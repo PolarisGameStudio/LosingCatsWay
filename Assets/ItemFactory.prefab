@@ -1,0 +1,2212 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3780839415449617259
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3780839415449617258}
+  - component: {fileID: 3780839415449617257}
+  m_Layer: 0
+  m_Name: ItemFactory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3780839415449617258
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3780839415449617259}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3780839415449617257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3780839415449617259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19897294ad46e9d4192821a628773231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: ffb2939788a000647848a3f093eab2b3, type: 2}
+    - {fileID: 11400000, guid: d62a7b7c1c0522e4981cd1ac83146543, type: 2}
+    - {fileID: 11400000, guid: 85e23c678b954c640b62c78e55ffceb7, type: 2}
+    - {fileID: 11400000, guid: 138ffca7be557794ba9fdfac8a56ba67, type: 2}
+    - {fileID: 11400000, guid: a798c6a1a455fd942b2f74ef19d5dbc0, type: 2}
+    - {fileID: 11400000, guid: 9115372663dc4464eb0dd7d04609811f, type: 2}
+    - {fileID: 11400000, guid: 22688ec2587731d41b8f6fb6256ea643, type: 2}
+    - {fileID: 11400000, guid: e125cd6894403444aa21c3344a21bfcd, type: 2}
+    - {fileID: 11400000, guid: cf991d00f2da90a46b1e5bc554559dcc, type: 2}
+    - {fileID: 11400000, guid: 329b37f44b58af948818ca8e467e57b0, type: 2}
+    - {fileID: 11400000, guid: c1bda6104e40ef14aa4db3f66333a4c9, type: 2}
+    - {fileID: 11400000, guid: 8c8016afbbd26834d854e1c67466258c, type: 2}
+    - {fileID: 11400000, guid: ecd5063b16a03e54f833d53ab23d5567, type: 2}
+    - {fileID: 11400000, guid: 8a380d3c13c11884b98dbcc6ddc07cb5, type: 2}
+    - {fileID: 11400000, guid: 0244c28c9a51a4249858967ba6512c9b, type: 2}
+    - {fileID: 11400000, guid: 1056a22c47118914bbd297df5f5f75c1, type: 2}
+    - {fileID: 11400000, guid: dbd54052771becd4184ca6ea01d171af, type: 2}
+    - {fileID: 11400000, guid: d0b3928f2c4f7204cb7e11f9b9ef7e34, type: 2}
+    - {fileID: 11400000, guid: e19f9590677ffca439e2e837bdf2b1b0, type: 2}
+    - {fileID: 11400000, guid: 945c3382a7b779f498014c3929d3bac2, type: 2}
+    - {fileID: 11400000, guid: 1e90b4f01cfadbc45921e87a2da05d7e, type: 2}
+    - {fileID: 11400000, guid: a14b1bc3241f61547b168d5a44af9003, type: 2}
+    - {fileID: 11400000, guid: 0785c49bc8d33a44b8a6291b63e477b3, type: 2}
+    - {fileID: 11400000, guid: dc1a0b33d64ea0543a1e9be3b2e4577a, type: 2}
+    - {fileID: 11400000, guid: 0809cd5367feaad40b2167da7a2c3ffd, type: 2}
+    - {fileID: 11400000, guid: b89d6a353b96f444f9ad64b0febf40b1, type: 2}
+    - {fileID: 11400000, guid: dee17d5305c31c84bbaa48647dd7b129, type: 2}
+    - {fileID: 11400000, guid: a464647eecb15af49af79f5392ba98c1, type: 2}
+    - {fileID: 11400000, guid: caa83e918c21b884cb679e8fd348a644, type: 2}
+    - {fileID: 11400000, guid: 4820858fec5a49c4489f1c7f49116f99, type: 2}
+    - {fileID: 11400000, guid: f70dde3ded9eb5049810ef657adb3415, type: 2}
+    - {fileID: 11400000, guid: f9219e771aebb3a48aaed6c82f79b2ee, type: 2}
+    - {fileID: 11400000, guid: ffdef62581410b844b1e25b9d6a8c939, type: 2}
+    - {fileID: 11400000, guid: 3fec986d047fa0e44a6645d54209249e, type: 2}
+    - {fileID: 11400000, guid: 3f03e283a244e0b409ea476b6056c42e, type: 2}
+    - {fileID: 11400000, guid: b1e565ffd8de5de45b61fdf874bc1aef, type: 2}
+    - {fileID: 11400000, guid: e629f26fa513166458da4d0bb5a4533a, type: 2}
+    - {fileID: 11400000, guid: b2c4f4f58e45c274f8f66bc9d12ca1a1, type: 2}
+    - {fileID: 11400000, guid: ec3bc4997af7bd34dae63344d285c2e7, type: 2}
+    - {fileID: 11400000, guid: 5c3d892f7a0ed5e4cb2b75eb5ea375cf, type: 2}
+    - {fileID: 11400000, guid: 428c5309891026649aaec8dc7ec526ba, type: 2}
+    - {fileID: 11400000, guid: 2c6c7c5d6e9838c46ac919e0fa0a64c2, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: tutorialRewards
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[Item_Reward[],
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: FR00001
+    - Name: $v
+      Entry: 7
+      Data: 2|Item_Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: FR00002
+    - Name: $v
+      Entry: 7
+      Data: 3|Item_Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: FR00003
+    - Name: $v
+      Entry: 7
+      Data: 4|Item_Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: LevelRewards
+      Entry: 7
+      Data: 5|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[Reward[],
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 6|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 39
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2
+    - Name: $v
+      Entry: 7
+      Data: 7|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 8|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 9|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 7
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 10|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 8
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3
+    - Name: $v
+      Entry: 7
+      Data: 11|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 12|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 13|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 9
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 4
+    - Name: $v
+      Entry: 7
+      Data: 14|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 15|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 16|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 10
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 5
+    - Name: $v
+      Entry: 7
+      Data: 17|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 18|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 19|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 11
+    - Name: count
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 20|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 12
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 6
+    - Name: $v
+      Entry: 7
+      Data: 21|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 22|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 23|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 13
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 7
+    - Name: $v
+      Entry: 7
+      Data: 24|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 25|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 26|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 14
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 8
+    - Name: $v
+      Entry: 7
+      Data: 27|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 28|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 29|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 15
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 9
+    - Name: $v
+      Entry: 7
+      Data: 30|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 31|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 32|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 11
+    - Name: count
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 10
+    - Name: $v
+      Entry: 7
+      Data: 33|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 34|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 35|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 16
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 36|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 8
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 37|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 12
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 11
+    - Name: $v
+      Entry: 7
+      Data: 38|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 39|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 300
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 40|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 17
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 41|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 18
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 12
+    - Name: $v
+      Entry: 7
+      Data: 42|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 43|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 300
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 44|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 19
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 13
+    - Name: $v
+      Entry: 7
+      Data: 45|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 46|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 300
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 47|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 11
+    - Name: count
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 14
+    - Name: $v
+      Entry: 7
+      Data: 48|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 49|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 300
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 50|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 20
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 15
+    - Name: $v
+      Entry: 7
+      Data: 51|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 52|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 300
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 53|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 21
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 54|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 12
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 16
+    - Name: $v
+      Entry: 7
+      Data: 55|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 56|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 300
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 57|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 22
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 17
+    - Name: $v
+      Entry: 7
+      Data: 58|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 59|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 300
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 60|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 11
+    - Name: count
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 18
+    - Name: $v
+      Entry: 7
+      Data: 61|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 62|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 300
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 63|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 23
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 19
+    - Name: $v
+      Entry: 7
+      Data: 64|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 65|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 300
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 66|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 24
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 20
+    - Name: $v
+      Entry: 7
+      Data: 67|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 68|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 300
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 69|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 25
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 70|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 12
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 21
+    - Name: $v
+      Entry: 7
+      Data: 71|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 72|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 500
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 73|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 11
+    - Name: count
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 74|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 18
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 22
+    - Name: $v
+      Entry: 7
+      Data: 75|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 76|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 500
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 77|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 26
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 23
+    - Name: $v
+      Entry: 7
+      Data: 78|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 79|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 500
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 80|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 27
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 24
+    - Name: $v
+      Entry: 7
+      Data: 81|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 82|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 500
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 83|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 11
+    - Name: count
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 25
+    - Name: $v
+      Entry: 7
+      Data: 84|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 5
+    - Name: 
+      Entry: 7
+      Data: 85|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 500
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 86|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 8
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 87|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 28
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 88|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 29
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 89|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 12
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 26
+    - Name: $v
+      Entry: 7
+      Data: 90|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 91|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 500
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 92|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 30
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 27
+    - Name: $v
+      Entry: 7
+      Data: 93|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 94|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 500
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 95|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 11
+    - Name: count
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 28
+    - Name: $v
+      Entry: 7
+      Data: 96|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 97|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 500
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 98|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 31
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 29
+    - Name: $v
+      Entry: 7
+      Data: 99|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 100|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 500
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 101|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 32
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 30
+    - Name: $v
+      Entry: 7
+      Data: 102|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 103|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 500
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 104|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 33
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 105|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 12
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 31
+    - Name: $v
+      Entry: 7
+      Data: 106|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 107|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 800
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 108|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 34
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 109|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 18
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 32
+    - Name: $v
+      Entry: 7
+      Data: 110|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 111|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 800
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 112|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 11
+    - Name: count
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 33
+    - Name: $v
+      Entry: 7
+      Data: 113|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 114|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 800
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 115|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 35
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 34
+    - Name: $v
+      Entry: 7
+      Data: 116|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 117|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 800
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 118|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 36
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 35
+    - Name: $v
+      Entry: 7
+      Data: 119|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 120|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 800
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 121|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 37
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 122|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 12
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 36
+    - Name: $v
+      Entry: 7
+      Data: 123|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 124|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 800
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 125|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 38
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 37
+    - Name: $v
+      Entry: 7
+      Data: 126|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 127|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 800
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 128|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 39
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 38
+    - Name: $v
+      Entry: 7
+      Data: 129|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 130|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 800
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 131|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 40
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 39
+    - Name: $v
+      Entry: 7
+      Data: 132|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 133|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 800
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 134|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 11
+    - Name: count
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 40
+    - Name: $v
+      Entry: 7
+      Data: 135|Reward[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 136|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 6
+    - Name: count
+      Entry: 3
+      Data: 800
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 137|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 41
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 138|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 8
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 139|Reward, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 12
+    - Name: count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  items:
+  - {fileID: 11400000, guid: 3dce52f3a4c25e047820eb41695a0e04, type: 2}
+  - {fileID: 11400000, guid: 5cd35734bfbc1bf48b11f44c8ccf4ef9, type: 2}
+  - {fileID: 11400000, guid: d9d6e2b3b28d71147a4c526c5e764e3e, type: 2}
+  - {fileID: 11400000, guid: f13b346464455a14b896ebf12ccae9fc, type: 2}
+  - {fileID: 11400000, guid: 28bcb04afc506b74a935e573fd861b91, type: 2}
+  - {fileID: 11400000, guid: b3b6df20329c874419942ceb44c6f0b9, type: 2}
+  - {fileID: 11400000, guid: 0b13747fea3c6874eaad27296d3cee14, type: 2}
+  - {fileID: 11400000, guid: a2642164e5dc29f4ea6c2c1761af4879, type: 2}
+  - {fileID: 11400000, guid: 950d730e315e0384cbeba76c5b212d8b, type: 2}
+  - {fileID: 11400000, guid: 665797c712b097d47aa1a9db6f616c0c, type: 2}
+  - {fileID: 11400000, guid: 0e3c37ef333a158448e85c72e3c84828, type: 2}
+  - {fileID: 11400000, guid: 4286fec47a820c3449f36cc38dc8d24e, type: 2}
+  - {fileID: 11400000, guid: eb65e7366b349bb47a3e52ba7a1e3b0e, type: 2}
+  - {fileID: 11400000, guid: 127e4313656ae9848be05b1d7c35034c, type: 2}
+  - {fileID: 11400000, guid: 2e65e10a0417fe34486259c4c6fba1e8, type: 2}
+  - {fileID: 11400000, guid: 3ea34252846fa0740a16115172b5f451, type: 2}
+  - {fileID: 11400000, guid: b6a3f6f3d87d56e4c8c973b59890ddad, type: 2}
+  - {fileID: 11400000, guid: 25979657e63618248b65e1dd80420b2d, type: 2}
+  - {fileID: 11400000, guid: 5895643085b2c2546a1e9373c9dc7701, type: 2}
+  - {fileID: 11400000, guid: 0c959006032045f4aab1b70cbfb217d8, type: 2}
+  - {fileID: 11400000, guid: 21c30a92f870ce64e9d63992a307e2ef, type: 2}
+  - {fileID: 11400000, guid: d601c158c70c7824b97dc57d261d1a82, type: 2}
+  - {fileID: 11400000, guid: d0dbfada0018fa5418ab44a355a308f9, type: 2}
+  - {fileID: 11400000, guid: 4421ac7299cacfb41bbcad987570175f, type: 2}
+  - {fileID: 11400000, guid: 9527989b435e0bf478669de0f89a8ab3, type: 2}
+  - {fileID: 11400000, guid: 60642b48c87442c44a113b4ba443edf6, type: 2}
+  - {fileID: 11400000, guid: 849abb8e5db4d384980a3c4c77a81080, type: 2}
+  - {fileID: 11400000, guid: b2fce0cd10e79e84390dbe28bf840d04, type: 2}
+  - {fileID: 11400000, guid: ba8d2f4cb04b2b54cafbe72e55cc0500, type: 2}
+  - {fileID: 11400000, guid: d2b3e7ff3fd7b024ebfb2b08fb6b81b2, type: 2}
+  - {fileID: 11400000, guid: 4f9c2e2a1a5cfb340b0d9aea0799c8f4, type: 2}
+  - {fileID: 11400000, guid: abedf2a226838564d93a8d37e7d9bb48, type: 2}
+  - {fileID: 11400000, guid: ef40a17b9048eab4fbf075a6208040e9, type: 2}
+  - {fileID: 11400000, guid: 899334b406a9c3e469f5ba4f10303c42, type: 2}
+  - {fileID: 11400000, guid: 2bbc27cb051594347af0f82067da7bef, type: 2}
+  - {fileID: 11400000, guid: 37053072f170e3943ac898cc57a49622, type: 2}
+  - {fileID: 11400000, guid: 6667eb29bd2d4694b883ea4f15b1bfd5, type: 2}
+  - {fileID: 11400000, guid: 9deac98986213d14fbf13a820a6220fd, type: 2}
+  - {fileID: 11400000, guid: ac1b860e09d812b44a16c16f94aa27ad, type: 2}
+  - {fileID: 11400000, guid: 76db8004cdf49224492796afa6f20207, type: 2}
+  - {fileID: 11400000, guid: d55ad9a9b74cea341b8324557679f82d, type: 2}
+  - {fileID: 11400000, guid: fecad2e0341b33f4aa18a024d565b52c, type: 2}
+  - {fileID: 11400000, guid: c9b4b33f84c0ec044bba0247139c162c, type: 2}
+  - {fileID: 11400000, guid: 71c4970dc4b6b114880ab7b68d4c883c, type: 2}
+  - {fileID: 11400000, guid: 9b86911fc2caf42498b363812080c2bc, type: 2}
+  - {fileID: 11400000, guid: 8461b2612e58a534f949915254d9b8a9, type: 2}

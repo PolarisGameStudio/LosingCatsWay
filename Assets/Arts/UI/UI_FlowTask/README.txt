@@ -1,0 +1,1 @@
+要收養這隻貓嗎？的白色底圖:bg_chose_bigmdpi.png

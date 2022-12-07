@@ -1,0 +1,160 @@
+﻿using System;
+using DG.Tweening;
+using Spine;
+using Spine.Unity;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Sirenix.OdinInspector;
+using UnityEngine;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
+
+public class Cat_Entrance : MvcBehaviour
+{
+    [SerializeField] private CatSkin catSkin;
+    [SerializeField] private RectTransform catRect;
+    [SerializeField] private GameObject bubbleObject;
+    [SerializeField] private Image statusImage; //想喝水想吃飼料想玩的氣泡
+    [SerializeField] private RectTransform diaryButtonRect; //死亡之後的按鈕
+    [SerializeField] private GameObject clickButton;
+    [SerializeField] private bool hasBubble;
+
+    [Title("Sprites")] [SerializeField] private Sprite angrySprite;
+    [SerializeField] private Sprite waterSprite;
+    [SerializeField] private Sprite sadSprite;
+    [SerializeField] private Sprite heartSprite;
+    [SerializeField] private Sprite brokenHeartSprite;
+    
+    private Vector2 startScale;
+    private SkeletonGraphic skeletonGraphic;
+    private bool isKitty;
+
+    public void SetCatData(CloudCatData cloudCatData)
+    {
+        catSkin.ChangeSkin(cloudCatData);
+        startScale = catRect.localScale;
+        CatIdle();
+
+        int ageLevel = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays);
+        isKitty = ageLevel == 0;
+
+        bubbleObject.SetActive(hasBubble);
+        if (!hasBubble) return;
+        
+        //Status
+        CloudSave_CatSurviveData catSurviveData = cloudCatData.CatSurviveData;
+        if (catSurviveData.Satiety >= 70f && catSurviveData.Moisture >= 70f && catSurviveData.Favourbility >= 70f)
+        {
+            statusImage.sprite = heartSprite;
+            return;
+        }
+        if (catSurviveData.Satiety < 30f && catSurviveData.Moisture < 30f && catSurviveData.Favourbility < 30f)
+        {
+            statusImage.sprite = brokenHeartSprite;
+            return;
+        }
+
+        List<float> status = new List<float>();
+        status.Add(catSurviveData.Moisture);
+        status.Add(catSurviveData.Favourbility);
+        status.Add(catSurviveData.Satiety);
+        float result = status.Min();
+        
+        if (catSurviveData.Moisture.Equals(result))
+        {
+            statusImage.sprite = waterSprite;
+            return;
+        }
+        if (catSurviveData.Favourbility.Equals(result))
+        {
+            statusImage.sprite = sadSprite;
+            return;
+        }
+        statusImage.sprite = angrySprite;
+    }
+
+    public void SetActive(bool active)
+    {
+        gameObject.SetActive(active);
+        catSkin.SetActive(active);
+    }
+
+    public void Click()
+    {
+        bubbleObject.transform.DOScale(Vector2.zero, 0.25f).SetEase(Ease.OutExpo);
+        
+        skeletonGraphic = catSkin.skeletonGraphic;
+        skeletonGraphic.AnimationState.ClearTracks();
+        skeletonGraphic.AnimationState.Complete -= EndClick; //連續點
+        skeletonGraphic.AnimationState.SetAnimation(0, "AI_Main/Entrance_Jump", false);
+        skeletonGraphic.AnimationState.Complete += EndClick;
+    }
+
+    private void EndClick(TrackEntry trackEntry)
+    {
+        trackEntry.Complete -= EndClick;
+        CatIdle();
+    }
+
+    private void CatIdle()
+    {
+        bubbleObject.transform.DOScale(Vector2.one, 0.25f).SetEase(Ease.OutBack);
+        
+        skeletonGraphic = catSkin.skeletonGraphic;
+        skeletonGraphic.AnimationState.ClearTracks();
+        // int random = isKitty ? 1 : Random.Range(1, 3);
+        skeletonGraphic.AnimationState.SetAnimation(0, $"AI_Main/Sit_0{1}", true); // TODO KittyBug
+    }
+
+    public void StartDead()
+    {
+        bubbleObject.SetActive(false);
+        clickButton.SetActive(false);
+
+        //先抓動畫
+        Spine.Animation anim = catSkin.skeletonGraphic.SkeletonData.FindAnimation("Situation_Cat/Die");
+        //播放動畫
+        TrackEntry trackEntry = catSkin.skeletonGraphic.AnimationState.SetAnimation(0, anim, false);
+        trackEntry.Complete += ShowDiaryButton;
+    }
+
+    //啓動日記
+    private void ShowDiaryButton(TrackEntry trackEntry)
+    {
+        trackEntry.Complete -= ShowDiaryButton;
+
+        catRect.DOScale(Vector2.zero, 0.45f).From(startScale).SetEase(Ease.InBack);
+        diaryButtonRect.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.45f);
+    }
+
+    /// <summary>
+    /// 綁定在貓死亡後的按鈕上：流程加上快捷前往溫室
+    /// </summary>
+    public void GetDiary()
+    {
+        App.system.openFlow.AddAction(ToGreenHouse);
+
+        diaryButtonRect.DOScale(Vector2.zero, 0.25f).From(Vector2.one).SetEase(Ease.InBack)
+            .OnComplete(() => 
+            {
+                App.controller.entrance.Close();
+            });
+    }
+
+    /// <summary>
+    /// 流程結束之後快捷前往溫室
+    /// </summary>
+    private void ToGreenHouse()
+    {
+        App.system.openFlow.RemoveAction(ToGreenHouse);
+
+        App.model.entrance.OpenType = 0;
+
+        //TODO 前往溫室的Confirm文字
+        App.system.confirm.Active(ConfirmTable.ExitComfirm, okEvent: () =>
+        {
+            App.controller.greenHouse.Open();
+        });
+    }
+}
