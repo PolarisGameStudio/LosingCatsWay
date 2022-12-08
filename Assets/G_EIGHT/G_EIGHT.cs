@@ -8,11 +8,14 @@ using Firebase.Firestore;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class G_EIGHT : MonoBehaviour
 {
     [Title("UI")] public TextMeshProUGUI totalCatText;
     public TextMeshProUGUI totalHatText;
+    public Image totalCatBar;
+    public Image totalHatBar;
 
     public G_EIGHT_LeadBoard[] gEightLeadBoards;
 
@@ -49,7 +52,8 @@ public class G_EIGHT : MonoBehaviour
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         Query query = db.Collection("Cats");
 
-        ListenerRegistration listener = query.Listen(snapshot => {
+        ListenerRegistration listener = query.Listen(snapshot =>
+        {
             var tmp = new List<CloudCatData>();
 
             foreach (DocumentSnapshot documentSnapshot in snapshot.Documents)
@@ -61,7 +65,7 @@ public class G_EIGHT : MonoBehaviour
             RefreshUI(tmp, cloudCatDatas);
             cloudCatDatas = tmp;
         });
-        
+
         // ListenerRegistration listener = query.Listen(snapshot =>
         // {
         //     foreach (DocumentChange change in snapshot.GetChanges())
@@ -159,6 +163,9 @@ public class G_EIGHT : MonoBehaviour
             }
         }
 
+        totalCatBar.DOFillAmount(totalCatCount / 250f, 0.25f);
+        totalHatBar.DOFillAmount(totalHatCount / 15f, 0.25f);
+
         DOTween.To(() => prevTotalCatCount, x => prevTotalCatCount = x, totalCatCount, 0.25f).OnUpdate(() =>
         {
             totalCatText.text = prevTotalCatCount.ToString();
@@ -223,7 +230,8 @@ public class G_EIGHT : MonoBehaviour
         }
 
         leaderBoards = leaderBoards.FindAll(x => x.HatCount != 0);
-        leaderBoards = leaderBoards.OrderByDescending(x => x.HatRatio).ThenByDescending(x => x.CatCount).ThenBy(x => x.Variety).ToList();
+        leaderBoards = leaderBoards.OrderByDescending(x => x.HatRatio).ThenByDescending(x => x.CatCount)
+            .ThenBy(x => x.Variety).ToList();
 
         if (leaderBoards.Count > 10)
             leaderBoards.RemoveRange(10, leaderBoards.Count - 10);
