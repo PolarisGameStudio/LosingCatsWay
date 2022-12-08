@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 public class G_EIGHT_DebugTool : MonoBehaviour
 {
     [Button]
-    public void Active()
+    public void Create250()
     {
         List<CreateTemplate> createTemplates = GetCreateTemplates();
 
@@ -25,12 +25,42 @@ public class G_EIGHT_DebugTool : MonoBehaviour
                 if (j < createTemplate.HatCount)
                     hasHat = "SantaHat";
                 
-                CreateCat(variety, hasHat);
+                CreateCat(variety, hasHat, "Location0");
             }
         }
     }
 
-    private void CreateCat(string variety, string useSkinId)
+    [Button]
+    public void Create8()
+    {
+        List<CreateTemplate> createTemplates = new List<CreateTemplate>();
+        createTemplates.Add(new CreateTemplate("LB_Tabby", 0, 1));
+        createTemplates.Add(new CreateTemplate("G_Mackerel", 0, 1));
+        createTemplates.Add(new CreateTemplate("DB_Tabby_O", 0, 1));
+        createTemplates.Add(new CreateTemplate("P_Calico", 0, 1));
+        createTemplates.Add(new CreateTemplate("K_Tortoiseshel", 0, 1));
+        createTemplates.Add(new CreateTemplate("P_Black", 0, 1));
+        createTemplates.Add(new CreateTemplate("G_American", 0, 1));
+        createTemplates.Add(new CreateTemplate("Siamese_4", 0, 1));
+
+        for (int i = 0; i < createTemplates.Count; i++)
+        {
+            CreateTemplate createTemplate = createTemplates[i];
+            string variety = createTemplate.Variety;
+            
+            for (int j = 0; j < createTemplate.CatCount; j++)
+            {
+                string hasHat = String.Empty;
+
+                if (j < createTemplate.HatCount)
+                    hasHat = "SantaHat";
+                
+                CreateCat(variety, hasHat, "玩家ID");
+            }
+        }
+    }
+
+    private void CreateCat(string variety, string useSkinId, string owner)
     {
         CloudCatData cloudCatData = new CloudCatData();
 
@@ -39,11 +69,11 @@ public class G_EIGHT_DebugTool : MonoBehaviour
         catData.CatName = "G8超棒";
         catData.Sex = (Random.value > .5f) ? (byte)1 : (byte)0;
         catData.Variety = variety;
-        catData.Owner = "Location0";
+        catData.Owner = owner;
         catData.BodyScale = Random.Range(0.9f, 1.1f);
         catData.PersonalityTypes = new List<int>(GetRandomPersonality());
         catData.PersonalityLevels = new List<int>(GetPersonalityLevel(catData.PersonalityTypes));
-        catData.Trait = "C001";
+        catData.Trait = GetRandomTrait();
         catData.DeathTime = new Timestamp();
         catData.IsFavorite = false;
         catData.BornTime = Timestamp.FromDateTime(Timestamp.GetCurrentTimestamp().ToDateTime() - TimeSpan.FromDays(5));
@@ -137,6 +167,29 @@ public class G_EIGHT_DebugTool : MonoBehaviour
         return result;
     }
 
+    private string GetRandomTrait()
+    {
+        int[] total = { 60, 30, 10 };
+        int index = MathfExtension.RandomRate(total, 100);
+
+        string result = String.Empty;
+
+        switch (index)
+        {
+            case 0:
+                result += 'C' + Random.Range(1, 10).ToString("000");
+                break;
+            case 1:
+                result += 'R' + Random.Range(1, 4).ToString("000");
+                break;
+            case 2:
+                result += 'S' + Random.Range(1, 3).ToString("000");
+                break;
+        }
+
+        return result;
+    }
+    
     private bool IsPurebred(string variety)
     {
         return Enum.IsDefined(typeof(PurebredCatType), variety);

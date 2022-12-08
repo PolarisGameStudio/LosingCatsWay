@@ -4,12 +4,8 @@ using DG.Tweening;
 using Spine;
 using UnityEngine;
 
-public class G_EIGHT_LeadBoard_Left : G_EIGHT_LeadBoard
+public class G_EIGHT_LeadBoard_First : G_EIGHT_LeadBoard
 {
-    public float leftPositionX;
-    public float rightPositionX;
-    public float centerPositionX;
-
     private LeaderBoard _leaderBoardTmp;
 
     public override void Out(float delay)
@@ -17,21 +13,14 @@ public class G_EIGHT_LeadBoard_Left : G_EIGHT_LeadBoard
         DOVirtual.DelayedCall(delay, () =>
         {
             skeletonGraphic.AnimationState.Start += WaitStartOutRun;
-
-            skeletonGraphic.AnimationState.SetAnimation(0, "AI_Cohesive/IdleToRun_01", false);
-            skeletonGraphic.AnimationState.AddAnimation(0, "AI_Main/Run_01", true, 0);
+            skeletonGraphic.AnimationState.SetAnimation(0, "G8/1_grab", false);
         });
     }
 
     private void WaitStartOutRun(TrackEntry entry)
     {
-        if (entry.Animation.Name.Equals("AI_Main/Run_01"))
+        if (entry.Animation.Name.Equals("G8/1_grab"))
         {
-            skeletonGraphic.transform.DOLocalMoveX(leftPositionX, 0.5f).From(centerPositionX).OnComplete(() =>
-            {
-                skeletonGraphic.AnimationState.SetAnimation(0, "AI_Cohesive/RunToIdle_01", false);
-            });
-
             hatRatioText.DOFade(0, 0.25f);
             catCountText.DOFade(0, 0.25f);
 
@@ -47,13 +36,14 @@ public class G_EIGHT_LeadBoard_Left : G_EIGHT_LeadBoard
         DOVirtual.DelayedCall(delay, () =>
         {
             skeletonGraphic.AnimationState.Start += WaitStartInRun;
-            skeletonGraphic.AnimationState.SetAnimation(0, "AI_Main/Run_01", true);
+            skeletonGraphic.AnimationState.SetAnimation(0, "G8/2_fall", false);
+            skeletonGraphic.AnimationState.AddAnimation(0, "AI_Main/Sit_01", true, 0);
         });
     }
 
     private void WaitStartInRun(TrackEntry entry)
     {
-        if (entry.Animation.Name.Equals("AI_Main/Run_01"))
+        if (entry.Animation.Name.Equals("AI_Main/Sit_01"))
         {
             hatRatioText.text = 0.ToString();
             catCountText.text = 0.ToString();
@@ -63,14 +53,8 @@ public class G_EIGHT_LeadBoard_Left : G_EIGHT_LeadBoard
                 ChangeHatRatio(0, _leaderBoardTmp.HatRatio);
                 ChangeCatCount(0, _leaderBoardTmp.CatCount);
             });
+            
             catCountText.DOFade(1, 0.25f);
-
-            skeletonGraphic.transform.DOLocalMoveX(centerPositionX, 0.5f).From(rightPositionX).OnComplete(() =>
-            {
-                skeletonGraphic.AnimationState.SetAnimation(0, "AI_Cohesive/RunToIdle_01", false);
-                skeletonGraphic.AnimationState.AddAnimation(0, "AI_Main/IDLE_Ordinary01", true, 0);
-            });
-
             skeletonGraphic.AnimationState.Start -= WaitStartInRun;
         }
     }
@@ -79,7 +63,7 @@ public class G_EIGHT_LeadBoard_Left : G_EIGHT_LeadBoard
     {
         _leaderBoardTmp = leaderBoard;
 
-        skeletonGraphic.AnimationState.Start += WaitStartOutIn;
+        skeletonGraphic.AnimationState.Complete += WaitStartOutIn;
         Out(delay);
     }
 
@@ -88,13 +72,13 @@ public class G_EIGHT_LeadBoard_Left : G_EIGHT_LeadBoard
         base.ChangeSkin(variety);
         skeletonGraphic.Skeleton.SetAttachment("SantaHat", "SantaHat");
     }
-
+    
     private void WaitStartOutIn(TrackEntry entry)
     {
-        if (entry.Animation.Name.Equals("AI_Cohesive/RunToIdle_01"))
+        if (entry.Animation.Name.Equals("G8/1_grab"))
         {
             In(0, _leaderBoardTmp);
-            skeletonGraphic.AnimationState.Start -= WaitStartOutIn;
+            skeletonGraphic.AnimationState.Complete -= WaitStartOutIn;
         }
     }
 

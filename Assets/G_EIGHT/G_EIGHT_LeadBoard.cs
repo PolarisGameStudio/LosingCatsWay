@@ -7,6 +7,7 @@ using UnityEngine;
 
 public abstract class G_EIGHT_LeadBoard : MonoBehaviour
 {
+    public StringData catVarietyName;
     public TextMeshProUGUI hatRatioText;
     public TextMeshProUGUI catCountText;
 
@@ -28,17 +29,20 @@ public abstract class G_EIGHT_LeadBoard : MonoBehaviour
     {
     }
 
-    protected void ChangeSkin(string variety)
+    protected virtual void ChangeSkin(string variety)
     {
         var newVariety = variety.Replace('_', '-');
 
+        if (newVariety.Equals("White-Special"))
+            newVariety = "White_Special";
+        
         // 王若呈那邊ID在靠北
         if (newVariety.Contains("Siamese") && !newVariety.Contains("GT") && !newVariety.Contains("CT"))
         {
             var t = newVariety.Split('-');
             newVariety = t[1] + '-' + t[0];
         }
-
+        
         skeletonGraphic.Skeleton.SetSkin("Normal_Cat/" + newVariety);
     }
     
