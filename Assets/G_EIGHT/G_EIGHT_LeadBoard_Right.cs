@@ -18,6 +18,7 @@ public class G_EIGHT_LeadBoard_Right : G_EIGHT_LeadBoard
                 skeletonGraphic.enabled = false;
                 hatRatioText.enabled = false;
                 catCountText.enabled = false;
+                catVarietyNameText.enabled = false;
             });
         });
     }
@@ -29,7 +30,9 @@ public class G_EIGHT_LeadBoard_Right : G_EIGHT_LeadBoard
             skeletonGraphic.enabled = true;
             hatRatioText.enabled = true;
             catCountText.enabled = true;
+            catVarietyNameText.enabled = true;
 
+            catVarietyNameText.text = catVarietyStringData.Contents[leaderBoard.Variety];
             ChangeSkin(leaderBoard.Variety);
             
             mask.transform.DOScaleY(0, 0.25f).From(1).OnComplete(() =>

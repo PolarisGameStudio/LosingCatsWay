@@ -23,7 +23,8 @@ public class G_EIGHT_LeadBoard_First : G_EIGHT_LeadBoard
         {
             hatRatioText.DOFade(0, 0.25f);
             catCountText.DOFade(0, 0.25f);
-
+            catVarietyNameText.DOFade(0, 0.25f);
+            
             skeletonGraphic.AnimationState.Start -= WaitStartOutRun;
         }
     }
@@ -31,6 +32,7 @@ public class G_EIGHT_LeadBoard_First : G_EIGHT_LeadBoard
     public override void In(float delay, LeaderBoard leaderBoard)
     {
         _leaderBoardTmp = leaderBoard;
+        catVarietyNameText.text = catVarietyStringData.Contents[leaderBoard.Variety];
         ChangeSkin(leaderBoard.Variety);
 
         DOVirtual.DelayedCall(delay, () =>
@@ -55,6 +57,8 @@ public class G_EIGHT_LeadBoard_First : G_EIGHT_LeadBoard
             });
             
             catCountText.DOFade(1, 0.25f);
+            catVarietyNameText.DOFade(1, 0.25f);
+
             skeletonGraphic.AnimationState.Start -= WaitStartInRun;
         }
     }

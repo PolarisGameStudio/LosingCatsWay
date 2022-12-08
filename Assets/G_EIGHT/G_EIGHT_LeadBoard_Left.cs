@@ -6,54 +6,46 @@ using UnityEngine;
 
 public class G_EIGHT_LeadBoard_Left : G_EIGHT_LeadBoard
 {
-    public float leftPositionX;
-    public float rightPositionX;
-    public float centerPositionX;
-
     private LeaderBoard _leaderBoardTmp;
 
     public override void Out(float delay)
     {
         DOVirtual.DelayedCall(delay, () =>
         {
-            skeletonGraphic.AnimationState.Start += WaitStartOutRun;
-
-            skeletonGraphic.AnimationState.SetAnimation(0, "AI_Cohesive/IdleToRun_01", false);
-            skeletonGraphic.AnimationState.AddAnimation(0, "AI_Main/Run_01", true, 0);
+            skeletonGraphic.AnimationState.Complete += WaitStartOutRun;
+            skeletonGraphic.AnimationState.SetAnimation(0, "G8/3_outjump", false);
         });
     }
 
     private void WaitStartOutRun(TrackEntry entry)
     {
-        if (entry.Animation.Name.Equals("AI_Main/Run_01"))
+        if (entry.Animation.Name.Equals("G8/3_outjump"))
         {
-            skeletonGraphic.transform.DOLocalMoveX(leftPositionX, 0.5f).From(centerPositionX).OnComplete(() =>
-            {
-                skeletonGraphic.AnimationState.SetAnimation(0, "AI_Cohesive/RunToIdle_01", false);
-            });
-
             hatRatioText.DOFade(0, 0.25f);
             catCountText.DOFade(0, 0.25f);
+            catVarietyNameText.DOFade(0, 0.25f);
 
-            skeletonGraphic.AnimationState.Start -= WaitStartOutRun;
+            skeletonGraphic.AnimationState.Complete -= WaitStartOutRun;
         }
     }
 
     public override void In(float delay, LeaderBoard leaderBoard)
     {
         _leaderBoardTmp = leaderBoard;
+        catVarietyNameText.text = catVarietyStringData.Contents[leaderBoard.Variety];
         ChangeSkin(leaderBoard.Variety);
 
         DOVirtual.DelayedCall(delay, () =>
         {
             skeletonGraphic.AnimationState.Start += WaitStartInRun;
-            skeletonGraphic.AnimationState.SetAnimation(0, "AI_Main/Run_01", true);
+            skeletonGraphic.AnimationState.SetAnimation(0, "G8/3_injump", true);
+            skeletonGraphic.AnimationState.AddAnimation(0, "AI_Main/IDLE_Ordinary01", true, 0);
         });
     }
 
     private void WaitStartInRun(TrackEntry entry)
     {
-        if (entry.Animation.Name.Equals("AI_Main/Run_01"))
+        if (entry.Animation.Name.Equals("AI_Main/IDLE_Ordinary01"))
         {
             hatRatioText.text = 0.ToString();
             catCountText.text = 0.ToString();
@@ -63,14 +55,11 @@ public class G_EIGHT_LeadBoard_Left : G_EIGHT_LeadBoard
                 ChangeHatRatio(0, _leaderBoardTmp.HatRatio);
                 ChangeCatCount(0, _leaderBoardTmp.CatCount);
             });
+
             catCountText.DOFade(1, 0.25f);
-
-            skeletonGraphic.transform.DOLocalMoveX(centerPositionX, 0.5f).From(rightPositionX).OnComplete(() =>
-            {
-                skeletonGraphic.AnimationState.SetAnimation(0, "AI_Cohesive/RunToIdle_01", false);
-                skeletonGraphic.AnimationState.AddAnimation(0, "AI_Main/IDLE_Ordinary01", true, 0);
-            });
-
+            catVarietyNameText.DOFade(1, 0.25f);
+            
+            skeletonGraphic.AnimationState.SetAnimation(0, "AI_Cohesive/RunToIdle_01", false);
             skeletonGraphic.AnimationState.Start -= WaitStartInRun;
         }
     }
