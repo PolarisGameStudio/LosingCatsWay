@@ -90,7 +90,7 @@ public class Controller_Pedia : ControllerBehavior
 
     public void ChoosePedia(int index)
     {
-        App.model.pedia.ChoosePediaIndex = index;
+        App.model.pedia.SelectedPediaId = App.model.pedia.UsingPediaIds[index];
         OpenReadPedia();
     }
 
@@ -100,11 +100,14 @@ public class Controller_Pedia : ControllerBehavior
         rightArrow.SetActive(false);
 
         App.view.pedia.subPedia.readPedia.Open();
+        App.model.pedia.SelectedPediaType = App.model.pedia.SelectedPediaType; // 跳動
     }
 
     public void CloseReadPedia()
     {
         App.view.pedia.subPedia.readPedia.Close();
+        RefreshPediaItems();
+        App.model.pedia.SelectedPediaType = App.model.pedia.SelectedPediaType; // 跳動
     }
 
     private void RefreshPediaItems()

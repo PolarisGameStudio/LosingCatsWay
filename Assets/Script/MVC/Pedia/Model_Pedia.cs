@@ -8,9 +8,9 @@ public class Model_Pedia : ModelBehavior
 
     //Pedia
     private int selectedPediaType = -1;
-    private int choosePediaIndex;
     private int pediaPageIndex = -1;
     private List<string> usingPediaIds;
+    private string selectedPediaId;
 
     //Archive
     private int selectedArchiveType = -1;
@@ -32,16 +32,6 @@ public class Model_Pedia : ModelBehavior
         }
     }
 
-    public int ChoosePediaIndex
-    {
-        get => choosePediaIndex;
-        set
-        {
-            choosePediaIndex = value;
-            OnChoosePediaIndexChange?.Invoke(value);
-        }
-    }
-
     public int PediaPageIndex
     {
         get => pediaPageIndex;
@@ -59,6 +49,16 @@ public class Model_Pedia : ModelBehavior
         {
             usingPediaIds = value;
             OnUsingPediaIdsChange?.Invoke(value);
+        }
+    }
+
+    public string SelectedPediaId
+    {
+        get => selectedPediaId;
+        set
+        {
+            selectedPediaId = value;
+            OnSelectPediaIdChange?.Invoke(value);
         }
     }
 
@@ -99,9 +99,9 @@ public class Model_Pedia : ModelBehavior
 
     //Pedia
     public ValueChange OnSelectedPediaTypeChange;
-    public ValueChange OnChoosePediaIndexChange;
     public ValueChange OnPediaPageIndexChange;
     public ValueChange OnUsingPediaIdsChange;
+    public ValueChange OnSelectPediaIdChange;
     
     //Archive
     public ValueChange OnSelectedArchiveTypeChange;

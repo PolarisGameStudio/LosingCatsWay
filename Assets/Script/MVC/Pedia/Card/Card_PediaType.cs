@@ -20,8 +20,6 @@ public class Card_PediaType : MvcBehaviour
             maskCanvasGroup.DOFade(1, 0.25f).From(0).SetEase(Ease.OutExpo);
         }
         else
-        {
             maskCanvasGroup.DOFade(0, 0.25f);
-        }
     }
 }
