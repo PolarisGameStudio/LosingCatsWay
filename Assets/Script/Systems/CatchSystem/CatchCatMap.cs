@@ -617,13 +617,13 @@ public class CatchCatMap : MvcBehaviour
 
         if (turn >= 7)
         {
+            SetCatNotUse();
+            
             if (isG8)
             {
                 App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchGameFailed, CloseToG8);
                 return;
             }
-            
-            SetCatNotUse();
             
             App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchCatGameEnd, () =>
             {
