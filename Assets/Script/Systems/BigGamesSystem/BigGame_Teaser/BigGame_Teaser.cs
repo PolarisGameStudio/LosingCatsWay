@@ -83,6 +83,7 @@ public class BigGame_Teaser : BigGameBehaviour
 
     public void Swing(int leftOrRight) // 0:Left 1:Right
     {
+        App.system.soundEffect.Play("Button");
         VibrateExtension.Vibrate(VibrateType.Nope);
 
         if (leftOrRight == 0)
@@ -162,6 +163,8 @@ public class BigGame_Teaser : BigGameBehaviour
         returnButton.interactable = false;
         curveBar.PointerPause();
 
+        App.system.soundEffect.Play("Button");
+        
         if (curveBar.CheckPointerInArea())
             Hit();
         else

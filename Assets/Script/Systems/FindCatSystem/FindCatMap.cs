@@ -45,7 +45,6 @@ public class FindCatMap : MvcBehaviour
     
     public void Open()
     {
-        App.system.bgm.FadeIn().Play("Street");
         uiView.InstantShow();
         
         string country = App.factory.stringFactory.GetCountryByLocaleIndex();
@@ -121,6 +120,7 @@ public class FindCatMap : MvcBehaviour
             return;
         
         VibrateExtension.Vibrate(VibrateType.Nope);
+        App.system.soundEffect.Play("Button");
         
         FindCatObject findCatObject = cats[index];
 
@@ -156,10 +156,11 @@ public class FindCatMap : MvcBehaviour
         {
             SetCloudCatDataToUse(false);
             App.system.bgm.FadeOut();
-            App.system.transition.Active(0, () =>
+            App.system.transition.OnlyOpen();
+            DOVirtual.DelayedCall(1f, () =>
             {
                 OnGameEnd?.Invoke();
-                App.system.findCat.ActiveCurrentMap();
+                App.system.findCat.ActiveCurrentGate();
             });
             return;
         }

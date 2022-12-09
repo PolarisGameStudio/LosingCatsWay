@@ -34,10 +34,10 @@ public class Controller_Map : ControllerBehavior
     public void OpenFindCat(int index)
     {
         App.system.bgm.FadeOut();
-        App.system.transition.OnlyOpen(() =>
+        App.system.transition.Active(1f, () =>
         {
             App.view.map.Close();
-            App.system.findCat.ActiveMap(index);
+            App.system.findCat.ActiveGate(index);
         });
     }
 

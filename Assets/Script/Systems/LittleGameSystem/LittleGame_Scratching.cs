@@ -18,6 +18,8 @@ public class LittleGame_Scratching : LittleGame
     public void Drag()
     {
         pointCircle.fillAmount += fillSpeed;
+        
+        App.system.soundEffect.Play("Button");
 
         if (pointCircle.fillAmount >= 1)
         {
@@ -25,12 +27,8 @@ public class LittleGame_Scratching : LittleGame
 
             //ExitAnim
             anim.SetBool(CatAnimTable.IsCanExit.ToString(), true);
-
-            App.system.confirm.OnlyConfirm().Active(endId, () =>
-            {
-                Success();
-                OpenLobby();
-            });
+            Success();
+            OpenLobby();
         }
     }
 }

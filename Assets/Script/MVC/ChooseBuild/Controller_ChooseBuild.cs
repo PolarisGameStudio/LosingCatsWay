@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -20,7 +21,8 @@ public class Controller_ChooseBuild : ControllerBehavior
         
         DOVirtual.DelayedCall(0.25f, () =>
         {
-            SelectRoomBoughtType(0);
+            // SelectRoomBoughtType(0);
+            SelectRoomSortType(0);
             SelectRoomType(0);
             
             RefreshSelectedRooms();
@@ -33,10 +35,14 @@ public class Controller_ChooseBuild : ControllerBehavior
         App.view.chooseBuild.Close();
 
         App.model.build.IsBuilding = false;
+        App.system.soundEffect.Play("Button");
     }
 
     public void Select(int index)
     {
+        App.system.soundEffect.Play("Button");
+        VibrateExtension.Vibrate(VibrateType.Nope);
+        
         App.view.build.Open();
         App.view.chooseBuild.Close();
         App.system.room.CloseExistRoomsSensor();
@@ -76,17 +82,30 @@ public class Controller_ChooseBuild : ControllerBehavior
 
     #region Building
 
-    public void SelectRoomBoughtType(int index)
+    // public void SelectRoomBoughtType(int index)
+    // {
+    //     if (App.model.chooseBuild.RoomBoughtType == index)
+    //         return;
+    //
+    //     App.model.chooseBuild.RoomBoughtType = index;
+    //     RefreshSelectedRooms();
+    // }
+
+    public void SelectRoomSortType(int type)
     {
-        if (App.model.chooseBuild.RoomBoughtType == index)
+        App.system.soundEffect.Play("Button");
+        
+        if (App.model.chooseBuild.RoomSortType == type)
             return;
 
-        App.model.chooseBuild.RoomBoughtType = index;
+        App.model.chooseBuild.RoomSortType = type;
         RefreshSelectedRooms();
     }
 
     public void SelectRoomType(int index)
     {
+        App.system.soundEffect.Play("Button");
+        
         if (App.model.chooseBuild.RoomType == index)
             return;
 
@@ -96,9 +115,9 @@ public class Controller_ChooseBuild : ControllerBehavior
 
     private void RefreshSelectedRooms()
     {
-        int roomBoughtType = App.model.chooseBuild.RoomBoughtType;
         int roomType = App.model.chooseBuild.RoomType;
-        App.model.chooseBuild.SelectedRooms = App.factory.roomFactory.GetRooms(roomBoughtType, roomType);
+        int roomSortType = App.model.chooseBuild.RoomSortType;
+        App.model.chooseBuild.SelectedRooms = App.factory.roomFactory.GetRoomsBySort(roomSortType, roomType);
     }
 
     #endregion

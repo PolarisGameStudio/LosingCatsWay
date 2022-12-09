@@ -66,11 +66,13 @@ public class HowToPlaySystem : MvcBehaviour
         uiView.InstantHide();
         OnClose?.Invoke();
         OnClose = null;
-        VibrateExtension.Vibrate(VibrateType.Nope);
+        App.system.soundEffect.Play("Button");
     }
 
     public void ToLeft()
     {
+        App.system.soundEffect.Play("Button");
+        
         index = Mathf.Clamp(index - 1, 0, descriptStrings.Length - 1);
         CheckContent();
         CheckButton();
@@ -78,6 +80,8 @@ public class HowToPlaySystem : MvcBehaviour
 
     public void ToRight()
     {
+        App.system.soundEffect.Play("Button");
+
         index = Mathf.Clamp(index + 1, 0, descriptStrings.Length - 1);
         CheckContent();
         CheckButton();

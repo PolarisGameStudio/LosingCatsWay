@@ -26,5 +26,7 @@ public class CatchCatG8End : MvcBehaviour
     {
         uiView.InstantHide();
         _callback?.Invoke();
+        VibrateExtension.Vibrate(VibrateType.Nope);
+        App.system.soundEffect.Play("Button");
     }
 }

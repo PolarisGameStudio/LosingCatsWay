@@ -87,12 +87,14 @@ public class ConfirmSystem : MvcBehaviour
     {
         _okEvent?.Invoke();
         Close();
+        App.system.soundEffect.Play("Button");
     }
 
     public void Cancel()
     {
         _cancelEvent?.Invoke();
         Close();
+        App.system.soundEffect.Play("Button");
     }
 
     private void Close()

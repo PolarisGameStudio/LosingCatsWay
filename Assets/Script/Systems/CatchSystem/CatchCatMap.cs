@@ -195,7 +195,7 @@ public class CatchCatMap : MvcBehaviour
         DOVirtual.DelayedCall(0.5f, () =>
         {
             Close();
-            App.system.findCat.ActiveCurrentMap();
+            App.system.findCat.ActiveCurrentGate();
         });
     }
 
@@ -388,7 +388,6 @@ public class CatchCatMap : MvcBehaviour
 
     public void SelectType(int type)
     {
-        VibrateExtension.Vibrate(VibrateType.Nope);
         App.system.soundEffect.Play("Button");
         
         if (selectedType == type)
@@ -513,11 +512,8 @@ public class CatchCatMap : MvcBehaviour
                 SpineCatHappy();
             }
             
-            print(value);
             //扣除生命值
             hp = Mathf.Clamp(hp - value, 0f, 100f);
-            print(hp);
-            print(hp / 100);
             hpBar.DOFillAmount(hp / 100, 0.35f).SetEase(Ease.OutExpo);
         });
 

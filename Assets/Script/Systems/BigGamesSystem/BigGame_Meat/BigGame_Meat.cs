@@ -62,6 +62,7 @@ public class BigGame_Meat : BigGameBehaviour
         curveBar.ResetPointer();
         direction = true;
         curveBar.Rotate(clockwise: true, autobreak: true, endToStart: true);
+        isPointerPause = false;
 
         percentText.text = "0%";
         percentFill.fillAmount = 0;
@@ -87,6 +88,7 @@ public class BigGame_Meat : BigGameBehaviour
         if (isPointerPause) return;
 
         direction = true;
+        App.system.soundEffect.Play("Button");
         VibrateExtension.Vibrate(VibrateType.Nope);
 
         curveBar.Rotate(clockwise: true, autobreak: true, endToStart: true, resetPointer: false);
@@ -100,6 +102,7 @@ public class BigGame_Meat : BigGameBehaviour
         if (isPointerPause) return;
 
         direction = false;
+        App.system.soundEffect.Play("Button");
         VibrateExtension.Vibrate(VibrateType.Nope);
 
         curveBar.Rotate(clockwise: false, autobreak: true, endToStart: true, resetPointer: false);
@@ -244,7 +247,7 @@ public class BigGame_Meat : BigGameBehaviour
         
         isPointerPause = false;
         ResetPercent();
-        direction = UnityEngine.Random.value < 0.5f;
+        direction = true;
         curveBar.Rotate(clockwise: true, autobreak: true, endToStart: true);
     }
 

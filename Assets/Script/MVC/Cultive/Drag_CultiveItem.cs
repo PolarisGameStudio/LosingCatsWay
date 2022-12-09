@@ -48,6 +48,7 @@ public class Drag_CultiveItem : MvcBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        App.controller.cultive.OpenClickCat();
         App.controller.cultive.CloseDropSensor();
 
         canvasGroup.alpha = 0;

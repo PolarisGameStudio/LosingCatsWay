@@ -70,6 +70,7 @@ public class CatTeeth : MvcBehaviour
         if (!bigGame_Teeth.IsCanClick())
             return;
         
+        App.system.soundEffect.Play("Button");
         VibrateExtension.Vibrate(VibrateType.Nope);
 
         if (!bigGame_Teeth.IsFocusTeeth(this))

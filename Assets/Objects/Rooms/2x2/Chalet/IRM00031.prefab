@@ -469,10 +469,10 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 51e061e241d0b744186bd1f5ca6b147e, type: 2}
-  - {fileID: 2100000, guid: 70c76729380c39042ac39415e5a86c29, type: 2}
-  - {fileID: 2100000, guid: 51e061e241d0b744186bd1f5ca6b147e, type: 2}
-  - {fileID: 2100000, guid: 70c76729380c39042ac39415e5a86c29, type: 2}
+  - {fileID: 2100000, guid: 0be9cc1a0296ccd40924121810084a6c, type: 2}
+  - {fileID: 2100000, guid: 8010c0b5270ad4c46a607c679c1cfcec, type: 2}
+  - {fileID: 2100000, guid: 0be9cc1a0296ccd40924121810084a6c, type: 2}
+  - {fileID: 2100000, guid: 8010c0b5270ad4c46a607c679c1cfcec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -591,6 +591,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1842620107149589380}
   - component: {fileID: 5275933450785684054}
+  - component: {fileID: 4977673050630280126}
+  - component: {fileID: 4680478332540387489}
   m_Layer: 0
   m_Name: IRM00031_Floor_Object_1
   m_TagString: Untagged
@@ -665,6 +667,47 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &4977673050630280126
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3580026671378993695}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 1.28, y: 2.56}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 2.56, y: 5.12}
+    newSize: {x: 2.56, y: 5.12}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.56, y: 5.12}
+  m_EdgeRadius: 0
+--- !u!114 &4680478332540387489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3580026671378993695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc4f7f33d8fc7c0419b2308165807ce0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeType: 1
+  extraOffset: 0
+  invertPolygon: 0
 --- !u!1 &3620063122994305920
 GameObject:
   m_ObjectHideFlags: 0
@@ -930,6 +973,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3613216095426283588}
   - component: {fileID: 3508252090213070671}
+  - component: {fileID: 5102286032077230020}
+  - component: {fileID: 2135677557450145972}
   m_Layer: 0
   m_Name: IRM00031_Floor_Object_2
   m_TagString: Untagged
@@ -1004,6 +1049,47 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &5102286032077230020
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4225573916460361260}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 1.07, y: 2.31}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 2.14, y: 4.62}
+    newSize: {x: 2.14, y: 4.62}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.14, y: 4.62}
+  m_EdgeRadius: 0
+--- !u!114 &2135677557450145972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4225573916460361260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc4f7f33d8fc7c0419b2308165807ce0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeType: 1
+  extraOffset: 0
+  invertPolygon: 0
 --- !u!1 &5421145366431970937
 GameObject:
   m_ObjectHideFlags: 0
@@ -1843,7 +1929,7 @@ MonoBehaviour:
     roomSizeType: 1
     roomType: 0
     roomBoughtType: 1
-    roomFeaturesType: 1
+    roomSortType: 1
     roomGamesType: 1
   x: 0
   y: 0

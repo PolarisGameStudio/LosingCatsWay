@@ -16,10 +16,13 @@ public class Controller_Bag : ControllerBehavior
     {
         App.controller.lobby.Open();
         App.view.bag.Close();
+        App.system.soundEffect.Play("Button");
     }
 
     public void ChooseType(int type)
     {
+        App.system.soundEffect.Play("Button");
+        
         if (App.model.bag.Type == type)
             return;
 
@@ -65,6 +68,8 @@ public class Controller_Bag : ControllerBehavior
 
     public void ChooseItem(int index)
     {
+        App.system.soundEffect.Play("Button");
+        
         if (index == -1)
         {
             App.model.bag.SelectedItem = null;
@@ -82,6 +87,8 @@ public class Controller_Bag : ControllerBehavior
 
     public void UseItem()
     {
+        App.system.soundEffect.Play("Button");
+        
         var item = App.model.bag.SelectedItem;
     
         if (item.id == "ITL00021")

@@ -67,6 +67,10 @@ public class StringFactory : SerializedMonoBehaviour
     [Title("AgeLevel")] [SerializeField]
     private Dictionary<string, StringData> ageLevelStringDatas = new Dictionary<string, StringData>();
 
+    [Title("FindCat")] [SerializeField]
+    private Dictionary<string, StringData> MapNameData = new Dictionary<string, StringData>();
+    [SerializeField] private Dictionary<string, StringData> MapContentData = new Dictionary<string, StringData>();
+
     private string countryId = "tw";
 
     #region Properties
@@ -393,6 +397,22 @@ public class StringFactory : SerializedMonoBehaviour
         string id = CatExtension.GetCatAgeLevel(surviveDays).ToString();
         string result = ageLevelStringDatas[CountryId].Contents.ContainsKey(id)
             ? ageLevelStringDatas[CountryId].Contents[id]
+            : "要叫阿邦上";
+        return result;
+    }
+
+    public string GetMapNameString(string id)
+    {
+        string result = MapNameData[CountryId].Contents.ContainsKey(id)
+            ? MapNameData[CountryId].Contents[id]
+            : "要叫阿邦上";
+        return result;
+    }
+
+    public string GetMapContentString(string id)
+    {
+        string result = MapContentData[CountryId].Contents.ContainsKey(id)
+            ? MapContentData[CountryId].Contents[id]
             : "要叫阿邦上";
         return result;
     }

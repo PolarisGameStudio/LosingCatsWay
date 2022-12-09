@@ -53,6 +53,15 @@ public class View_CultiveInfo_Status : ViewBehaviour
     [Title("TraitColor")] [SerializeField] private Color32 commonTraitColor;
     [SerializeField] private Color32 rareTraitColor;
     [SerializeField] private Color32 ssrTraitColor;
+    
+    [Title("ChipInfo")]
+    [SerializeField] private Card_ChipInfo chipInfo;
+
+    public override void Close()
+    {
+        base.Close();
+        chipInfo.CloseInfo();
+    }
 
     public override void Init()
     {
@@ -63,6 +72,8 @@ public class View_CultiveInfo_Status : ViewBehaviour
     private void OnSelectedCatChange(object value)
     {
         var cat = (Cat)value;
+        
+        chipInfo.SetData(cat.cloudCatData);
 
         catNameText.text = cat.cloudCatData.CatData.CatName;
         string traitString = App.factory.stringFactory.GetTraitString(cat.cloudCatData.CatData.Trait);

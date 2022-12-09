@@ -38,22 +38,21 @@ public class LittleGame_Ass : LittleGame
         float nowAmount = prevAmount + addAmount;
         fillCircle.DOFillAmount(nowAmount, 0.25f).From(prevAmount).SetEase(Ease.OutExpo);
         
+        VibrateExtension.Vibrate(VibrateType.Nope);
+        App.system.soundEffect.Play("Button");
+        
         RefreshClickText();
         RefreshClickSpine();
 
         if (value == 0)
         {
             Close();
-
-            App.system.confirm.OnlyConfirm().Active(endId, () => 
-            {
-                Success();
-                cat.catHeartEffect.Play();
-                cat.hand.gameObject.SetActive(false);
-                //ExitAnim
-                anim.SetBool(CatAnimTable.IsCanExit.ToString(), true);
-                OpenLobby();
-            });
+            Success();
+            cat.catHeartEffect.Play();
+            cat.hand.gameObject.SetActive(false);
+            //ExitAnim
+            anim.SetBool(CatAnimTable.IsCanExit.ToString(), true);
+            OpenLobby();
         }
     }
 

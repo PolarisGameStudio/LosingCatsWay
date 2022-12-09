@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -17,18 +18,21 @@ public class Controller_Information : ControllerBehavior
    
     public void Close()
     {
+        App.system.soundEffect.Play("Button");
         App.view.information.Close();
         App.controller.lobby.Open();
     }
 
     public void OpenSubInfomation()
     {
+        App.system.soundEffect.Play("Button");
         App.view.information.view_SubInformation.Open();
         SelectTab(0);
     }
 
     public void CloseSubInformation()
     {
+        App.system.soundEffect.Play("Button");
         App.view.information.view_SubInformation.Close();
         App.controller.information.Open();
         CancelPreviewSkin();
@@ -41,6 +45,7 @@ public class Controller_Information : ControllerBehavior
 
     public void CopyPlayerId()
     {
+        App.system.soundEffect.Play("Button");
         string playerId = App.system.player.PlayerId;
         playerId.CopyToClipboard();
         App.system.confirm.OnlyConfirm().Active(ConfirmTable.Copied);
@@ -48,6 +53,7 @@ public class Controller_Information : ControllerBehavior
 
     public void SelectCat(int index)
     {
+        App.system.soundEffect.Play("Button");
         App.model.information.SelectedCat = App.model.information.MyCats[index];
         OpenSubInfomation();
     }
@@ -74,7 +80,7 @@ public class Controller_Information : ControllerBehavior
 
     public void DiamondUnlockCatSlot()
     {
-        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        App.system.confirm.Active(ConfirmTable.BuyConfirm, () =>
         {
             if (App.system.player.Diamond < 2000)
             {
@@ -90,6 +96,7 @@ public class Controller_Information : ControllerBehavior
 
     public void SelectTab(int index)
     {
+        App.system.soundEffect.Play("Button");
         App.model.information.TabIndex = index;
         
         if (index == 0)
@@ -106,6 +113,7 @@ public class Controller_Information : ControllerBehavior
 
     private void OpenStatus()
     {
+        App.system.soundEffect.Play("Button");
         App.view.information.view_SubInformation.OpenStatus();
         CloseChooseSkin();
     }
@@ -117,6 +125,7 @@ public class Controller_Information : ControllerBehavior
 
     private void OpenChooseSkin()
     {
+        App.system.soundEffect.Play("Button");
         App.model.information.SkinItems = App.factory.itemFactory.GetItemByType((int)ItemType.CatSkin);
         App.view.information.view_SubInformation.OpenChooseSkin();
         CloseStatus();
@@ -130,6 +139,7 @@ public class Controller_Information : ControllerBehavior
     
     public void ChooseSkin(int index)
     {
+        App.system.soundEffect.Play("Button");
         App.model.information.SelectedSkinIndex = index;
         var cat = App.model.information.SelectedCat;
         string currentSkin = cat.cloudCatData.CatSkinData.UseSkinId;
@@ -165,29 +175,32 @@ public class Controller_Information : ControllerBehavior
         cat.cloudCatData.CatSkinData.UseSkinId = skinBeforePreview;
         App.model.information.SelectedCat = cat;
         App.model.information.MyCats = App.model.information.MyCats;
-        skinBeforePreview = string.Empty;
+        skinBeforePreview = String.Empty;
     }
 
     public void ConfirmChooseSkin()
     {
+        App.system.soundEffect.Play("Button");
+        VibrateExtension.Vibrate(VibrateType.Nope);
+        
         int index = App.model.information.SelectedSkinIndex;
         var cat = App.model.information.SelectedCat;
-        App.system.cloudSave.UpdateCloudCatSkinData(cat.cloudCatData);
         
         SpineSetSkinHappy();
         
         if (!skinBeforePreview.IsNullOrEmpty())
         {
-            Item lastSkinItem = App.factory.itemFactory.GetItem(cat.cloudCatData.CatSkinData.UseSkinId);
+            Item lastSkinItem = App.factory.itemFactory.GetItem(skinBeforePreview);
             lastSkinItem.Count++;
-            skinBeforePreview = string.Empty;
+            skinBeforePreview = String.Empty;
         }
         
         if (index == -1)
         {
             // 脫
             //TODO Save ItemCount
-            
+            cat.cloudCatData.CatSkinData.UseSkinId = String.Empty;
+            App.system.cloudSave.UpdateCloudCatSkinData(cat.cloudCatData);
             OpenChooseSkin();
             App.system.cat.RefreshCatSkin();
             return;

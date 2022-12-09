@@ -82,5 +82,6 @@ public class View_Build : ViewBehaviour
     public void CloseMoveBuild()
     {
         moveBuild.InstantHide();
+        App.system.soundEffect.Play("Button");
     }
 }

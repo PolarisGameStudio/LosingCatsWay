@@ -59,6 +59,8 @@ public class Controller_Cultive : ControllerBehavior
     public void Close()
     {
         if (!isCanDrag) return;
+        
+        App.system.soundEffect.Play("Button");
 
         LocalSaveCultiveLitter();
         isOpen = false;
@@ -80,6 +82,11 @@ public class Controller_Cultive : ControllerBehavior
 
     public void SelectType(int index)
     {
+        if (!isCanDrag)
+            return;
+
+        App.system.soundEffect.Play("Button");
+        
         App.model.cultive.SelectedType = index;
         ItemType targetType = ItemType.Feed;
         
@@ -404,6 +411,8 @@ public class Controller_Cultive : ControllerBehavior
     {
         if (App.model.cultive.CleanLitterCount <= 0) return;
 
+        App.system.soundEffect.Play("Button");
+        
         App.model.cultive.CleanLitterCount--;
 
         if (Random.value < 0.05f)
@@ -450,6 +459,8 @@ public class Controller_Cultive : ControllerBehavior
         if (!isCanDrag)
             return;
 
+        App.system.soundEffect.Play("Button");
+        
         isCanDrag = false;
 
         CloudCatData cloudCatData = App.model.cultive.SelectedCat.cloudCatData;
@@ -586,6 +597,8 @@ public class Controller_Cultive : ControllerBehavior
     
     public void Reject()
     {
+        isCanDrag = false;
+        
         var cat = App.model.cultive.SelectedCat;
         if (CatExtension.GetCatAgeLevel(cat.cloudCatData.CatData.SurviveDays) != 0)
         {
@@ -614,6 +627,11 @@ public class Controller_Cultive : ControllerBehavior
 
     public void OpenScreenshot()
     {
+        if (!isCanDrag)
+            return;
+        
+        App.system.soundEffect.Play("Button");
+        
         App.system.screenshot.OnScreenshotComplete += CloseScreenshot;
         App.system.screenshot.OnClose += CloseScreenshot;
         App.view.cultive.TweenOut();
@@ -623,6 +641,8 @@ public class Controller_Cultive : ControllerBehavior
 
     private void CloseScreenshot()
     {
+        App.system.soundEffect.Play("Button");
+        
         App.view.cultive.TweenIn();
         App.system.screenshot.OnScreenshotComplete -= CloseScreenshot;
         App.system.screenshot.OnClose -= CloseScreenshot;
@@ -634,18 +654,26 @@ public class Controller_Cultive : ControllerBehavior
 
     public void OpenCultiveInfo()
     {
+        if (!isCanDrag)
+            return;
+        
+        App.system.soundEffect.Play("Button");
+        
         App.view.cultive.cultiveInfo.Open();
         SelectTab(1);
     }
 
     public void CloseCultiveInfo()
     {
+        App.system.soundEffect.Play("Button");
+        
         App.view.cultive.cultiveInfo.Close();
         CancelPreviewSkin();
     }
 
     public void SelectTab(int index)
     {
+        App.system.soundEffect.Play("Button");
         App.model.cultive.SelectedTab = index;
         
         if (index == 0)
@@ -662,6 +690,7 @@ public class Controller_Cultive : ControllerBehavior
 
     private void OpenStatus()
     {
+        App.system.soundEffect.Play("Button");
         App.view.cultive.cultiveInfo.status.Open();
         CloseChooseSkin();
     }
@@ -673,6 +702,7 @@ public class Controller_Cultive : ControllerBehavior
 
     private void OpenChooseSkin()
     {
+        App.system.soundEffect.Play("Button");
         App.model.cultive.SkinItems = App.factory.itemFactory.GetItemByType((int)ItemType.CatSkin);
         App.view.cultive.cultiveInfo.chooseSkin.Open();
         CloseStatus();
@@ -700,6 +730,7 @@ public class Controller_Cultive : ControllerBehavior
 
     public void ChooseSkin(int index)
     {
+        App.system.soundEffect.Play("Button");
         App.model.cultive.SelectedSkinIndex = index;
         var cat = App.model.cultive.SelectedCat;
         string currentSkin = cat.cloudCatData.CatSkinData.UseSkinId;
@@ -721,7 +752,7 @@ public class Controller_Cultive : ControllerBehavior
             cat.cloudCatData.CatSkinData.UseSkinId = skinItem.id;
         }
         else
-            cat.cloudCatData.CatSkinData.UseSkinId = string.Empty;
+            cat.cloudCatData.CatSkinData.UseSkinId = String.Empty;
         
         App.model.cultive.SelectedCat = cat;
     }
@@ -734,11 +765,14 @@ public class Controller_Cultive : ControllerBehavior
         var cat = App.model.cultive.SelectedCat;
         cat.cloudCatData.CatSkinData.UseSkinId = skinBeforePreview;
         App.model.cultive.SelectedCat = cat;
-        skinBeforePreview = string.Empty;
+        skinBeforePreview = String.Empty;
     }
 
     public void ConfirmChooseSkin()
     {
+        App.system.soundEffect.Play("Button");
+        VibrateExtension.Vibrate(VibrateType.Nope);
+        
         int index = App.model.cultive.SelectedSkinIndex;
         var cat = App.model.cultive.SelectedCat;
         App.system.cloudSave.UpdateCloudCatSkinData(cat.cloudCatData);
@@ -749,7 +783,7 @@ public class Controller_Cultive : ControllerBehavior
         {
             Item lastSkinItem = App.factory.itemFactory.GetItem(skinBeforePreview);
             lastSkinItem.Count++;
-            skinBeforePreview = string.Empty;
+            skinBeforePreview = String.Empty;
         }
         
         if (index == -1)

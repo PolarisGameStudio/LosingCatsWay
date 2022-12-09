@@ -41,6 +41,9 @@ public class LittleGame_Hand : LittleGame
         if (!isActive)
             return;
 
+        VibrateExtension.Vibrate(VibrateType.Nope);
+        App.system.soundEffect.Play("Button");
+        
         isActive = false;
         pointCircle.DOKill();
 
@@ -70,25 +73,22 @@ public class LittleGame_Hand : LittleGame
             DOVirtual.DelayedCall(0.5f, () =>
             {
                 Close();
-                App.system.confirm.OnlyConfirm().Active(endId, () => 
+                if (isSuccess)
                 {
-                    if (isSuccess)
-                    {
-                        Success();
-                        cat.catHeartEffect.Play();
-                        //Anim
-                        anim.SetBool(CatAnimTable.LittleGameHandEndStatus.ToString(), true);
-                    }
-                    else
-                    {
-                        Failed();
-                        //Anim
-                        anim.SetBool(CatAnimTable.LittleGameHandEndStatus.ToString(), false);
-                    }
+                    Success();
+                    cat.catHeartEffect.Play();
+                    //Anim
+                    anim.SetBool(CatAnimTable.LittleGameHandEndStatus.ToString(), true);
+                }
+                else
+                {
+                    Failed();
+                    //Anim
+                    anim.SetBool(CatAnimTable.LittleGameHandEndStatus.ToString(), false);
+                }
                 
-                    anim.SetBool(CatAnimTable.IsCanExit.ToString(), true);
-                    OpenLobby();
-                });
+                anim.SetBool(CatAnimTable.IsCanExit.ToString(), true);
+                OpenLobby();
             });
         }).SetEase(Ease.OutBack);
     }

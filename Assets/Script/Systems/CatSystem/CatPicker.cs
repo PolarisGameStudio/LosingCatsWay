@@ -38,6 +38,8 @@ public class CatPicker : MvcBehaviour
     {
         App.controller.lobby.Close();
         App.view.followCat.Close();
+        
+        App.system.soundEffect.Play("Button");
 
         //1.Stop AI
         agent.Stop();

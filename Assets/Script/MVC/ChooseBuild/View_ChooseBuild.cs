@@ -37,7 +37,7 @@ public class View_ChooseBuild : ViewBehaviour
         base.Init();
 
         App.model.chooseBuild.SelectedRoomsChange += OnSelectedRoomsValueChange;
-        App.model.chooseBuild.BoughtRoomTypeChange += OnRoomBoughtTypeChange;
+        App.model.chooseBuild.OnRoomSortTypeChange += OnRoomSortTypeChange;
         App.model.chooseBuild.RoomTypeChange += OnRoomTypeChange;
     }
 
@@ -89,7 +89,7 @@ public class View_ChooseBuild : ViewBehaviour
         }
     }
 
-    public void OnRoomBoughtTypeChange(object value)
+    public void OnRoomSortTypeChange(object value)
     {
         int index = (int) value;
 

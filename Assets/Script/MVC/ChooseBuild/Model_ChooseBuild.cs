@@ -9,7 +9,8 @@ public class Model_ChooseBuild : ModelBehavior
     private GameObject moveBuildTmpModel;
 
     private int roomRoomType = -1;
-    private int roomBoughtType = -1;
+    //private int roomBoughtType = -1;
+    private int roomSortType = -1;
 
     public int RoomType
     {
@@ -21,15 +22,15 @@ public class Model_ChooseBuild : ModelBehavior
         }
     }
 
-    public int RoomBoughtType
-    {
-        get => roomBoughtType;
-        set
-        {
-            BoughtRoomTypeChange?.Invoke(value);
-            roomBoughtType = value;
-        }
-    }
+    // public int RoomBoughtType
+    // {
+    //     get => roomBoughtType;
+    //     set
+    //     {
+    //         BoughtRoomTypeChange?.Invoke(value);
+    //         roomBoughtType = value;
+    //     }
+    // }
 
     public List<Room> SelectedRooms
     {
@@ -53,7 +54,18 @@ public class Model_ChooseBuild : ModelBehavior
         set => moveBuildTmpModel = value;
     }
 
+    public int RoomSortType
+    {
+        get => roomSortType;
+        set
+        {
+            roomSortType = value;
+            OnRoomSortTypeChange(value);
+        }
+    }
+
     public ValueChange SelectedRoomsChange;
     public ValueChange RoomTypeChange;
-    public ValueChange BoughtRoomTypeChange;
+    //public ValueChange BoughtRoomTypeChange;
+    public ValueChange OnRoomSortTypeChange;
 }

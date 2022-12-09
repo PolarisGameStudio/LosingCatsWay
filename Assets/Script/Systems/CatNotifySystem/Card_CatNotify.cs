@@ -103,5 +103,7 @@ public class Card_CatNotify : MvcBehaviour
         OnClick?.Invoke();
         OnClick = null;
         Close();
+        App.system.soundEffect.Play("Button");
+        VibrateExtension.Vibrate(VibrateType.Nope);
     }
 }

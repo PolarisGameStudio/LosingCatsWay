@@ -348,6 +348,8 @@ public class CatSkin : MvcBehaviour
     {
         var useSkinId = cloudCatData.CatSkinData.UseSkinId;
 
+        SetAttachmentNull();
+        
         if (String.IsNullOrEmpty(useSkinId))
         {
             if (!isGUI)

@@ -14,12 +14,14 @@ public class Controller_Feed : ControllerBehavior
 
     public void Close()
     {
+        App.system.soundEffect.Play("Button");
         App.view.feed.Close();
         App.controller.lobby.Open();
     }
 
     public void Select(int index)
     {
+        App.system.soundEffect.Play("Button");
         App.system.bgm.FadeOut();
         App.system.transition.Active(0, () =>
         {

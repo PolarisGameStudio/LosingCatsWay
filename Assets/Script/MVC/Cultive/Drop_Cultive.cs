@@ -91,6 +91,9 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
             }
         }
         
+        App.system.soundEffect.Play("Button");
+        VibrateExtension.Vibrate(VibrateType.Nope);
+        
         if (item.itemType == ItemType.Litter && !isCat)
         {
             App.controller.cultive.ChangeLitter();

@@ -177,6 +177,13 @@ public enum RoomBoughtType
     Cash = 3
 }
 
+public enum RoomSortType
+{
+    Normal = 1,
+    Limit = 2,
+    Event = 3,
+}
+
 public enum MallItemRefreshType
 {
     Infinity = -1,

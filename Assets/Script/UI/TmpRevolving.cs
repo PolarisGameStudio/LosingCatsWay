@@ -50,6 +50,9 @@ public class TmpRevolving : MonoBehaviour
 
     public void Init()
     {
+        if (isInit)
+            return;
+        
         isInit = true;
         
         textRect = text.transform as RectTransform;
@@ -69,6 +72,8 @@ public class TmpRevolving : MonoBehaviour
     [Button]
     public void StopRevolving()
     {
+        Init();
+        
         if (!IsLongText())
         {
             text.alignment = TextAlignmentOptions.Center;
@@ -86,6 +91,8 @@ public class TmpRevolving : MonoBehaviour
     [Button]
     public void StartRevolving()
     {
+        Init();
+        
         if (!IsLongText()) 
         {
             text.alignment = TextAlignmentOptions.Center;

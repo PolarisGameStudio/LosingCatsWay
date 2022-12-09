@@ -29,18 +29,21 @@ public class Controller_Lobby : ControllerBehavior
     {
         Close();
         App.controller.build.Open();
+        App.system.soundEffect.Play("Button");
     }
 
     public void OpenBag()
     {
         App.controller.bag.Open();
         Close();
+        App.system.soundEffect.Play("Button");
     }
 
     public void OpenFeed()
     {
         App.controller.feed.Open();
         Close();
+        App.system.soundEffect.Play("Button");
     }
 
     public void OpenMap()
@@ -61,6 +64,7 @@ public class Controller_Lobby : ControllerBehavior
         App.system.screenshot.OnClose += CloseScreenshot;
         Close();
         App.system.screenshot.Open();
+        App.system.soundEffect.Play("Button");
     }
 
     private void CloseScreenshot()
@@ -74,6 +78,7 @@ public class Controller_Lobby : ControllerBehavior
     {
         Close();
         App.controller.information.Open();
+        App.system.soundEffect.Play("Button");
     }
 
     public void OpenFriend()

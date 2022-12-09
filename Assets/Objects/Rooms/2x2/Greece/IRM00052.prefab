@@ -242,6 +242,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8871873553488496304}
   - component: {fileID: 4586753029393363989}
+  - component: {fileID: 1871474469321407667}
+  - component: {fileID: 1525847670877666422}
   m_Layer: 0
   m_Name: IRM00052_Floor_Object_1
   m_TagString: Untagged
@@ -316,6 +318,47 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1871474469321407667
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990146450365054280}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 2.56, y: 2.56}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 5.12, y: 5.12}
+    newSize: {x: 5.12, y: 5.12}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 5.12, y: 5.12}
+  m_EdgeRadius: 0
+--- !u!114 &1525847670877666422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990146450365054280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc4f7f33d8fc7c0419b2308165807ce0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeType: 1
+  extraOffset: 0
+  invertPolygon: 0
 --- !u!1 &1152245552846508652
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,11 +933,11 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 51e061e241d0b744186bd1f5ca6b147e, type: 2}
-  - {fileID: 2100000, guid: 70c76729380c39042ac39415e5a86c29, type: 2}
-  - {fileID: 2100000, guid: 51e061e241d0b744186bd1f5ca6b147e, type: 2}
-  - {fileID: 2100000, guid: 70c76729380c39042ac39415e5a86c29, type: 2}
-  - {fileID: 2100000, guid: 51e061e241d0b744186bd1f5ca6b147e, type: 2}
+  - {fileID: 2100000, guid: 0be9cc1a0296ccd40924121810084a6c, type: 2}
+  - {fileID: 2100000, guid: 8010c0b5270ad4c46a607c679c1cfcec, type: 2}
+  - {fileID: 2100000, guid: 0be9cc1a0296ccd40924121810084a6c, type: 2}
+  - {fileID: 2100000, guid: 8010c0b5270ad4c46a607c679c1cfcec, type: 2}
+  - {fileID: 2100000, guid: 0be9cc1a0296ccd40924121810084a6c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1499,6 +1542,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8721969831067785670}
   - component: {fileID: 6319198397156660543}
+  - component: {fileID: 6920192946393323525}
+  - component: {fileID: 2162942837838169374}
   m_Layer: 0
   m_Name: IRM00052_Floor_Object_3
   m_TagString: Untagged
@@ -1573,6 +1618,47 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &6920192946393323525
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6793536079776146826}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 1.28, y: 2.56}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 2.56, y: 5.12}
+    newSize: {x: 2.56, y: 5.12}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.56, y: 5.12}
+  m_EdgeRadius: 0
+--- !u!114 &2162942837838169374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6793536079776146826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc4f7f33d8fc7c0419b2308165807ce0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeType: 1
+  extraOffset: 0
+  invertPolygon: 0
 --- !u!1 &6983113791997112123
 GameObject:
   m_ObjectHideFlags: 0
@@ -1627,11 +1713,11 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 70c76729380c39042ac39415e5a86c29, type: 2}
-  - {fileID: 2100000, guid: 51e061e241d0b744186bd1f5ca6b147e, type: 2}
-  - {fileID: 2100000, guid: 70c76729380c39042ac39415e5a86c29, type: 2}
-  - {fileID: 2100000, guid: 51e061e241d0b744186bd1f5ca6b147e, type: 2}
-  - {fileID: 2100000, guid: 70c76729380c39042ac39415e5a86c29, type: 2}
+  - {fileID: 2100000, guid: 8010c0b5270ad4c46a607c679c1cfcec, type: 2}
+  - {fileID: 2100000, guid: 0be9cc1a0296ccd40924121810084a6c, type: 2}
+  - {fileID: 2100000, guid: 8010c0b5270ad4c46a607c679c1cfcec, type: 2}
+  - {fileID: 2100000, guid: 0be9cc1a0296ccd40924121810084a6c, type: 2}
+  - {fileID: 2100000, guid: 8010c0b5270ad4c46a607c679c1cfcec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2095,8 +2181,8 @@ MonoBehaviour:
     roomSizeType: 1
     roomType: 1
     roomBoughtType: 1
-    roomFeaturesType: 0
-    roomGamesType: 1
+    roomSortType: 2
+    roomGamesType: 2
   x: 0
   y: 0
   upCoverWalls:
