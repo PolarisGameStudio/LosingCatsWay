@@ -183,8 +183,6 @@ public class CatchCatMap : MvcBehaviour
         if (!isG8)
             return;
         
-        App.system.cloudSave.DeleteCloudCatData(cloudCatData);
-        
         for (int i = 0; i < cardPersonalitys.Length; i++)
         {
             cardPersonalitys[i].isCanFlip = false;
@@ -591,6 +589,7 @@ public class CatchCatMap : MvcBehaviour
 
         if (isG8)
         {
+            App.system.cloudSave.DeleteCloudCatData(cloudCatData);
             App.system.catchCat.ActiveG8End(cloudCatData, CloseToG8);
             return;
         }
