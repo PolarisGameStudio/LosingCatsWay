@@ -34,7 +34,7 @@ public class Controller_Map : ControllerBehavior
     public void OpenFindCat(int index)
     {
         App.system.bgm.FadeOut();
-        App.system.transition.Active(1f, () =>
+        App.system.transition.Active(0.5f, () =>
         {
             App.view.map.Close();
             App.system.findCat.ActiveGate(index);

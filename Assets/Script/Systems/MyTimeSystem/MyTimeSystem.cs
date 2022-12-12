@@ -10,13 +10,9 @@ public class MyTimeSystem : MvcBehaviour
     public DateTime PerDayLoginDateTime;
     public DateTime LastLoginDateTime;
 
-    /// <summary>
     /// 每天固定執行一次的事情：貓死亡檢查等
-    /// </summary>
     public Callback OnFirstLogin;
-    /// <summary>
     /// 每次上線都會執行的事情
-    /// </summary>
     public Callback OnAlreadyLogin;
 
     #region Method
@@ -54,10 +50,7 @@ public class MyTimeSystem : MvcBehaviour
         return true;
     }
 
-    /// <summary>
     /// 0:First 1:Already 2:FromFriendLobby
-    /// </summary>
-    /// <returns></returns>
     public int BackLobbyStatus()
     {
         bool login = IsTodayLogin();
@@ -78,6 +71,8 @@ public class MyTimeSystem : MvcBehaviour
     {
         LastLoginDateTime = Timestamp.GetCurrentTimestamp().ToDateTime();
     }
+
+    public DateTime MyTimeNow => Timestamp.GetCurrentTimestamp().ToDateTime().ToLocalTime();
 
     #endregion
 }

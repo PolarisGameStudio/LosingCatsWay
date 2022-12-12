@@ -16,8 +16,6 @@ public class View_SubInfo_Status : ViewBehaviour
     [SerializeField] private TextMeshProUGUI catSexText;
     [SerializeField] private Image catSexImage;
     [SerializeField] private GameObject ligationImage;
-
-    [Title("Trait")] [SerializeField] private TextMeshProUGUI traitText;
     
     [Title("Age")]
     [SerializeField]
@@ -65,16 +63,6 @@ public class View_SubInfo_Status : ViewBehaviour
         var cat = (Cat)value;
 
         catNameText.text = cat.cloudCatData.CatData.CatName;
-        string traitString = App.factory.stringFactory.GetTraitString(cat.cloudCatData.CatData.Trait);
-        traitText.text = traitString;
-
-        char traitHead = cat.cloudCatData.CatData.Trait[0];
-        if (traitHead == 'C')
-            traitText.color = commonTraitColor;
-        else if (traitHead == 'R')
-            traitText.color = rareTraitColor;
-        else if (traitHead == 'S')
-            traitText.color = ssrTraitColor;
 
         catSizeText.text = $"{CatExtension.GetCatRealSize(cat.cloudCatData.CatData.BodyScale):0.00}cm";
 

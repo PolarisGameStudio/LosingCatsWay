@@ -48,19 +48,16 @@ public class FindCatObject : MvcBehaviour
     
     public void Hide()
     {
-        // if (isShowing)
-        //     Invoke("NextCat", 0.25f);
+        outline.DOFade(0, 0);
         
-        // isShowing = false;
-        cat.DOLocalMove(hidePosition, 0.25f).From(showPosition).SetEase(Ease.InBack).OnComplete(() =>
-        {
-            if (isShowing)
-                Invoke("NextCat", 0.25f);
+        if (isShowing)
+            Invoke("NextCat", 0.5f);
+        isShowing = false;
             
-            isShowing = false;
+        cat.DOLocalMove(hidePosition, 0.25f).SetEase(Ease.InBack).OnComplete(() =>
+        {
             cat.localScale = Vector2.zero;
         });
-        outline.DOFade(0, 0.25f);
     }
 
     private void NextCat()

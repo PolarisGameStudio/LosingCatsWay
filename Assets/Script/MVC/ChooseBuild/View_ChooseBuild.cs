@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class View_ChooseBuild : ViewBehaviour
 {
     public Transform content;
-    public GameObject chooseRoomItem;
+    public ChooseRoomItem chooseRoomItem;
 
     [Title("Tween")] public Transform bg;
     
@@ -56,14 +56,9 @@ public class View_ChooseBuild : ViewBehaviour
         //生成
         for (int i = 0; i < selectedRooms.Count; i++)
         {
-            GameObject buffer = Instantiate(chooseRoomItem, content);
-
+            var buffer = Instantiate(chooseRoomItem, content);
             buffer.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutBack).SetDelay(i * 0.09375f);
-            
-            int index = i;
-            buffer.GetComponent<Button>().onClick.RemoveListener(() => { App.controller.chooseBuild.Select(index); });
-            buffer.GetComponent<Button>().onClick.AddListener(() => { App.controller.chooseBuild.Select(index); });
-            buffer.GetComponent<ChooseRoomItem>().Active(selectedRooms[i]);
+            buffer.SetData(selectedRooms[i]);
         }
     }
 

@@ -94,10 +94,10 @@ public class Card_ClinicChooseCat : MvcBehaviour
                 return;
             }
 
-            if (noBugExpiredDate > DateTime.Now)
+            if (noBugExpiredDate > App.system.myTime.MyTimeNow)
             {
                 IsNumber(true);
-                int day = (noBugExpiredDate - DateTime.Now).Days;
+                int day = (noBugExpiredDate - App.system.myTime.MyTimeNow).Days;
                 if (day == 0) // <24H 
                     day = 1;
                 countText.text = day.ToString("00");

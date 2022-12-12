@@ -525,7 +525,7 @@ public class Cat : MvcBehaviour
     // 每次上線執行一次
     public void LoginCheckStatus()
     {
-        int passMinutes = (int)(DateTime.Now - App.system.myTime.LastLoginDateTime).TotalMinutes;
+        int passMinutes = (int)(App.system.myTime.MyTimeNow - App.system.myTime.LastLoginDateTime).TotalMinutes;
         for (int i = 0; i < passMinutes; i++)
         {
             SetMoisture();
@@ -556,7 +556,7 @@ public class Cat : MvcBehaviour
         }
 
         DateTime noBugExpiredDate = cloudCatData.CatHealthData.NoBugExpireTimestamp.ToDateTime().ToLocalTime();
-        if (noBugExpiredDate > DateTime.Now)
+        if (noBugExpiredDate > App.system.myTime.MyTimeNow)
             return;
 
         //檢查長蟲
@@ -569,9 +569,7 @@ public class Cat : MvcBehaviour
         }
     }
 
-    /// <summary>
     /// 貓死亡
-    /// </summary>
     [Button]
     public void Death()
     {
@@ -580,8 +578,8 @@ public class Cat : MvcBehaviour
         
         App.model.entrance.OpenType = 1;
         App.system.catNotify.Remove(this);
-        cloudCatData.CatData.DeathTime = Timestamp.FromDateTime(DateTime.Now);
-        cloudCatData.CatDiaryData.FlowerExpiredTimestamp = Timestamp.FromDateTime(DateTime.Now.AddDays(7));
+        cloudCatData.CatData.DeathTime = Timestamp.GetCurrentTimestamp();
+        cloudCatData.CatDiaryData.FlowerExpiredTimestamp = Timestamp.FromDateTime(App.system.myTime.MyTimeNow.AddDays(7));
         cloudCatData.CatDiaryData.DiaryDatas = App.factory.diaryFactory.GetDiaryDatas(cloudCatData);
         App.system.cat.SetDead(this);
     }

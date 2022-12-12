@@ -50,7 +50,7 @@ public class ScreenshotSystem : MvcBehaviour
 
         byte[] _byte = texture.EncodeToPNG();
 
-        string dateTime = System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
+        string dateTime = App.system.myTime.MyTimeNow.ToString("dd-MM-yyyy-HH-mm-ss");
         string fileName = "LosingCatWay_" + dateTime + ".png";
 
         NativeGallery.SaveImageToGallery(_byte, "Screenshots", fileName);

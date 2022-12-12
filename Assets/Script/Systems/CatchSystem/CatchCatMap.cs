@@ -124,7 +124,7 @@ public class CatchCatMap : MvcBehaviour
             cardPersonalitys[i].DoPopCard();
         }
 
-        App.system.transition.Active(1, () =>
+        App.system.transition.Active(0.5f, () =>
         {
             Close();
             App.controller.lobby.Open();
@@ -139,7 +139,7 @@ public class CatchCatMap : MvcBehaviour
             cardPersonalitys[i].DoPopCard();
         }
 
-        App.system.transition.Active(1, () =>
+        App.system.transition.Active(0.5f, () =>
         {
             Close();
             App.controller.map.Open();
@@ -344,14 +344,10 @@ public class CatchCatMap : MvcBehaviour
     private void OpenAction()
     {
         for (int i = 0; i < chooseTypeButtons.Length; i++)
-        {
             chooseTypeButtons[i].interactable = true;
-        }
 
         for (int i = 0; i < cardItems.Length; i++)
-        {
             cardItems[i].SetInteractable(true);
-        }
 
         catchButton.interactable = true;
         blockRaycastObject.SetActive(false);
@@ -369,14 +365,10 @@ public class CatchCatMap : MvcBehaviour
         catchButton.interactable = false;
 
         for (int i = 0; i < chooseTypeButtons.Length; i++)
-        {
             chooseTypeButtons[i].interactable = false;
-        }
 
         for (int i = 0; i < cardItems.Length; i++)
-        {
             cardItems[i].SetInteractable(false);
-        }
         
         DoTopLeftDark();
         DoTopDark();

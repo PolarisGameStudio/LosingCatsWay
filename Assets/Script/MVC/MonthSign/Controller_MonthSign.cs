@@ -16,7 +16,7 @@ public class Controller_MonthSign : ControllerBehavior
     {
         //App.controller.events.OnClose += Open;
         
-        if ((int)(App.model.monthSign.LastMonthSignDate - DateTime.Now).TotalDays != 0)
+        if ((int)(App.model.monthSign.LastMonthSignDate - App.system.myTime.MyTimeNow).TotalDays != 0)
         {
             SetEnableFlow(0);
         }
@@ -49,57 +49,52 @@ public class Controller_MonthSign : ControllerBehavior
         App.system.openFlow.NextAction();
     }
 
-    /// <summary>
     /// 檢查並創建calender
-    /// </summary>
     private void CheckCalender()
     {
-        var today = DateTime.Now;
+        var today = App.system.myTime.MyTimeNow;
         var last = App.model.monthSign.LastMonthSignDate;
 
         //No last sign record
+/*
         if (last == null)
         {
             CreateCalander(today.Year, today.Month);
             return;
         }
+*/
 
         //Over a year or month
         if (today.Year != last.Year || today.Month != last.Month)
         {
             CreateCalander(today.Year, today.Month);
-            return;
         }
         //Same year and month
         else
         {
             List<int> signs = App.model.monthSign.SignIndexs;
             App.model.monthSign.SignIndexs = signs;
-            App.model.monthSign.Month = DateTime.Now.Month;
-            App.model.monthSign.SelectedMonthSignRewardData = monthSignRewardDatas[DateTime.Now.Month - 1];
+            App.model.monthSign.Month = App.system.myTime.MyTimeNow.Month;
+            App.model.monthSign.SelectedMonthSignRewardData = monthSignRewardDatas[App.system.myTime.MyTimeNow.Month - 1];
         }
     }
 
-    /// <summary>
     /// 按鈕簽到
-    /// </summary>
     public void Sign()
     {
-        int day = DateTime.Now.Day;
+        int day = App.system.myTime.MyTimeNow.Day;
         var signIndexs = App.model.monthSign.SignIndexs;
 
-        ReceiveReward(DateTime.Now.Month, day);
+        ReceiveReward(App.system.myTime.MyTimeNow.Month, day);
 
         signIndexs[day - 1] = 1;
         App.model.monthSign.SignIndexs = signIndexs;
-        App.model.monthSign.LastMonthSignDate = DateTime.Now;
+        App.model.monthSign.LastMonthSignDate = App.system.myTime.MyTimeNow;
 
         SetEnableFlow(1);
     }
 
-    /// <summary>
     /// 按鈕補簽
-    /// </summary>
     public void Resign()
     {
         if (App.model.monthSign.ResignCount <= 0) return;
@@ -109,10 +104,10 @@ public class Controller_MonthSign : ControllerBehavior
         var signs = App.model.monthSign.SignIndexs;
         for (int i = 0; i < signs.Count; i++)
         {
-            if (i == DateTime.Now.Day - 1) break; //不超過今天
+            if (i == App.system.myTime.MyTimeNow.Day - 1) break; //不超過今天
             if (signs[i] == 1) continue; //簽到了
 
-            ReceiveReward(DateTime.Now.Month, i + 1);
+            ReceiveReward(App.system.myTime.MyTimeNow.Month, i + 1);
             signs[i] = 1;
             App.model.monthSign.ResignCount--;
             break;
@@ -133,7 +128,7 @@ public class Controller_MonthSign : ControllerBehavior
 
         App.model.monthSign.SignIndexs = signs;
         App.model.monthSign.Month = month;
-        App.model.monthSign.SelectedMonthSignRewardData = monthSignRewardDatas[DateTime.Now.Month - 1];
+        App.model.monthSign.SelectedMonthSignRewardData = monthSignRewardDatas[App.system.myTime.MyTimeNow.Month - 1];
         App.model.monthSign.ResignCount = 7; //重設補簽次數
     }
 

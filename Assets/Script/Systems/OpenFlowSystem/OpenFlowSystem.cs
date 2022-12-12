@@ -50,7 +50,7 @@ public class OpenFlowSystem : MvcBehaviour
             isEnd = true;
             isActive = false;
             print("End of actions.");
-            App.system.myTime.LastLoginDateTime = DateTime.Now;
+            // App.system.myTime.LastLoginDateTime = DateTime.Now;
             return;
         }
 

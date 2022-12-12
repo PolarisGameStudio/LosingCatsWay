@@ -81,7 +81,7 @@ public class Card_Cloister : MvcBehaviour
 
     private void CountDown()
     {
-        DateTime now = DateTime.Now;
+        DateTime now = App.system.myTime.MyTimeNow;
         int days = (expiredDate - now).Days;
         int hours = (expiredDate - now).Hours;
         int minutes = (expiredDate - now).Minutes;

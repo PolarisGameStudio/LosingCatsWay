@@ -362,7 +362,7 @@ public class Controller_Cultive : ControllerBehavior
     {
         if (App.model.cultive.UsingLitterIndex >= 0)
         {
-            if (App.model.cultive.NextCleanDateTime > DateTime.Now) //時間還沒到
+            if (App.model.cultive.NextCleanDateTime > App.system.myTime.MyTimeNow) //時間還沒到
                 return;
         }
 
@@ -496,7 +496,7 @@ public class Controller_Cultive : ControllerBehavior
     private void CountDownTimer()
     {
         DateTime dt = App.model.cultive.NextCleanDateTime;
-        if (dt <= DateTime.Now)
+        if (dt <= App.system.myTime.MyTimeNow)
         {
             App.model.cultive.NextCleanDateTime = dt;
             CancelInvoke(nameof(CountDownTimer));
@@ -508,7 +508,7 @@ public class Controller_Cultive : ControllerBehavior
 
     private void ResetTimer()
     {
-        App.model.cultive.NextCleanDateTime = DateTime.Now.AddHours(0).AddMinutes(1).AddSeconds(0);
+        App.model.cultive.NextCleanDateTime = App.system.myTime.MyTimeNow.AddHours(0).AddMinutes(1).AddSeconds(0);
 
         int usingIndex = App.model.cultive.UsingLitterIndex;
         int likeIndex = App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.LikeLitterIndex;
@@ -587,7 +587,7 @@ public class Controller_Cultive : ControllerBehavior
         App.model.cultive.NextCleanDateTime = date;
         App.model.cultive.CleanLitterCount = cleanCount;
 
-        if (date > DateTime.Now)
+        if (date > App.system.myTime.MyTimeNow)
             InvokeRepeating(nameof(CountDownTimer), 0.1f, 0.1f);
     }
 
@@ -605,20 +605,20 @@ public class Controller_Cultive : ControllerBehavior
             var catSkin = App.view.cultive.catSkin;
             catSkin.SetCold();
         }
-        
-        catSkeleton.AnimationState.SetAnimation(0, "Rearing_Cat/Rearing_Reject", false);
-        catSkeleton.AnimationState.Complete += WaitReject;
+
+        var t = catSkeleton.AnimationState.SetAnimation(0, "Rearing_Cat/Rearing_Reject", false);
+        t.Complete += WaitReject;
     }
 
     private void WaitReject(TrackEntry entry)
     {
+        catSkeleton.AnimationState.Complete -= WaitReject;
+        
         var catSkin = App.view.cultive.catSkin;
         catSkin.ChangeSkin(App.model.cultive.SelectedCat.cloudCatData);
 
         catSkeleton.AnimationState.AddAnimation(0, "AI_Main/IDLE_Ordinary01", true, 0);
-
         isCanDrag = true;
-        catSkeleton.AnimationState.Complete -= WaitReject;
     }
 
     #endregion

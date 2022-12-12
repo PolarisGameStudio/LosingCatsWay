@@ -12,9 +12,8 @@ public class ChooseRoomItem : MvcBehaviour
     public TextMeshProUGUI roomCountText;
 
     public Image gameTagImage;
-    [SerializeField] private TmpRevolving tmpRevolving;
 
-    public void Active(Room room)
+    public void SetData(Room room)
     {
         roomImage.sprite = room.Image;
         roomNameText.text = room.Name;
@@ -25,8 +24,11 @@ public class ChooseRoomItem : MvcBehaviour
         roomCountText.text = room.Count.ToString();
 
         if (room.roomData.roomType == RoomType.Game && room.roomData.roomGamesType != RoomGameType.None) gameTagImage.gameObject.SetActive(true);
-        
-        // tmpRevolving.Init();
-        // tmpRevolving.StartRevolving();
+    }
+
+    public void Select()
+    {
+        int index = transform.GetSiblingIndex();
+        App.controller.chooseBuild.Select(index);
     }
 }

@@ -27,8 +27,6 @@ public class FindCatMap : MvcBehaviour
     [Title("Cat")] public FindCatObject[] cats;
     [SerializeField] private UIParticle[] catLoves;
 
-    [Title("G8")] [SerializeField] private bool isG8;
-
     CloudCatData cloudCatData;
 
     public Callback OnGameEnd;
@@ -118,6 +116,9 @@ public class FindCatMap : MvcBehaviour
             return;
         if (countDown <= 0)
             return;
+
+        if (!IsAnyCatShowing())
+            return;
         
         VibrateExtension.Vibrate(VibrateType.Nope);
         App.system.soundEffect.Play("Button");
@@ -127,6 +128,7 @@ public class FindCatMap : MvcBehaviour
         if (!findCatObject.isShowing)
         {
             countDown -= 1;
+            Hide();
             return;
         }
 
@@ -152,27 +154,12 @@ public class FindCatMap : MvcBehaviour
 
     public void Close()
     {
-        if (isG8)
-        {
-            SetCloudCatDataToUse(false);
-            App.system.bgm.FadeOut();
-            App.system.transition.OnlyOpen();
-            DOVirtual.DelayedCall(1f, () =>
-            {
-                OnGameEnd?.Invoke();
-                App.system.findCat.ActiveCurrentGate();
-            });
-            return;
-        }
-        
         SetCloudCatDataToUse(false);
-        App.system.bgm.FadeOut();
-        App.system.transition.Active(0, () =>
+        App.system.transition.OnlyOpen();
+        DOVirtual.DelayedCall(1f, () =>
         {
             OnGameEnd?.Invoke();
-            uiView.InstantHide();
-            App.controller.map.Open();
-            App.system.findCat.Close();
+            App.system.findCat.ActiveCurrentGate();
         });
     }
 
@@ -209,6 +196,13 @@ public class FindCatMap : MvcBehaviour
             cats[i].QuickHide();
     }
 
+    private void Hide()
+    {
+        for (int i = 0; i < cats.Length; i++)
+            if (cats[i].isShowing)
+                cats[i].Hide();
+    }
+
     private void Play()
     {
         NextCat();
@@ -231,5 +225,16 @@ public class FindCatMap : MvcBehaviour
     {
         cloudCatData.CatSurviveData.IsUseToFind = value;
         App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
+    }
+
+    private bool IsAnyCatShowing()
+    {
+        for (int i = 0; i < cats.Length; i++)
+        {
+            if (cats[i].isShowing)
+                return true;
+        }
+
+        return false;
     }
 }

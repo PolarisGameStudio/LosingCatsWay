@@ -25,6 +25,8 @@ public class Drag_CultiveItem : MvcBehaviour, IBeginDragHandler, IDragHandler, I
         if (!App.controller.cultive.isCanDrag)
             return;
 
+        VibrateExtension.Vibrate(VibrateType.Nope);
+        
         App.controller.cultive.CloseClickCat();
         App.controller.cultive.OpenDropSensor();
 

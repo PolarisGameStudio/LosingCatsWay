@@ -62,7 +62,7 @@ public class View_MonthSign : ViewBehaviour
             }
         }
 
-        int day = DateTime.Now.Day;
+        int day = App.system.myTime.MyTimeNow.Day;
         if (dateObjects[day - 1].IsSign) signButton.interactable = false;
 
         #endregion

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Doozy.Runtime.UIManager.Containers;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine.UI;
 
@@ -17,32 +15,40 @@ public class FindCatSystem : MvcBehaviour
     [SerializeField] private TextMeshProUGUI gateName;
     [SerializeField] private TextMeshProUGUI gateContent;
 
+    [Title("NoFindCats")] [SerializeField] private int findCountLimit;
+    [SerializeField, ReadOnly] private int alreadyFindCount;
+
     private FindCatMap activeMap;
     private int mapIndex;
     
-    private async void ActiveMap(int index, bool isTutorial = false)
+    private async void ActiveMap()
     {
-        FindCatMaps[index].SetCloudCatData(null);
-        FindCatMaps[index].IsTutorial = isTutorial;
+        FindCatMaps[mapIndex].SetCloudCatData(null);
         
-        var cloudCatDatas = await App.system.cloudSave.LoadCloudCatDatasByOwner($"Location{0}", 1); //TODO G8後改回Index
+        var cloudCatDatas = await App.system.cloudSave.LoadCloudCatDatasByOwner($"Location{mapIndex}", 1);
         var cloudCatData = cloudCatDatas.Count > 0 ? cloudCatDatas[0] : null;
         
         if (cloudCatData == null || cloudCatData.CatSurviveData.IsUseToFind)
         {
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.MapNoCats, () =>
+            if (IsFindLimit())
+                App.system.confirm.OnlyConfirm().Active(ConfirmTable.MapNoCats, () =>
+                {
+                    App.system.findCat.ActiveGate(mapIndex);
+                    DOVirtual.DelayedCall(1f, App.system.transition.OnlyClose);
+                });
+            else
             {
-                App.system.findCat.ActiveGate(index);
-                DOVirtual.DelayedCall(1f, App.system.transition.OnlyClose);
-            });
+                alreadyFindCount++;
+                DOVirtual.DelayedCall(0.25f, ActiveMap);
+            }
             return;
         }
         
         App.system.transition.OnlyClose();
-        FindCatMaps[index].SetCloudCatData(cloudCatData);
-        PlayMapBgm(index);
-        FindCatMaps[index].Open();
-        activeMap = FindCatMaps[index];
+        FindCatMaps[mapIndex].SetCloudCatData(cloudCatData);
+        PlayMapBgm();
+        FindCatMaps[mapIndex].Open();
+        activeMap = FindCatMaps[mapIndex];
     }
 
     public void Pause()
@@ -70,6 +76,7 @@ public class FindCatSystem : MvcBehaviour
     {
         mapIndex = index;
         gateBg.sprite = backgrounds[index];
+        alreadyFindCount = 0;
 
         App.system.bgm.FadeOut();
         string id = $"Location{index}";
@@ -88,7 +95,7 @@ public class FindCatSystem : MvcBehaviour
         DOVirtual.DelayedCall(1f, () =>
         {
             gateView.InstantHide();
-            ActiveMap(mapIndex);
+            ActiveMap();
         });
     }
 
@@ -104,8 +111,10 @@ public class FindCatSystem : MvcBehaviour
 
     public void ActiveCurrentGate()
     {
-        App.system.transition.OnlyClose();
+        // App.system.transition.OnlyClose();
         App.system.bgm.FadeOut();
+        
+        alreadyFindCount = 0;
         
         gateBg.sprite = backgrounds[mapIndex];
         
@@ -115,16 +124,34 @@ public class FindCatSystem : MvcBehaviour
         
         view.Show();
         gateView.Show();
+
+        DOVirtual.DelayedCall(0.5f, App.system.transition.OnlyClose);
     }
 
-    private void PlayMapBgm(int index)
+    private void PlayMapBgm()
     {
-        if (index == 0)
+        if (mapIndex == 0)
         {
             App.system.bgm.FadeIn().Play("Street");
             return;
         }
         
         App.system.bgm.FadeIn().Play("CloudCatHotel");
+    }
+
+    private bool IsFindLimit()
+    {
+        return alreadyFindCount >= findCountLimit;
+    }
+
+    public void CloseToMap()
+    {
+        App.system.bgm.FadeOut();
+        App.system.transition.Active(0, () =>
+        {
+            Close();
+            gateView.InstantHide();
+            App.controller.map.Open();
+        });
     }
 }

@@ -92,7 +92,7 @@ public class View_ClinicInvoice : ViewBehaviour
         Cat cat = (Cat)value;
         playerNameText.text = App.system.player.PlayerName;
         catNameText.text = cat.cloudCatData.CatData.CatName;
-        dateText.text = System.DateTime.Now.ToString("yyyy-MM-dd");
+        dateText.text = App.system.myTime.MyTimeNow.ToString("yyyy-MM-dd");
     }
 
     public override void Open()

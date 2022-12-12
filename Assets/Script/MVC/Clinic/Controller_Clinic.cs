@@ -275,7 +275,7 @@ public class Controller_Clinic : ControllerBehavior
         }
         else if(index == 2)
         {
-            DateTime noBugExpireDate = DateTime.Now.AddDays(3);
+            DateTime noBugExpireDate = App.system.myTime.MyTimeNow.AddDays(3);
             cloudCatData.CatHealthData.NoBugExpireTimestamp = Timestamp.FromDateTime(noBugExpireDate);
         }
         else if (index == 3)

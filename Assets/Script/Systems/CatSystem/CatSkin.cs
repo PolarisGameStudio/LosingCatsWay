@@ -129,9 +129,6 @@ public class CatSkin : MvcBehaviour
             variety = t[1] + '-' + t[0];
         }
 
-        if (variety == "White-Special")
-            variety = "White_Special";
-        
         catSkeleton.SetSkin("Normal_Cat/" + variety);
 
         catSkeleton.SetAttachment(slot_beard, key_beard + (catSkinData.BeardIndex + 1));

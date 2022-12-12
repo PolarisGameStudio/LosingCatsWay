@@ -25,7 +25,7 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
         if (isCat)
         {
             // 未在倒數不可玩
-            if (item.itemType == ItemType.Play && App.model.cultive.NextCleanDateTime <= DateTime.Now)
+            if (item.itemType == ItemType.Play && App.model.cultive.NextCleanDateTime <= App.system.myTime.MyTimeNow)
             {
                 if (App.model.cultive.CleanLitterCount > 0)
                     App.controller.cultive.NoLitterCatTalk();
@@ -40,12 +40,11 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
             if (item.itemType == ItemType.Feed && item.itemFeedType == ItemFeedType.Food)
             {
                 // 飽足大等於100不接受
-                // TODO G8
-                // if (cat.cloudCatData.CatSurviveData.Satiety >= 100f)
-                // {
-                //     App.controller.cultive.Reject();
-                //     return;
-                // }
+                if (cat.cloudCatData.CatSurviveData.Satiety >= 100f)
+                {
+                    App.controller.cultive.Reject();
+                    return;
+                }
                 
                 // 討厭
                 if (cat.cloudCatData.CatSurviveData.HateFoodIndex == (int)item.foodType)
@@ -59,12 +58,11 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
             if (item.itemType == ItemType.Feed && item.itemFeedType == ItemFeedType.Water)
             {
                 // 水分大等於100不接受
-                // TODO G8
-                // if (cat.cloudCatData.CatSurviveData.Moisture >= 100f)
-                // {
-                //     App.controller.cultive.Reject();
-                //     return;
-                // }
+                if (cat.cloudCatData.CatSurviveData.Moisture >= 100f)
+                {
+                    App.controller.cultive.Reject();
+                    return;
+                }
             }
             
             // 零食拒絕
@@ -82,12 +80,11 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
             if (item.itemType == ItemType.Feed && item.itemFeedType == ItemFeedType.Can)
             {
                 // 飽足大等於100不接受
-                // TODO G8
-                // if (cat.cloudCatData.CatSurviveData.Satiety >= 100f)
-                // {
-                //     App.controller.cultive.Reject();
-                //     return;
-                // }
+                if (cat.cloudCatData.CatSurviveData.Satiety >= 100f)
+                {
+                    App.controller.cultive.Reject();
+                    return;
+                }
             }
         }
         

@@ -221,10 +221,10 @@ public class View_Cultive : ViewBehaviour
     private void OnNextCleanDateTimeChange(object value)
     {
         DateTime nextDate = (DateTime)value;
-        TimeSpan ts = nextDate - DateTime.Now;
+        TimeSpan ts = nextDate - App.system.myTime.MyTimeNow;
 
         //時候未到
-        if (nextDate > DateTime.Now)
+        if (nextDate > App.system.myTime.MyTimeNow)
         {
             cleanLitterButton.gameObject.SetActive(false);
 

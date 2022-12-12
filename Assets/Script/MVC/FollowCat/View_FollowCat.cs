@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Doozy.Runtime.UIManager.Components;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -20,6 +21,8 @@ public class View_FollowCat : ViewBehaviour
     public Image moistureValueImage;
 
     public Image moodImage;
+
+    [SerializeField] private UIButton traitButton;
 
     public override void Open()
     {
@@ -53,5 +56,7 @@ public class View_FollowCat : ViewBehaviour
         varietyText.text = isKitty ? App.factory.stringFactory.GetKittyName() : App.factory.stringFactory.GetCatVariety(cloudCatData.CatData.Variety);
 
         catSkin.ChangeSkin(cloudCatData);
+        
+        traitButton.interactable = cloudCatData.CatSkinData.UseSkinId.Contains("要叫阿邦上：機器人造型ID") || cloudCatData.CatSkinData.UseSkinId.Contains("要叫阿邦上：飛魚造型ID"); // TODO SkinId
     }
 }
