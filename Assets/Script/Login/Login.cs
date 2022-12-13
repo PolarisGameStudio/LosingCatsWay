@@ -10,6 +10,7 @@ using Doozy.Runtime.UIManager.Containers;
 using Google;
 using Sirenix.OdinInspector;
 using TMPro;
+using UnityEngine.Serialization;
 
 //debug
 using UnityEngine.UI;
@@ -20,15 +21,17 @@ public class Login : MonoBehaviour
     public GameObject startGameButton;
     [SerializeField] TextMeshProUGUI idText;
 
-    [Title("NoticeSystem")] public NoticeSystem notice;
+    [FormerlySerializedAs("notice")] [Title("NoticeSystem")] public PostSystem post;
 
     [Title("Login")] public UIView loginView;
     [Title("Confirm")] [SerializeField] private UIView confirmView;
 
     private bool isRequest = false;
     
-    private void Start()
+    private async void Start()
     {
+        await FindObjectOfType<PostSystem>().Init();
+        
         GoogleSignIn.Configuration = new GoogleSignInConfiguration
         {
             RequestIdToken = true,
@@ -41,7 +44,7 @@ public class Login : MonoBehaviour
         {
             idText.text = $"UID: {auth.CurrentUser.UserId}";
             startGameButton.SetActive(true);
-            DOVirtual.DelayedCall(1f, notice.Open);
+            DOVirtual.DelayedCall(1f, post.Open);
         }
         else
         {
@@ -73,7 +76,7 @@ public class Login : MonoBehaviour
         }
 
         idText.text = $"UID: {auth.CurrentUser.UserId}";
-        notice.Open();
+        post.Open();
         loginView.InstantHide();
         startGameButton.SetActive(true);
     }
@@ -96,7 +99,7 @@ public class Login : MonoBehaviour
         }
 
         idText.text = $"UID: {auth.CurrentUser.UserId}";
-        notice.Open();
+        post.Open();
         loginView.InstantHide();
         startGameButton.SetActive(true);
     }
@@ -115,7 +118,7 @@ public class Login : MonoBehaviour
 
     public void OpenAnnouncement()
     {
-        notice.Open();
+        post.Open();
     }
 
     public void OpenConfirm()
