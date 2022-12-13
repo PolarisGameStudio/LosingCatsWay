@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using System;
+using I2.Loc;
 
 public class DebugTool : MonoBehaviour
 {
@@ -20,5 +21,13 @@ public class DebugTool : MonoBehaviour
     {
         int index = Random.Range(0, 2);
         cat.CreateCat($"Location{index}");
+    }
+
+    [Button]
+    public void Test()
+    {
+        print(LocalizationManager.CurrentLanguage);
+        print(LocalizationManager.CurrentRegionCode);
+        print(LocalizationManager.CurrentLanguageCode);
     }
 }
