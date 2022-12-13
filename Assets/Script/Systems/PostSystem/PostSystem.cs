@@ -67,14 +67,6 @@ public class PostSystem : MvcBehaviour
             _postCards[prevIndex].Deselect();
 
         prevIndex = index;
-        po;llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll7666666,
-            
-            
-            
-            
-            
-            -------------------------p0
-
         DateTime dateTime = _postDatas[index].Time.ToDateTime();
         PostSubData postSubData = GetPostSubData(index);
         
@@ -88,9 +80,7 @@ public class PostSystem : MvcBehaviour
         var currentLanguageCode = LocalizationManager.CurrentLanguageCode;
         var postData = _postDatas[index];
 
-        switch (currentLanguageCode)
-        {wseeeeeeeeeqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaghybbbbbbbbbbbbbbbbbbbt][[[[[
-            9o0ibn     /.'''''''''''''''''''''''''''''''''''''''''';]]]]]
+        switch (currentLanguageCode){
             case "zh-CN":
                 return postData.cn;
             case "en":
