@@ -73,7 +73,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 1
+  invertPolygon: 0
 --- !u!1 &52185623334597480
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 1
+  invertPolygon: 0
 --- !u!1 &852310760356867301
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 4797216094280460167}
   - component: {fileID: 8477721531210480083}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -275,7 +275,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 1
+  invertPolygon: 0
 --- !u!1 &1152245552846508652
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,7 +635,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 1
+  invertPolygon: 0
 --- !u!1 &2589677704324243895
 GameObject:
   m_ObjectHideFlags: 0
@@ -833,7 +833,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 1
+  invertPolygon: 0
 --- !u!1 &3620063122994305920
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,7 +960,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 1
+  invertPolygon: 0
 --- !u!1 &3701111580219754306
 GameObject:
   m_ObjectHideFlags: 0
@@ -1088,7 +1088,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 1
+  invertPolygon: 0
 --- !u!1 &3712214296524132047
 GameObject:
   m_ObjectHideFlags: 0
@@ -1099,6 +1099,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4890448292046782032}
   - component: {fileID: 518017414750452935}
+  - component: {fileID: 5491415855740287598}
+  - component: {fileID: 8869077860086038558}
   m_Layer: 0
   m_Name: IRM00033_Floor_Object_2
   m_TagString: Untagged
@@ -1173,6 +1175,47 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &5491415855740287598
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3712214296524132047}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.64, y: 0.36845207}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 1.28, y: 1.28}
+    newSize: {x: 1.28, y: 1.28}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.28, y: 0.73690414}
+  m_EdgeRadius: 0
+--- !u!114 &8869077860086038558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3712214296524132047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc4f7f33d8fc7c0419b2308165807ce0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeType: 1
+  extraOffset: 0
+  invertPolygon: 0
 --- !u!1 &4266481964635689522
 GameObject:
   m_ObjectHideFlags: 0
@@ -1273,7 +1316,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.13200209}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1284,7 +1327,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 0.9686772}
   m_EdgeRadius: 0
 --- !u!114 &3477297545192685505
 MonoBehaviour:
@@ -1300,7 +1343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 1
+  invertPolygon: 0
 --- !u!1 &5014572564000446614
 GameObject:
   m_ObjectHideFlags: 0
@@ -1511,7 +1554,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 1
+  invertPolygon: 0
 --- !u!1 &5634345151237570558
 GameObject:
   m_ObjectHideFlags: 0
@@ -1669,7 +1712,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 1
+  invertPolygon: 0
 --- !u!1 &6157606911334101187
 GameObject:
   m_ObjectHideFlags: 0
@@ -1827,7 +1870,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 1
+  invertPolygon: 0
 --- !u!1 &7124735321894030175
 GameObject:
   m_ObjectHideFlags: 0
@@ -1901,7 +1944,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 1
+  invertPolygon: 0
 --- !u!1 &7205568534874848777
 GameObject:
   m_ObjectHideFlags: 0
@@ -1975,7 +2018,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 1
+  invertPolygon: 0
 --- !u!1 &7616674969772344088
 GameObject:
   m_ObjectHideFlags: 0
@@ -2165,7 +2208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 1
+  invertPolygon: 0
 --- !u!1 &8166697906548065400
 GameObject:
   m_ObjectHideFlags: 0
@@ -2239,7 +2282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 1
+  invertPolygon: 0
 --- !u!1 &8167949268940047865
 GameObject:
   m_ObjectHideFlags: 0
@@ -2906,4 +2949,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 1
+  invertPolygon: 0

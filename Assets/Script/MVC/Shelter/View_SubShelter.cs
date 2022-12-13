@@ -25,17 +25,12 @@ public class View_SubShelter : ViewBehaviour
     [SerializeField] private TextMeshProUGUI catSexText;
     [SerializeField] private Image catSexImage;
     [SerializeField] private GameObject ligationImage;
-    [SerializeField] private TextMeshProUGUI traitText;
     [SerializeField] private TextMeshProUGUI catVarietyText;
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI catAgeText;
     [SerializeField] private TextMeshProUGUI catAgeLevelText;
     [SerializeField] private TextMeshProUGUI catSizeText;
     [SerializeField] private Card_Personality[] cardPersonalitys;
-
-    [Title("TraitColor")] [SerializeField] private Color32 commonTraitColor;
-    [SerializeField] private Color32 rareTraitColor;
-    [SerializeField] private Color32 ssrTraitColor;
 
     public override void Init()
     {
@@ -60,16 +55,6 @@ public class View_SubShelter : ViewBehaviour
         CloudCatData cloudCatData = (CloudCatData)value;
 
         catNameText.text = cloudCatData.CatData.CatName;
-        string traitString = App.factory.stringFactory.GetTraitString(cloudCatData.CatData.Trait);
-        traitText.text = traitString;
-
-        char traitHead = cloudCatData.CatData.Trait[0];
-        if (traitHead == 'C')
-            traitText.color = commonTraitColor;
-        else if (traitHead == 'R')
-            traitText.color = rareTraitColor;
-        else if (traitHead == 'S')
-            traitText.color = ssrTraitColor;
         
         bool isKitty = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) == 0;
         catVarietyText.text = isKitty ? App.factory.stringFactory.GetKittyName() : App.factory.stringFactory.GetCatVariety(cloudCatData.CatData.Variety);
