@@ -21,6 +21,7 @@ public class FindCatMap : MvcBehaviour
 
     private int heart = 0;
     private float countDown = 15f;
+    [ReadOnly] public int dollCount;
     
     [ReadOnly] public bool IsTutorial;
 
@@ -66,6 +67,7 @@ public class FindCatMap : MvcBehaviour
     {
         countDown = 15f;
         heart = 0;
+        dollCount = 0;
 
         for (int i = 0; i < hearts.Length; i++)
             hearts[i].SetActive(false);
@@ -81,7 +83,7 @@ public class FindCatMap : MvcBehaviour
 
     public void NextCat()
     {
-        float waitTime = Random.Range(0.5f, 1.5f);
+        float waitTime = Random.Range(0.25f, 0.75f);
         Invoke(nameof(DrawCat), waitTime);
     }
 
@@ -125,7 +127,7 @@ public class FindCatMap : MvcBehaviour
         
         FindCatObject findCatObject = cats[index];
 
-        if (!findCatObject.isShowing)
+        if (!findCatObject.isShowing || findCatObject.isDoll)
         {
             countDown -= 1;
             Hide();

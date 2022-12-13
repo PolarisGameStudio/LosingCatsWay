@@ -420,22 +420,22 @@ public class CatchCatMap : MvcBehaviour
         switch (index)
         {
             case 0:
-                value = 6f;
+                value = 5f;
                 break;
             case 1:
-                value = 10f;
+                value = 8f;
                 break;
             case 2:
-                value = 14f;
+                value = 12f;
                 break;
             case 3:
-                value = 18f;
+                value = 15f;
                 break;
             case 4:
                 value = 30f;
                 break;
             default:
-                value = 6f;
+                value = 5f;
                 break;
         }
 
@@ -473,7 +473,7 @@ public class CatchCatMap : MvcBehaviour
                             break;
 
                         case 1:
-                            value *= 0.5f;
+                            value *= 0.3f;
                             hateParticle.Play();
                             SpineCatAngry();
                             runChance = 0.03f;
