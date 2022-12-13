@@ -72,13 +72,12 @@ public class CatchCatMap : MvcBehaviour
     [Title("Animator")] [SerializeField] private Animator catchFlowerAnimator;
 
     private int turn;
-    private float[] runChances = { 0f, 0f, 0.03f, 0.05f, 0.1f, 0.2f, 1f };
+    private float[] runChance = { 0f, 0f, 0.03f, 0.05f, 0.1f, 0.2f, 1f };
     private float hp; //生命值
     private CloudCatData cloudCatData;
     private List<Item_CatchCat> selectedItems = new List<Item_CatchCat>();
     private float cardOriginY = -65f;
     private int selectedType;
-    private float runChance;
     
     private List<Item> usedItems = new List<Item>();
     private int exp;
@@ -239,7 +238,6 @@ public class CatchCatMap : MvcBehaviour
         coin = 0;
         
         turn = 0;
-        runChance = 0;
         turnText.text = "0/7";
         runChanceText.text = "0%";
 
@@ -339,7 +337,7 @@ public class CatchCatMap : MvcBehaviour
             tmp = 0;
         if (tmp >= 6)
             tmp = 6;
-        runChanceText.text = $"{runChances[tmp] * 100:0}%";
+        runChanceText.text = $"{runChance[tmp] * 100:0}%";
     }
 
     // 允許玩家行動
@@ -455,7 +453,7 @@ public class CatchCatMap : MvcBehaviour
         itemImage.sprite = item.icon;
         DoItemTween(() =>
         {
-            if (availablePersonality.Contains(item.personality)) //該回合有匹配的個性
+            if (availablePersonality.Contains(item.personality)) //有匹配的個性
             {
                 for (int i = 0; i < availablePersonality.Count; i++)
                 {
@@ -469,45 +467,39 @@ public class CatchCatMap : MvcBehaviour
                             value *= 0f;
                             hateParticle.Play();
                             SpineCatAngry();
-                            runChance = 0.05f;
                             break;
 
                         case 1:
                             value *= 0.5f;
                             hateParticle.Play();
                             SpineCatAngry();
-                            runChance = 0.03f;
                             break;
 
                         case 2:
                             value *= 1.5f;
                             loveParticle.Play();
                             SpineCatHappy();
-                            runChance = -0.03f;
                             break;
 
                         case 3:
                             value *= 2f;
                             bigLoveParticle.Play();
                             SpineCatHappy();
-                            runChance = -0.05f;
                             break;
 
                         default:
                             loveParticle.Play();
                             SpineCatHappy();
-                            runChance = 0f;
                             break;
                     }
 
                     break;
                 }
             }
-            else //該回合沒有匹配的個性
+            else
             {
                 loveParticle.Play();
                 SpineCatHappy();
-                runChance = 0f;
             }
             
             //扣除生命值
@@ -548,10 +540,8 @@ public class CatchCatMap : MvcBehaviour
         if (index < 0)
             index = 0;
         
-        float chance = runChance + runChances[index];
-        chance = Mathf.Clamp(chance, 0f, 100f);
-        
-        if (isG8 && index < runChances.Length - 1)
+        float chance = runChance[index];
+        if (isG8 && index < runChance.Length - 1)
             chance = 0;
         
         if (Random.value < chance)

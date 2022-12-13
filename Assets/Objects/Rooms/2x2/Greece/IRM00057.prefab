@@ -73,7 +73,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 0
+  invertPolygon: 1
 --- !u!1 &52185623334597480
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 0
+  invertPolygon: 1
 --- !u!1 &806570969636330135
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,7 +247,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.048791, y: 1.415515}
+  m_Offset: {x: 1.28, y: 2.56}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -258,7 +258,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.097582, y: 2.83103}
+  m_Size: {x: 2.56, y: 5.12}
   m_EdgeRadius: 0
 --- !u!114 &403185485619849830
 MonoBehaviour:
@@ -581,8 +581,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4282641715119214919}
   - component: {fileID: 754338913528520547}
-  - component: {fileID: 6298571445996220291}
-  - component: {fileID: 8036933862582722734}
   m_Layer: 0
   m_Name: IRM00057_Floor_Object_4
   m_TagString: Untagged
@@ -657,47 +655,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &6298571445996220291
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1792573358105268937}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.7829006, y: 0.79446125}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 2.56, y: 2.56}
-    newSize: {x: 2.56, y: 2.56}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.5658011, y: 1.5889225}
-  m_EdgeRadius: 0
---- !u!114 &8036933862582722734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1792573358105268937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc4f7f33d8fc7c0419b2308165807ce0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shapeType: 1
-  extraOffset: 0
-  invertPolygon: 0
 --- !u!1 &1895284656384777408
 GameObject:
   m_ObjectHideFlags: 0
@@ -739,8 +696,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6151272135723383446}
   - component: {fileID: 7578148331286532311}
-  - component: {fileID: 8484751256896152599}
-  - component: {fileID: 6327534025261402592}
   m_Layer: 0
   m_Name: IRM00057_Floor_Object_1
   m_TagString: Untagged
@@ -815,47 +770,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &8484751256896152599
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2250140086664336288}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 1.0792967, y: 1.6110783}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 1.28, y: 1.28}
-    newSize: {x: 1.28, y: 1.28}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 2.3898032, y: 3.2221565}
-  m_EdgeRadius: 0
---- !u!114 &6327534025261402592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2250140086664336288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc4f7f33d8fc7c0419b2308165807ce0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shapeType: 1
-  extraOffset: 0
-  invertPolygon: 0
 --- !u!1 &2415436347712544362
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,7 +843,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 0
+  invertPolygon: 1
 --- !u!1 &2669222159243811103
 GameObject:
   m_ObjectHideFlags: 0
@@ -1003,7 +917,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 0
+  invertPolygon: 1
 --- !u!1 &3505249434511799659
 GameObject:
   m_ObjectHideFlags: 0
@@ -1138,8 +1052,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6484156393379997425}
   - component: {fileID: 5568999348250961205}
-  - component: {fileID: 532327323331508500}
-  - component: {fileID: 7883702307274629091}
   m_Layer: 0
   m_Name: IRM00057_Floor_Object_3
   m_TagString: Untagged
@@ -1214,47 +1126,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &532327323331508500
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3556831223899137070}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.80602145, y: 0.7944608}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 2.56, y: 2.56}
-    newSize: {x: 2.56, y: 2.56}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.6120429, y: 1.5889215}
-  m_EdgeRadius: 0
---- !u!114 &7883702307274629091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3556831223899137070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc4f7f33d8fc7c0419b2308165807ce0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shapeType: 1
-  extraOffset: 0
-  invertPolygon: 0
 --- !u!1 &3620063122994305920
 GameObject:
   m_ObjectHideFlags: 0
@@ -1381,7 +1252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 0
+  invertPolygon: 1
 --- !u!1 &3701111580219754306
 GameObject:
   m_ObjectHideFlags: 0
@@ -1509,7 +1380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 0
+  invertPolygon: 1
 --- !u!1 &4230203368103372266
 GameObject:
   m_ObjectHideFlags: 0
@@ -1970,7 +1841,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 0
+  invertPolygon: 1
 --- !u!1 &5634345151237570558
 GameObject:
   m_ObjectHideFlags: 0
@@ -2212,7 +2083,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 0
+  invertPolygon: 1
 --- !u!1 &6157606911334101187
 GameObject:
   m_ObjectHideFlags: 0
@@ -2370,7 +2241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 0
+  invertPolygon: 1
 --- !u!1 &7124735321894030175
 GameObject:
   m_ObjectHideFlags: 0
@@ -2444,7 +2315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 0
+  invertPolygon: 1
 --- !u!1 &7205568534874848777
 GameObject:
   m_ObjectHideFlags: 0
@@ -2518,7 +2389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 0
+  invertPolygon: 1
 --- !u!1 &7616674969772344088
 GameObject:
   m_ObjectHideFlags: 0
@@ -2623,7 +2494,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 0
+  invertPolygon: 1
 --- !u!1 &8166697906548065400
 GameObject:
   m_ObjectHideFlags: 0
@@ -2697,7 +2568,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 0
+  invertPolygon: 1
 --- !u!1 &8167949268940047865
 GameObject:
   m_ObjectHideFlags: 0
@@ -3085,7 +2956,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.28, y: 2.7449672}
+  m_Offset: {x: 1.28, y: 2.56}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3096,7 +2967,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.56, y: 5.4899344}
+  m_Size: {x: 2.56, y: 5.12}
   m_EdgeRadius: 0
 --- !u!114 &7130036717294968287
 MonoBehaviour:
@@ -3323,4 +3194,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 1
   extraOffset: 0
-  invertPolygon: 0
+  invertPolygon: 1

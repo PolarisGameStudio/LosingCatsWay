@@ -17,6 +17,8 @@ public class View_CultiveInfo_Status : ViewBehaviour
     [SerializeField] private Image catSexImage;
     [SerializeField] private GameObject ligationImage;
 
+    [Title("Trait")] [SerializeField] private TextMeshProUGUI traitText;
+    
     [Title("Age")]
     [SerializeField]
     private TextMeshProUGUI catAgeText;
@@ -47,6 +49,10 @@ public class View_CultiveInfo_Status : ViewBehaviour
     [SerializeField] private Image satietyBar;
     [SerializeField] private Image moistureBar;
     [SerializeField] private Image favorabilityBar;
+
+    [Title("TraitColor")] [SerializeField] private Color32 commonTraitColor;
+    [SerializeField] private Color32 rareTraitColor;
+    [SerializeField] private Color32 ssrTraitColor;
     
     [Title("ChipInfo")]
     [SerializeField] private Card_ChipInfo chipInfo;
@@ -70,6 +76,16 @@ public class View_CultiveInfo_Status : ViewBehaviour
         chipInfo.SetData(cat.cloudCatData);
 
         catNameText.text = cat.cloudCatData.CatData.CatName;
+        string traitString = App.factory.stringFactory.GetTraitString(cat.cloudCatData.CatData.Trait);
+        traitText.text = traitString;
+
+        char traitHead = cat.cloudCatData.CatData.Trait[0];
+        if (traitHead == 'C')
+            traitText.color = commonTraitColor;
+        else if (traitHead == 'R')
+            traitText.color = rareTraitColor;
+        else if (traitHead == 'S')
+            traitText.color = ssrTraitColor;
 
         catSizeText.text = $"{CatExtension.GetCatRealSize(cat.cloudCatData.CatData.BodyScale):0.00}cm";
 
