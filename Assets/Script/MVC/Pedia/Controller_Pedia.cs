@@ -17,6 +17,9 @@ public class Controller_Pedia : ControllerBehavior
 
     public void ToLeft()
     {
+        if (!IsCanToLeft())
+            return;
+        
         if (isPedia)
         {
             App.model.pedia.PediaPageIndex -= 1;
@@ -28,6 +31,9 @@ public class Controller_Pedia : ControllerBehavior
 
     public void ToRight()
     {
+        if (!IsCanToRight())
+            return;
+        
         if (isPedia)
         {
             App.model.pedia.PediaPageIndex += 1;
@@ -136,6 +142,38 @@ public class Controller_Pedia : ControllerBehavior
         }
 
         App.model.pedia.UsingPediaIds = result;
+    }
+
+    private bool IsCanToLeft()
+    {
+        int type = App.model.pedia.SelectedPediaType;
+        int index = App.model.pedia.PediaPageIndex;
+        List<string> tmp = App.factory.pediaFactory.GetPediaIds(type);
+        
+        if (index < 0)
+            index = 0;
+
+        int end = Mathf.CeilToInt(tmp.Count / 8f);
+        if (index > end)
+            index = end;
+
+        return index > 0;
+    }
+    
+    private bool IsCanToRight()
+    {
+        int type = App.model.pedia.SelectedPediaType;
+        int index = App.model.pedia.PediaPageIndex;
+        List<string> tmp = App.factory.pediaFactory.GetPediaIds(type);
+        
+        if (index < 0)
+            index = 0;
+
+        int end = Mathf.CeilToInt(tmp.Count / 8f);
+        if (index > end)
+            index = end;
+
+        return index < end - 1;
     }
     
     #endregion

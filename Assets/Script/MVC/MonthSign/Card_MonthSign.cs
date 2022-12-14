@@ -15,7 +15,7 @@ public class Card_MonthSign : MvcBehaviour
 
     public void SetDate(int date)
     {
-        dateText.text = date.ToString();
+        dateText.text = date.ToString("00");
     }
 
     public void SetReward(Reward reward)

@@ -126,6 +126,7 @@ public class FindCatMap : MvcBehaviour
         App.system.soundEffect.Play("Button");
         
         FindCatObject findCatObject = cats[index];
+        findCatObject.transform.DOScale(new Vector2(1.01f, 1.01f), 0.1f).From(Vector2.one).SetLoops(2, LoopType.Yoyo);
 
         if (!findCatObject.isShowing || findCatObject.isDoll)
         {

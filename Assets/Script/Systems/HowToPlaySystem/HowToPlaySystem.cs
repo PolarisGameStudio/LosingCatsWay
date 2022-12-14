@@ -71,6 +71,9 @@ public class HowToPlaySystem : MvcBehaviour
 
     public void ToLeft()
     {
+        if (index <= 0)
+            return;
+        
         App.system.soundEffect.Play("Button");
         
         index = Mathf.Clamp(index - 1, 0, descriptStrings.Length - 1);
@@ -80,6 +83,9 @@ public class HowToPlaySystem : MvcBehaviour
 
     public void ToRight()
     {
+        if (index >= descriptStrings.Length - 1)
+            return;
+        
         App.system.soundEffect.Play("Button");
 
         index = Mathf.Clamp(index + 1, 0, descriptStrings.Length - 1);
@@ -104,8 +110,8 @@ public class HowToPlaySystem : MvcBehaviour
                 circles[i].GetChild(0).gameObject.SetActive(false);
         }
         
-        leftButton.gameObject.SetActive(index > 0);
-        rightButton.gameObject.SetActive(index < descriptStrings.Length - 1);
+        // leftButton.gameObject.SetActive(index > 0);
+        // rightButton.gameObject.SetActive(index < descriptStrings.Length - 1);
         if (!IsTutorial) return;
         startButton.gameObject.SetActive(index == descriptStrings.Length - 1);
     } 
