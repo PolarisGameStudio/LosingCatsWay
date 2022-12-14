@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
-using TMPro;
 using UnityEngine;
 using Spine;
 using Spine.Unity;
@@ -10,19 +9,18 @@ using UnityEngine.UI;
 
 public class LittleGame_Ass : LittleGame
 {
-    public TextMeshProUGUI clickText;
-    public int clickTimes;
+    [Title("Game")]
+    [SerializeField] private int clickTimes;
     [SerializeField] private Image fillCircle;
 
-    private int value;
+    private int tmpClick;
     private SkeletonAnimation spine;
 
     public override void StartGame(Cat cat)
     {
         base.StartGame(cat);
 
-        value = clickTimes;
-        RefreshClickText();
+        tmpClick = clickTimes;
 
         fillCircle.fillAmount = 0;
 
@@ -32,7 +30,7 @@ public class LittleGame_Ass : LittleGame
 
     public void Click()
     {
-        value = Mathf.Clamp(value - 1, 0, clickTimes);
+        tmpClick = Mathf.Clamp(tmpClick - 1, 0, clickTimes);
         float addAmount = 1f / clickTimes;
         float prevAmount = fillCircle.fillAmount;
         float nowAmount = prevAmount + addAmount;
@@ -41,10 +39,9 @@ public class LittleGame_Ass : LittleGame
         VibrateExtension.Vibrate(VibrateType.Nope);
         App.system.soundEffect.Play("Button");
         
-        RefreshClickText();
         RefreshClickSpine();
 
-        if (value == 0)
+        if (tmpClick == 0)
         {
             Close();
             Success();
@@ -54,11 +51,6 @@ public class LittleGame_Ass : LittleGame
             anim.SetBool(CatAnimTable.IsCanExit.ToString(), true);
             OpenLobby();
         }
-    }
-
-    private void RefreshClickText()
-    {
-        clickText.text = value.ToString();
     }
 
     private void RefreshClickSpine()

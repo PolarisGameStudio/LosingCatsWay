@@ -14,7 +14,7 @@ public abstract class LittleGame : MvcBehaviour
     [Title("Confirm")] 
     public string titleId;
     public string descriptionId;
-    public ConfirmTable endId;
+    // public ConfirmTable endId;
 
     protected Cat cat;
     protected Animator anim;

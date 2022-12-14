@@ -2,24 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
 
 public class TouchOnHold : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public bool interactable = true;
-    public bool useFixedUpdate = false;
-    [Space(10)]
-
-    public Image targetGraphic;
-    public Color32 enabledColor = Color.white;
-    public Color32 disabledColor = Color.white;
-    [Space(10)]
-
+    public bool useFixedUpdate;
+    
     public UnityEvent OnHoldDown;
 
-    bool OnHold = false;
+    private bool OnHold;
 
     public void OnPointerDown(PointerEventData pointerEventData)
     {
@@ -33,28 +26,20 @@ public class TouchOnHold : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         OnHold = false;
     }
 
-    void Start()
+    private void Start()
     {
-        OnHold = false; //�קK�۰ʶ}�l
-
-        InteractableChecker();
+        OnHold = false;
     }
 
-    void Update()
+    private void Update()
     {
-        InteractableChecker();
-
         if (useFixedUpdate) return;
-
         if (OnHold) OnHoldDown?.Invoke();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        InteractableChecker();
-
         if (!useFixedUpdate) return;
-
         if (OnHold) OnHoldDown?.Invoke();
     }
 
@@ -62,14 +47,4 @@ public class TouchOnHold : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         OnHold = false;
     }
-
-    #region Logic
-
-    void InteractableChecker()
-    {
-        if (interactable) targetGraphic.color = enabledColor;
-        else targetGraphic.color = disabledColor;
-    }
-
-    #endregion
 }

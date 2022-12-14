@@ -1,27 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class LittleGame_Scratching : LittleGame
 {
-    public Image pointCircle;
+    [Title("Game")]
+    public Image fillCircle;
     public float fillSpeed;
 
     public override void StartGame(Cat cat)
     {
         base.StartGame(cat);
-        pointCircle.fillAmount = 0;
+        fillCircle.fillAmount = 0;
     }
     
     public void Drag()
     {
-        pointCircle.fillAmount += fillSpeed;
+        fillCircle.fillAmount += fillSpeed;
         
         App.system.soundEffect.Play("Button");
 
-        if (pointCircle.fillAmount >= 1)
+        if (fillCircle.fillAmount >= 1)
         {
             Close();
 

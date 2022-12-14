@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LittleGame_SmellCat : LittleGame
 {
-    public float zoomSize;
-    public float zoomSpeed;
-    [SerializeField] private Image fillImage;
+    [Title("Game")]
+    [SerializeField] private float zoomSize;
+    [SerializeField] private float zoomSpeed;
+    [SerializeField] private Image fillCircle;
 
     private Camera cam;
     private float originSize;
@@ -18,18 +20,18 @@ public class LittleGame_SmellCat : LittleGame
 
         cam = Camera.main;
         originSize = cam.orthographicSize;
-        fillImage.fillAmount = 0;
+        fillCircle.fillAmount = 0;
     }
 
     public void SmellCat()
     {
-        cam.orthographicSize -= 0.01f * zoomSpeed;
+        cam.orthographicSize -= 0.001f * zoomSpeed;
         
         App.system.soundEffect.Play("Button");
         
         //FillAmount
         float distance = originSize - zoomSize;
-        fillImage.fillAmount += 0.01f * zoomSpeed / distance;
+        fillCircle.fillAmount += 0.001f * zoomSpeed / distance;
 
         if (cam.orthographicSize <= zoomSize)
         {
