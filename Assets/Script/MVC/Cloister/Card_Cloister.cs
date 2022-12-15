@@ -58,10 +58,7 @@ public class Card_Cloister : MvcBehaviour
         expiredDate = losingCatData.CatDiaryData.FlowerExpiredTimestamp.ToDateTime().ToLocalTime();
         
         //CatSkin
-        CloudCatData tmp = new CloudCatData();
-        tmp.CatData = losingCatData.CatData;
-        tmp.CatSkinData = losingCatData.CatSkinData;
-        catSkin.ChangeSkin(tmp);
+        catSkin.ChangeSkin(losingCatData);
         
         //Info
         catNameText.text = losingCatData.CatData.CatName;
@@ -105,7 +102,6 @@ public class Card_Cloister : MvcBehaviour
             App.controller.cloister.Select(-1); //如果在時間到的時候保持選中，則隱藏花
             //TODO DeleteLosingCat
             CancelInvoke(nameof(CountDown));
-            return;
         }
     }
 

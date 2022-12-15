@@ -6,7 +6,7 @@ using UnityEngine;
 public class View_Cloister : ViewBehaviour
 {
     [SerializeField] private CatFlower catFlower;
-    [SerializeField] private GameObject cardPrefab;
+    [SerializeField] private Card_Cloister cardCloister;
     [SerializeField] private Transform cardContent;
     [SerializeField] private GameObject noDataObject;
 
@@ -42,16 +42,13 @@ public class View_Cloister : ViewBehaviour
         List<CloudLosingCatData> datas = (List<CloudLosingCatData>)value;
 
         for (int i = 0; i < cardContent.childCount; i++)
-        {
             Destroy(cardContent.GetChild(i).gameObject);
-        }
 
         noDataObject.SetActive(datas.Count <= 0);
         
         for (int i = 0; i < datas.Count; i++)
         {
-            GameObject tmp = Instantiate(cardPrefab, cardContent);
-            Card_Cloister card = tmp.GetComponent<Card_Cloister>();
+            var card = Instantiate(cardCloister, cardContent);
             card.SetData(datas[i]);
         }
     }

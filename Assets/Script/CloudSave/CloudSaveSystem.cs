@@ -415,7 +415,6 @@ public class CloudSaveSystem : MvcBehaviour
         losingCatData.CatData = cloudCatData.CatData;
         losingCatData.CatSkinData = cloudCatData.CatSkinData;
         losingCatData.CatDiaryData = cloudCatData.CatDiaryData;
-        losingCatData.CatServerData = cloudCatData.CatServerData;
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         var losingCatRef = db.Collection("LosingCats").Document(losingCatData.CatData.CatId);
         await losingCatRef.SetAsync(losingCatData);

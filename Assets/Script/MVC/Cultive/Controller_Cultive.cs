@@ -353,7 +353,7 @@ public class Controller_Cultive : ControllerBehavior
 
             isCanDrag = true;
             OpenClickCat();
-            catSkeleton.AnimationState.Start -= SetEndSensor;
+            entry.Start -= SetEndSensor;
         }
     }
 
@@ -475,7 +475,7 @@ public class Controller_Cultive : ControllerBehavior
         if (entry.Animation.Name.Equals("AI_Main/IDLE_Ordinary01"))
         {
             isCanDrag = true;
-            catSkeleton.AnimationState.Start -= SetEndSensor;
+            entry.Start -= SetClickCatEnd;
         }
     }
 
@@ -606,19 +606,18 @@ public class Controller_Cultive : ControllerBehavior
             catSkin.SetCold();
         }
 
-        var t = catSkeleton.AnimationState.SetAnimation(0, "Rearing_Cat/Rearing_Reject", false);
-        t.Complete += WaitReject;
+        catSkeleton.AnimationState.SetAnimation(0, "Rearing_Cat/Rearing_Reject", false).Complete += WaitReject;
     }
 
     private void WaitReject(TrackEntry entry)
     {
+        isCanDrag = true;
         catSkeleton.AnimationState.Complete -= WaitReject;
         
         var catSkin = App.view.cultive.catSkin;
         catSkin.ChangeSkin(App.model.cultive.SelectedCat.cloudCatData);
 
         catSkeleton.AnimationState.AddAnimation(0, "AI_Main/IDLE_Ordinary01", true, 0);
-        isCanDrag = true;
     }
 
     #endregion

@@ -76,11 +76,7 @@ public class View_Diary : ViewBehaviour
         var data = (CloudLosingCatData)value;
         catFlower.ChangeSkin(data);
         catFlower.DoAnimation(data.CatDiaryData.UsedFlower);
-        
-        CloudCatData tmp = new CloudCatData();
-        tmp.CatData = data.CatData;
-        tmp.CatSkinData = data.CatSkinData;
-        catSkin.ChangeSkin(tmp);
+        catSkin.ChangeSkin(data);
 
         for (int i = 0; i < dots.Length; i++)
         {

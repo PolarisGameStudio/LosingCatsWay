@@ -266,4 +266,22 @@ public class RoomSystem : MvcBehaviour
     }
 
     #endregion
+
+    #region EnableRooms (Performance)
+
+    public void OpenRooms()
+    {
+        for (int i = 0; i < myRooms.Count; i++)
+            if (!myRooms[i].gameObject.activeSelf) 
+                myRooms[i].gameObject.SetActive(true);
+    }
+
+    public void CloseRooms()
+    {
+        for (int i = 0; i < myRooms.Count; i++)
+            if (myRooms[i].gameObject.activeSelf) 
+                myRooms[i].gameObject.SetActive(false);
+    }
+
+    #endregion
 }

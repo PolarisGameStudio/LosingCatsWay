@@ -109,6 +109,45 @@ public class CatSkin : MvcBehaviour
             ChangeKittySkin(cloudCatData);
     }
 
+    public void ChangeSkin(CloudLosingCatData cloudLosingCatData)
+    {
+        CloudCatData cloudCatData = new CloudCatData();
+        cloudCatData.CatData = cloudLosingCatData.CatData;
+        cloudCatData.CatSkinData = cloudLosingCatData.CatSkinData;
+        ChangeLosingCatSkin(cloudCatData);
+    }
+
+    private void ChangeLosingCatSkin(CloudCatData cloudCatData)
+    {
+        if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) != 0)
+        {
+            SetSkeletonDataAsset(false);
+        
+            var catData = cloudCatData.CatData;
+            var catSkinData = cloudCatData.CatSkinData;
+            Skeleton catSkeleton = skeletonGraphic.Skeleton;
+            
+            var variety = catData.Variety.Replace('_', '-');
+
+            // 王若呈那邊ID在靠北
+            if (variety.Contains("Siamese") && !variety.Contains("GT") && !variety.Contains("CT"))
+            {
+                var t = variety.Split('-');
+                variety = t[1] + '-' + t[0];
+            }
+            
+            catSkeleton.SetSkin("Normal_Cat/" + variety);
+            SetSkinAttachment(catSkeleton, catSkinData);
+            SetCatBodyScale(cloudCatData);
+        }
+        else
+        {
+            SetSkeletonDataAsset(true);
+            transform.localPosition = kittyGuiPosition;
+            SetKittyCatBodyScale();
+        }
+    }
+
     private void ChangeCatSkin(CloudCatData cloudCatData)
     {
         Skeleton catSkeleton = null;
@@ -134,7 +173,17 @@ public class CatSkin : MvcBehaviour
         }
 
         catSkeleton.SetSkin("Normal_Cat/" + variety);
+        SetSkinAttachment(catSkeleton, catSkinData);
 
+        var catSickId = cloudCatData.CatHealthData.SickId;
+        if (!String.IsNullOrEmpty(catSickId))
+            SetCatSick(cloudCatData, catSkeleton);
+
+        SetCatBodyScale(cloudCatData);
+    }
+
+    private void SetSkinAttachment(Skeleton catSkeleton, CloudSave_CatSkinData catSkinData)
+    {
         catSkeleton.SetAttachment(slot_beard, key_beard + (catSkinData.BeardIndex + 1));
         catSkeleton.SetAttachment(slot_body, key_body + (catSkinData.BodyIndex + 1));
         catSkeleton.SetAttachment(slot_earLeft, key_earLeft + (catSkinData.EarLeftIndex + 1));
@@ -158,15 +207,6 @@ public class CatSkin : MvcBehaviour
         catSkeleton.SetAttachment(slot_faceAngry, null);
         catSkeleton.SetAttachment(slot_faceCry, null);
         // catSkeleton.SetAttachment(slot_faceSinisterSmile, null);
-
-        var catSickId = cloudCatData.CatHealthData.SickId;
-
-        if (!String.IsNullOrEmpty(catSickId))
-        {
-            SetCatSick(cloudCatData, catSkeleton);
-        }
-
-        SetCatBodyScale(cloudCatData);
     }
 
     private void SetCatSick(CloudCatData cloudCatData, Skeleton catSkeleton)

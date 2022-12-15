@@ -12,6 +12,7 @@ public class Controller_Cloister : ControllerBehavior
 
     public async void Open()
     {
+        App.controller.greenHouse.LockGyro();
         App.view.cloister.Open();
 
         if (!IsLoad)
@@ -30,6 +31,12 @@ public class Controller_Cloister : ControllerBehavior
     public void Close()
     {
         App.view.cloister.Close();
+    }
+
+    public void CloseToGreenHouse()
+    {
+        Close();
+        App.controller.greenHouse.UnlockGyro();
     }
 
     public void OpenDiary()

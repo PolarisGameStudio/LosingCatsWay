@@ -24,7 +24,6 @@ public class Card_FeedItem : MvcBehaviour
     public Image satietyBar;
     public Image moistureBar;
     public Image funBar;
-    public TmpRevolving revolving;
 
     [SerializeField] private Card_ChipInfo chipInfo;
 
@@ -53,11 +52,6 @@ public class Card_FeedItem : MvcBehaviour
     {
         gameObject.SetActive(active);
         catSkin.SetActive(active);
-        
-        if (active)
-            revolving.StartRevolving();
-        else
-            revolving.StopRevolving();
     }
 
     public void Select()

@@ -10,6 +10,7 @@ public class Controller_Lobby : ControllerBehavior
     public void Open()
     {
         App.system.bgm.FadeIn().Play("Lobby");
+        App.system.room.OpenRooms();
         App.view.lobby.Open();
         App.system.catNotify.PopUp();
     }
@@ -23,6 +24,7 @@ public class Controller_Lobby : ControllerBehavior
     public void Close()
     {
         App.view.lobby.Close();
+        App.system.room.CloseRooms();
     }
 
     public void OpenBuildMode()

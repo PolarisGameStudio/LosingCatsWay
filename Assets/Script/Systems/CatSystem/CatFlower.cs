@@ -42,9 +42,8 @@ public class CatFlower : MonoBehaviour
 
         CloudSave_CatData catData = cloudLosingCatData.CatData;
         CloudSave_CatSkinData catSkinData = cloudLosingCatData.CatSkinData;
-        CloudSave_CatServerData catServerData = cloudLosingCatData.CatServerData;
         
-        var variety = catData.Variety;
+        var variety = catData.Variety.Replace('_', '-');
         
         // 王若呈那邊ID在靠北
         if (variety.Contains("Siamese") && !variety.Contains("GT") && !variety.Contains("CT"))
