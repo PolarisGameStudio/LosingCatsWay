@@ -24,7 +24,7 @@ public class DiaryFactory : SerializedMonoBehaviour
 
     private DateTime GetRandomDate(DateTime adoptDate, int days, float min, float max)
     {
-        return adoptDate.AddDays(days * (Random.Range(min, max)));
+        return adoptDate.AddDays(days * Random.Range(min, max));
     }
 
     private string GetDiaryTone(CloudCatData cloudCatData, string diaryId)

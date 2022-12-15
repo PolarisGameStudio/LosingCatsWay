@@ -13,10 +13,8 @@ public class CatchCatSystem : MvcBehaviour
     [SerializeField] private Sprite[] mapSprites;
     public CatchCatMap map;
     public CatchCatRunAway runAway;
-    [SerializeField] private CatchCatG8End G8End;
 
-    [ReadOnly] public bool IsWatchAd = false;
-    private int g8Index;
+    [ReadOnly] public bool IsWatchAd;
 
     public void Active(int index, CloudCatData cloudCatData, bool isTutorial = false)
     {
@@ -24,7 +22,6 @@ public class CatchCatSystem : MvcBehaviour
         
         catchCatBg.sprite = mapSprites[index];
         map.IsTutorial = isTutorial;
-        g8Index = index;
         
         map.Open(cloudCatData);
         view.Show();
@@ -33,10 +30,5 @@ public class CatchCatSystem : MvcBehaviour
     public void Close()
     {
         view.InstantHide();
-    }
-
-    public void ActiveG8End(CloudCatData cloudCatData, Callback callback)
-    {
-        G8End.Active(g8Index, cloudCatData, callback);
     }
 }

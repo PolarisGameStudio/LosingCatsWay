@@ -817,4 +817,19 @@ public class Controller_Cultive : ControllerBehavior
     }
 
     #endregion
+    
+    //TODO Debug
+    public void DebugSick()
+    {
+        App.model.cultive.SelectedCat.SetSick();
+        App.view.cultive.catSkin.ChangeSkin(App.model.cultive.SelectedCat.cloudCatData);
+        App.system.cloudSave.UpdateCloudCatHealthData(App.model.cultive.SelectedCat.cloudCatData);
+    }
+
+    public void DebugDead()
+    {
+        App.model.cultive.SelectedCat.cloudCatData.CatServerData.IsDead = true;
+        App.view.cultive.catSkin.ChangeSkin(App.model.cultive.SelectedCat.cloudCatData);
+        App.system.cloudSave.UpdateCloudCatServerData(App.model.cultive.SelectedCat.cloudCatData);
+    }
 }

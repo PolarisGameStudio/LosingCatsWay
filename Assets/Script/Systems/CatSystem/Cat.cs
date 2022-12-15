@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using DG.Tweening;
+using Doozy.Runtime.Common.Extensions;
 using Firebase.Firestore;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -578,9 +579,15 @@ public class Cat : MvcBehaviour
         
         App.model.entrance.OpenType = 1;
         App.system.catNotify.Remove(this);
+
+        // 造型給我還回來
+        if (!cloudCatData.CatSkinData.UseSkinId.IsNullOrEmpty())
+            App.factory.itemFactory.GetItem(cloudCatData.CatSkinData.UseSkinId).Count += 1;
+        
         cloudCatData.CatData.DeathTime = Timestamp.GetCurrentTimestamp();
         cloudCatData.CatDiaryData.FlowerExpiredTimestamp = Timestamp.FromDateTime(App.system.myTime.MyTimeNow.AddDays(7));
         cloudCatData.CatDiaryData.DiaryDatas = App.factory.diaryFactory.GetDiaryDatas(cloudCatData);
+        
         App.system.cat.SetDead(this);
     }
 
@@ -606,12 +613,14 @@ public class Cat : MvcBehaviour
     public void SetSick()
     {
         cloudCatData.CatHealthData.SickId = App.factory.sickFactory.GetSick(cloudCatData);
+        catSkin.ChangeSkin(cloudCatData);
     }
 
     [Button]
     public void SetDeadSick()
     {
         cloudCatData.CatHealthData.SickId = "SK001";
+        catSkin.ChangeSkin(cloudCatData);
     }
 
     [Button]

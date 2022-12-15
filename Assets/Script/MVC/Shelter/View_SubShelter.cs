@@ -104,12 +104,4 @@ public class View_SubShelter : ViewBehaviour
         idButton.interactable = cloudCatData.CatHealthData.IsChip;
         blackMask.SetActive(!cloudCatData.CatHealthData.IsChip);
     }
-
-    public void CopyID()
-    {
-        //TODO �ѽ��X
-        string CatId = App.model.shelter.SelectedAdoptCloudCatData.CatData.CatId;
-        CatId.CopyToClipboard();
-        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Copied);
-    }
 }

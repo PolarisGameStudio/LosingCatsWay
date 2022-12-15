@@ -345,6 +345,17 @@ public class CloudSaveSystem : MvcBehaviour
         };
         await docRef.UpdateAsync(updates);
     }
+    
+    public async void UpdateCloudCatServerData(CloudCatData cloudCatData)
+    {
+        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+        DocumentReference docRef = db.Collection("Cats").Document(cloudCatData.CatData.CatId);
+        Dictionary<string, object> updates = new Dictionary<string, object>
+        {
+            { "CatServerData", cloudCatData.CatServerData }
+        };
+        await docRef.UpdateAsync(updates);
+    }
 
     public async Task<List<CloudCatData>> LoadCloudCatDatas()
     {

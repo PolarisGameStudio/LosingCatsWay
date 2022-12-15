@@ -69,8 +69,8 @@ public class MyApplication : MonoBehaviour
 
         system.transition.OnlyClose();
 
-        // if (backStatus != 2)
-        //     system.openFlow.Init();
+        if (backStatus != 2)
+            system.openFlow.Init();
 
         // MyTime 一定要放最後
         system.myTime.Init();

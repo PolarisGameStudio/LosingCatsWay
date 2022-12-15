@@ -86,8 +86,6 @@ public class CatchCatMap : MvcBehaviour
 
     [HideInInspector] public bool IsTutorial;
 
-    [Title("G8")] [SerializeField] private bool isG8;
-
     #endregion
 
     #region 基本開關+暫停離開
@@ -154,12 +152,6 @@ public class CatchCatMap : MvcBehaviour
 
     public void Exit()
     {
-        if (isG8)
-        {
-            App.system.confirm.Active(ConfirmTable.ExitComfirm, CloseToG8);
-            return;
-        }
-        
         App.system.confirm.Active(ConfirmTable.ExitComfirm, () =>
         {
             SetCatNotUse();
@@ -169,33 +161,11 @@ public class CatchCatMap : MvcBehaviour
 
     private void GameEndAction()
     {
-        if (isG8)
-            return;
-        
         App.system.player.AddExp(exp);
         App.system.player.Coin += coin;
 
         for (int i = 0; i < usedItems.Count; i++)
             usedItems[i].Count--;
-    }
-
-    private void CloseToG8()
-    {
-        if (!isG8)
-            return;
-        
-        for (int i = 0; i < cardPersonalitys.Length; i++)
-        {
-            cardPersonalitys[i].isCanFlip = false;
-            cardPersonalitys[i].DoPopCard();
-        }
-
-        App.system.transition.OnlyOpen();
-        DOVirtual.DelayedCall(0.5f, () =>
-        {
-            Close();
-            App.system.findCat.ActiveCurrentGate();
-        });
     }
 
     #endregion
@@ -548,11 +518,9 @@ public class CatchCatMap : MvcBehaviour
         if (index < 0)
             index = 0;
         
-        float chance = runChance + runChances[index];
+        //float chance = runChance + runChances[index];
+        float chance = runChance;
         chance = Mathf.Clamp(chance, 0f, 100f);
-        
-        if (isG8 && index < runChances.Length - 1)
-            chance = 0;
         
         if (Random.value < chance)
             return true;
@@ -589,13 +557,6 @@ public class CatchCatMap : MvcBehaviour
     {
         catSkin.SetActive(false);
 
-        if (isG8)
-        {
-            App.system.cloudSave.DeleteCloudCatData(cloudCatData);
-            App.system.catchCat.ActiveG8End(cloudCatData, CloseToG8);
-            return;
-        }
-        
         SetCatNotUse();
         
         App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchGameSuccess, () =>
@@ -620,12 +581,6 @@ public class CatchCatMap : MvcBehaviour
         if (turn >= 7)
         {
             SetCatNotUse();
-            
-            if (isG8)
-            {
-                App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchGameFailed, CloseToG8);
-                return;
-            }
             
             App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchCatGameEnd, () =>
             {

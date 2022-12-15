@@ -11,6 +11,7 @@ public class View_SubInfo_Status : ViewBehaviour
 {
     [SerializeField] private TextMeshProUGUI catNameText;
     [SerializeField] private TextMeshProUGUI catVarietyText;
+    [SerializeField] private Card_ChipInfo chipInfo;
     
     [Title("Gender")]
     [SerializeField] private TextMeshProUGUI catSexText;
@@ -48,21 +49,30 @@ public class View_SubInfo_Status : ViewBehaviour
     [SerializeField] private Image moistureBar;
     [SerializeField] private Image favorabilityBar;
 
-    [Title("TraitColor")] [SerializeField] private Color32 commonTraitColor;
-    [SerializeField] private Color32 rareTraitColor;
-    [SerializeField] private Color32 ssrTraitColor;
-
     public override void Init()
     {
         base.Init();
         App.model.information.OnSelectedCatChange += OnSelectedCatChange;
     }
-    
+
+    public override void Open()
+    {
+        chipInfo.CloseInfo();
+        base.Open();
+    }
+
+    public override void Close()
+    {
+        chipInfo.CloseInfo();
+        base.Close();
+    }
+
     private void OnSelectedCatChange(object value)
     {
         var cat = (Cat)value;
 
         catNameText.text = cat.cloudCatData.CatData.CatName;
+        chipInfo.SetData(cat.cloudCatData);
 
         catSizeText.text = $"{CatExtension.GetCatRealSize(cat.cloudCatData.CatData.BodyScale):0.00}cm";
 
@@ -76,9 +86,9 @@ public class View_SubInfo_Status : ViewBehaviour
         catSexImage.sprite = App.factory.catFactory.GetCatSexSpriteEW(cat.cloudCatData.CatData.Sex);
         ligationImage.SetActive(cat.cloudCatData.CatHealthData.IsLigation);
 
-        satietyBar.DOFillAmount((cat.cloudCatData.CatSurviveData.Satiety / 100f), .75f).From(0).SetEase(Ease.OutExpo).SetDelay(0.1875f);
-        moistureBar.DOFillAmount((cat.cloudCatData.CatSurviveData.Moisture / 100f), .75f).From(0).SetEase(Ease.OutExpo).SetDelay(0.1875f + 0.1f);
-        favorabilityBar.DOFillAmount((cat.cloudCatData.CatSurviveData.Favourbility / 100f), .75f).From(0).SetEase(Ease.OutExpo).SetDelay(0.1875f + 0.2f);
+        satietyBar.DOFillAmount(cat.cloudCatData.CatSurviveData.Satiety / 100f, .75f).From(0).SetEase(Ease.OutExpo).SetDelay(0.1875f);
+        moistureBar.DOFillAmount(cat.cloudCatData.CatSurviveData.Moisture / 100f, .75f).From(0).SetEase(Ease.OutExpo).SetDelay(0.1875f + 0.1f);
+        favorabilityBar.DOFillAmount(cat.cloudCatData.CatSurviveData.Favourbility / 100f, .75f).From(0).SetEase(Ease.OutExpo).SetDelay(0.1875f + 0.2f);
 
         satietyValueText.text = Convert.ToInt32(cat.cloudCatData.CatSurviveData.Satiety) + "/100%";
         favorabilityValueText.text = Convert.ToInt32(cat.cloudCatData.CatSurviveData.Favourbility) + "/100%";
@@ -90,9 +100,9 @@ public class View_SubInfo_Status : ViewBehaviour
         moistureValueText_Back.text = Convert.ToInt32(cat.cloudCatData.CatSurviveData.Moisture) + "/100%";
 
         healthText.text =
-            (String.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId)) ? App.factory.stringFactory.GetHealthString() : App.factory.stringFactory.GetSickString();
+            String.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId) ? App.factory.stringFactory.GetHealthString() : App.factory.stringFactory.GetSickString();
 
-        catSexText.text = (cat.cloudCatData.CatData.Sex == 0) ? App.factory.stringFactory.GetBoyString() : App.factory.stringFactory.GetGirlString();
+        catSexText.text = cat.cloudCatData.CatData.Sex == 0 ? App.factory.stringFactory.GetBoyString() : App.factory.stringFactory.GetGirlString();
 
         int mood = CatExtension.GetCatMood(cat.cloudCatData);
         moodImage.sprite = App.factory.catFactory.GetMoodSprite(mood);

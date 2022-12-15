@@ -205,4 +205,15 @@ public class Controller_Shelter : ControllerBehavior
     }
 
     #endregion
+
+    #region SubShelter
+
+    public void CopySubShelterCatId()
+    {
+        string CatId = App.model.shelter.SelectedAdoptCloudCatData.CatData.CatId;
+        CatId.CopyToClipboard();
+        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Copied);
+    }
+
+    #endregion
 }

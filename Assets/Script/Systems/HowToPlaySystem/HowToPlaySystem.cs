@@ -114,5 +114,5 @@ public class HowToPlaySystem : MvcBehaviour
         // rightButton.gameObject.SetActive(index < descriptStrings.Length - 1);
         if (!IsTutorial) return;
         startButton.gameObject.SetActive(index == descriptStrings.Length - 1);
-    } 
+    }
 }

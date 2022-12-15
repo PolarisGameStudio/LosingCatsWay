@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8936897912154947603}
   - component: {fileID: 215133336406167852}
   - component: {fileID: 7130374475728962587}
-  - component: {fileID: 6602700819971754905}
-  m_Layer: 0
+  - component: {fileID: 2912379957906710528}
+  m_Layer: 8
   m_Name: BigGameBubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,8 +72,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -746322295
+  m_SortingLayer: 1
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 89d1317d69ba1d14aa4c32b421eeb8ab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -99,7 +99,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -110,9 +110,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 3, y: 2}
   m_EdgeRadius: 0
---- !u!114 &6602700819971754905
+--- !u!114 &2912379957906710528
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 758282805978108681}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0e342617cb44a14da10e7d1849ed496, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c7853cc7f6a6d14c8485456dda2e595, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   OnSelected:
@@ -5331,7 +5331,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
+  m_SortingLayerID: -746322295
   m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &8659286748323154124
@@ -5416,8 +5416,8 @@ GameObject:
   - component: {fileID: 6353266052384891456}
   - component: {fileID: 3575410737580985016}
   - component: {fileID: 1521455901608583206}
-  - component: {fileID: 8741093911447261300}
-  m_Layer: 0
+  - component: {fileID: 1306866532153160000}
+  m_Layer: 8
   m_Name: LittleGameBubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5477,8 +5477,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -746322295
+  m_SortingLayer: 1
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: b6b576ca9abb9fb4f9b61bd2e41762c0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5504,7 +5504,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5515,9 +5515,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 3, y: 2}
   m_EdgeRadius: 0
---- !u!114 &8741093911447261300
+--- !u!114 &1306866532153160000
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5526,7 +5526,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3897883591460438260}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0e342617cb44a14da10e7d1849ed496, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c7853cc7f6a6d14c8485456dda2e595, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   OnSelected:
@@ -5698,9 +5698,9 @@ GameObject:
   - component: {fileID: -5621480718031308782}
   - component: {fileID: 4512927224500718099}
   - component: {fileID: 9182607496572841206}
-  - component: {fileID: 2219577488557749924}
-  - component: {fileID: 1012070818156611520}
-  m_Layer: 0
+  - component: {fileID: 2354505712173441845}
+  - component: {fileID: 2835929198818567098}
+  m_Layer: 8
   m_Name: KittyCatObject
   m_TagString: Cat
   m_Icon: {fileID: 0}
@@ -5963,7 +5963,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offsetY: -0.7
---- !u!114 &2219577488557749924
+  agent: {fileID: 7089325040683128256}
+  animator: {fileID: 3993597551386912298}
+  cat: {fileID: 1297879765970711033}
+--- !u!114 &2354505712173441845
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5972,7 +5975,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8602726242278831696}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0e342617cb44a14da10e7d1849ed496, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c7853cc7f6a6d14c8485456dda2e595, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   OnSelected:
@@ -5990,7 +5993,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1012070818156611520
+--- !u!114 &2835929198818567098
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5999,13 +6002,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8602726242278831696}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f29ce2f9c1f6594cba1b48f467eaef5, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e75c9c2413a3aa46bcc0a1e42ff122f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DragBegin:
-    m_PersistentCalls:
-      m_Calls: []
-  Drag:
+  useBeginDrag: 0
+  useEndDrag: 1
+  m_OnDrag:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9182607496572841206}
@@ -6020,7 +6022,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  DragEnd:
+  m_OnBeginDrag:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnEndDrag:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9182607496572841206}

@@ -8,15 +8,16 @@ public class CatPicker : MvcBehaviour
     #region Variable
 
     [SerializeField] private float offsetY;
+    [SerializeField] private PolyNavAgent agent;
+    [SerializeField] private Animator animator;
+    [SerializeField] private Cat cat;
 
-    Camera cam;
-    LeanPinchCamera pinchCam;
-    LeanDragCamera dragCam;
+    private Camera cam;
+    private LeanPinchCamera pinchCam;
+    private LeanDragCamera dragCam;
 
-    PolyNavAgent agent;
-    Animator animator;
-
-    private Cat cat;
+    private Vector3 startPosition = Vector3.zero;
+    private bool isPicking;
 
     #endregion
 
@@ -25,16 +26,11 @@ public class CatPicker : MvcBehaviour
     private void Start()
     {
         cam = Camera.main;
-        cat = GetComponent<Cat>();
-        
         pinchCam = cam.GetComponent<LeanPinchCamera>();
         dragCam = cam.GetComponent<LeanDragCamera>();
-
-        agent = GetComponent<PolyNavAgent>();
-        animator = GetComponent<Animator>();
     }
 
-    void Active()
+    private void Active()
     {
         App.controller.lobby.Close();
         App.view.followCat.Close();
@@ -43,6 +39,8 @@ public class CatPicker : MvcBehaviour
 
         //1.Stop AI
         agent.Stop();
+        SetStartPosition();
+        isPicking = true;
 
         //2.Stop animator
         for (int i = 0; i < animator.parameters.Length; i++)
@@ -58,15 +56,34 @@ public class CatPicker : MvcBehaviour
         animator.Play("PickCat");
     }
 
-    void Cancel()
+    private void Cancel()
     {
+        isPicking = false;
         App.controller.lobby.Open();
-
-        //1.Trigger animator
         animator.SetTrigger("OnPick");
+        CheckCatCanStand();
+    }
 
-        //2.Start AI
-        agent.Stop();
+    private void SetStartPosition()
+    {
+        if (isPicking)
+            return;
+        startPosition = cat.transform.position;
+    }
+
+    private void CheckCatCanStand()
+    {
+        var position = cat.transform.position;
+        int gridX = (int)(position.x / 5.12);
+        int gridY = (int)(position.y / 5.12);
+
+        int gridValue = App.system.grid.GetGrid(gridX, gridY).Value;
+
+        if (gridValue != 1)
+        {
+            cat.transform.position = startPosition;
+            cat.Reset();
+        }
     }
 
     #endregion

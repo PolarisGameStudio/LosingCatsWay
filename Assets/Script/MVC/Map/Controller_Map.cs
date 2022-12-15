@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 public class Controller_Map : ControllerBehavior
 {
-    [Title("G8")] [SerializeField] private bool isG8;
     [SerializeField] private UIButton lobbyMapButton;
     [SerializeField] private GameObject lobbyMapMask;
     
@@ -83,12 +82,6 @@ public class Controller_Map : ControllerBehavior
 
     public void Close()
     {
-        if (isG8)
-        {
-            lobbyMapButton.interactable = false;
-            lobbyMapMask.SetActive(true);
-        }
-        
         App.system.cat.ToggleCatsGameTimer(false);
         App.system.bgm.FadeOut();
         App.system.transition.Active(0, () =>
