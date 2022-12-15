@@ -18,6 +18,7 @@ public static class MyAnimationTable
             "Rearing_LookFeet_Sit",
             "Rearing_Look_IDLE",
             "Rearing_Look_Sit",
+            "Rearing_Rub_IDLE",
             "Rearing_Rub_Sit",
             "Rearing_Smile_IDLE",
             "Rearing_Smile_Sit"

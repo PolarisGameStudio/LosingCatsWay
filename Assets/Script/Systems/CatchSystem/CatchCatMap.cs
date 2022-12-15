@@ -909,7 +909,7 @@ public class CatchCatMap : MvcBehaviour
 
     private void SpineCatHappy()
     {
-        TrackEntry t = catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "Catch_Cat/Catch_Win", false);
+        TrackEntry t = catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "Rearing_Cat/Rearing_Rub_IDLE", false);
         t.Complete += WaitSpineIdle;
     }
 
@@ -950,6 +950,8 @@ public class CatchCatMap : MvcBehaviour
     {
         TrackEntry t = catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "Catch_Cat/Catch_Win", false);
         t.Complete += WaitSpineCatCatchWin;
+        
+        catSkin.SetLove();
     }
 
     private void WaitSpineCatCatchFail(TrackEntry trackEntry)
@@ -968,6 +970,8 @@ public class CatchCatMap : MvcBehaviour
 
     private void WaitSpineCatCatchWin(TrackEntry trackEntry)
     {
+        catSkin.ChangeSkin(cloudCatData);
+
         trackEntry.Complete -= WaitSpineCatCatchWin;
         Gotcha();
     }

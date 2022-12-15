@@ -64,7 +64,10 @@ public enum CatAnimTable
     TraitIndex,
     ToTrait,
     
-    SpcialSpineRoomId
+    SpcialSpineRoomId,
+    
+    IsPersonality,
+    Personality
 }
 
 public enum ItemType
