@@ -43,7 +43,9 @@ public class CatSkin : MvcBehaviour
     private string slot_faceCold = "Face_Cold";
     private string slot_faceAngry = "Face_Angry";
     private string slot_faceCry = "Face_Cry";
-    private string slot_faceSinisterSmile = "Face_Sinister Smile";
+    private string slot_faceLove = "Face_Love";
+    
+    // private string slot_faceSinisterSmile = "Face_Sinister Smile";
 
     #endregion
 
@@ -71,6 +73,8 @@ public class CatSkin : MvcBehaviour
     private string key_faceAngry = "Face_Angry";
     private string key_faceCold = "Face_Cold";
     private string key_faceCry = "Face_Cry";
+    private string key_faceLove = "Face_Love";
+    
     private string key_sinisterSmile = "Face_Sinister Smile";
 
     #endregion
@@ -153,7 +157,7 @@ public class CatSkin : MvcBehaviour
         catSkeleton.SetAttachment(slot_faceCold, null);
         catSkeleton.SetAttachment(slot_faceAngry, null);
         catSkeleton.SetAttachment(slot_faceCry, null);
-        catSkeleton.SetAttachment(slot_faceSinisterSmile, null);
+        // catSkeleton.SetAttachment(slot_faceSinisterSmile, null);
 
         var catSickId = cloudCatData.CatHealthData.SickId;
 
@@ -283,7 +287,7 @@ public class CatSkin : MvcBehaviour
         else
             catSkeleton = skeletonMecanim.Skeleton;
 
-        CloseFace(catSkeleton);
+        CloseFace();
         catSkeleton.SetAttachment(slot_faceAngry, key_faceAngry);
     }
     
@@ -296,7 +300,7 @@ public class CatSkin : MvcBehaviour
         else
             catSkeleton = skeletonMecanim.Skeleton;
         
-        CloseFace(catSkeleton);
+        CloseFace();
         catSkeleton.SetAttachment(slot_faceCold, key_faceCold);
     }
 
@@ -309,7 +313,7 @@ public class CatSkin : MvcBehaviour
         else
             catSkeleton = skeletonMecanim.Skeleton;
         
-        CloseFace(catSkeleton);
+        CloseFace();
         catSkeleton.SetAttachment(slot_faceCry, key_faceCry);
     }
     
@@ -322,12 +326,32 @@ public class CatSkin : MvcBehaviour
         else
             catSkeleton = skeletonMecanim.Skeleton;
         
-        CloseFace(catSkeleton);
-        catSkeleton.SetAttachment(slot_faceSinisterSmile, key_sinisterSmile);
+        CloseFace();
+        // catSkeleton.SetAttachment(slot_faceSinisterSmile, key_sinisterSmile);
     }
 
-    private void CloseFace(Skeleton catSkeleton)
+    public void SetLove()
     {
+        Skeleton catSkeleton = null;
+        
+        if (isGUI)
+            catSkeleton = skeletonGraphic.Skeleton;
+        else
+            catSkeleton = skeletonMecanim.Skeleton;
+        
+        CloseFace();
+        catSkeleton.SetAttachment(slot_faceLove, key_faceLove);
+    }
+
+    public void CloseFace()
+    {
+        Skeleton catSkeleton = null;
+        
+        if (isGUI)
+            catSkeleton = skeletonGraphic.Skeleton;
+        else
+            catSkeleton = skeletonMecanim.Skeleton;
+        
         catSkeleton.SetAttachment(slot_eyeLeft, null);
         catSkeleton.SetAttachment(slot_eyeRight, null);
         catSkeleton.SetAttachment(slot_mouthAndNose, null);

@@ -8,7 +8,7 @@ using Firebase.Auth;
 
 public class DebugTool_Cat
 {   
-    public async void CreateCat(string owner)
+    public async void CreateCat(string owner, bool isAdult)
     {
         CloudCatData cloudCatData = new CloudCatData();
 
@@ -24,7 +24,12 @@ public class DebugTool_Cat
         catData.Trait = GetRandomTrait();
         catData.DeathTime = new Timestamp();
         catData.IsFavorite = false;
-        catData.BornTime = Timestamp.GetCurrentTimestamp();
+        
+        if (isAdult)
+            catData.BornTime = Timestamp.GetCurrentTimestamp();
+        else
+            catData.BornTime = Timestamp.FromDateTime(Timestamp.GetCurrentTimestamp().ToDateTime() - TimeSpan.FromDays(5));
+        
         catData.ChipId = String.Empty;
 
         CloudSave_CatSkinData catSkinData = new CloudSave_CatSkinData();

@@ -637,4 +637,9 @@ public class Cat : MvcBehaviour
     {
         catSkin.ChangeSkin(cloudCatData);
     }
+
+    public void CloseFace()
+    {
+        catSkin.CloseFace();
+    }
 }

@@ -11,23 +11,41 @@ public class DebugTool : MonoBehaviour
     DebugTool_Cat cat = new DebugTool_Cat();
 
     [Button]
-    public void CreateCatAtShelter()
+    public void CreateAdultCatAtShelter()
     {
-        cat.CreateCat("Shelter");
+        cat.CreateCat("Shelter", true);
     }
 
     [Button]
-    public void CreateCatAtMap()
+    public void CreateAdultCatAtMap()
     {
         int index = Random.Range(0, 2);
-        cat.CreateCat($"Location{index}");
+        cat.CreateCat($"Location{index}", true);
+    }
+    
+    [Button]
+    public void CreateChildCatAtShelter()
+    {
+        cat.CreateCat("Shelter", false);
+    }
+
+    [Button]
+    public void CreateChildCatAtMap()
+    {
+        int index = Random.Range(0, 2);
+        cat.CreateCat($"Location{index}", false);
     }
 
     [Button]
     public void Test()
     {
-        print(LocalizationManager.CurrentLanguage);
-        print(LocalizationManager.CurrentRegionCode);
-        print(LocalizationManager.CurrentLanguageCode);
+        List<int> r = new List<int>();
+        
+        r.Add(0);
+        r.Add(1);
+        r.Add(2);
+        r.Add(3);
+        
+        print(r.FindIndex(x => x == 4));
     }
 }
