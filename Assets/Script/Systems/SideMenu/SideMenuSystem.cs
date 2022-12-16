@@ -1,11 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Doozy.Runtime.UIManager.Containers;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SideMenuSystem : MvcBehaviour
 {
@@ -14,12 +12,15 @@ public class SideMenuSystem : MvcBehaviour
 
     [Title("Panel")] [SerializeField] private RectTransform bgRect;
     [SerializeField] private float duration;
-    [SerializeField] private Button button;
 
     [Title("DoTween")] [SerializeField] private RectTransform[] buttonRects;
 
     private Vector2 origin;
     private Vector2 offset;
+
+    public Callback OnOpen;
+    /// 沒有任何操作就關掉
+    public Callback OnOnlyClose;
 
     private void Start()
     {
@@ -30,21 +31,30 @@ public class SideMenuSystem : MvcBehaviour
 
     public void Open()
     {
+        OnOpen?.Invoke();
+        OnOpen = null;
+        
         uiView.Show();
         bgRect.DOAnchorPos(origin, duration).SetEase(Ease.OutExpo);
-        button.interactable = true;
-
         for (int i = 0; i < buttonRects.Length; i++)
-        {
             buttonRects[i].DOScale(Vector2.one, 0.15f).From(Vector2.zero).SetDelay(0.05f * (i + 1));
-        }
     }
 
-    public void Close()
+    private void Close()
     {
-        button.interactable = false;
         bgRect.DOAnchorPos(offset, duration).SetEase(Ease.InSine);
         DOVirtual.DelayedCall(duration * 0.75f, uiView.Hide);
+
+        OnOnlyClose = null;
+    }
+    
+    public void OnlyClose()
+    {
+        bgRect.DOAnchorPos(offset, duration).SetEase(Ease.InSine);
+        DOVirtual.DelayedCall(duration * 0.75f, uiView.Hide);
+        
+        OnOnlyClose?.Invoke();
+        OnOnlyClose = null;
     }
 
     #region ButtonEvents

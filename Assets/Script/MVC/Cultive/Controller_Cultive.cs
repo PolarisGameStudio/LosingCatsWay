@@ -74,6 +74,8 @@ public class Controller_Cultive : ControllerBehavior
 
             if (index == 0)
                 App.controller.feed.Open();
+            if (index == 1)
+                App.controller.followCat.Select(App.model.followCat.SelectedCat);
         });
     }
 
@@ -390,7 +392,9 @@ public class Controller_Cultive : ControllerBehavior
         
         funEffects.Play();
         funPop.Pop(40);
-        DOVirtual.DelayedCall(1.5f, () => App.model.cultive.SelectedCat = App.model.cultive.SelectedCat);
+        
+        var t = catSkeleton.AnimationState.SetAnimation(0, "Rearing_Cat/Rearing_Smile_IDLE", false);
+        DOVirtual.DelayedCall(t.Animation.Duration, () => App.model.cultive.SelectedCat = App.model.cultive.SelectedCat);
         
         OnChangeLitter?.Invoke();
     }
@@ -776,8 +780,7 @@ public class Controller_Cultive : ControllerBehavior
         if (index == -1)
         {
             // 脫
-            //TODO Save ItemCount
-            
+            App.system.cloudSave.UpdateCloudItemData();
             OpenChooseSkin();
             App.system.cat.RefreshCatSkin();
             return;
@@ -785,8 +788,7 @@ public class Controller_Cultive : ControllerBehavior
 
         Item skinItem = App.model.cultive.SkinItems[index];
         skinItem.Count--;
-        //TODO Save ItemCount
-        
+        App.system.cloudSave.UpdateCloudItemData();
         OpenChooseSkin();
         App.system.cat.RefreshCatSkin();
     }

@@ -84,6 +84,7 @@ public class Controller_Map : ControllerBehavior
     {
         App.system.cat.ToggleCatsGameTimer(false);
         App.system.bgm.FadeOut();
+        App.system.room.OpenRooms();
         App.system.transition.Active(0, () =>
         {
             App.view.map.Close();

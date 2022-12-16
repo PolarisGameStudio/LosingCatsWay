@@ -12,29 +12,32 @@ public class Item : ScriptableObject
 
     #region Feed
 
-    [ShowIf("itemType", ItemType.Feed)] [BoxGroup("Feed")] [EnumPaging]
+    [ShowIf("itemType", ItemType.Feed), BoxGroup("Feed"), EnumPaging]
     public ItemFeedType itemFeedType;
 
-    [ShowIf("itemType", ItemType.Feed)] [BoxGroup("Feed")] [EnumPaging]
+    [ShowIf("itemFeedType", ItemFeedType.Food), BoxGroup("Feed"), EnumPaging]
     public FoodType foodType;
 
-    [ShowIf("itemFeedType", ItemFeedType.Snack)] [BoxGroup("Feed")] [EnumPaging]
+    [ShowIf("itemFeedType", ItemFeedType.Snack), BoxGroup("Feed"), EnumPaging]
     public SnackType snackType;
+    
+    [ShowIf("itemFeedType", ItemFeedType.Water), BoxGroup("Feed"), EnumPaging]
+    public WaterType waterType;
 
     [Title("LikeValue")]
-    [ShowIf("itemType", ItemType.Feed)] [BoxGroup("Feed")] public int likeSatiety;
-    [ShowIf("itemType", ItemType.Feed)] [BoxGroup("Feed")] public int likeMoisture;
-    [ShowIf("itemType", ItemType.Feed)] [BoxGroup("Feed")] public int likeFun;
+    [ShowIf("itemType", ItemType.Feed), BoxGroup("Feed")] public int likeSatiety;
+    [ShowIf("itemType", ItemType.Feed), BoxGroup("Feed")] public int likeMoisture;
+    [ShowIf("itemType", ItemType.Feed), BoxGroup("Feed")] public int likeFun;
 
     [Title("NormalValue")]
-    [ShowIf("itemType", ItemType.Feed)] [BoxGroup("Feed")] public int normalSatiety;
-    [ShowIf("itemType", ItemType.Feed)] [BoxGroup("Feed")] public int normalMoisture;
-    [ShowIf("itemType", ItemType.Feed)] [BoxGroup("Feed")] public int normalFun;
+    [ShowIf("itemType", ItemType.Feed), BoxGroup("Feed")] public int normalSatiety;
+    [ShowIf("itemType", ItemType.Feed), BoxGroup("Feed")] public int normalMoisture;
+    [ShowIf("itemType", ItemType.Feed), BoxGroup("Feed")] public int normalFun;
     
     [Title("HateValue")]
-    [ShowIf("itemType", ItemType.Feed)] [BoxGroup("Feed")] public int hateSatiety;
-    [ShowIf("itemType", ItemType.Feed)] [BoxGroup("Feed")] public int hateMoisture;
-    [ShowIf("itemType", ItemType.Feed)] [BoxGroup("Feed")] public int hateFun;
+    [ShowIf("itemType", ItemType.Feed), BoxGroup("Feed")] public int hateSatiety;
+    [ShowIf("itemType", ItemType.Feed), BoxGroup("Feed")] public int hateMoisture;
+    [ShowIf("itemType", ItemType.Feed), BoxGroup("Feed")] public int hateFun;
 
     #endregion
 

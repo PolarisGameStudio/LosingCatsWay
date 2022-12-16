@@ -52,4 +52,11 @@ public class Controller_GreenHouse : ControllerBehavior
     }
 
     #endregion
+
+    public void OpenSideMenu()
+    {
+        App.system.sideMenu.OnOpen = LockGyro;
+        App.system.sideMenu.OnOnlyClose = UnlockGyro;
+        App.system.sideMenu.Open();
+    }
 }

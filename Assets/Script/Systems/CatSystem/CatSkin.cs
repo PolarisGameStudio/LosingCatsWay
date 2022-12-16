@@ -44,6 +44,7 @@ public class CatSkin : MvcBehaviour
     private string slot_faceAngry = "Face_Angry";
     private string slot_faceCry = "Face_Cry";
     private string slot_faceLove = "Face_Love";
+    private string slot_faceDocile = "Face_Docile";
     
     // private string slot_faceSinisterSmile = "Face_Sinister Smile";
 
@@ -76,6 +77,8 @@ public class CatSkin : MvcBehaviour
     private string key_faceLove = "Face_Love";
     
     private string key_sinisterSmile = "Face_Sinister Smile";
+
+    private string key_docile = "Face_Docile";
 
     #endregion
 
@@ -387,6 +390,19 @@ public class CatSkin : MvcBehaviour
         catSkeleton.SetAttachment(slot_faceLove, key_faceLove);
     }
 
+    public void SetDocile()
+    {
+        Skeleton catSkeleton = null;
+        
+        if (isGUI)
+            catSkeleton = skeletonGraphic.Skeleton;
+        else
+            catSkeleton = skeletonMecanim.Skeleton;
+        
+        CloseFace();
+        catSkeleton.SetAttachment(slot_faceDocile, key_docile);
+    }
+
     public void CloseFace()
     {
         Skeleton catSkeleton = null;
@@ -453,6 +469,13 @@ public class CatSkin : MvcBehaviour
             case "SantaHat":
                 catSkeleton.SetAttachment("SantaHat", "SantaHat");
                 break;
+            case "Flyfish":
+                catSkeleton.SetAttachment("Flyfish", "Flyfish");
+                break;
+            case "Robot":
+                catSkeleton.SetAttachment("Robot_Card", "Robot_Card");
+                catSkeleton.SetAttachment("Robot_Wire", "Robot_Wire");
+                break;
         }
         
         // 額外要開的
@@ -505,6 +528,13 @@ public class CatSkin : MvcBehaviour
         
         //SantaHat
         catSkeleton.SetAttachment("SantaHat", null);
+        
+        //Flyfish
+        catSkeleton.SetAttachment("Flyfish", null);
+        
+        //Robot
+        catSkeleton.SetAttachment("Robot_Card", null);
+        catSkeleton.SetAttachment("Robot_Wire", null);
     }
 
     #endregion

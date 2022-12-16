@@ -134,6 +134,14 @@ public enum SnackType
     Jelly = 2, //凍乾
 }
 
+public enum WaterType
+{
+    Water = 0,
+    Milk = 1,
+    FishSoup = 2,
+    ChickSoup = 3,
+}
+
 public enum ItemLitterType //喜歡討厭
 {
     Mineral = 0,

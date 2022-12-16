@@ -66,6 +66,7 @@ public class View_Diary : ViewBehaviour
 
         if (index < 0)
         {
+            lastPage.InstantHide();
             contentPage.InstantHide();
             frontPage.Show();
         }

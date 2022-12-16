@@ -42,10 +42,7 @@ public class Controller_FollowCat : ControllerBehavior
         App.view.followCat.Close();
     }
 
-    /// <summary>
     /// 貓身上點擊選中並跟隨
-    /// </summary>
-    /// <param name="cat"></param>
     public void Select(Cat cat)
     {
         if (isFollowing)
@@ -56,11 +53,10 @@ public class Controller_FollowCat : ControllerBehavior
 
         StartFollow(cat);
 
-        App.view.followCat.SetCat(cat.cloudCatData);
         App.model.followCat.SelectedCat = cat;
 
         App.controller.lobby.Close();
-        App.view.followCat.Open();
+        Open();
     }
     
     public void CloseByOpenLobby()
@@ -68,7 +64,7 @@ public class Controller_FollowCat : ControllerBehavior
         CloseFollow();
         
         App.controller.lobby.Open();
-        App.view.followCat.Close();
+        Close();
     }
 
     public void SelectByOnlyFollw(Cat cat)
@@ -103,34 +99,58 @@ public class Controller_FollowCat : ControllerBehavior
 
     public void StartTrait()
     {
-        var trait = followCat.cloudCatData.CatData.Trait;
-
-        char traitType = 'C';
-        int traitIndex;
-        
-        int traitTypeIndex = 0;
-
-        if (trait.Contains('R'))
-        {
-            traitType = 'R';
-            traitTypeIndex = 1;
-        }
-
-        if (trait.Contains('S'))
-        {
-            traitType = 'S';
-            traitTypeIndex = 2;
-        }
-
-        traitIndex = Convert.ToInt32(trait.Split(traitType)[1]);
+        // var trait = followCat.cloudCatData.CatData.Trait;
+        //
+        // char traitType = 'C';
+        // int traitIndex;
+        //
+        // int traitTypeIndex = 0;
+        //
+        // if (trait.Contains('R'))
+        // {
+        //     traitType = 'R';
+        //     traitTypeIndex = 1;
+        // }
+        //
+        // if (trait.Contains('S'))
+        // {
+        //     traitType = 'S';
+        //     traitTypeIndex = 2;
+        // }
+        //
+        // traitIndex = Convert.ToInt32(trait.Split(traitType)[1]);
+        //
+        // followCat.StopMove();
+        //
+        // var animator = followCat.GetComponent<Animator>();
+        // animator.SetInteger(CatAnimTable.TraitType.ToString(), traitTypeIndex);
+        // animator.SetInteger(CatAnimTable.TraitIndex.ToString(), traitIndex);
+        //
+        // animator.Play(CatAnimTable.ToTrait.ToString());
 
         followCat.StopMove();
+
+        var skinId = followCat.cloudCatData.CatSkinData.UseSkinId;
+        int traitIndex = 0;
+        float duration = 0f; // 從若丞Spine看
+        if (skinId == "Flyfish")
+        {
+            traitIndex = 1;
+            duration = 8f;
+        }
+        if (skinId == "Robot")
+        {
+            traitIndex = 2;
+            duration = 17.45f;
+        }
         
         var animator = followCat.GetComponent<Animator>();
-        animator.SetInteger(CatAnimTable.TraitType.ToString(), traitTypeIndex);
+        animator.SetInteger(CatAnimTable.TraitType.ToString(), 2);
         animator.SetInteger(CatAnimTable.TraitIndex.ToString(), traitIndex);
         
         animator.Play(CatAnimTable.ToTrait.ToString());
+        CloseSensor();
+        DOVirtual.DelayedCall(duration, OpenSensor);
     }
 
     public void OpenCultive()
@@ -140,15 +160,13 @@ public class Controller_FollowCat : ControllerBehavior
         {
             App.model.cultive.SelectedCat = App.model.followCat.SelectedCat;
             App.model.cultive.OpenFromIndex = 1;
+            CloseFollow();
             App.controller.cultive.Open();
         });
     }
 
     #region Screenshot
-
-    /// <summary>
-    /// 跟隨貓按鈕開啓截圖頁面
-    /// </summary>
+    
     public void OpenScreenshot()
     {
         App.system.screenshot.OnScreenshotComplete += CloseScreenshot;
@@ -165,4 +183,36 @@ public class Controller_FollowCat : ControllerBehavior
     }
 
     #endregion
+
+    public void OpenSensor()
+    {
+        Open();
+        
+        if (followCat.bigGameBubble.gameObject.activeSelf)
+        {
+            followCat.bigGameBubble.DOScale(Vector3.one, 0.5f).From(Vector3.zero);
+            followCat.bigGameBubble.DOLocalMoveY(followCat.bigGameBubbleDistance, 0.5f).From(1);
+        }
+        if (followCat.littleGameBubble.gameObject.activeSelf)
+        {
+            followCat.littleGameBubble.DOScale(Vector3.one, 0.5f).From(Vector3.zero);
+            followCat.littleGameBubble.DOLocalMoveY(followCat.littleGameBubbleDistance, 0.5f).From(1);
+        }
+    }
+
+    public void CloseSensor()
+    {
+        Close();
+        
+        if (followCat.bigGameBubble.gameObject.activeSelf)
+        {
+            followCat.bigGameBubble.DOScale(Vector3.zero, 0.5f);
+            followCat.bigGameBubble.DOLocalMoveY(1, 0.5f);
+        }
+        if (followCat.littleGameBubble.gameObject.activeSelf)
+        {
+            followCat.littleGameBubble.DOScale(Vector3.zero, 0.5f);
+            followCat.littleGameBubble.DOLocalMoveY(1, 0.5f);
+        }
+    }
 }

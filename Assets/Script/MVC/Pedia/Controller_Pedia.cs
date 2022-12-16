@@ -236,10 +236,11 @@ public class Controller_Pedia : ControllerBehavior
         {
             string id = "ACR000" + i;
             Quest quest = GetAchieveQuest(id);
+            quest.Init();
             quests.Add(quest);
 
-            if (quest.IsReceived)
-                quest.Init();
+            // if (quest.IsReceived)
+            //     quest.Init();
         }
 
         App.model.pedia.ArchiveQuests = quests;

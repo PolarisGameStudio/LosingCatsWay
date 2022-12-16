@@ -47,6 +47,7 @@ public class SystemContainer : MvcBehaviour
     public SettleSystem settle;
     public ShortcutSystem shortcut;
     public SoundEffectSystem soundEffect;
+    public SideMenuSystem sideMenu;
 
     public TnrSystem tnr;
     public TransitionsSystem transition;

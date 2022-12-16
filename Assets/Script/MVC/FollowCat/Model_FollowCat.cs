@@ -12,7 +12,9 @@ public class Model_FollowCat : ModelBehavior
         set
         {
             selectedCat = value;
-            // TODO ValueChange
+            OnSelectedCatChange(value);
         }
     }
+
+    public ValueChange OnSelectedCatChange;
 }

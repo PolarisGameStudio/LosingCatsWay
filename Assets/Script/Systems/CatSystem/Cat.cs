@@ -14,12 +14,12 @@ public class Cat : MvcBehaviour
     #region Variable
 
     [SerializeField] private CatSkin catSkin;
-    [SerializeField] private Transform littleGameBubble;
-    [SerializeField] private Transform bigGameBubble;
+    public Transform littleGameBubble;
+    public Transform bigGameBubble;
     public Transform hand;
 
-    [SerializeField] float littleGameBubbleDistance;
-    [SerializeField] float bigGameBubbleDistance;
+    public float littleGameBubbleDistance;
+    public float bigGameBubbleDistance;
 
     public CloudCatData cloudCatData;
     public bool isFriendMode = false;
@@ -417,9 +417,6 @@ public class Cat : MvcBehaviour
         App.system.catNotify.Remove(this);
     }
 
-    /// <summary>
-    /// 按鈕開始
-    /// </summary>
     public void StartLittleGame()
     {
         CancelGame();
@@ -430,9 +427,6 @@ public class Cat : MvcBehaviour
         catNotifyId = string.Empty;
     }
 
-    /// <summary>
-    /// 按鈕開始
-    /// </summary>
     public void StartBigGame()
     {
         CancelGame();
@@ -508,6 +502,12 @@ public class Cat : MvcBehaviour
     // 每天固定一次
     public void DailyCheckStatus()
     {
+        // 每日一個喜歡的零食
+        cloudCatData.CatSurviveData.LikeSnackIndex = Random.Range(0, 4);
+        cloudCatData.CatSurviveData.LikeSoupIndex = Random.Range(1, 4);
+        SaveLikeSnackIndex();
+        SaveLikeSoupIndex();
+
         if (cloudCatData.CatServerData.IsDead) return;
 
         if (cloudCatData.CatHealthData.SickId == "SK001" || cloudCatData.CatHealthData.SickId == "SK002")
@@ -533,9 +533,11 @@ public class Cat : MvcBehaviour
             SetSatiety();
             SetFavorability();
         }
-
-        cloudCatData.CatSurviveData.LikeSnackIndex = Random.Range(0, 4);
         App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
+        
+        // 載入今日最愛零食
+        LoadLikeSnackIndex();
+        LoadLikeSoupIndex();
     }
 
     void CheckSick()
@@ -570,8 +572,6 @@ public class Cat : MvcBehaviour
         }
     }
 
-    /// 貓死亡
-    [Button]
     public void Death()
     {
         ToggleCancelGamePause(true);
@@ -595,40 +595,50 @@ public class Cat : MvcBehaviour
 
     #region PlayerPrefs
 
-    public void LocalSaveLikeSnackIndex()
+    public void SaveLikeSnackIndex()
     {
         PlayerPrefs.SetInt($"{cloudCatData.CatData.CatId}_LikeSnackIndex", cloudCatData.CatSurviveData.LikeSnackIndex);
     }
 
-    public void LocalLoadLikeSnackIndex()
+    public void LoadLikeSnackIndex()
     {
-        cloudCatData.CatSurviveData.LikeSnackIndex = PlayerPrefs.GetInt($"{cloudCatData.CatData.CatId}_LikeSnackIndex", 0);
+        cloudCatData.CatSurviveData.LikeSnackIndex = PlayerPrefs.GetInt($"{cloudCatData.CatData.CatId}_LikeSnackIndex", -1);
+        if (cloudCatData.CatSurviveData.LikeSnackIndex == -1)
+        {
+            cloudCatData.CatSurviveData.LikeSnackIndex = Random.Range(0, 4);
+            SaveLikeSnackIndex();
+        }
     }
 
+    public void SaveLikeSoupIndex()
+    {
+        PlayerPrefs.SetInt($"{cloudCatData.CatData.CatId}_LikeSoupIndex", cloudCatData.CatSurviveData.LikeSoupIndex);
+    }
+    
+    public void LoadLikeSoupIndex()
+    {
+        cloudCatData.CatSurviveData.LikeSoupIndex = PlayerPrefs.GetInt($"{cloudCatData.CatData.CatId}_LikeSoupIndex", -1);
+        if (cloudCatData.CatSurviveData.LikeSoupIndex == -1)
+        {
+            cloudCatData.CatSurviveData.LikeSoupIndex = Random.Range(1, 4);
+            SaveLikeSoupIndex();
+        }
+    }
+    
     #endregion
 
     #region Debug
 
-    [Button]
     public void SetSick()
     {
         cloudCatData.CatHealthData.SickId = App.factory.sickFactory.GetSick(cloudCatData);
         catSkin.ChangeSkin(cloudCatData);
     }
 
-    [Button]
     public void SetDeadSick()
     {
         cloudCatData.CatHealthData.SickId = "SK001";
         catSkin.ChangeSkin(cloudCatData);
-    }
-
-    [Button]
-    public void PrintScore()
-    {
-        print($"SatietyScore:{cloudCatData.CatDiaryData.DiarySatietyScore}");
-        print($"MoistureScore:{cloudCatData.CatDiaryData.DiaryMoistureScore}");
-        print($"FavourabilityScore:{cloudCatData.CatDiaryData.DiaryFavourbilityScore}");
     }
 
     #endregion

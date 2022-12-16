@@ -38,8 +38,17 @@ public class View_FollowCat : ViewBehaviour
         base.Close();
     }
 
-    public void SetCat(CloudCatData cloudCatData)
+    public override void Init()
     {
+        base.Init();
+        App.model.followCat.OnSelectedCatChange += OnSelectedCatChange;
+    }
+
+    private void OnSelectedCatChange(object value)
+    {
+        var cat = (Cat)value;
+        CloudCatData cloudCatData = cat.cloudCatData;
+        
         catNameText.text = cloudCatData.CatData.CatName;
         
         catAgeText.text = cloudCatData.CatData.CatAge.ToString();
@@ -57,6 +66,6 @@ public class View_FollowCat : ViewBehaviour
 
         catSkin.ChangeSkin(cloudCatData);
         
-        traitButton.interactable = cloudCatData.CatSkinData.UseSkinId.Contains("要叫阿邦上：機器人造型ID") || cloudCatData.CatSkinData.UseSkinId.Contains("要叫阿邦上：飛魚造型ID"); // TODO SkinId
+        traitButton.interactable = cloudCatData.CatSkinData.UseSkinId == "Robot" || cloudCatData.CatSkinData.UseSkinId == "Flyfish";
     }
 }

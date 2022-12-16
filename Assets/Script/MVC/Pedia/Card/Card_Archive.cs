@@ -14,15 +14,10 @@ public class Card_Archive : Card_Quest
     [SerializeField] private TextMeshProUGUI descriptText;
     [SerializeField] private GameObject receiveMask;
 
-    private string questId;
-    
     public override void SetData(Quest quest)
     {
         base.SetData(quest);
 
-        questId = quest.id;
-        
-        progressText.text = $"{quest.Progress}/{quest.TargetCount}";
         titleText.text = App.factory.stringFactory.GetQuestTitle(quest.id);
         descriptText.text = quest.Content;
 
@@ -31,17 +26,27 @@ public class Card_Archive : Card_Quest
         
         string id = quest.id;
         var strings = id.Split('_');
-        int index = Int32.Parse(strings[1]) - 2;
 
-        if (index < 0)
-            return;
+        for (int i = 0; i < 3; i++)
+        {
+            string tmpId = strings[0] + "_" + (i + 1);
+            bool isReach = App.factory.questFactory.GetQuestById(tmpId).IsReach;
+            bool isReceived = App.factory.questFactory.GetQuestById(tmpId).IsReceived;
+            if (isReach && !isReceived)
+            {
+                reachObjects[i].SetActive(true);
+                break;
+            }
+        }
 
-        index++;
-
-        for (int i = 0; i <= index; i++)
-            reachObjects[i].SetActive(true);
+        string lastQuestId = strings[0] + "_" + 3;
+        bool isLastQuestEnd = App.system.quest.QuestIsReceivedData[lastQuestId];
         
-        receiveMask.SetActive(index == 2 && quest.IsReceived);
+        reachObjects[2].SetActive(isLastQuestEnd);
+        receiveMask.SetActive(isLastQuestEnd);
+        progressText.text = isLastQuestEnd
+            ? $"{App.factory.questFactory.GetQuestById(lastQuestId).TargetCount}/{App.factory.questFactory.GetQuestById(lastQuestId).TargetCount}"
+            : $"{quest.Progress}/{quest.TargetCount}";
     }
 
     public void GetReward()

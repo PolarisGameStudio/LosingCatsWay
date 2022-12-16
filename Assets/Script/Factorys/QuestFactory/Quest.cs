@@ -18,7 +18,6 @@ public class Quest : SerializedScriptableObject
     #endregion
 
     public string id;
-    public Sprite icon;
     [Space(10)]
 
     public int[] targetCountBasedOnLevel;

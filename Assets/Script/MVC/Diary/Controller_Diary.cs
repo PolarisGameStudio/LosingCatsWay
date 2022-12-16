@@ -10,7 +10,6 @@ public class Controller_Diary : ControllerBehavior
     public void Open()
     {
         App.view.diary.Open();
-        var selectedLosingCat = App.model.cloister.SelectedLosingCatData;
         ToPage(-1);
     }
 
@@ -42,9 +41,7 @@ public class Controller_Diary : ControllerBehavior
         
         App.model.diary.PageIndex = index;
         if (index >= 0)
-        {
             App.model.diary.SelectedDiaryData = datas[index];
-        }
     }
 
     public void PageRight()

@@ -112,20 +112,12 @@ public class BigGamesSystem : MvcBehaviour
         });
     }
 
-    [Button]
-    public void DebugOpenGame(int index)
-    {
-        App.system.transition.Active(0, () => 
-        {
-            GetBigGames()[index].Open();
-        });
-    }
-    
     public void OpenGame(BigGameBehaviour bigGameBehaviour)
     {
-        App.system.transition.Active(0, () =>
+        App.system.transition.Active(0.5f, () =>
         {
             bigGameBehaviour.Open();
+            App.system.room.CloseRooms();
         });
     }
 
@@ -138,6 +130,7 @@ public class BigGamesSystem : MvcBehaviour
     public void Close()
     {
         App.system.cat.ToggleCatsGameTimer(false);
+        App.system.room.OpenRooms();
         view.InstantHide();
         OnClose?.Invoke();
     }

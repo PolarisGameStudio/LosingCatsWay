@@ -63,6 +63,13 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
                     App.controller.cultive.Reject();
                     return;
                 }
+
+                // 不喜歡的湯
+                if (cat.cloudCatData.CatSurviveData.LikeSoupIndex == (int)item.waterType)
+                {
+                    App.controller.cultive.Reject();
+                    return;
+                }
             }
             
             // 零食拒絕

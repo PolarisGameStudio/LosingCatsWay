@@ -24,14 +24,11 @@ public class CatSystem : MvcBehaviour
     public void Init()
     {
         InvokeRepeating(nameof(CheckCatStatus), 0, 180);
-        //InvokeRepeating(nameof(DrawCatGame), 30 , 30);
 
         App.system.myTime.OnFirstLogin += DailyCheckCatStatus;
         App.system.myTime.OnFirstLogin += LoginCheckCatStatus;
-        App.system.myTime.OnFirstLogin += DailyChangeCatsLikeSnack;
         
         App.system.myTime.OnAlreadyLogin += LoginCheckCatStatus;
-        App.system.myTime.OnAlreadyLogin += LoginLoadCatsLikeSnack;
     }
 
     #region CatStatus
@@ -44,37 +41,15 @@ public class CatSystem : MvcBehaviour
         }
     }
 
-    private void DailyChangeCatsLikeSnack()
-    {
-        for (int i = 0; i < myCats.Count; i++)
-        {
-            myCats[i].cloudCatData.CatSurviveData.LikeSnackIndex = Random.Range(0, 3);
-            myCats[i].LocalSaveLikeSnackIndex();
-        }
-    }
-
     private void LoginCheckCatStatus()
     {
         for (int i = 0; i < myCats.Count; i++)
-        {
             myCats[i].LoginCheckStatus();
-        }
 
         for (int i = myCats.Count - 1; i >= 0; i--)
         {
             if (myCats[i].cloudCatData.CatServerData.IsDead)
-            {
                 myCats[i].Death();
-                continue;
-            }
-        }
-    }
-
-    private void LoginLoadCatsLikeSnack()
-    {
-        for (int i = 0; i < myCats.Count; i++)
-        {
-            myCats[i].LocalLoadLikeSnackIndex();
         }
     }
 

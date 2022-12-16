@@ -10,21 +10,13 @@ public class Controller_Lobby : ControllerBehavior
     public void Open()
     {
         App.system.bgm.FadeIn().Play("Lobby");
-        App.system.room.OpenRooms();
         App.view.lobby.Open();
         App.system.catNotify.PopUp();
-    }
-    
-    [Button]
-    public void Test()
-    {
-        App.system.player.AddExp(20);
     }
 
     public void Close()
     {
         App.view.lobby.Close();
-        App.system.room.CloseRooms();
     }
 
     public void OpenBuildMode()
@@ -56,6 +48,7 @@ public class Controller_Lobby : ControllerBehavior
         App.system.transition.Active(0, () =>
         {
             Close();
+            App.system.room.CloseRooms();
             App.controller.map.Open();
         });
     }

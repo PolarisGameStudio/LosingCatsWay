@@ -80,7 +80,7 @@ public class Controller_Information : ControllerBehavior
 
     public void DiamondUnlockCatSlot()
     {
-        App.system.confirm.Active(ConfirmTable.BuyConfirm, () =>
+        App.system.confirm.ActiveByInsert(ConfirmTable.BuyConfirm, "", App.factory.stringFactory.GetUnlock("ULK001"),() =>
         {
             if (App.system.player.Diamond < 2000)
             {
@@ -185,6 +185,7 @@ public class Controller_Information : ControllerBehavior
         
         int index = App.model.information.SelectedSkinIndex;
         var cat = App.model.information.SelectedCat;
+        App.system.cloudSave.UpdateCloudCatSkinData(cat.cloudCatData);
         
         SpineSetSkinHappy();
         
@@ -198,9 +199,7 @@ public class Controller_Information : ControllerBehavior
         if (index == -1)
         {
             // 脫
-            //TODO Save ItemCount
-            cat.cloudCatData.CatSkinData.UseSkinId = String.Empty;
-            App.system.cloudSave.UpdateCloudCatSkinData(cat.cloudCatData);
+            App.system.cloudSave.UpdateCloudItemData();
             OpenChooseSkin();
             App.system.cat.RefreshCatSkin();
             return;
@@ -208,8 +207,7 @@ public class Controller_Information : ControllerBehavior
 
         Item skinItem = App.model.information.SkinItems[index];
         skinItem.Count--;
-        //TODO Save ItemCount
-        
+        App.system.cloudSave.UpdateCloudItemData();
         OpenChooseSkin();
         App.system.cat.RefreshCatSkin();
     }
