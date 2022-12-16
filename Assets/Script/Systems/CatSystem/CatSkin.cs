@@ -303,7 +303,9 @@ public class CatSkin : MvcBehaviour
             skeletonGraphic.skeletonDataAsset = catDataAsset;
             skeletonGraphic.Initialize(true);
             skeletonGraphic.Skeleton.SetSkin("Normal_Cat/Benz");
-            skeletonGraphic.AnimationState.SetAnimation(0, "AI_Main/IDLE_Ordinary01", true);
+            
+            if (skeletonGraphic.AnimationState.GetCurrent(0) == null)
+                skeletonGraphic.AnimationState.SetAnimation(0, "AI_Main/IDLE_Ordinary01", true);
         }
         else
         {
@@ -312,7 +314,9 @@ public class CatSkin : MvcBehaviour
             skeletonGraphic.skeletonDataAsset = kittyCatDataAsset;
             skeletonGraphic.Initialize(true);
             skeletonGraphic.Skeleton.SetSkin("Ordinary");
-            skeletonGraphic.AnimationState.SetAnimation(0, "AI_Main/IDLE_Ordinary01", true);
+            
+            if (skeletonGraphic.AnimationState.GetCurrent(0) == null)
+                skeletonGraphic.AnimationState.SetAnimation(0, "AI_Main/IDLE_Ordinary01", true);
         }
     }
 

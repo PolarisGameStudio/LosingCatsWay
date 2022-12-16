@@ -4,11 +4,20 @@ using System.Collections.Generic;
 using Firebase.Firestore;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MallContainer : ViewBehaviour
 {
     public Mall_Item[] mallItems;
-    
+    public Scrollbar scrollBar;
+
+    public override void Open()
+    {
+        base.Open();
+        if (scrollBar != null)
+            scrollBar.value = 0;
+    }
+
     public virtual void Refresh()
     {
     }

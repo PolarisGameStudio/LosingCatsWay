@@ -19,7 +19,7 @@ public class View_Cultive : ViewBehaviour
     [SerializeField] private Transform layerContent;
     [SerializeField] private GameObject layerPrefab;
     [SerializeField] private Transform itemContent;
-    [SerializeField] private GameObject itemPrefab;
+    [SerializeField] private Card_CultiveItem cultiveItem;
 
     [Title("DragDrop")]
     public Canvas canvas;
@@ -120,13 +120,13 @@ public class View_Cultive : ViewBehaviour
             else genderImages[i].SetActive(false);
         }
 
-        satietyFillInner.sprite = (cat.cloudCatData.CatSurviveData.Satiety > 20) ? highValueSprite : lowValueSprite;
-        moistureFillInner.sprite = (cat.cloudCatData.CatSurviveData.Moisture > 20) ? highValueSprite : lowValueSprite;
-        funFillInner.sprite = (cat.cloudCatData.CatSurviveData.Favourbility > 20) ? highValueSprite : lowValueSprite;
+        satietyFillInner.sprite = cat.cloudCatData.CatSurviveData.Satiety > 20 ? highValueSprite : lowValueSprite;
+        moistureFillInner.sprite = cat.cloudCatData.CatSurviveData.Moisture > 20 ? highValueSprite : lowValueSprite;
+        funFillInner.sprite = cat.cloudCatData.CatSurviveData.Favourbility > 20 ? highValueSprite : lowValueSprite;
 
-        satietyFill.DOFillAmount((cat.cloudCatData.CatSurviveData.Satiety / 100), 0.25f).SetEase(Ease.OutExpo);
-        moistureFill.DOFillAmount((cat.cloudCatData.CatSurviveData.Moisture / 100), 0.25f).SetEase(Ease.OutExpo);
-        funFill.DOFillAmount((cat.cloudCatData.CatSurviveData.Favourbility / 100), 0.25f).SetEase(Ease.OutExpo);
+        satietyFill.DOFillAmount(cat.cloudCatData.CatSurviveData.Satiety / 100, 0.25f).SetEase(Ease.OutExpo);
+        moistureFill.DOFillAmount(cat.cloudCatData.CatSurviveData.Moisture / 100, 0.25f).SetEase(Ease.OutExpo);
+        funFill.DOFillAmount(cat.cloudCatData.CatSurviveData.Favourbility / 100, 0.25f).SetEase(Ease.OutExpo);
 
         satietyText.text = $"{cat.cloudCatData.CatSurviveData.Satiety:0} / 100";
         moistureText.text = $"{cat.cloudCatData.CatSurviveData.Moisture:0} / 100";
@@ -143,13 +143,9 @@ public class View_Cultive : ViewBehaviour
         for (int i = 0; i < buttonMasks.Length; i++)
         {
             if (i == index)
-            {
                 buttonMasks[i].SetActive(true);
-            }
             else
-            {
                 buttonMasks[i].SetActive(false);
-            }
         }
 
         #endregion
@@ -187,14 +183,13 @@ public class View_Cultive : ViewBehaviour
 
         for (int i = 0; i < items.Count; i++)
         {
-            GameObject tmp = Instantiate(itemPrefab, itemContent);
-            Card_CultiveItem card = tmp.GetComponent<Card_CultiveItem>();
+            var card = Instantiate(cultiveItem, itemContent);
 
             card.SetData(items[i]);
             card.dragSensor.canvas = canvas;
 
-            tmp.transform.DOScale(0, 0);
-            tmp.transform.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetDelay(i * 0.09375f);
+            card.transform.DOScale(0, 0);
+            card.transform.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetDelay(i * 0.09375f);
         }
 
         #endregion

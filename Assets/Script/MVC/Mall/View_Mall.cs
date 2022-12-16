@@ -26,17 +26,26 @@ public class View_Mall : ViewBehaviour
     public Transform previewPackageContent;
     public Item_Mall_Preview previewPackageObject;
 
+    [Title("Rules")]
+    public UIView ruleView;
+    public UIView mainRule;
+    public UIView serviceRule;
+    public Scrollbar serviceBar;
+    public UIView privacyRule;
+    public Scrollbar privacyBar;
+
     public override void Init()
     {
         base.Init();
 
         App.model.mall.onSelectedPageIndexChange += OnSelectedPageIndexChange;
         App.model.mall.onPreviewPackageRewardsChange += OnPreviewPackageRewardsChange;
+        App.model.mall.OnRuleIndexChange += OnRuleIndexChange;
 
         App.system.player.OnCoinChange += OnCoinChange;
         App.system.player.OnDiamondChange += OnDiamondChange;
     }
-    
+
     public void OpenPreviewPackageView()
     {
         previewPackageView.Show();
@@ -88,5 +97,51 @@ public class View_Mall : ViewBehaviour
     {
         int diamond = (int)value;
         diamondText.text = diamond.ToString();
+    }
+
+    private void OnRuleIndexChange(object value)
+    {
+        int ruleIndex = (int)value;
+        
+        if (ruleIndex == 0)
+            App.view.mall.OpenMainRule();
+        if (ruleIndex == 1)
+            App.view.mall.OpenServiceRule();
+        if (ruleIndex == 2)
+            App.view.mall.OpenPrivacyRule();
+    }
+
+    private void OpenMainRule()
+    {
+        serviceRule.InstantHide();
+        privacyRule.InstantHide();
+        
+        ruleView.Show();
+        mainRule.Show();
+    }
+
+    private void OpenServiceRule()
+    {
+        mainRule.InstantHide();
+        privacyRule.InstantHide();
+        
+        ruleView.Show();
+        serviceRule.Show();
+        serviceBar.value = 1;
+    }
+
+    private void OpenPrivacyRule()
+    {
+        mainRule.InstantHide();
+        serviceRule.InstantHide();
+        
+        ruleView.Show();
+        privacyRule.Show();
+        privacyBar.value = 1;
+    }
+
+    public void CloseRule()
+    {
+        ruleView.InstantHide();
     }
 }

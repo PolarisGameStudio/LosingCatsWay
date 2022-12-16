@@ -247,7 +247,7 @@ public class Controller_Cultive : ControllerBehavior
         moisturePop.Pop(moistureValue);
         funPop.Pop(funValue);
 
-        DOVirtual.DelayedCall(1.5f, () => App.model.cultive.SelectedCat = cat);
+        //DOVirtual.DelayedCall(1.5f, () => App.model.cultive.SelectedCat = cat);
 
         catSkeleton.AnimationState.Start -= SetFeedData;
     }
@@ -299,6 +299,8 @@ public class Controller_Cultive : ControllerBehavior
         if (!entry.Animation.Name.Contains("ToIdle"))
             return;
 
+        catSkeleton.AnimationState.Start -= SetPlayData;
+
         var cat = App.model.cultive.SelectedCat;
         float lastFavourbility = cat.cloudCatData.CatSurviveData.Favourbility;
 
@@ -317,43 +319,33 @@ public class Controller_Cultive : ControllerBehavior
 
         funEffects.Play();
         funPop.Pop(20);
-        
-        DOVirtual.DelayedCall(1.5f, () =>
-        {
-            App.model.cultive.SelectedCat = cat;
-        });
-
-        catSkeleton.AnimationState.Start -= SetPlayData;
     }
 
     private void SetEndSensor(TrackEntry entry)
     {
         if (entry.Animation.Name.Equals("AI_Main/IDLE_Ordinary01"))
         {
+            entry.Start -= SetEndSensor;
+            
             #region Callback
 
             var item = App.model.cultive.DragItem;
 
             if (item.itemFeedType == ItemFeedType.Food)
-            {
                 OnFeedFood?.Invoke();
-            }
-
             if (item.itemFeedType == ItemFeedType.Water)
-            {
                 OnFeedWater?.Invoke();
-            }
-
             if (item.itemType == ItemType.Play)
-            {
                 OnPlayCat?.Invoke(App.model.cultive.DragItem.id);
-            }
 
             #endregion
 
-            isCanDrag = true;
-            OpenClickCat();
-            entry.Start -= SetEndSensor;
+            DOVirtual.DelayedCall(entry.Animation.Duration, () =>
+            {
+                App.model.cultive.SelectedCat = App.model.cultive.SelectedCat;
+                isCanDrag = true;
+                OpenClickCat();
+            });
         }
     }
 
@@ -361,10 +353,8 @@ public class Controller_Cultive : ControllerBehavior
     public void ChangeLitter()
     {
         if (App.model.cultive.UsingLitterIndex >= 0)
-        {
             if (App.model.cultive.NextCleanDateTime > App.system.myTime.MyTimeNow) //時間還沒到
                 return;
-        }
 
         if (App.model.cultive.CleanLitterCount > 0) return;
 
@@ -384,9 +374,7 @@ public class Controller_Cultive : ControllerBehavior
         var items = App.model.cultive.SelectedItems;
 
         for (int i = 0; i < items.Count; i++)
-        {
             if (items[i].Count <= 0) items.RemoveAt(i);
-        }
 
         App.model.cultive.SelectedItems = items;
 

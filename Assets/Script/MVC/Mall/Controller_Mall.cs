@@ -30,4 +30,19 @@ public class Controller_Mall : ControllerBehavior
     {
         App.view.mall.ClosePreviewPackageView();
     }
+
+    public void OpenRule(int ruleIndex)
+    {
+        App.model.mall.RuleIndex = ruleIndex;
+    }
+
+    public void CloseRule()
+    {
+        int ruleIndex = App.model.mall.RuleIndex;
+        
+        if (ruleIndex == 0)
+            App.view.mall.CloseRule();
+        else
+            OpenRule(0);
+    }
 }
