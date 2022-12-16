@@ -67,6 +67,9 @@ public class Controller_Pedia : ControllerBehavior
 
     public void Close()
     {
+        if (!App.view.pedia.IsVisible)
+            return;
+        
         ClosePedia();
         CloseArchive();
         App.view.pedia.Close();

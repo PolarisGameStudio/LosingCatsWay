@@ -154,7 +154,7 @@ public class CatchCatMap : MvcBehaviour
     {
         App.system.confirm.Active(ConfirmTable.ExitComfirm, () =>
         {
-            SetCatNotUse();
+            SetCloudCatDataToUse(false);
             CloseToMap();
         });
     }
@@ -557,7 +557,7 @@ public class CatchCatMap : MvcBehaviour
     {
         catSkin.SetActive(false);
 
-        SetCatNotUse();
+        SetCloudCatDataToUse(false);
         
         App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchGameSuccess, () =>
         {
@@ -580,7 +580,7 @@ public class CatchCatMap : MvcBehaviour
 
         if (turn >= 7)
         {
-            SetCatNotUse();
+            SetCloudCatDataToUse(false);
             
             App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchCatGameEnd, () =>
             {
@@ -602,7 +602,7 @@ public class CatchCatMap : MvcBehaviour
         
         App.system.catchCat.runAway.Active(cloudCatData, NextTurn, () =>
         {
-            SetCatNotUse();
+            SetCloudCatDataToUse(false);
             
             App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchGameFailed, () =>
             {
@@ -622,9 +622,11 @@ public class CatchCatMap : MvcBehaviour
     }
 
     /// 把貓還回伺服器
-    private void SetCatNotUse()
+    private void SetCloudCatDataToUse(bool value)
     {
-        cloudCatData.CatSurviveData.IsUseToFind = false;
+        if (cloudCatData == null)
+            return;
+        cloudCatData.CatSurviveData.IsUseToFind = value;
         App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
     }
     
@@ -929,6 +931,31 @@ public class CatchCatMap : MvcBehaviour
 
         trackEntry.Complete -= WaitSpineCatCatchWin;
         Gotcha();
+    }
+    
+    #endregion
+    
+    #region ApplicationProcess
+
+    private void OnApplicationFocus(bool focus)
+    {
+        if (!focus)
+            SetCloudCatDataToUse(false);
+        else
+            SetCloudCatDataToUse(true);
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause)
+            SetCloudCatDataToUse(false);
+        else
+            SetCloudCatDataToUse(true);
+    }
+
+    private void OnApplicationQuit()
+    {
+        SetCloudCatDataToUse(false);
     }
     
     #endregion

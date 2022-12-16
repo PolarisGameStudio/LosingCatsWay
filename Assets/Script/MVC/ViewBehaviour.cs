@@ -27,4 +27,9 @@ public class ViewBehaviour : MvcBehaviour
     {
         UIView.InstantHide();
     }
+
+    public bool IsVisible
+    {
+        get => UIView.isVisible;
+    }
 }

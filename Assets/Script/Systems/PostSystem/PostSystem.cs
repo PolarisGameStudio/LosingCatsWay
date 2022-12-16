@@ -55,6 +55,8 @@ public class PostSystem : MvcBehaviour
 
     public void Close()
     {
+        if (!uiView.isVisible)
+            return;
         uiView.Hide();
     }
 

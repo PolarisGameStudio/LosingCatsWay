@@ -32,16 +32,6 @@ public class FindCatMap : MvcBehaviour
 
     public Callback OnGameEnd;
 
-    #region OnApplication
-
-    private void OnApplicationQuit()
-    {
-        if (cloudCatData == null) return;
-        SetCloudCatDataToUse(false);
-    }
-
-    #endregion
-    
     public void Open()
     {
         uiView.InstantShow();
@@ -118,7 +108,6 @@ public class FindCatMap : MvcBehaviour
             return;
         if (countDown <= 0)
             return;
-
         if (!IsAnyCatShowing())
             return;
         
@@ -126,7 +115,6 @@ public class FindCatMap : MvcBehaviour
         App.system.soundEffect.Play("Button");
         
         FindCatObject findCatObject = cats[index];
-        findCatObject.transform.DOScale(new Vector2(0.98f, 0.98f), 0.05f).From(Vector2.one).SetLoops(2, LoopType.Yoyo);
 
         if (!findCatObject.isShowing || findCatObject.isDoll)
         {
@@ -135,21 +123,17 @@ public class FindCatMap : MvcBehaviour
             return;
         }
 
+        catLoves[index].Play();
         cats[index].Stop();
         heart++;
-        
-        catLoves[index].Play();
         
         if (heart >= 3)
             Stop();
 
         // tween
-        DOVirtual.DelayedCall(1f, () =>
+        var heartTmp = hearts[heart - 1];
+        heartTmp.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutExpo).SetDelay(1).OnStart(() => heartTmp.SetActive(true)).OnComplete(() =>
         {
-            var heartTmp = hearts[heart - 1];
-            heartTmp.SetActive(true);
-            heartTmp.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutExpo);
-            
             if (heart >= 3)
                 Success();
         });
@@ -226,6 +210,8 @@ public class FindCatMap : MvcBehaviour
 
     private void SetCloudCatDataToUse(bool value)
     {
+        if (cloudCatData == null)
+            return;
         cloudCatData.CatSurviveData.IsUseToFind = value;
         App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
     }
@@ -240,4 +226,29 @@ public class FindCatMap : MvcBehaviour
 
         return false;
     }
+    
+    #region ApplicationProcess
+
+    private void OnApplicationFocus(bool focus)
+    {
+        if (!focus)
+            SetCloudCatDataToUse(false);
+        else
+            SetCloudCatDataToUse(true);
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause)
+            SetCloudCatDataToUse(false);
+        else
+            SetCloudCatDataToUse(true);
+    }
+
+    private void OnApplicationQuit()
+    {
+        SetCloudCatDataToUse(false);
+    }
+    
+    #endregion
 }
