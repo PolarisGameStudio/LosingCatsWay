@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Controller_Events : ControllerBehavior
 {
+    public MyEvent[] myEvents;
     public Callback OnClose;
 
     public void Init()
@@ -32,5 +33,6 @@ public class Controller_Events : ControllerBehavior
     {
         if (App.model.events.SelectIndex == index) return;
         App.model.events.SelectIndex = index;
+        myEvents[index].Open();
     }
 }

@@ -33,7 +33,7 @@ public class QuestSystem : SerializedMonoBehaviour
     {
         var tmp = QuestProgressData.ToList();
 
-        Timestamp nowTime = Timestamp.GetCurrentTimestamp();
+        Timestamp nowTime = Timestamp.FromDateTime(DateTime.MinValue);
 
         for (int i = 0; i < tmp.Count; i++)
         {
