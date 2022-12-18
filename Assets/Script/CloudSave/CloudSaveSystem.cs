@@ -96,7 +96,8 @@ public class CloudSaveSystem : MvcBehaviour
         CloudSave_MissionData missionData = new CloudSave_MissionData();
 
         missionData.QuestProgressData = App.system.quest.QuestProgressData;
-        missionData.QuestIsReceivedData = App.system.quest.QuestIsReceivedData;
+        missionData.QuestReceivedStatusData = App.system.quest.QuestReceivedStatusData;
+        missionData.QuestReceivedTimeData = App.system.quest.QuestReceivedTimeData;
         missionData.MyQuests = new List<string>();
         for (int i = 0; i < App.model.dailyQuest.Quests.Count; i++)
         {
@@ -186,7 +187,8 @@ public class CloudSaveSystem : MvcBehaviour
         CloudSave_MissionData missionData = new CloudSave_MissionData();
 
         missionData.QuestProgressData = App.system.quest.QuestProgressData;
-        missionData.QuestIsReceivedData = App.system.quest.QuestIsReceivedData;
+        missionData.QuestReceivedStatusData = App.system.quest.QuestReceivedStatusData;
+        missionData.QuestReceivedTimeData = App.system.quest.QuestReceivedTimeData;
         missionData.MyQuests = new List<string>();
 
         cloudSaveData.PlayerData = playerData;
@@ -271,7 +273,8 @@ public class CloudSaveSystem : MvcBehaviour
     {
         CloudSave_MissionData missionData = new CloudSave_MissionData();
         missionData.QuestProgressData = App.system.quest.QuestProgressData;
-        missionData.QuestIsReceivedData = App.system.quest.QuestIsReceivedData;
+        missionData.QuestReceivedStatusData = App.system.quest.QuestReceivedStatusData;
+        missionData.QuestReceivedTimeData = App.system.quest.QuestReceivedTimeData;
         missionData.MyQuests = new List<string>();
         for (int i = 0; i < App.model.dailyQuest.Quests.Count; i++)
         {

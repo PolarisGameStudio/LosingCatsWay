@@ -38,15 +38,15 @@ public class Card_Archive : Card_Quest
                 break;
             }
         }
-
-        string lastQuestId = strings[0] + "_" + 3;
-        bool isLastQuestEnd = App.system.quest.QuestIsReceivedData[lastQuestId];
-        
-        reachObjects[2].SetActive(isLastQuestEnd);
-        receiveMask.SetActive(isLastQuestEnd);
-        progressText.text = isLastQuestEnd
-            ? $"{App.factory.questFactory.GetQuestById(lastQuestId).TargetCount}/{App.factory.questFactory.GetQuestById(lastQuestId).TargetCount}"
-            : $"{quest.Progress}/{quest.TargetCount}";
+        //
+        // string lastQuestId = strings[0] + "_" + 3;
+        // bool isLastQuestEnd = App.system.quest.QuestReceivedStatusData[lastQuestId] > 0;
+        //
+        // reachObjects[2].SetActive(isLastQuestEnd);
+        // receiveMask.SetActive(isLastQuestEnd);
+        // progressText.text = isLastQuestEnd
+        //     ? $"{App.factory.questFactory.GetQuestById(lastQuestId).TargetCount}/{App.factory.questFactory.GetQuestById(lastQuestId).TargetCount}"
+        //     : $"{quest.Progress}/{quest.TargetCount}";
     }
 
     public void GetReward()

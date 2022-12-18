@@ -130,7 +130,8 @@ public class MyApplication : MonoBehaviour
         var missionData = cloudSaveData.MissionData;
 
         quest.QuestProgressData = missionData.QuestProgressData;
-        quest.QuestIsReceivedData = missionData.QuestIsReceivedData;
+        quest.QuestReceivedStatusData = missionData.QuestReceivedStatusData;
+        quest.QuestReceivedTimeData = missionData.QuestReceivedTimeData;
         model.dailyQuest.Quests = new List<Quest>();
         for (int i = 0; i < missionData.MyQuests.Count; i++)
         {

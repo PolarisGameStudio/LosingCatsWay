@@ -448,8 +448,11 @@ public class Controller_Cultive : ControllerBehavior
 
     public void ClickCat()
     {
-        if (!isCanDrag)
+        if (!isCanDrag){
+            var track = catSkeleton.AnimationState.GetCurrent(0);
+            track.TrackTime = 25;
             return;
+        }
 
         App.system.soundEffect.Play("Button");
         

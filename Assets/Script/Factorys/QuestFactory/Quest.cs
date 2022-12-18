@@ -44,15 +44,16 @@ public class Quest : SerializedScriptableObject
         }
     }
     
-    public bool IsReceived
+    public virtual bool IsReceived
     {
         get
         {
-            return App.system.quest.QuestIsReceivedData[id];
+            int receivedStatus = App.system.quest.QuestReceivedStatusData[id];
+            return receivedStatus > 0;
         }
         set
         {
-            App.system.quest.QuestIsReceivedData[id] = value;
+            App.system.quest.QuestReceivedStatusData[id] = value ? 1 : 0;
         }
     }
 

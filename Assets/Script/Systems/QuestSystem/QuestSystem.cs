@@ -1,6 +1,8 @@
+using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using Firebase.Firestore;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
@@ -19,7 +21,8 @@ public class QuestSystem : SerializedMonoBehaviour
     #endregion
 
     public Dictionary<string, int> QuestProgressData;
-    public Dictionary<string, bool> QuestIsReceivedData;
+    public Dictionary<string, int> QuestReceivedStatusData; // 0 還沒領 1 領了
+    public Dictionary<string, Timestamp> QuestReceivedTimeData;
 
     public void Init()
     {
@@ -30,13 +33,15 @@ public class QuestSystem : SerializedMonoBehaviour
     {
         var tmp = QuestProgressData.ToList();
 
+        Timestamp nowTime = Timestamp.GetCurrentTimestamp();
+
         for (int i = 0; i < tmp.Count; i++)
         {
             var key = tmp[i].Key;
             
             QuestProgressData[key] = 0;
-            QuestIsReceivedData[key] = false;
-
+            QuestReceivedStatusData[key] = 0;
+            QuestReceivedTimeData[key] = nowTime;
         }
     }
 }
