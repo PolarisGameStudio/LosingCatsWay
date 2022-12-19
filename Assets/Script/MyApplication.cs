@@ -131,7 +131,6 @@ public class MyApplication : MonoBehaviour
 
         quest.QuestProgressData = missionData.QuestProgressData;
         quest.QuestReceivedStatusData = missionData.QuestReceivedStatusData;
-        quest.QuestReceivedTimeData = missionData.QuestReceivedTimeData;
         model.dailyQuest.Quests = new List<Quest>();
         for (int i = 0; i < missionData.MyQuests.Count; i++)
         {

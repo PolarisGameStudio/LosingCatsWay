@@ -13,7 +13,8 @@ using Sequence = DG.Tweening.Sequence;
 public class CatchCatMap : MvcBehaviour
 {
     public Callback OnGameEnd;
-    
+    public Callback OnGotcha;
+
     #region Variable
 
     [SerializeField] private HowToPlayData howToPlayData;
@@ -562,6 +563,7 @@ public class CatchCatMap : MvcBehaviour
         App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchGameSuccess, () =>
         {
             OnGameEnd?.Invoke();
+            OnGotcha?.Invoke();
             exp = App.system.player.playerDataSetting.CatchCatExp;
             coin = App.system.player.playerDataSetting.CatchCatCoin;
             App.system.settle.Active(exp, coin, 100, () =>

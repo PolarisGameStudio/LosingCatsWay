@@ -22,4 +22,6 @@ public abstract class MyEvent : SerializedMonoBehaviour
     
     public string id;
     public abstract void Open();
+    public abstract void Init();
+
 }

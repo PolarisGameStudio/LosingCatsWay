@@ -10,6 +10,9 @@ public class Controller_Events : ControllerBehavior
 
     public void Init()
     {
+        for (int i = 0; i < myEvents.Length; i++)
+            myEvents[i].Init();
+
         App.system.openFlow.AddAction(Open);
     }
 
