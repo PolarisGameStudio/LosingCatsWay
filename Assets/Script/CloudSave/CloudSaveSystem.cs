@@ -81,7 +81,6 @@ public class CloudSaveSystem : MvcBehaviour
         signData.MonthSigns = App.model.monthSign.SignIndexs;
         signData.MonthResignCount = App.model.monthSign.ResignCount;
         signData.LastMonthSignDate = Timestamp.FromDateTime(App.model.monthSign.LastMonthSignDate);
-        signData.WeekSigns = 0;
 
         // CloudSave_ItemData
         CloudSave_ItemData itemData = new CloudSave_ItemData();
@@ -170,8 +169,6 @@ public class CloudSaveSystem : MvcBehaviour
         signData.MonthSigns = new List<int>();
         signData.MonthResignCount = 0;
         signData.LastMonthSignDate = Timestamp.FromDateTime(DateTime.MinValue) ;
-        // TODO
-        signData.WeekSigns = 0;
 
         // CloudSave_ItemData
         CloudSave_ItemData itemData = new CloudSave_ItemData();
@@ -283,6 +280,22 @@ public class CloudSaveSystem : MvcBehaviour
         Dictionary<string, object> updates = new Dictionary<string, object>
         {
             { "MissionData", missionData }
+        };
+        await docRef.UpdateAsync(updates);
+    }
+    
+    public async void UpdateCloudSignData()
+    {
+        CloudSave_SignData signData = new CloudSave_SignData();
+        signData.MonthSigns = App.model.monthSign.SignIndexs;
+        signData.MonthResignCount = App.model.monthSign.ResignCount;
+        signData.LastMonthSignDate = Timestamp.FromDateTime(App.model.monthSign.LastMonthSignDate);
+        
+        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+        DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
+        Dictionary<string, object> updates = new Dictionary<string, object>
+        {
+            { "SignData", signData }
         };
         await docRef.UpdateAsync(updates);
     }

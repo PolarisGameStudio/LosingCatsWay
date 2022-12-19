@@ -6,7 +6,6 @@ using UnityEngine;
 public class Controller_Events : ControllerBehavior
 {
     public MyEvent[] myEvents;
-    public Callback OnClose;
 
     public void Init()
     {

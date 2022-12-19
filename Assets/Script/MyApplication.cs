@@ -111,8 +111,7 @@ public class MyApplication : MonoBehaviour
 
         monthSign.SignIndexs = signData.MonthSigns;
         monthSign.ResignCount = signData.MonthResignCount;
-        monthSign.LastMonthSignDate = signData.LastMonthSignDate.ToDateTime();
-        // TODO signData.WeekSigns = 0;
+        monthSign.LastMonthSignDate = signData.LastMonthSignDate.ToDateTime().ToLocalTime();
 
         // ItemData
         var inventory = system.inventory;

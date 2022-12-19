@@ -10,12 +10,8 @@ public class Controller_MonthSign : ControllerBehavior
 {
     [SerializeField] private MonthSignRewardData[] monthSignRewardDatas; //12個月的獎勵資料
 
-    public Callback OnClose;
-
     public void Init()
     {
-        //App.controller.events.OnClose += Open;
-        
         if ((int)(App.model.monthSign.LastMonthSignDate - App.system.myTime.MyTimeNow).TotalDays != 0)
         {
             SetEnableFlow(0);
@@ -40,12 +36,7 @@ public class Controller_MonthSign : ControllerBehavior
     public void Close()
     {
         App.view.monthSign.Close();
-
-        //Remove callback
-        //App.controller.events.OnClose -= Open;
-
-        //OnClose?.Invoke();
-
+        App.system.cloudSave.UpdateCloudSignData();
         App.system.openFlow.NextAction();
     }
 
@@ -55,20 +46,9 @@ public class Controller_MonthSign : ControllerBehavior
         var today = App.system.myTime.MyTimeNow;
         var last = App.model.monthSign.LastMonthSignDate;
 
-        //No last sign record
-/*
-        if (last == null)
-        {
-            CreateCalander(today.Year, today.Month);
-            return;
-        }
-*/
-
         //Over a year or month
         if (today.Year != last.Year || today.Month != last.Month)
-        {
             CreateCalander(today.Year, today.Month);
-        }
         //Same year and month
         else
         {
@@ -161,23 +141,17 @@ public class Controller_MonthSign : ControllerBehavior
 
     #region Prefs
 
-    /// <summary>
     /// 設定下次是否自動加入流程的索引
     /// 0:加入
     /// 1:不加入
-    /// </summary>
-    /// <param name="value"></param>
     private void SetEnableFlow(int value)
     {
         PlayerPrefs.SetInt("MonthEnableFlow", value);
     }
 
-    /// <summary>
     /// 取得是否自動加入流程的索引
     /// 0:加入
     /// 1:不加入
-    /// </summary>
-    /// <returns></returns>
     private int GetEnableFlow()
     {
         return PlayerPrefs.GetInt("MonthEnableFlow", 0);
