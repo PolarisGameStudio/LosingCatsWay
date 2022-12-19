@@ -447,8 +447,6 @@ public class CatSkin : MvcBehaviour
         else
             catSkeleton = skeletonMecanim.Skeleton;
 
-        SetAttachmentNull();
-        
         // 要顯示的
         switch (useSkinId)
         {

@@ -7,11 +7,6 @@ public class MallContainer_SuperGift : MallContainer
     [Title("UI")]
     public Item_Mall_Limited[] itemMallLimiteds;
     
-    public override void Open()
-    {
-        base.Open();
-    }
-
     public override void Refresh()
     {
         for (int i = 0; i < mallItems.Length; i++)
