@@ -2,7 +2,7 @@ using Doozy.Runtime.UIManager.Containers;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
-using Doozy.Runtime.UIManager.Components;
+using Doozy.Runtime.Common.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,9 +12,8 @@ public class HowToPlaySystem : MvcBehaviour
     [Title("Text")]
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI descriptText;
-    [SerializeField] private TextMeshProUGUI numberText;
 
-    [Title("UI")] [SerializeField] private UIButton startButton;
+    [Title("UI")] [SerializeField] private Button startButton;
     [SerializeField] private Button closeButton;
     [SerializeField] private Button leftButton;
     [SerializeField] private Button rightButton;
@@ -95,7 +94,6 @@ public class HowToPlaySystem : MvcBehaviour
 
     private void CheckContent()
     {
-        numberText.text = (index + 1).ToString();
         tutorialImage.sprite = tutorialSprites[index];
         descriptText.text = descriptStrings[index];
     }
@@ -110,8 +108,8 @@ public class HowToPlaySystem : MvcBehaviour
                 circles[i].GetChild(0).gameObject.SetActive(false);
         }
         
-        // leftButton.gameObject.SetActive(index > 0);
-        // rightButton.gameObject.SetActive(index < descriptStrings.Length - 1);
+        leftButton.gameObject.SetActive(index > 0);
+        rightButton.gameObject.SetActive(index < descriptStrings.Length - 1);
         if (!IsTutorial) return;
         startButton.gameObject.SetActive(index == descriptStrings.Length - 1);
     }

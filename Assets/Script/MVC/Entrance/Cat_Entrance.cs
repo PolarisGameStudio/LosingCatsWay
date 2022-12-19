@@ -128,33 +128,14 @@ public class Cat_Entrance : MvcBehaviour
         diaryButtonRect.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.45f);
     }
 
-    /// <summary>
-    /// 綁定在貓死亡後的按鈕上：流程加上快捷前往溫室
-    /// </summary>
+    /// 綁定在貓死亡後出現的日記按鈕上
     public void GetDiary()
     {
-        App.system.openFlow.AddAction(ToGreenHouse);
-
         diaryButtonRect.DOScale(Vector2.zero, 0.25f).From(Vector2.one).SetEase(Ease.InBack)
             .OnComplete(() => 
             {
-                App.controller.entrance.Close();
+                App.controller.entrance.OpenChooseDiary();
+                App.model.entrance.OpenType = 0;
             });
-    }
-
-    /// <summary>
-    /// 流程結束之後快捷前往溫室
-    /// </summary>
-    private void ToGreenHouse()
-    {
-        App.system.openFlow.RemoveAction(ToGreenHouse);
-
-        App.model.entrance.OpenType = 0;
-
-        //TODO 前往溫室的Confirm文字
-        App.system.confirm.Active(ConfirmTable.ExitComfirm, okEvent: () =>
-        {
-            App.controller.greenHouse.Open();
-        });
     }
 }

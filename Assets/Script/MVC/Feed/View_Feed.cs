@@ -27,11 +27,8 @@ public class View_Feed : ViewBehaviour
     public override void Close()
     {
         base.Close();
-
         for (int i = 0; i < cards.Length; i++)
-        {
-            cards[i].SetActive(false);
-        }
+            cards[i].SetActiveContainer(false);
     }
 
     private void OnCatsChange(object value)
@@ -42,14 +39,22 @@ public class View_Feed : ViewBehaviour
         {
             Card_FeedItem card = cards[i];
             int index = i;
+            int slotLine = Mathf.CeilToInt(cats.Count / 3f);
 
+            // 排版而已
+            for (int j = 0; j < cards.Length; j++)
+                cards[i].gameObject.SetActive(false);
+
+            for (int j = 0; j < slotLine; j++)
+                cards[i].gameObject.SetActive(true);
+            
             if (index >= cats.Count)
             {
-                card.SetActive(false);
+                card.SetActiveContainer(false);
             }
             else
             {
-                card.SetActive(true);
+                card.SetActiveContainer(true);
                 card.SetData(cats[i]);
             }
         }

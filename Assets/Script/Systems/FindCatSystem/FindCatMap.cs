@@ -128,14 +128,16 @@ public class FindCatMap : MvcBehaviour
         heart++;
         
         if (heart >= 3)
+        {
             Stop();
+            DOVirtual.DelayedCall(1f, Success);
+        }
 
         // tween
         var heartTmp = hearts[heart - 1];
-        heartTmp.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutExpo).SetDelay(1).OnStart(() => heartTmp.SetActive(true)).OnComplete(() =>
+        heartTmp.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutExpo).SetDelay(1).OnStart(() =>
         {
-            if (heart >= 3)
-                Success();
+            heartTmp.SetActive(true);
         });
     }
 

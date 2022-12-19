@@ -14,7 +14,6 @@ public class Card_FeedItem : MvcBehaviour
 
     public TextMeshProUGUI nameText;
     public Image genderImage;
-    public Button chipButton;
     [Space(10)]
 
     public TextMeshProUGUI varietyText;
@@ -26,6 +25,7 @@ public class Card_FeedItem : MvcBehaviour
     public Image funBar;
 
     [SerializeField] private Card_ChipInfo chipInfo;
+    [SerializeField] private GameObject container;
 
     public void SetData(Cat cat)
     {
@@ -48,9 +48,9 @@ public class Card_FeedItem : MvcBehaviour
         funBar.fillAmount = cat.cloudCatData.CatSurviveData.Favourbility / 100;
     }
 
-    public void SetActive(bool active)
+    public void SetActiveContainer(bool active)
     {
-        gameObject.SetActive(active);
+        container.SetActive(active);
         catSkin.SetActive(active);
     }
 

@@ -1,15 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class View_Entrance : ViewBehaviour
 {
+    [Title("Entrance")]
     [SerializeField] private Cat_Entrance[] frontCats;
     [SerializeField] private Cat_Entrance[] backCats;
     [SerializeField] private Cat_Entrance deadCat;
     [SerializeField] private GameObject closeButton;
 
+    [Title("ChooseDiary")] [SerializeField]
+    private View_EntranceDiary chooseDiary;
+    
     public override void Init()
     {
         base.Init();
@@ -99,4 +104,14 @@ public class View_Entrance : ViewBehaviour
     }
 
     #endregion
+
+    public void OpenChooseDiary()
+    {
+        chooseDiary.Open();
+    }
+
+    public void CloseChooseDiary()
+    {
+        chooseDiary.Close();
+    }
 }

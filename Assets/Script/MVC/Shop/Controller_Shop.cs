@@ -115,8 +115,7 @@ public class Controller_Shop : ControllerBehavior
             {
                 if (App.system.player.Coin < App.model.shop.TotalAmount)
                     DOVirtual.DelayedCall(0.1f,
-                        () => App.system.confirm.OnlyConfirm()
-                            .Active(ConfirmTable.NoMoney, () => App.controller.mall.Open()));
+                        () => App.system.confirm.Active(ConfirmTable.NoMoney, OpenTopUp));
                 else
                 {
                     App.system.player.Coin -= App.model.shop.TotalAmount;
@@ -145,7 +144,7 @@ public class Controller_Shop : ControllerBehavior
             if (item.itemBoughtType == ItemBoughtType.Diamond)
             {
                 if (App.system.player.Diamond < App.model.shop.TotalAmount)
-                    DOVirtual.DelayedCall(0.1f, () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.NoDiamond));
+                    DOVirtual.DelayedCall(0.1f, () => App.system.confirm.Active(ConfirmTable.NoDiamond, OpenTopUp));
                 else
                 {
                     App.system.player.Diamond -= App.model.shop.TotalAmount;
@@ -166,5 +165,11 @@ public class Controller_Shop : ControllerBehavior
                 }
             }
         });
+    }
+    
+    private void OpenTopUp()
+    {
+        App.controller.mall.Open();
+        DOVirtual.DelayedCall(0.25f, () => App.controller.mall.SelectPage(6));
     }
 }
