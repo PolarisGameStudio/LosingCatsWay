@@ -22,7 +22,6 @@ public class QuestSystem : SerializedMonoBehaviour
 
     public Dictionary<string, int> QuestProgressData;
     public Dictionary<string, int> QuestReceivedStatusData; // 0 還沒領 1 領了
-    public Dictionary<string, Timestamp> QuestReceivedTimeData;
 
     public void Init()
     {
@@ -41,7 +40,6 @@ public class QuestSystem : SerializedMonoBehaviour
             
             QuestProgressData[key] = 0;
             QuestReceivedStatusData[key] = 0;
-            QuestReceivedTimeData[key] = nowTime;
         }
     }
 }

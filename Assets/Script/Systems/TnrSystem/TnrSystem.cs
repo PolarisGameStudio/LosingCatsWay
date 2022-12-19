@@ -41,7 +41,8 @@ public class TnrSystem : MvcBehaviour
     public Callback OnDoAdopt;
     public Callback OnDoRelease;
     public Callback OnDoShelter;
-
+    public Callback OnDoLigation;
+    
     public CallbackValue OnAdoptCat;
 
     public void Init()
@@ -191,6 +192,7 @@ public class TnrSystem : MvcBehaviour
             functionGraphic.AnimationState.SetAnimation(0, "Hospital_Tool/Operation", false);
             catGraphic.AnimationState.SetAnimation(0, "Hospital_Cat/Operation_Cat", false);
             functionGraphic.AnimationState.Complete += DoLigationComplete;
+            OnDoLigation?.Invoke();
         }, () =>
         {
             Open();

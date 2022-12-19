@@ -11,7 +11,7 @@ public class Controller_DailyQuest : ControllerBehavior
     public Callback OnClose;
     public Callback OnGetReward;
     public Callback OnGetAdsReward;
-    
+
     #region Basic
 
     public void Init()
@@ -125,9 +125,7 @@ public class Controller_DailyQuest : ControllerBehavior
     {
         CloseWatchAd();
         OnGetReward?.Invoke();
-        OnGetReward = null;
-        OnGetAdsReward = null;
-        
+
         int index = App.model.dailyQuest.GetRewardIndex;
         var quest = App.model.dailyQuest.Quests[index];
         
@@ -156,9 +154,7 @@ public class Controller_DailyQuest : ControllerBehavior
     {
         CloseWatchAd();
         OnGetAdsReward?.Invoke();
-        OnGetReward = null;
-        OnGetAdsReward = null;
-        
+
         int index = App.model.dailyQuest.GetRewardIndex;
         var quest = App.model.dailyQuest.Quests[index];
         

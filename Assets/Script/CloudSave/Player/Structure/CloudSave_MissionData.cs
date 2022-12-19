@@ -6,7 +6,6 @@ public class CloudSave_MissionData
 {
     [FirestoreProperty] public Dictionary<string, int> QuestProgressData { get; set; }
     [FirestoreProperty] public Dictionary<string, int> QuestReceivedStatusData { get; set; }
-    [FirestoreProperty] public Dictionary<string, Timestamp> QuestReceivedTimeData { get; set; }
 
     [FirestoreProperty] public List<string> MyQuests { get; set; }
 }

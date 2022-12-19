@@ -24,7 +24,11 @@ public class PlayerSystem : MvcBehaviour
     public ValueChange OnPlayerNameChange;
     public ValueChange OnLevelChange;
     public ValueChangeFromTo OnExpChange;
+    
     public ValueChange OnCoinChange;
+    public ValueChange OnAddCoinChange;
+    public ValueChange OnReduceCoinChange;
+    
     public ValueChange OnDiamondChange;
     public ValueChange OnCatSlotChange;
     public ValueChange OnPlayerGenderChange;
@@ -204,6 +208,22 @@ public class PlayerSystem : MvcBehaviour
         {
             Exp = result;
         }
+    }
+
+    public void AddMoney(int value)
+    {
+        coin += value;
+        OnAddCoinChange?.Invoke(value);
+    }
+    
+    public bool ReduceMoney(int value)
+    {
+        if ((coin - value) < 0)
+            return false;
+        
+        coin -= value;
+        OnReduceCoinChange?.Invoke(value);
+        return true;
     }
 
     #endregion
