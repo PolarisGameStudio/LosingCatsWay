@@ -52,12 +52,13 @@ public class Controller_Bag : ControllerBehavior
         }
         
         List<Item> buffer = App.factory.itemFactory.GetHoldItems(targetType);
+        
         for (int i = buffer.Count - 1; i >= 0; i--)
         {
             if (buffer[i].notShowAtBag)
                 buffer.RemoveAt(i);
         }
-
+        
         App.model.bag.SelectedItems = buffer;
 
         ChooseItem(-1);

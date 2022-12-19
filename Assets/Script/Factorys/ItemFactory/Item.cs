@@ -94,6 +94,9 @@ public class Item : ScriptableObject
                 case ItemType.CatSkin:
                     value = app.system.inventory.SkinData[id];
                     break;
+                case ItemType.Special:
+                    value = app.system.inventory.ToolData[id];
+                    break;
                 default:
                     break;
             }
