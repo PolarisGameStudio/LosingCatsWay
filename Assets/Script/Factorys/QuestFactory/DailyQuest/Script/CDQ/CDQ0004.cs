@@ -7,21 +7,16 @@ public class CDQ0004 : DailyQuest
 {
     public override void Init()
     {
-        App.controller.cultive.OnPlayCat += BindWithValue;
+        App.system.screenshot.OnScreenshotComplete += Bind;
     }
 
-    private void BindWithValue(object value)
+    private void Bind()
     {
-        string playId = value.ToString();
-
-        if (!playId.Equals("ICP00004"))
-            return;
-
         Progress++;
 
         if (Progress == TargetCount)
         {
-            App.controller.cultive.OnPlayCat -= BindWithValue;
+            App.system.screenshot.OnScreenshotComplete -= Bind;
         }
     }
 }

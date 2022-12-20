@@ -43,6 +43,10 @@ public class Controller_Cultive : ControllerBehavior
     public Callback OnFeedWater;
     public Callback OnChangeLitter;
     public CallbackValue OnPlayCat;
+    
+    public CallbackValue OnAddFun;
+    public CallbackValue OnAddSatiety;
+    public CallbackValue OnAddMoisture;
 
     #region Basic
 
@@ -221,6 +225,10 @@ public class Controller_Cultive : ControllerBehavior
         float newMoisture = cat.cloudCatData.CatSurviveData.Moisture;
         float newFavourbility = cat.cloudCatData.CatSurviveData.Favourbility;
 
+        OnAddFun?.Invoke(newFavourbility - lastFavourbility);
+        OnAddSatiety?.Invoke(newSatiety - lastSatiety);
+        OnAddMoisture?.Invoke(newMoisture - lastMoisture);
+        
         if (lastSatiety < 90f && newSatiety >= 90f)
             cat.cloudCatData.CatDiaryData.DiarySatietyScore++;
 

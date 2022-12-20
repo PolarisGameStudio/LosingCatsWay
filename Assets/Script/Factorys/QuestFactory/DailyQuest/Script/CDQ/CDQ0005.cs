@@ -7,16 +7,16 @@ public class CDQ0005 : DailyQuest
 {
     public override void Init()
     {
-        App.system.screenshot.OnScreenshotComplete += Bind;
+        App.system.bigGames.OnClose += Bind;
     }
 
     private void Bind()
     {
-        Progress++;
+        Progress ++;
 
-        if (Progress == TargetCount)
+        if (Progress >= TargetCount)
         {
-            App.system.screenshot.OnScreenshotComplete -= Bind;
+            App.system.bigGames.OnClose -= Bind;
         }
     }
 }

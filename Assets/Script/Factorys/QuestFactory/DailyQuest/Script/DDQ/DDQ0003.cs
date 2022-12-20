@@ -7,8 +7,7 @@ public class DDQ0003 : DailyQuest
 {
     public override void Init()
     {
-        App.controller.cultive.OnChangeLitter += Bind;
-
+        App.system.catchCat.map.OnGameEnd += Bind;
     }
 
     public void Bind()
@@ -17,7 +16,7 @@ public class DDQ0003 : DailyQuest
 
         if (Progress == TargetCount)
         {
-            App.controller.cultive.OnChangeLitter -= Bind;
+            App.system.catchCat.map.OnGameEnd -= Bind;
         }
     }
 }

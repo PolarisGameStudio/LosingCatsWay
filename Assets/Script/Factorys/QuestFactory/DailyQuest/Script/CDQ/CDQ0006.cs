@@ -7,7 +7,7 @@ public class CDQ0006 : DailyQuest
 {
     public override void Init()
     {
-        App.system.bigGames.OnClose += Bind;
+        App.system.littleGame.OnClose += Bind;
     }
 
     private void Bind()
@@ -16,7 +16,7 @@ public class CDQ0006 : DailyQuest
 
         if (Progress >= TargetCount)
         {
-            App.system.bigGames.OnClose -= Bind;
+            App.system.littleGame.OnClose -= Bind;
         }
     }
 }
