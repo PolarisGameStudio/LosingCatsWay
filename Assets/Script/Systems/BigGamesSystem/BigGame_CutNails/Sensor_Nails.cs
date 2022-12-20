@@ -5,6 +5,7 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Sensor_Nails : MvcBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -12,6 +13,11 @@ public class Sensor_Nails : MvcBehaviour, IPointerEnterHandler, IPointerExitHand
     [SerializeField] private int nailIndex;
     [SerializeField] private ParticleSystem nailParticle;
     [SerializeField] private RectTransform nailRect;
+
+    [Title("UI")] [SerializeField] private Image nailImage;
+    [SerializeField] private Sprite fullNail;
+    [SerializeField] private Sprite crackNail;
+    [SerializeField] private Sprite halfNail;
 
     private bool isCut;
     [ReadOnly] public int Value;
@@ -35,12 +41,21 @@ public class Sensor_Nails : MvcBehaviour, IPointerEnterHandler, IPointerExitHand
         IsClean = false;
     }
 
-    private void MoveNail()
+    public void CheckNail(int value)
     {
-        Vector2 origin = nailRect.anchoredPosition;
-        Vector2 offset = origin;
-        offset.y -= 70f / Value;
-        nailRect.DOAnchorPos(offset, 0.1f).From(origin);
+        if (value <= 0)
+        {
+            nailImage.sprite = halfNail;
+            return;
+        }
+
+        if (value < Value / 2)
+        {
+            nailImage.sprite = crackNail;
+            return;
+        }
+
+        nailImage.sprite = fullNail;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -55,7 +70,6 @@ public class Sensor_Nails : MvcBehaviour, IPointerEnterHandler, IPointerExitHand
         VibrateExtension.Vibrate(VibrateType.Cancel);
         VibrateExtension.Vibrate(VibrateType.Nope);
         
-        MoveNail();
         isCut = true;
     }
 

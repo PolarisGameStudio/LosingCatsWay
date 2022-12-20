@@ -502,11 +502,8 @@ public class Cat : MvcBehaviour
     // 每天固定一次
     public void DailyCheckStatus()
     {
-        // 每日一個喜歡的零食
-        cloudCatData.CatSurviveData.LikeSnackIndex = Random.Range(0, 4);
-        cloudCatData.CatSurviveData.LikeSoupIndex = Random.Range(1, 4);
-        SaveLikeSnackIndex();
-        SaveLikeSoupIndex();
+        GetLikeSnack();
+        GetLikeSoup();
 
         if (cloudCatData.CatServerData.IsDead) return;
 
@@ -593,14 +590,20 @@ public class Cat : MvcBehaviour
 
     #endregion
 
-    #region PlayerPrefs
+    #region Snack/Soup
 
-    public void SaveLikeSnackIndex()
+    public void GetLikeSnack()
+    {
+        cloudCatData.CatSurviveData.LikeSnackIndex = Random.Range(0, 4);
+        SaveLikeSnackIndex();
+    }
+
+    private void SaveLikeSnackIndex()
     {
         PlayerPrefs.SetInt($"{cloudCatData.CatData.CatId}_LikeSnackIndex", cloudCatData.CatSurviveData.LikeSnackIndex);
     }
 
-    public void LoadLikeSnackIndex()
+    private void LoadLikeSnackIndex()
     {
         cloudCatData.CatSurviveData.LikeSnackIndex = PlayerPrefs.GetInt($"{cloudCatData.CatData.CatId}_LikeSnackIndex", -1);
         if (cloudCatData.CatSurviveData.LikeSnackIndex == -1)
@@ -610,12 +613,18 @@ public class Cat : MvcBehaviour
         }
     }
 
-    public void SaveLikeSoupIndex()
+    public void GetLikeSoup()
+    {
+        cloudCatData.CatSurviveData.LikeSoupIndex = Random.Range(1, 4);
+        SaveLikeSoupIndex();
+    }
+
+    private void SaveLikeSoupIndex()
     {
         PlayerPrefs.SetInt($"{cloudCatData.CatData.CatId}_LikeSoupIndex", cloudCatData.CatSurviveData.LikeSoupIndex);
     }
-    
-    public void LoadLikeSoupIndex()
+
+    private void LoadLikeSoupIndex()
     {
         cloudCatData.CatSurviveData.LikeSoupIndex = PlayerPrefs.GetInt($"{cloudCatData.CatData.CatId}_LikeSoupIndex", -1);
         if (cloudCatData.CatSurviveData.LikeSoupIndex == -1)
@@ -638,6 +647,12 @@ public class Cat : MvcBehaviour
     public void SetDeadSick()
     {
         cloudCatData.CatHealthData.SickId = "SK001";
+        catSkin.ChangeSkin(cloudCatData);
+    }
+
+    public void SetBug()
+    {
+        cloudCatData.CatHealthData.IsBug = true;
         catSkin.ChangeSkin(cloudCatData);
     }
 

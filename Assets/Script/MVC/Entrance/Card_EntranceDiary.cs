@@ -5,23 +5,27 @@ using UnityEngine;
 public class Card_EntranceDiary : MvcBehaviour
 {
     [SerializeField] private CatSkin catSkin;
-    [SerializeField] private GameObject effectObject;
-    [SerializeField] private GameObject maskObject;
+    [SerializeField] private Vector2 catSkinStartPosition;
 
     public void SetData(CloudLosingCatData losingCatData)
     {
+        if (losingCatData == null)
+        {
+            SetActive(false);
+            return;
+        }
+        SetActive(true);
         catSkin.ChangeSkin(losingCatData);
+
+        if (CatExtension.GetCatAgeLevel(losingCatData.CatData.SurviveDays) == 0)
+            return;
+
+        catSkin.transform.localPosition = catSkinStartPosition;
     }
 
-    public void SetActive(bool value)
+    private void SetActive(bool value)
     {
         gameObject.SetActive(value);
         catSkin.SetActive(value);
-    }
-
-    public void SetSelect(bool value)
-    {
-        effectObject.SetActive(value);
-        maskObject.SetActive(!value);
     }
 }

@@ -8,8 +8,8 @@ public class Model_Entrance : ModelBehavior
     private Cat deadCat;
     private int openType = 0; //0:正常 1:死
     private int selectedDiaryIndex;
-    private List<Cat> allDeadCats;
-    private Cat selectedDeadCat;
+    private List<CloudLosingCatData> losingCatDatas;
+    private List<CloudLosingCatData> sortedLosingCatDatas;
 
     public List<Cat> Cats
     {
@@ -50,24 +50,25 @@ public class Model_Entrance : ModelBehavior
         set => selectedDiaryIndex = value;
     }
 
-    public List<Cat> AllDeadCats
+    public List<CloudLosingCatData> LosingCatDatas
     {
-        get => allDeadCats;
-        set
-        {
-            allDeadCats = value;
-            //
-        }
+        get => losingCatDatas;
+        set => losingCatDatas = value;
     }
 
-    public Cat SelectedDeadCat
+    public List<CloudLosingCatData> SortedLosingCatDatas
     {
-        get => selectedDeadCat;
-        set => selectedDeadCat = value;
+        get => sortedLosingCatDatas;
+        set
+        {
+            sortedLosingCatDatas = value;
+            OnSortedLosingCatDatasChange(value);
+        }
     }
 
     public ValueChange OnCatsChange;
     public ValueChange OnDeadCatChange;
     public ValueChange OnOpenTypeChange;
-    public ValueChange OnAllDeadCatsChange;
+    // public ValueChange OnAllDeadCatsChange;
+    public ValueChange OnSortedLosingCatDatasChange;
 }

@@ -128,9 +128,9 @@ public class Controller_Shelter : ControllerBehavior
             int count = App.system.room.FeatureRoomsCount;
 
             if (App.system.player.CatSlot >= count)
-                App.system.confirm.OnlyConfirm().Active(ConfirmTable.NeedMoreCatSlot);
-            else
                 App.system.confirm.OnlyConfirm().Active(ConfirmTable.NeedMoreFeedRoom);
+            else
+                App.system.confirm.OnlyConfirm().Active(ConfirmTable.NeedMoreCatSlot);
             
             return;
         }
@@ -146,7 +146,9 @@ public class Controller_Shelter : ControllerBehavior
         {
             var cloudCatData = App.model.shelter.SelectedAdoptCloudCatData;
 
-            App.system.cat.CreateCatObject(cloudCatData);
+            Cat cat = App.system.cat.CreateCatObject(cloudCatData);
+            cat.GetLikeSnack();
+            cat.GetLikeSoup();
 
             cloudCatData.CatData.Owner = App.system.player.PlayerId;
             App.system.cloudSave.UpdateCloudCatData(cloudCatData);

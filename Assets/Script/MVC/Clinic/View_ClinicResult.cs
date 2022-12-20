@@ -96,28 +96,22 @@ public class View_ClinicResult : ViewBehaviour
         if (resultIds.Count > 0)
         {
             contentGroup.DOFade(0, 0.25f).From(1);
-
-            DOVirtual.DelayedCall(0.25f, () =>
-            {
-                ChangeContent();
-            });
-
+            DOVirtual.DelayedCall(0.25f, ChangeContent);
             contentGroup.DOFade(1, 0.25f).From(0).SetDelay(.5f);
         }
         else
         {
-            //TODO �ѽ��X
             App.controller.clinic.CloseCheckResult();
             App.controller.clinic.OpenChooseFunction();
         }
     }
 
+    //TODO OnlyBug, No SickId
     private void ChangeContent()
     {
         if (resultIds.Count <= 0) return;
         string id = resultIds.Dequeue();
 
-        //�^�E
         if (id == "CP001")
         {
             sickNameText.text = "CP001";
@@ -147,7 +141,6 @@ public class View_ClinicResult : ViewBehaviour
             return;
         }
 
-        //�̭]
         if (id == "CP002")
         {
             sickNameText.text = "CP002";
@@ -161,7 +154,6 @@ public class View_ClinicResult : ViewBehaviour
             return;
         }
 
-        //�w�����D
         if (id == "CP003")
         {
             sickNameText.text = "CP003";
@@ -175,7 +167,6 @@ public class View_ClinicResult : ViewBehaviour
             return;
         }
 
-        //����
         if (id == "CP004")
         {
             sickNameText.text = "CP004";
@@ -189,7 +180,6 @@ public class View_ClinicResult : ViewBehaviour
             return;
         }
 
-        //����
         if (id == "CP005" || id == "CP006")
         {
             sickNameText.text = "CP005+6";
@@ -203,7 +193,6 @@ public class View_ClinicResult : ViewBehaviour
             return;
         }
 
-        //����
         if (id == "CP007")
         {
             sickNameText.text = "CP007";
@@ -216,5 +205,7 @@ public class View_ClinicResult : ViewBehaviour
             sickLevels[3].SetActive(true);
             return;
         }
+        
+        //TODO SickName(StringFactory)
     }
 }

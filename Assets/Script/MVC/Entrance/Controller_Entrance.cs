@@ -38,62 +38,83 @@ public class Controller_Entrance : ControllerBehavior
     public void OpenChooseDiary()
     {
         App.model.entrance.SelectedDiaryIndex = 0;
-        App.model.entrance.AllDeadCats = new List<Cat>(App.system.cat.MyDeadCats());
-        leftObject.SetActive(App.model.entrance.AllDeadCats.Count > 1);
-        rightObject.SetActive(App.model.entrance.AllDeadCats.Count > 1);
+        
+        var deadCats = App.system.cat.MyDeadCats();
+        List<CloudLosingCatData> tmpDatas = new List<CloudLosingCatData>();
+        for (int i = 0; i < deadCats.Count; i++)
+            tmpDatas.Add(CatExtension.CreateCloudLosingCatData(deadCats[i].cloudCatData));
+        App.model.entrance.LosingCatDatas = tmpDatas;
+        
+        leftObject.SetActive(App.model.entrance.LosingCatDatas.Count > 1);
+        rightObject.SetActive(App.model.entrance.LosingCatDatas.Count > 1);
         RefreshDiary();
         App.view.entrance.OpenChooseDiary();
     }
 
     public void ToLeft()
     {
-        var losingCats = App.model.cloister.LosingCatDatas;
+        var losingCatDatas = App.model.entrance.LosingCatDatas;
         int index = App.model.entrance.SelectedDiaryIndex;
         index--;
 
         if (index < 0)
-            index = losingCats.Count - 1;
+            index = losingCatDatas.Count - 1;
         
         App.model.entrance.SelectedDiaryIndex = index;
+        RefreshDiary();
     }
 
     public void ToRight()
     {
-        var losingCats = App.model.cloister.LosingCatDatas;
+        var losingCatDatas = App.model.entrance.LosingCatDatas;
         int index = App.model.entrance.SelectedDiaryIndex;
         index++;
         
-        if (index > losingCats.Count - 1)
+        if (index > losingCatDatas.Count - 1)
             index = 0;
         
         App.model.entrance.SelectedDiaryIndex = index;
+        RefreshDiary();
     }
 
     private void RefreshDiary()
     {
         int index = App.model.entrance.SelectedDiaryIndex;
-        var deadCats = App.model.entrance.AllDeadCats;
+        var losingCatDatas = App.model.entrance.LosingCatDatas;
         
-        List<Cat> previousCats = new List<Cat>();
-        List<Cat> nextCats = new List<Cat>();
-        for (int i = 0; i < index; i++)
-            previousCats.Add(deadCats[i]);
-        for (int i = index; i < deadCats.Count; i++)
-            nextCats.Add(deadCats[i]);
-
-        nextCats.AddRange(previousCats);
-        App.model.entrance.AllDeadCats = nextCats;
+        CloudLosingCatData center = losingCatDatas[index];
+        CloudLosingCatData previousData = null;
+        CloudLosingCatData nextData = null;
+        
+        if (losingCatDatas.Count > 1)
+        {
+            int previousIndex = index - 1;
+            int nextIndex = index + 1;
+            
+            if (nextIndex > losingCatDatas.Count - 1)
+                nextIndex = 0;
+            if (previousIndex < 0)
+                previousIndex = losingCatDatas.Count - 1;
+            
+            previousData = losingCatDatas[previousIndex];
+            nextData = losingCatDatas[nextIndex];
+        }
+        
+        //0中間 1左邊 2右邊
+        List<CloudLosingCatData> tmpDatas = new List<CloudLosingCatData>();
+        tmpDatas.Add(center);
+        tmpDatas.Add(previousData);
+        tmpDatas.Add(nextData);
+        
+        App.model.entrance.SortedLosingCatDatas = tmpDatas;
     }
 
     public void ReadDiary()
     {
-        var cat = App.model.entrance.SelectedDeadCat;
-        var losingCatData = new CloudLosingCatData();
-        losingCatData.CatData = cat.cloudCatData.CatData;
-        losingCatData.CatDiaryData = cat.cloudCatData.CatDiaryData;
-        losingCatData.CatSkinData = cat.cloudCatData.CatSkinData;
-        
-        App.model.cloister.SelectedLosingCatData = losingCatData; //TODO Diary也要有自己的SelectedLosingCatData
+        Close();
+        var index = App.model.entrance.SelectedDiaryIndex;
+        var losingCatData = App.model.entrance.LosingCatDatas[index];
+        App.model.diary.LosingCatData = losingCatData;
         App.controller.diary.Open();
     }
 }

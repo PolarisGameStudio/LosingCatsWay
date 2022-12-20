@@ -34,7 +34,8 @@ public class View_Diary : ViewBehaviour
     public override void Init()
     {
         base.Init();
-        App.model.cloister.OnSelectedLosingCatChange += OnSelectedLosingCatChange;
+        //App.model.cloister.OnSelectedLosingCatChange += OnSelectedLosingCatChange;
+        App.model.diary.OnLosingCatDataChange += OnSelectedLosingCatChange;
         App.model.diary.OnPageIndexChange += OnPageIndexChange;
         App.model.diary.OnSelectedDiaryDataChange += OnSelectedDiaryDataChange;
     }

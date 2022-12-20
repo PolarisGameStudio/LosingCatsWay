@@ -121,7 +121,9 @@ public class TnrSystem : MvcBehaviour
                 cloudCatData.CatDiaryData.AdoptLocation = "OutSide";
                 App.system.cloudSave.UpdateCloudCatDiaryData(cloudCatData);
 
-                App.system.cat.CreateCatObject(cloudCatData);
+                Cat cat = App.system.cat.CreateCatObject(cloudCatData);
+                cat.GetLikeSnack();
+                cat.GetLikeSoup();
                 
                 DOVirtual.DelayedCall(0.1f, () => 
                     App.system.confirm.OnlyConfirm().Active(ConfirmTable.HasNewCat, () =>

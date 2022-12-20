@@ -200,4 +200,17 @@ public static class CatExtension
     }
 
     #endregion
+
+    #region Convert
+
+    public static CloudLosingCatData CreateCloudLosingCatData(CloudCatData cloudCatData)
+    {
+        CloudLosingCatData result = new CloudLosingCatData();
+        result.CatData = cloudCatData.CatData;
+        result.CatDiaryData = cloudCatData.CatDiaryData;
+        result.CatSkinData = cloudCatData.CatSkinData;
+        return result;
+    }
+
+    #endregion
 }

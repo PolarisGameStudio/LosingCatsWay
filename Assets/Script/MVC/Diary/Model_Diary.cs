@@ -6,6 +6,7 @@ public class Model_Diary : ModelBehavior
 {
     private int pageIndex;
     private CloudSave_DiaryData selectedDiaryData;
+    private CloudLosingCatData losingCatData;
 
     public int PageIndex
     {
@@ -27,6 +28,17 @@ public class Model_Diary : ModelBehavior
         }
     }
 
+    public CloudLosingCatData LosingCatData
+    {
+        get => losingCatData;
+        set
+        {
+            losingCatData = value;
+            OnLosingCatDataChange(value);
+        }
+    }
+
     public ValueChange OnPageIndexChange;
     public ValueChange OnSelectedDiaryDataChange;
+    public ValueChange OnLosingCatDataChange;
 }

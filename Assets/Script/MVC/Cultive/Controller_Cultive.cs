@@ -832,4 +832,12 @@ public class Controller_Cultive : ControllerBehavior
         App.view.cultive.catSkin.ChangeSkin(App.model.cultive.SelectedCat.cloudCatData);
         App.system.cloudSave.UpdateCloudCatServerData(App.model.cultive.SelectedCat.cloudCatData);
     }
+
+    public void DebugBug()
+    {
+        App.model.cultive.SelectedCat.cloudCatData.CatHealthData.IsBug = true;
+        App.view.cultive.catSkin.ChangeSkin(App.model.cultive.SelectedCat.cloudCatData);
+        App.system.cloudSave.UpdateCloudCatHealthData(App.model.cultive.SelectedCat.cloudCatData);
+        
+    }
 }

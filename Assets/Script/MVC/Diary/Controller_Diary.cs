@@ -21,7 +21,7 @@ public class Controller_Diary : ControllerBehavior
 
     private void ToPage(int index)
     {
-        var datas = App.model.cloister.SelectedLosingCatData.CatDiaryData.DiaryDatas;
+        var datas = App.model.diary.LosingCatData.CatDiaryData.DiaryDatas;
         
         if (index < 0)
         {

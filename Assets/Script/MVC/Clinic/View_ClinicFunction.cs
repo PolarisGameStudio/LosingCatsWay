@@ -46,25 +46,21 @@ public class View_ClinicFunction : ViewBehaviour
     {
         base.Open();
 
-        //���s�u�ƶ}��
         tableGraphic.gameObject.SetActive(true);
         catSkin.SetActive(true);
         functionGraphic.gameObject.SetActive(true);
 
         #region Animation
 
-        //�M���Ҧ��ʵe
         catSkin.skeletonGraphic.AnimationState.ClearTracks();
         functionGraphic.AnimationState.ClearTracks();
 
-        //�ʵe�C��
         List<Spine.Animation> catTracks = new List<Spine.Animation>();
         List<Spine.Animation> funcTracks = new List<Spine.Animation>();
 
-        //����ݭn���ʵe
         for (int i = 0; i < subjects.Count; i++)
         {
-            if (subjects[i] == "CP007") //�����G�����D�A�v��
+            if (subjects[i] == "CP007")
             {
                 catTracks.Add(catSkin.skeletonGraphic.SkeletonData.FindAnimation(catAnimNames[5]));
                 funcTracks.Add(functionGraphic.SkeletonData.FindAnimation(funcAnimNames[5]));
@@ -106,17 +102,15 @@ public class View_ClinicFunction : ViewBehaviour
             }
         }
 
-        //�N�߰ʵe�C����J�y�D�A�T�O�ߩM�D��ʵe�ɶ��@�P
         for (int i = 0; i < catTracks.Count; i++)
         {
             catTracks[i].Duration = funcTracks[i].Duration;
             catSkin.skeletonGraphic.AnimationState.AddAnimation(0, catTracks[i], false, 0);
         }
 
-        //�N�D��ʵe��J�y�D�A�h�Ӱʵe�h���ݳ̫�@�ӭy�D�A�i��Complete
         for (int i = 0; i < funcTracks.Count; i++)
         {
-            if (funcTracks.Count > 1) //�h�Ӱʵe
+            if (funcTracks.Count > 1)
             {
                 if (i < funcTracks.Count - 1)
                 {
@@ -140,7 +134,6 @@ public class View_ClinicFunction : ViewBehaviour
     private void FunctionComplete(TrackEntry trackEntry)
     {
         trackEntry.Complete -= FunctionComplete;
-        //�ѽ��X
         Close();
         App.controller.clinic.OpenCheckResult();
     }

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Core.Enums;
 using Sirenix.OdinInspector;
 using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
@@ -88,6 +90,9 @@ public class BigGame_CutNails : BigGameBehaviour, IBeginDragHandler, IDragHandle
             total -= rand;
         }
 
+        for (int i = 0; i < nailSensors.Length; i++)
+            nailSensors[i].CheckNail(nailValues[i]);
+
         maxNailValue = randomNailValue + basicNailValue * nailSensors.Length;
 
         TweenIn();
@@ -155,10 +160,19 @@ public class BigGame_CutNails : BigGameBehaviour, IBeginDragHandler, IDragHandle
             .AppendInterval(0.03125f)
             .OnComplete(() =>
             {
-                pawRect.DOShakeAnchorPos(duration:2f, strength:80, vibrato:1, randomness:180).SetLoops(-1, LoopType.Yoyo);
+                DoShakePaw();
                 for (int i = 0; i < nails.Length; i++)
                     nails[i].DOAnchorPos(nailOrigins[i], 0.25f).SetDelay(i * 0.0625f);
             });
+    }
+
+    private void DoShakePaw()
+    {
+        float duration = Random.Range(1f, 1.5f);
+        float strength = Random.Range(80, 100);
+        int vibrato = Random.Range(1, 4);
+        pawRect.DOShakeAnchorPos(duration, strength, vibrato, 180).SetSpecialStartupMode(SpecialStartupMode.SetShake)
+            .OnComplete(DoShakePaw);
     }
 
     #endregion
@@ -170,16 +184,23 @@ public class BigGame_CutNails : BigGameBehaviour, IBeginDragHandler, IDragHandle
         if (nailValues[index] == 0)
         {
             nailSensors[index].IsClean = true;
+            nailSensors[index].CheckNail(nailValues[index]);
             return;
         }
 
         nailValues[index]--;
+        nailSensors[index].CheckNail(nailValues[index]);
 
         RefreshBar();
+        
         if (CheckIsNailsCut())
         {
             CloseSensors();
-            DOVirtual.DelayedCall(1f, OpenSettle);
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                pawRect.DOKill();
+                OpenSettle();
+            });
         }
     }
 

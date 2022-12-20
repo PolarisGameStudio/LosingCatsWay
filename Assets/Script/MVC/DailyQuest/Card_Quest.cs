@@ -16,8 +16,8 @@ public class Card_Quest : MvcBehaviour
 
     public virtual void SetData(Quest quest)
     {
-        if (rewardIcon != null) rewardIcon.sprite = quest.Rewards[0].item.icon;
-        if (titleText != null) titleText.text = quest.Content;
-        if (rewardText != null) rewardText.text = quest.Rewards[0].count.ToString();
+        // if (rewardIcon != null) rewardIcon.sprite = quest.Rewards[0].item.icon;
+        // if (titleText != null) titleText.text = quest.Content;
+        // if (rewardText != null) rewardText.text = quest.Rewards[0].count.ToString();
     }
 }

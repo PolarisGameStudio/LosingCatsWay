@@ -80,7 +80,7 @@ public class CatSystem : MvcBehaviour
         return myCats;
     }
 
-    public void CreateCatObject(CloudCatData cloudCatData)
+    public Cat CreateCatObject(CloudCatData cloudCatData)
     {
         Cat tmp = catObject;
 
@@ -96,6 +96,8 @@ public class CatSystem : MvcBehaviour
         cat.Active();
 
         Add(cat);
+
+        return cat;
     }
 
     /// 增加貓，伺服器不變(領養、捕獲等)

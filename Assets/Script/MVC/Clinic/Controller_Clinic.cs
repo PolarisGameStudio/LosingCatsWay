@@ -109,7 +109,7 @@ public class Controller_Clinic : ControllerBehavior
 
         if (index == 0)
         {
-            if (string.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId))
+            if (string.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId) && !cat.cloudCatData.CatHealthData.IsBug)
                 return;
         }
         
@@ -121,7 +121,7 @@ public class Controller_Clinic : ControllerBehavior
         
         if (index == 2)
         {
-            if (cat.cloudCatData.CatHealthData.SickId == "SK020")
+            if (cat.cloudCatData.CatHealthData.IsBug)
                 return;
         }
         
@@ -252,16 +252,19 @@ public class Controller_Clinic : ControllerBehavior
 
         if (index == 0)
         {
-            cloudCatData.CatHealthData.MetDoctorCount = App.factory.sickFactory.GetMetCount(cloudCatData.CatHealthData.SickId);
-
-            if (cloudCatData.CatHealthData.SickId != "SK001" || cloudCatData.CatHealthData.SickId != "SK002")
+            if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
             {
-                cloudCatData.CatHealthData.IsMetDoctor = true;
-                cloudCatData.CatHealthData.MetDoctorCount = Mathf.Clamp(cloudCatData.CatHealthData.MetDoctorCount--, 0, 3);
-                if (cloudCatData.CatHealthData.MetDoctorCount <= 0)
+                cloudCatData.CatHealthData.MetDoctorCount = App.factory.sickFactory.GetMetCount(cloudCatData.CatHealthData.SickId);
+
+                if (cloudCatData.CatHealthData.SickId != "SK001" || cloudCatData.CatHealthData.SickId != "SK002")
                 {
-                    cloudCatData.CatHealthData.SickId = string.Empty;
-                    cloudCatData.CatHealthData.IsMetDoctor = false;
+                    cloudCatData.CatHealthData.IsMetDoctor = true;
+                    cloudCatData.CatHealthData.MetDoctorCount = Mathf.Clamp(cloudCatData.CatHealthData.MetDoctorCount--, 0, 3);
+                    if (cloudCatData.CatHealthData.MetDoctorCount <= 0)
+                    {
+                        cloudCatData.CatHealthData.SickId = string.Empty;
+                        cloudCatData.CatHealthData.IsMetDoctor = false;
+                    }
                 }
             }
 

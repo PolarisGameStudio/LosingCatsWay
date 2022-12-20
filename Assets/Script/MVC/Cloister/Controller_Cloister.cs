@@ -38,6 +38,7 @@ public class Controller_Cloister : ControllerBehavior
 
     public void OpenDiary()
     {
+        App.model.diary.LosingCatData = App.model.cloister.SelectedLosingCatData;
         App.controller.diary.Open();
     }
 

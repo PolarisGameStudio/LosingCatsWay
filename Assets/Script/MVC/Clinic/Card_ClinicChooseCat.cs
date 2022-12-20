@@ -47,11 +47,13 @@ public class Card_ClinicChooseCat : MvcBehaviour
         DateTime noBugExpiredDate = catHealthData.NoBugExpireTimestamp.ToDateTime().ToLocalTime();
         
         ResetUI();
+        
         if (FunctionIndex == 0)
         {
             bool noSick = string.IsNullOrEmpty(catHealthData.SickId);
+            bool isBug = catHealthData.IsBug;
 
-            if (noSick)
+            if (noSick && !isBug)
             {
                 IsCheck(true);
                 blackMask.SetActive(true);
