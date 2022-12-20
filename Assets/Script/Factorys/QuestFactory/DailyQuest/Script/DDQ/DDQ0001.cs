@@ -7,10 +7,8 @@ public class DDQ0001 : DailyQuest
 {
     public override void Init()
     {
-        App.controller.cultive.OnPlayCat += BindWithValue;
-        App.controller.cultive.OnFeedFood += Bind;
-        App.controller.cultive.OnFeedWater += Bind;
         App.controller.cultive.OnChangeLitter += Bind;
+
     }
 
     public void Bind()
@@ -19,19 +17,7 @@ public class DDQ0001 : DailyQuest
 
         if (Progress == TargetCount)
         {
-            App.controller.cultive.OnFeedFood -= Bind;
-            App.controller.cultive.OnFeedWater -= Bind;
             App.controller.cultive.OnChangeLitter -= Bind;
-        }
-    }
-
-    public void BindWithValue(object value)
-    {
-        Progress++;
-
-        if (Progress == TargetCount)
-        {
-            App.controller.cultive.OnPlayCat -= BindWithValue;
         }
     }
 }

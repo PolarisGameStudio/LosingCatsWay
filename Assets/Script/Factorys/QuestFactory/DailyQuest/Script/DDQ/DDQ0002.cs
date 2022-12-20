@@ -7,8 +7,7 @@ public class DDQ0002 : DailyQuest
 {
     public override void Init()
     {
-        App.controller.cultive.OnFeedFood += Bind;
-        App.controller.cultive.OnFeedWater += Bind;
+        //TODO �ӫ��[callback
     }
 
     public void Bind()
@@ -17,8 +16,7 @@ public class DDQ0002 : DailyQuest
 
         if (Progress == TargetCount)
         {
-            App.controller.cultive.OnFeedFood -= Bind;
-            App.controller.cultive.OnFeedWater -= Bind;
+            //�ӫ���callback
         }
     }
 }

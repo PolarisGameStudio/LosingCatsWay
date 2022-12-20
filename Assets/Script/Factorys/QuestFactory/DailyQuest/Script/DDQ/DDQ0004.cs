@@ -7,16 +7,17 @@ public class DDQ0004 : DailyQuest
 {
     public override void Init()
     {
-        //TODO °Ó«°¥[callback
+        App.controller.shop.OnBuyByValue += Bind;
     }
 
-    public void Bind()
+    public void Bind(object item, object count)
     {
-        Progress++;
+        int value = (int) count;
+        Progress += value;
 
-        if (Progress == TargetCount)
+        if (Progress >= TargetCount)
         {
-            //°Ó«°´îcallback
+            App.controller.shop.OnBuyByValue -= Bind;
         }
     }
 }
