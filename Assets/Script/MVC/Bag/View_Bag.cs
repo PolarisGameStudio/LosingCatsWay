@@ -9,6 +9,9 @@ using UnityEngine.UI;
 
 public class View_Bag : ViewBehaviour
 {
+    [Title("View")] [SerializeField] private View_BagChooseCat chooseCat;
+    
+    [Title("Tab")]
     [SerializeField] private GameObject[] showButtons;
     [SerializeField] private GameObject item;
     [SerializeField] private Transform content;
@@ -132,5 +135,15 @@ public class View_Bag : ViewBehaviour
             cardBagItems[i].SetFocus(false);
 
         cardBagItems[index].SetFocus(true);
+    }
+
+    public void OpenChooseCat()
+    {
+        chooseCat.Open();
+    }
+
+    public void CloseChooseCat()
+    {
+        chooseCat.Close();
     }
 }

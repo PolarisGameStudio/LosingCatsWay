@@ -12,65 +12,11 @@ public class View_EntranceDiary : ViewBehaviour
     public override void Init()
     {
         base.Init();
-        App.model.entrance.OnLeftCatDataChange += OnLeftCatDataChange;
-        App.model.entrance.OnRightCatDataChange += OnRightCatDataChange;
-        App.model.entrance.OnCenterCatDataChange += OnCenterCatDataChange;
+        App.model.entrance.OnAllDeadCatsChange += OnAllDeadCatsChange;
     }
 
-    private void OnCenterCatDataChange(object value)
+    private void OnAllDeadCatsChange(object value)
     {
-        var losingCat = (CloudLosingCatData)value;
-        centerBook.SetData(losingCat);
-        centerBook.SetActive(true);
-        centerBook.SetSelect(true);
-    }
-
-    private void OnRightCatDataChange(object value)
-    {
-        if (value == null)
-        {
-            rightBook.SetActive(false);
-            return;
-        }
-        
-        var losingCat = (CloudLosingCatData)value;
-        rightBook.SetData(losingCat);
-        rightBook.SetSelect(false);
-    }
-
-    private void OnLeftCatDataChange(object value)
-    {
-        if (value == null)
-        {
-            leftBook.SetActive(false);
-            return;
-        }
-
-        var losingCat = (CloudLosingCatData)value;
-        leftBook.SetData(losingCat);
-        leftBook.SetSelect(true);
-    }
-
-    private void OnLosingCatsChange(object value)
-    {
-        var cats = (List<CloudLosingCatData>)value;
-        
-        if (cats.Count <= 1)
-        {
-            centerBook.SetData(cats[0]);
-            return;
-        }
-
-        if (cats.Count == 2)
-        {
-            centerBook.SetData(cats[0]);
-            rightBook.SetData(cats[1]);
-            return;
-        }
-
-        int lastIndex = cats.Count - 1;
-        leftBook.SetData(cats[lastIndex]);
-        
-        //TODO Descript
+        //
     }
 }

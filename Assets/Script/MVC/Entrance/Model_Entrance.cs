@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Model_Entrance : ModelBehavior
 {
-    private List<Cat> cats = new List<Cat>();
+    private List<Cat> cats;
     private Cat deadCat;
     private int openType = 0; //0:正常 1:死
     private int selectedDiaryIndex;
-    private CloudLosingCatData leftCatData, rightCatData, centerCatData;
+    private List<Cat> allDeadCats;
+    private Cat selectedDeadCat;
 
     public List<Cat> Cats
     {
@@ -49,26 +50,24 @@ public class Model_Entrance : ModelBehavior
         set => selectedDiaryIndex = value;
     }
 
-    public CloudLosingCatData LeftCatData
+    public List<Cat> AllDeadCats
     {
-        get => leftCatData;
-        set => leftCatData = value;
+        get => allDeadCats;
+        set
+        {
+            allDeadCats = value;
+            //
+        }
     }
 
-    public CloudLosingCatData RightCatData
+    public Cat SelectedDeadCat
     {
-        get => rightCatData;
-        set => rightCatData = value;
-    }
-
-    public CloudLosingCatData CenterCatData
-    {
-        get => centerCatData;
-        set => centerCatData = value;
+        get => selectedDeadCat;
+        set => selectedDeadCat = value;
     }
 
     public ValueChange OnCatsChange;
     public ValueChange OnDeadCatChange;
     public ValueChange OnOpenTypeChange;
-    public ValueChange OnLeftCatDataChange, OnRightCatDataChange, OnCenterCatDataChange;
+    public ValueChange OnAllDeadCatsChange;
 }

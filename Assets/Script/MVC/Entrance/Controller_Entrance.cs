@@ -38,6 +38,9 @@ public class Controller_Entrance : ControllerBehavior
     public void OpenChooseDiary()
     {
         App.model.entrance.SelectedDiaryIndex = 0;
+        App.model.entrance.AllDeadCats = new List<Cat>(App.system.cat.MyDeadCats());
+        leftObject.SetActive(App.model.entrance.AllDeadCats.Count > 1);
+        rightObject.SetActive(App.model.entrance.AllDeadCats.Count > 1);
         RefreshDiary();
         App.view.entrance.OpenChooseDiary();
     }
@@ -69,38 +72,28 @@ public class Controller_Entrance : ControllerBehavior
     private void RefreshDiary()
     {
         int index = App.model.entrance.SelectedDiaryIndex;
-        var losingCats = App.model.cloister.LosingCatDatas;
+        var deadCats = App.model.entrance.AllDeadCats;
         
-        leftObject.SetActive(losingCats.Count > 1);
-        rightObject.SetActive(losingCats.Count > 1);
-        
-        CloudLosingCatData centerCatData = losingCats[index];
-        CloudLosingCatData leftCatData = null;
-        CloudLosingCatData rightCatData = null;
+        List<Cat> previousCats = new List<Cat>();
+        List<Cat> nextCats = new List<Cat>();
+        for (int i = 0; i < index; i++)
+            previousCats.Add(deadCats[i]);
+        for (int i = index; i < deadCats.Count; i++)
+            nextCats.Add(deadCats[i]);
 
-        //Left
-        int previous = index - 1;
-        if (previous < 0)
-            previous = losingCats.Count - 1;
-        //Right
-        int next = index + 1;
-        if (next > losingCats.Count - 1)
-            next = 0;
-        
-        if (losingCats.Count > 1)
-        {
-            leftCatData = losingCats[previous];
-            rightCatData = losingCats[next];
-        }
-
-        App.model.entrance.LeftCatData = leftCatData;
-        App.model.entrance.RightCatData = rightCatData;
-        App.model.entrance.CenterCatData = centerCatData;
+        nextCats.AddRange(previousCats);
+        App.model.entrance.AllDeadCats = nextCats;
     }
 
     public void ReadDiary()
     {
-        App.model.cloister.SelectedLosingCatData = App.model.entrance.CenterCatData; //TODO Diary也要有自己的SelectedLosingCatData
+        var cat = App.model.entrance.SelectedDeadCat;
+        var losingCatData = new CloudLosingCatData();
+        losingCatData.CatData = cat.cloudCatData.CatData;
+        losingCatData.CatDiaryData = cat.cloudCatData.CatDiaryData;
+        losingCatData.CatSkinData = cat.cloudCatData.CatSkinData;
+        
+        App.model.cloister.SelectedLosingCatData = losingCatData; //TODO Diary也要有自己的SelectedLosingCatData
         App.controller.diary.Open();
     }
 }

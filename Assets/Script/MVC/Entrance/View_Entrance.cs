@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class View_Entrance : ViewBehaviour
 {
@@ -11,6 +12,7 @@ public class View_Entrance : ViewBehaviour
     [SerializeField] private Cat_Entrance[] backCats;
     [SerializeField] private Cat_Entrance deadCat;
     [SerializeField] private GameObject closeButton;
+    [SerializeField] private Button maskButton;
 
     [Title("ChooseDiary")] [SerializeField]
     private View_EntranceDiary chooseDiary;
@@ -75,6 +77,7 @@ public class View_Entrance : ViewBehaviour
         {
             //正常
             closeButton.SetActive(true);
+            maskButton.interactable = true;
             return;
         }
 
@@ -82,7 +85,7 @@ public class View_Entrance : ViewBehaviour
         {
             //死
             closeButton.SetActive(false);
-            return;
+            maskButton.interactable = false;
         }
     }
 

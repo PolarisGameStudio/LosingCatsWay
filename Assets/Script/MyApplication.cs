@@ -74,6 +74,10 @@ public class MyApplication : MonoBehaviour
 
         // MyTime 一定要放最後
         system.myTime.Init();
+        
+        // myTime 弄死貓之後再叫
+        controller.cloister.Init();
+        
         DOVirtual.DelayedCall(0.35f, controller.lobby.Open);
     }
 

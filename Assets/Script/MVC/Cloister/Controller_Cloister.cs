@@ -6,21 +6,18 @@ public class Controller_Cloister : ControllerBehavior
 {
     [SerializeField] private GameObject catFlowerObject;
 
-    private bool IsLoad = false;
-    
     #region Basic
 
-    public async void Open()
+    public async void Init()
+    {
+        var losingCats = await App.system.cloudSave.LoadCloudLosingCatDatas(App.system.player.PlayerId);
+        App.model.cloister.LosingCatDatas = losingCats;
+    }
+
+    public void Open()
     {
         App.controller.greenHouse.LockGyro();
         App.view.cloister.Open();
-
-        if (!IsLoad)
-        {
-            IsLoad = true;
-            var losingCats = await App.system.cloudSave.LoadCloudLosingCatDatas(App.system.player.PlayerId);
-            App.model.cloister.LosingCatDatas = losingCats;
-        }
 
         if (App.model.cloister.LosingCatDatas.Count > 0)
             Select(0); //Show

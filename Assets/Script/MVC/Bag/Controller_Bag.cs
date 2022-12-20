@@ -19,6 +19,16 @@ public class Controller_Bag : ControllerBehavior
         App.system.soundEffect.Play("Button");
     }
 
+    public void OpenChooseCat()
+    {
+        App.view.bag.OpenChooseCat();
+    }
+
+    public void CloseChooseCat()
+    {
+        App.view.bag.CloseChooseCat();
+    }
+
     public void ChooseType(int type)
     {
         App.system.soundEffect.Play("Button");
