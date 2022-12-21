@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Controller_Pedia : ControllerBehavior
 {
-    [SerializeField] private GameObject leftArrow;
-    [SerializeField] private GameObject rightArrow;
+    [SerializeField] private Button pediaLeftArrow;
+    [SerializeField] private Button pediaRightArrow;
     
     private bool isPedia;
     
@@ -15,6 +16,7 @@ public class Controller_Pedia : ControllerBehavior
         ArchiveInit();
     }
 
+    //todo 改成Pedia專用
     public void ToLeft()
     {
         if (!IsCanToLeft())
@@ -29,6 +31,7 @@ public class Controller_Pedia : ControllerBehavior
             App.model.pedia.ArchivePageIndex--;
     }
 
+    //todo 改成Pedia專用
     public void ToRight()
     {
         if (!IsCanToRight())
@@ -105,18 +108,17 @@ public class Controller_Pedia : ControllerBehavior
 
     public void OpenReadPedia()
     {
-        leftArrow.SetActive(false);
-        rightArrow.SetActive(false);
-
+        pediaLeftArrow.gameObject.SetActive(false);
+        pediaRightArrow.gameObject.SetActive(false);
+        CloseChoosePedia();
         App.view.pedia.subPedia.readPedia.Open();
-        App.model.pedia.SelectedPediaType = App.model.pedia.SelectedPediaType; // 跳動
     }
 
     public void CloseReadPedia()
     {
         App.view.pedia.subPedia.readPedia.Close();
         RefreshPediaItems();
-        App.model.pedia.SelectedPediaType = App.model.pedia.SelectedPediaType; // 跳動
+        OpenChoosePedia();
     }
 
     private void RefreshPediaItems()
@@ -132,8 +134,11 @@ public class Controller_Pedia : ControllerBehavior
         if (index > end)
             index = end;
 
-        leftArrow.SetActive(index > 0);
-        rightArrow.SetActive(index < end - 1);
+        pediaLeftArrow.gameObject.SetActive(true);
+        pediaRightArrow.gameObject.SetActive(true);
+        
+        pediaLeftArrow.interactable = index > 0;
+        pediaRightArrow.interactable = index < end - 1;
         
         List<string> result = new List<string>();
         for (int i = index * 8; i < index * 8 + 8; i++)
@@ -196,8 +201,8 @@ public class Controller_Pedia : ControllerBehavior
         DOVirtual.DelayedCall(0.1f, () => { SelectArchiveType(0); });
         App.model.pedia.ArchivePageIndex = 0;
 
-        leftArrow.SetActive(false);
-        rightArrow.SetActive(false);
+        pediaLeftArrow.gameObject.SetActive(false);
+        pediaRightArrow.gameObject.SetActive(false);
     }
 
     private void CloseArchive()

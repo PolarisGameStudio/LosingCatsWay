@@ -96,6 +96,8 @@ public class CatSkin : MvcBehaviour
 
     public GameObject[] extraSkins;
 
+    [SerializeField] private GameObject wormEffect;
+
     public void SetActive(bool active)
     {
         gameObject.SetActive(active);
@@ -110,6 +112,9 @@ public class CatSkin : MvcBehaviour
         }
         else
             ChangeKittySkin(cloudCatData);
+        
+        if (wormEffect != null)
+            wormEffect.SetActive(cloudCatData.CatHealthData.IsBug);
     }
 
     public void ChangeSkin(CloudLosingCatData cloudLosingCatData)
@@ -259,7 +264,6 @@ public class CatSkin : MvcBehaviour
         }
 
         var catSickId = cloudCatData.CatHealthData.SickId;
-
         if (!String.IsNullOrEmpty(catSickId) || cloudCatData.CatHealthData.IsBug)
         {
             Skeleton catSkeleton = null;

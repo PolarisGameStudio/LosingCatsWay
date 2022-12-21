@@ -24,7 +24,7 @@ public class RoomSystem : MvcBehaviour
             List<Room> result = room.GetNearByRooms();
 
             alreadyCheckRooms.Add(room);
-
+            
             for (int i = 0; i < result.Count; i++)
             {
                 if (alreadyCheckRooms.Contains(result[i]))

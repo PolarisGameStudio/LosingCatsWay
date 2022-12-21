@@ -31,7 +31,7 @@ public class View_ClinicResult : ViewBehaviour
     [Title("MetCount")] [SerializeField] private GameObject metCountObject;
     [SerializeField] private GameObject cantMetObject;
 
-    Queue<string> resultIds; //���h�֯f����ݭn½��
+    Queue<string> resultIds;
 
     private Cat cat;
 
@@ -46,6 +46,7 @@ public class View_ClinicResult : ViewBehaviour
     {
         base.Open();
         catSkin.SetActive(true);
+        catSkin.ChangeSkin(cat.cloudCatData);
         ReadResult();
     }
 
@@ -86,18 +87,26 @@ public class View_ClinicResult : ViewBehaviour
         var payment = (Dictionary<string, int>)value;
         resultIds = new Queue<string>();
         for (int i = 0; i < payment.Count; i++)
-        {
             resultIds.Enqueue(payment.ElementAt(i).Key);
-        }
     }
 
     public void ReadResult()
     {
         if (resultIds.Count > 0)
         {
-            contentGroup.DOFade(0, 0.25f).From(1);
-            DOVirtual.DelayedCall(0.25f, ChangeContent);
-            contentGroup.DOFade(1, 0.25f).From(0).SetDelay(.5f);
+            if (string.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId))
+            {
+                resultIds = new Queue<string>(resultIds.Where(x => x != "CP001")); //客製化病狀單
+                contentGroup.DOFade(0, 0.25f).From(1);
+                DOVirtual.DelayedCall(0.25f, ChangeContent);
+                contentGroup.DOFade(1, 0.25f).From(0).SetDelay(.5f);
+            }
+            else
+            {
+                contentGroup.DOFade(0, 0.25f).From(1);
+                DOVirtual.DelayedCall(0.25f, ChangeContent);
+                contentGroup.DOFade(1, 0.25f).From(0).SetDelay(.5f);
+            }
         }
         else
         {
@@ -106,17 +115,20 @@ public class View_ClinicResult : ViewBehaviour
         }
     }
 
-    //TODO OnlyBug, No SickId
+    // 病狀單內容
     private void ChangeContent()
     {
         if (resultIds.Count <= 0) return;
         string id = resultIds.Dequeue();
+        
+        metCountObject.SetActive(true);
+        cantMetObject.SetActive(false);
 
         if (id == "CP001")
         {
-            sickNameText.text = "CP001";
-            sickInfoText.text = "CP001";
-            
+            sickNameText.text = App.factory.stringFactory.GetSickName(cat.cloudCatData.CatHealthData.SickId);
+            sickInfoText.text = App.factory.stringFactory.GetSickInfo(cat.cloudCatData.CatHealthData.SickId);
+
             for (int i = 0; i < sickLevels.Length; i++)
             {
                 int sickLevel = App.factory.sickFactory.GetSickLevel(cat.cloudCatData.CatHealthData.SickId);
@@ -126,25 +138,22 @@ public class View_ClinicResult : ViewBehaviour
                     sickLevels[i].SetActive(false);
             }
 
-            int count = App.factory.sickFactory.GetMetCount(cat.cloudCatData.CatHealthData.SickId);
+            int count = cat.cloudCatData.CatHealthData.MetDoctorCount;
             if (count < 0)
             {
                 metCountObject.SetActive(false);
                 cantMetObject.SetActive(true);
             }
             else
-            {
                 metCountText.text = count.ToString();
-                metCountObject.SetActive(true);
-                cantMetObject.SetActive(false);
-            }
+            
             return;
         }
 
         if (id == "CP002")
         {
-            sickNameText.text = "CP002";
-            sickInfoText.text = "CP002";
+            sickNameText.text = App.factory.stringFactory.GetPaymentName("CP002");
+            sickInfoText.text = App.factory.stringFactory.GetPaymentInfo("CP002");
             metCountText.text = "-";
 
             for (int i = 0; i < sickLevels.Length; i++)
@@ -156,8 +165,8 @@ public class View_ClinicResult : ViewBehaviour
 
         if (id == "CP003")
         {
-            sickNameText.text = "CP003";
-            sickInfoText.text = "CP003";
+            sickNameText.text = App.factory.stringFactory.GetPaymentName("CP003");
+            sickInfoText.text = App.factory.stringFactory.GetPaymentInfo("CP003");
             metCountText.text = "-";
 
             for (int i = 0; i < sickLevels.Length; i++)
@@ -169,8 +178,8 @@ public class View_ClinicResult : ViewBehaviour
 
         if (id == "CP004")
         {
-            sickNameText.text = "CP004";
-            sickInfoText.text = "CP004";
+            sickNameText.text = App.factory.stringFactory.GetPaymentName("CP004");
+            sickInfoText.text = App.factory.stringFactory.GetPaymentInfo("CP004");
             metCountText.text = "-";
 
             for (int i = 0; i < sickLevels.Length; i++)
@@ -180,10 +189,23 @@ public class View_ClinicResult : ViewBehaviour
             return;
         }
 
-        if (id == "CP005" || id == "CP006")
+        if (id == "CP005")
         {
-            sickNameText.text = "CP005+6";
-            sickInfoText.text = "CP005+6";
+            sickNameText.text = App.factory.stringFactory.GetPaymentName("CP005");
+            sickInfoText.text = App.factory.stringFactory.GetPaymentInfo("CP005");
+            metCountText.text = "-";
+
+            for (int i = 0; i < sickLevels.Length; i++)
+                sickLevels[i].SetActive(false);
+
+            sickLevels[3].SetActive(true);
+            return;
+        }
+        
+        if (id == "CP006")
+        {
+            sickNameText.text = App.factory.stringFactory.GetPaymentName("CP006");
+            sickInfoText.text = App.factory.stringFactory.GetPaymentInfo("CP006");
             metCountText.text = "-";
 
             for (int i = 0; i < sickLevels.Length; i++)
@@ -195,17 +217,14 @@ public class View_ClinicResult : ViewBehaviour
 
         if (id == "CP007")
         {
-            sickNameText.text = "CP007";
-            sickInfoText.text = "CP007";
+            sickNameText.text = App.factory.stringFactory.GetPaymentName("CP007");
+            sickInfoText.text = App.factory.stringFactory.GetPaymentInfo("CP007");
             metCountText.text = "-";
 
             for (int i = 0; i < sickLevels.Length; i++)
                 sickLevels[i].SetActive(false);
 
             sickLevels[3].SetActive(true);
-            return;
         }
-        
-        //TODO SickName(StringFactory)
     }
 }

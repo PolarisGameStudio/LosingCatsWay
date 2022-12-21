@@ -33,7 +33,6 @@ public class Cat : MvcBehaviour
     
     [Title("Effects")]
     public ParticleSystem catHeartEffect;
-    public ParticleSystem wormEffect;
 
     // ID變化
 
@@ -435,6 +434,15 @@ public class Cat : MvcBehaviour
 
     public void StartLittleGame()
     {
+        if (isFriendMode)
+            return;
+
+        if (App.model.build.IsCanMoveOrRemove)
+            return;
+
+        if (App.controller.followCat.isFollowing)
+            return;
+
         CancelGame();
 
         App.system.littleGame.Active(this);
@@ -445,6 +453,15 @@ public class Cat : MvcBehaviour
 
     public void StartBigGame()
     {
+        if (isFriendMode)
+            return;
+
+        if (App.model.build.IsCanMoveOrRemove)
+            return;
+
+        if (App.controller.followCat.isFollowing)
+            return;
+        
         CancelGame();
         CloseBigGame();
 
@@ -564,13 +581,6 @@ public class Cat : MvcBehaviour
     // 檢查長蟲
     void CheckBug()
     {
-        if (cloudCatData.CatHealthData.IsBug)
-        {
-            wormEffect.gameObject.SetActive(true);
-            wormEffect.Play();
-            return;
-        }
-
         DateTime noBugExpiredDate = cloudCatData.CatHealthData.NoBugExpireTimestamp.ToDateTime().ToLocalTime();
         if (noBugExpiredDate > App.system.myTime.MyTimeNow)
             return;
@@ -579,9 +589,7 @@ public class Cat : MvcBehaviour
         if (Random.value <= 0.15f)
         {
             cloudCatData.CatHealthData.IsBug = true;
-            wormEffect.gameObject.SetActive(true);
-            wormEffect.Play();
-            wormEffect.Play();
+            App.system.cloudSave.UpdateCloudCatHealthData(cloudCatData);
         }
     }
 

@@ -274,7 +274,7 @@ public class Room : MvcBehaviour
                     result.Add(rightRoom);
             }
         }
-
+        
         return result;
     }
 

@@ -63,13 +63,18 @@ public class StringFactory : SerializedMonoBehaviour
     [Title("Health")] [SerializeField]
     private Dictionary<string, string> healthString = new Dictionary<string, string>();
     [SerializeField] private Dictionary<string, string> sickString = new Dictionary<string, string>();
+    [SerializeField] private Dictionary<string, StringData> sickName;
+    [SerializeField] private Dictionary<string, StringData> sickInfo;
 
     [Title("AgeLevel")] [SerializeField]
-    private Dictionary<string, StringData> ageLevelStringDatas = new Dictionary<string, StringData>();
+    private Dictionary<string, StringData> ageLevelStringDatas;
 
     [Title("FindCat")] [SerializeField]
     private Dictionary<string, StringData> MapNameData = new Dictionary<string, StringData>();
     [SerializeField] private Dictionary<string, StringData> MapContentData = new Dictionary<string, StringData>();
+
+    [Title("Clinic")] [SerializeField] private Dictionary<string, StringData> paymentName;
+    [SerializeField] private Dictionary<string, StringData> paymentInfo;
 
     private string countryId = "tw";
 
@@ -413,6 +418,38 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = MapContentData[CountryId].Contents.ContainsKey(id)
             ? MapContentData[CountryId].Contents[id]
+            : "要叫阿邦上";
+        return result;
+    }
+
+    public string GetSickName(string id)
+    {
+        string result = sickName[CountryId].Contents.ContainsKey(id)
+            ? sickName[CountryId].Contents[id]
+            : "要叫阿邦上";
+        return result;
+    }
+    
+    public string GetSickInfo(string id)
+    {
+        string result = sickInfo[CountryId].Contents.ContainsKey(id)
+            ? sickInfo[CountryId].Contents[id]
+            : "要叫阿邦上";
+        return result;
+    }
+
+    public string GetPaymentName(string id)
+    {
+        string result = paymentName[CountryId].Contents.ContainsKey(id)
+            ? paymentName[CountryId].Contents[id]
+            : "要叫阿邦上";
+        return result;
+    }
+    
+    public string GetPaymentInfo(string id)
+    {
+        string result = paymentInfo[CountryId].Contents.ContainsKey(id)
+            ? paymentInfo[CountryId].Contents[id]
             : "要叫阿邦上";
         return result;
     }

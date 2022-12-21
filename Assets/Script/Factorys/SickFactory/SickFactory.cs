@@ -33,7 +33,7 @@ public class SickFactory : SerializedMonoBehaviour
         float realMoisture = cloudCatData.CatSurviveData.RealMoisture;
         float realFun = cloudCatData.CatSurviveData.RealFavourbility;
         int ageLevel = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays);
-        bool isBoy = (cloudCatData.CatData.Sex == 0);
+        bool isBoy = cloudCatData.CatData.Sex == 0;
 
         //Kitty
         if (ageLevel == 0)

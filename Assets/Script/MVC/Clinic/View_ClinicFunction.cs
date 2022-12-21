@@ -16,6 +16,7 @@ public class View_ClinicFunction : ViewBehaviour
     [SerializeField] private SkeletonGraphic functionGraphic;
 
     List<string> subjects = new List<string>();
+    private Cat cat;
 
     public override void Init()
     {
@@ -26,7 +27,7 @@ public class View_ClinicFunction : ViewBehaviour
 
     private void OnSelectedCatChange(object value)
     {
-        Cat cat = (Cat)value;
+        cat = (Cat)value;
         catSkin.ChangeSkin(cat.cloudCatData);
         functionGraphic.transform.localScale = catSkin.transform.localScale;
     }
@@ -50,6 +51,8 @@ public class View_ClinicFunction : ViewBehaviour
         catSkin.SetActive(true);
         functionGraphic.gameObject.SetActive(true);
 
+        bool isSick = !string.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId);
+        
         #region Animation
 
         catSkin.skeletonGraphic.AnimationState.ClearTracks();
@@ -57,7 +60,7 @@ public class View_ClinicFunction : ViewBehaviour
 
         List<Spine.Animation> catTracks = new List<Spine.Animation>();
         List<Spine.Animation> funcTracks = new List<Spine.Animation>();
-
+        
         for (int i = 0; i < subjects.Count; i++)
         {
             if (subjects[i] == "CP007")
@@ -67,7 +70,7 @@ public class View_ClinicFunction : ViewBehaviour
                 continue;
             }
 
-            if (subjects[i] == "CP001")
+            if (subjects[i] == "CP001" && isSick)
             {
                 catTracks.Add(catSkin.skeletonGraphic.SkeletonData.FindAnimation(catAnimNames[0]));
                 funcTracks.Add(functionGraphic.SkeletonData.FindAnimation(funcAnimNames[0]));
@@ -105,7 +108,10 @@ public class View_ClinicFunction : ViewBehaviour
         for (int i = 0; i < catTracks.Count; i++)
         {
             catTracks[i].Duration = funcTracks[i].Duration;
-            catSkin.skeletonGraphic.AnimationState.AddAnimation(0, catTracks[i], false, 0);
+            if (i == 0)
+                catSkin.skeletonGraphic.AnimationState.SetAnimation(0, catTracks[i], false);
+            else
+                catSkin.skeletonGraphic.AnimationState.AddAnimation(0, catTracks[i], false, 0);
         }
 
         for (int i = 0; i < funcTracks.Count; i++)
@@ -118,12 +124,19 @@ public class View_ClinicFunction : ViewBehaviour
                     continue;
                 }
 
-                var trackEntry = functionGraphic.AnimationState.AddAnimation(0, funcTracks[i], false, 0);
-                trackEntry.Complete += FunctionComplete;
+                if (i == 0)
+                {
+                    functionGraphic.AnimationState.SetAnimation(0, funcTracks[i], false);
+                }
+                else
+                {
+                    var trackEntry = functionGraphic.AnimationState.AddAnimation(0, funcTracks[i], false, 0);
+                    trackEntry.Complete += FunctionComplete;
+                }
             }
             else
             {
-                var trackEntry = functionGraphic.AnimationState.AddAnimation(0, funcTracks[i], false, 0);
+                var trackEntry = functionGraphic.AnimationState.SetAnimation(0, funcTracks[i], false);
                 trackEntry.Complete += FunctionComplete;
             }
         }

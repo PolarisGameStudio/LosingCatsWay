@@ -24,7 +24,9 @@ public class MyApplication : MonoBehaviour
 
         system.tnr.Init(); // Init(ValueChange) -> SetData (Diamond Coin) //TODO App.system.player.Diamond = App.system.player.Diamond 就好
         system.grid.Init(); // 生成格子 // TODO 讀玩家擁有格生格子
-        
+        // 初始化系統
+        controller.build.Init(); // 中心房要排序在myRooms的第0個
+
         // 讀取資料
         bool isCloudSaveDataExist = await system.cloudSave.IsCloudSaveDataExist();
         CloudSaveData cloudSaveData = null;
@@ -41,9 +43,6 @@ public class MyApplication : MonoBehaviour
         if (backStatus == 2)
             PlayerPrefs.DeleteKey("FriendRoomId");
         
-        // 初始化系統
-        controller.build.Init();
-
         system.cat.Init();
         controller.dailyQuest.Init();
         controller.pedia.Init();

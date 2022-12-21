@@ -227,7 +227,7 @@ public class Controller_Clinic : ControllerBehavior
             App.system.player.Coin -= totalCost;
         }
 
-        DoFunction();
+        // DoFunction();
         CloseInvoice();
         OpenFunction();
     }
@@ -254,23 +254,18 @@ public class Controller_Clinic : ControllerBehavior
         {
             if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
             {
-                cloudCatData.CatHealthData.MetDoctorCount = App.factory.sickFactory.GetMetCount(cloudCatData.CatHealthData.SickId);
+                if (cloudCatData.CatHealthData.MetDoctorCount <= 0)
+                    cloudCatData.CatHealthData.MetDoctorCount = App.factory.sickFactory.GetMetCount(cloudCatData.CatHealthData.SickId);
 
-                if (cloudCatData.CatHealthData.SickId != "SK001" || cloudCatData.CatHealthData.SickId != "SK002")
+                if (cloudCatData.CatHealthData.SickId != "SK001" && cloudCatData.CatHealthData.SickId != "SK002")
                 {
                     cloudCatData.CatHealthData.IsMetDoctor = true;
-                    cloudCatData.CatHealthData.MetDoctorCount = Mathf.Clamp(cloudCatData.CatHealthData.MetDoctorCount--, 0, 3);
-                    if (cloudCatData.CatHealthData.MetDoctorCount <= 0)
-                    {
-                        cloudCatData.CatHealthData.SickId = string.Empty;
-                        cloudCatData.CatHealthData.IsMetDoctor = false;
-                    }
+                    cloudCatData.CatHealthData.MetDoctorCount = Mathf.Clamp(cloudCatData.CatHealthData.MetDoctorCount - 1, 0, 3);
                 }
             }
 
             cloudCatData.CatHealthData.IsBug = false;
-            App.model.clinic.SelectedCat.wormEffect.Stop();
-            App.model.clinic.SelectedCat.wormEffect.gameObject.SetActive(false);
+            App.model.clinic.SelectedCat.ChangeSkin();
         }
         else if (index == 1)
         {
@@ -307,6 +302,7 @@ public class Controller_Clinic : ControllerBehavior
 
     public void OpenCheckResult()
     {
+        DoFunction();
         App.view.clinic.result.Open();
     }
 
@@ -317,8 +313,20 @@ public class Controller_Clinic : ControllerBehavior
 
     public void CloseCheckResult()
     {
+        ClearCatSick();
         App.view.clinic.result.Close();
         OnFunctionComplete?.Invoke();
+    }
+
+    private void ClearCatSick()
+    {
+        CloudCatData cloudCatData = App.model.clinic.SelectedCat.cloudCatData;
+        if (cloudCatData.CatHealthData.MetDoctorCount <= 0)
+        {
+            cloudCatData.CatHealthData.SickId = string.Empty;
+            cloudCatData.CatHealthData.IsMetDoctor = false;
+        }
+        App.system.cloudSave.UpdateCloudCatHealthData(cloudCatData);
     }
 
     #endregion
