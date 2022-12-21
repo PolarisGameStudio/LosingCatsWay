@@ -7,7 +7,8 @@ public class CatAnim_IdleSelector : StateMachineBehaviour
     // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        int[] randomTotal = { 35, 45, 20 };
+        // int[] randomTotal = { 35, 45, 20 };
+        int[] randomTotal = { 0, 100, 0 };
         int randomSelect = MathfExtension.RandomRate(randomTotal, 100);
 
         if (randomSelect == 0)

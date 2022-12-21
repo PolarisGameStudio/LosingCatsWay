@@ -24,7 +24,8 @@ public class CatAnim_Walk : StateMachineBehaviour
         {
             var catAgeLevel = CatExtension.GetCatAgeLevel(cat.cloudCatData.CatData.SurviveDays);
 
-            if (catAgeLevel == 0 && Random.value >= 0.7f)
+            // if (catAgeLevel != 0 && Random.value >= 0.7f)
+            if (catAgeLevel != 0)
             {
                 cat.MoveToSpecialSpineRoom();
                 return;

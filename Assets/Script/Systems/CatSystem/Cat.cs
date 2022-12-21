@@ -139,11 +139,16 @@ public class Cat : MvcBehaviour
 
     public void MoveToSpecialSpineRoom()
     {
+        print("開始");
         Room room = null;
 
         if (!isFriendMode)
         {
             room = App.system.room.GetRandomSpecialSpineRoom();
+            if (room != null)
+                print(room.roomData.id);
+            else
+                print("找不到");
         }
         else
         {
@@ -164,10 +169,13 @@ public class Cat : MvcBehaviour
             return;
         }
 
-        Vector2 target = room.spcialSpinePosition.position;
+        Vector2 target = room.transform.position;
+
+        target.x += Random.Range(1f, 5f) * Random.Range(0, 2);
+        target.y += Random.Range(1f, 5f) * Random.Range(0, 2);
 
         polyNavAgent.SetDestination(target);
-
+        
         if (polyNavAgent.hasPath)
         {
             specialSpineRoom = room;
@@ -180,21 +188,29 @@ public class Cat : MvcBehaviour
 
     private void WaitMoveEnd()
     {
+        print("正在走");
+        
         if (directionChecker.CheckIsMoving())
             return;
 
+        print("走到");
+        
         if (specialSpineRoom == null) // 房間爆掉
         {
-            directionChecker.Stop();
             specialSpineRoom.spcialSpineIsUse = false;
             CancelInvoke("WaitMoveEnd");
             return;
         }
 
-        int roomIndex = Convert.ToInt32(specialSpineRoom.roomData.id.Split("IRM")[1]);
-        anim.SetInteger(CatAnimTable.SpcialSpineRoomId.ToString(), roomIndex);
-        anim.Play("SpecialSpine");
-        specialSpineRoom.PlaySpecialSpine();
+        transform.position = specialSpineRoom.spcialSpinePosition.position;
+        //
+        // int roomIndex = Convert.ToInt32(specialSpineRoom.roomData.id.Split("IRM")[1]);
+        // anim.SetInteger(CatAnimTable.SpcialSpineRoomId.ToString(), roomIndex);
+        // anim.Play("SpecialSpine");
+        // specialSpineRoom.PlaySpecialSpine();
+        
+        directionChecker.Stop();
+        specialSpineRoom.spcialSpineIsUse = false;
         CancelInvoke("WaitMoveEnd");
     }
 
