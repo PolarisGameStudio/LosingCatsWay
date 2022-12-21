@@ -305,6 +305,10 @@ public class Controller_Cultive : ControllerBehavior
     }
 
     private void SetPlayData(TrackEntry entry)
+    
+    
+    
+    
     {
         if (!entry.Animation.Name.Contains("ToIdle"))
             return;

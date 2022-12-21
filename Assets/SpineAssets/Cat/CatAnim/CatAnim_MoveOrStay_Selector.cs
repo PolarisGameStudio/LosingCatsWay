@@ -48,6 +48,8 @@ public class CatAnim_MoveOrStay_Selector : StateMachineBehaviour
                 break;
         }
 
+        exitRoomValue = 1f;
+
         if (Random.value <= exitRoomValue) // 怎麼離開房間的
         {
             int[] total = { 95, 5 };

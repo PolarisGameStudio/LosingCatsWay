@@ -26,9 +26,10 @@ public class DebugTool_Cat
         catData.IsFavorite = false;
         
         if (isAdult)
-            catData.BornTime = Timestamp.GetCurrentTimestamp();
-        else
             catData.BornTime = Timestamp.FromDateTime(Timestamp.GetCurrentTimestamp().ToDateTime() - TimeSpan.FromDays(5));
+        else
+            catData.BornTime = Timestamp.GetCurrentTimestamp();
+
         
         catData.ChipId = String.Empty;
 
