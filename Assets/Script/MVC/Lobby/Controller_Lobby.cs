@@ -83,6 +83,11 @@ public class Controller_Lobby : ControllerBehavior
         App.controller.friend.Open();
     }
 
+    public void OpenMail()
+    {
+        App.system.mail.Open();
+    }
+
     public void OpenMall()
     {
         App.controller.mall.Open();

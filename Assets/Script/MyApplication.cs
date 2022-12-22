@@ -76,6 +76,7 @@ public class MyApplication : MonoBehaviour
         
         // myTime 弄死貓之後再叫
         controller.cloister.Init();
+        await system.mail.Init();
         
         DOVirtual.DelayedCall(0.35f, controller.lobby.Open);
     }
@@ -139,7 +140,10 @@ public class MyApplication : MonoBehaviour
             Quest q = factory.questFactory.GetQuestById(missionData.MyQuests[i]);
             model.dailyQuest.Quests.Add(q);
         }
-
+        
+        // MailReceivedDatas
+        system.mail.mailReceivedDatas = cloudSaveData.MailReceivedDatas;
+        
         // ExistRoomDatas
         var build = controller.build;
         var existRoomDatas = cloudSaveData.ExistRoomDatas;

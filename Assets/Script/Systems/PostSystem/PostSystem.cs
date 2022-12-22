@@ -70,30 +70,17 @@ public class PostSystem : MvcBehaviour
 
         prevIndex = index;
         DateTime dateTime = _postDatas[index].Time.ToDateTime();
-        PostSubData postSubData = GetPostSubData(index);
+        PostContent postContent = GetPostSubData(index);
         
-        titleText.text = postSubData.Title;
-        contentText.text = postSubData.Content;
+        titleText.text = postContent.Title;
+        contentText.text = postContent.Content;
         timeText.text = dateTime.ToShortDateString();
     }
 
-    private PostSubData GetPostSubData(int index)
+    private PostContent GetPostSubData(int index)
     {
         var currentLanguageCode = LocalizationManager.CurrentLanguageCode;
-        var postData = _postDatas[index];
-
-        switch (currentLanguageCode){
-            case "zh-CN":
-                return postData.cn;
-            case "en":
-                return postData.en;
-            case "ja":
-                return postData.ja;
-            case "ko":
-                return postData.ko;
-        }
-
-        return postData.tw;
+        return  _postDatas[index].Content[currentLanguageCode];
     }
 
     private async Task<List<PostData>> LoadPostDatas()
@@ -115,16 +102,12 @@ public class PostSystem : MvcBehaviour
 [FirestoreData]
 public class PostData
 {
-    [FirestoreProperty] public PostSubData en { get; set; }
-    [FirestoreProperty] public PostSubData ja { get; set; }
-    [FirestoreProperty] public PostSubData ko { get; set; }
-    [FirestoreProperty] public PostSubData cn { get; set; }
-    [FirestoreProperty] public PostSubData tw { get; set; }
+    [FirestoreProperty] public Dictionary<string, PostContent> Content { get; set; }
     [FirestoreProperty] public Timestamp Time { get; set; }
 }
 
 [FirestoreData]
-public class PostSubData
+public class PostContent
 {
     [FirestoreProperty] public string Content { get; set; }
     [FirestoreProperty] public string Title { get; set; }

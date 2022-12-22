@@ -31,6 +31,7 @@ public class SystemContainer : MvcBehaviour
     public LittleGameSystem littleGame;
     public InventorySystem inventory;
 
+    public MailSystem mail;
     public MyTimeSystem myTime;
 
     public OpenFlowSystem openFlow;

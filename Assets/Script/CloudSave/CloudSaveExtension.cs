@@ -24,7 +24,9 @@ public static class CloudSaveExtension
             {"SignData", data.SignData},
             {"ItemData", data.ItemData},
             {"MissionData", data.MissionData},
-            {"ExistRoomDatas", data.ExistRoomDatas}
+            {"ExistRoomDatas", data.ExistRoomDatas},
+            {"PurchaseRecords", data.PurchaseRecords},
+            {"MailReceivedDatas", data.MailReceivedDatas}
         };
 
         return result;

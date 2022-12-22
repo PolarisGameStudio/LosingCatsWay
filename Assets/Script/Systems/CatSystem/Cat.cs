@@ -187,7 +187,7 @@ public class Cat : MvcBehaviour
 
     private void WaitMoveEnd()
     {
-        print("正在走");
+        // print("正在走");
         
         if (directionChecker.CheckIsMoving())
             return;
