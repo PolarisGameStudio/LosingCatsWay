@@ -126,6 +126,9 @@ public class CloudSaveSystem : MvcBehaviour
         // Purchase
         cloudSaveData.PurchaseRecords = App.model.mall.PurchaseRecords;
 
+        // MailReceivedDatas
+        cloudSaveData.MailReceivedDatas = new List<string>();
+        
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
         await docRef.UpdateAsync(cloudSaveData.ToDict());
@@ -186,6 +189,9 @@ public class CloudSaveSystem : MvcBehaviour
         missionData.QuestReceivedStatusData = App.system.quest.QuestReceivedStatusData;
         missionData.MyQuests = new List<string>();
 
+        // MailReceivedDatas
+        cloudSaveData.MailReceivedDatas = new List<string>();
+        
         cloudSaveData.PlayerData = playerData;
         cloudSaveData.FriendData = friendData;
         cloudSaveData.TimeData = timeData;
