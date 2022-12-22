@@ -23,23 +23,23 @@ public class QuestSystem : SerializedMonoBehaviour
     public Dictionary<string, int> QuestProgressData;
     public Dictionary<string, int> QuestReceivedStatusData; // 0 還沒領 1 領了
 
-    public void Init()
-    {
-        App.system.myTime.OnFirstLogin += ResetQuests;
-    }
-
-    private void ResetQuests()
-    {
-        var tmp = QuestProgressData.ToList();
-
-        Timestamp nowTime = Timestamp.FromDateTime(DateTime.MinValue);
-
-        for (int i = 0; i < tmp.Count; i++)
-        {
-            var key = tmp[i].Key;
-            
-            QuestProgressData[key] = 0;
-            QuestReceivedStatusData[key] = 0;
-        }
-    }
+    // public void Init()
+    // {
+    //     App.system.myTime.OnFirstLogin += ResetQuests; // todo 改成第一次玩遊戲的事件
+    // }
+    //
+    // private void ResetQuests()
+    // {
+    //     var tmp = QuestProgressData.ToList();
+    //
+    //     Timestamp nowTime = Timestamp.FromDateTime(DateTime.MinValue);
+    //
+    //     for (int i = 0; i < tmp.Count; i++)
+    //     {
+    //         var key = tmp[i].Key;
+    //         
+    //         QuestProgressData[key] = 0;
+    //         QuestReceivedStatusData[key] = 0;
+    //     }
+    // }
 }

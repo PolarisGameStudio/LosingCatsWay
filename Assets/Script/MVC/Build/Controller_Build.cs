@@ -3,12 +3,18 @@ using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Controller_Build : ControllerBehavior
 {
     public GameObject buildEffect;
     public BuildTmpSensor buildTmpSensor;
+
+    [Title("MoveBuild")] [SerializeField] private GameObject cantMoveDialog;
+    [SerializeField] private GameObject removeMask;
+    
 
     private Tweener jumpTween;
 
@@ -97,8 +103,6 @@ public class Controller_Build : ControllerBehavior
                 buildEffect.transform.GetChild(1).localScale = new Vector3(6, 6, 6);
                 buildEffect.transform.GetChild(2).localScale = new Vector3(7.5f, 7.5f, 7.5f);
                 break;
-            default:
-                break;
         }
 
         GameObject effect = Instantiate(buildEffect, effectPos, Quaternion.identity);
@@ -123,8 +127,6 @@ public class Controller_Build : ControllerBehavior
         App.system.cat.OpenPolyNav2D();
 
         App.system.room.OpenExistRoomsSensor();
-
-        //App.system.bigGame.AddRoomGame(App.model.build.SelectedRoom);
     }
 
     public void FirestoreBuild(string roomId, int x, int y)
@@ -140,8 +142,6 @@ public class Controller_Build : ControllerBehavior
 
     public void Remove()
     {
-        //TODO 貓數量不可大於飼養房數量
-
         Room room = App.model.build.SelectedRoom;
         RoomSizeType sizeTpye = room.roomData.roomSizeType;
 
@@ -236,7 +236,7 @@ public class Controller_Build : ControllerBehavior
 
         if (jumpTween != null && jumpTween.IsPlaying())
             return;
-
+        
         var originY = room.transform.position.y;
         var offsetY = originY + 0.5f;
         jumpTween = room.transform.DOMoveY(offsetY, 0.1f).From(originY).SetLoops(2, LoopType.Yoyo).OnComplete(() =>
@@ -244,10 +244,11 @@ public class Controller_Build : ControllerBehavior
             jumpTween = null;
         });
 
+        // 限制拆養育房
         int catsCount = App.system.cat.GetCats().Count;
         int featuresRoomCount = App.system.room.GetFeaturesRooms().Count;
-        
-        App.view.build.removeButton.enabled = (featuresRoomCount > catsCount || catsCount == 0);
+        removeMask.SetActive(room.roomData.roomType == RoomType.Features && featuresRoomCount <= catsCount);
+        cantMoveDialog.SetActive(room.roomData.roomType == RoomType.Features && featuresRoomCount <= catsCount);
 
         App.model.build.SelectedRoom = room;
         App.view.build.OpenMoveBuild();

@@ -16,10 +16,9 @@ public class Controller_Pedia : ControllerBehavior
         ArchiveInit();
     }
 
-    //todo 改成Pedia專用
-    public void ToLeft()
+    public void PediaToLeft()
     {
-        if (!IsCanToLeft())
+        if (!IsPediaCanToLeft())
             return;
         
         if (isPedia)
@@ -31,10 +30,9 @@ public class Controller_Pedia : ControllerBehavior
             App.model.pedia.ArchivePageIndex--;
     }
 
-    //todo 改成Pedia專用
-    public void ToRight()
+    public void PediaToRight()
     {
-        if (!IsCanToRight())
+        if (!IsPediaCanToRight())
             return;
         
         if (isPedia)
@@ -152,7 +150,7 @@ public class Controller_Pedia : ControllerBehavior
         App.model.pedia.UsingPediaIds = result;
     }
 
-    private bool IsCanToLeft()
+    private bool IsPediaCanToLeft()
     {
         int type = App.model.pedia.SelectedPediaType;
         int index = App.model.pedia.PediaPageIndex;
@@ -168,7 +166,7 @@ public class Controller_Pedia : ControllerBehavior
         return index > 0;
     }
     
-    private bool IsCanToRight()
+    private bool IsPediaCanToRight()
     {
         int type = App.model.pedia.SelectedPediaType;
         int index = App.model.pedia.PediaPageIndex;
@@ -229,7 +227,10 @@ public class Controller_Pedia : ControllerBehavior
         if (quest.IsReceived)
             return;
 
-        quest.IsReceived = true;
+        // quest.IsReceived = true;
+        var strings = quest.id.Split('_');
+        App.system.quest.QuestReceivedStatusData[strings[0]] += 1;
+        
         App.system.reward.Open(quest.Rewards);
         ArchiveInit();
     }

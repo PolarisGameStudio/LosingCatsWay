@@ -57,7 +57,7 @@ public class MyApplication : MonoBehaviour
 
         system.bgm.Init();
         system.soundEffect.Init();
-        system.quest.Init();
+        // system.quest.Init();
 
         controller.settings.Init(); //BGM SE 之後
 

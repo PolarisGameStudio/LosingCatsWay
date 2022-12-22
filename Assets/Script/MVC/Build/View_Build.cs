@@ -20,13 +20,11 @@ public class View_Build : ViewBehaviour
 
     [Title("MoveBuild")]
     public UIView moveBuild;
-    public Button removeButton;
     
     [Title("Tween")] 
     public Transform chooseFloorButton;
     public Transform chooseBuildButton;
 
-    
     public override void Open()
     {
         UIView.InstantShow();

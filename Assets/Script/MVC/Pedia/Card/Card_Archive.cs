@@ -13,6 +13,7 @@ public class Card_Archive : Card_Quest
     [SerializeField] private TextMeshProUGUI progressText;
     [SerializeField] private TextMeshProUGUI descriptText;
     [SerializeField] private GameObject receiveMask;
+    [SerializeField] private TextMeshProUGUI rewardCountText;
 
     public override void SetData(Quest quest)
     {
@@ -20,6 +21,8 @@ public class Card_Archive : Card_Quest
 
         titleText.text = App.factory.stringFactory.GetQuestTitle(quest.id);
         descriptText.text = quest.Content;
+        progressText.text = $"{quest.Progress}/{quest.TargetCount}";
+        rewardCountText.text = quest.Rewards[0].count.ToString();
 
         for (int i = 0; i < 3; i++)
             reachObjects[i].SetActive(false);
@@ -38,15 +41,16 @@ public class Card_Archive : Card_Quest
                 break;
             }
         }
-        //
-        // string lastQuestId = strings[0] + "_" + 3;
-        // bool isLastQuestEnd = App.system.quest.QuestReceivedStatusData[lastQuestId] > 0;
-        //
-        // reachObjects[2].SetActive(isLastQuestEnd);
-        // receiveMask.SetActive(isLastQuestEnd);
-        // progressText.text = isLastQuestEnd
-        //     ? $"{App.factory.questFactory.GetQuestById(lastQuestId).TargetCount}/{App.factory.questFactory.GetQuestById(lastQuestId).TargetCount}"
-        //     : $"{quest.Progress}/{quest.TargetCount}";
+
+        string lastId = strings[0] + "_" + 3;
+        var lastQuest = App.factory.questFactory.GetQuestById(lastId);
+        bool isLastReceived = lastQuest.IsReceived;
+        if (isLastReceived)
+        {
+            receiveMask.SetActive(true);
+            reachObjects[2].SetActive(true);
+            progressText.text = $"{lastQuest.TargetCount}/{lastQuest.TargetCount}";
+        }
     }
 
     public void GetReward()
