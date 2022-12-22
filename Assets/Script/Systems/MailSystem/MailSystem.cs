@@ -77,7 +77,7 @@ public class MailSystem : MvcBehaviour
             _mailButtons[prevIndex].SetStatus(status);
         }
 
-        receiveButtonMask.SetActive(_mailDatas[prevIndex].IsReceived(mailReceivedDatas));
+        receiveButtonMask.SetActive(_mailDatas[index].IsReceived(mailReceivedDatas));
         var currentLanguageCode = LocalizationManager.CurrentLanguageCode;
 
         MailData mailData = _mailDatas[index];
@@ -110,6 +110,7 @@ public class MailSystem : MvcBehaviour
 
     public void Receive()
     {
+        mailReceivedDatas.Add(_mailDatas[prevIndex].Id);
         App.system.reward.Open(_rewards.ToArray());
         receiveButtonMask.SetActive(true);
     }
@@ -149,8 +150,6 @@ public class MailData
 
     public bool IsReceived(List<string> mailReceivedDatas)
     {
-        Debug.Log(mailReceivedDatas.Count);
-        
         return mailReceivedDatas.Contains(Id);
     }
 }
