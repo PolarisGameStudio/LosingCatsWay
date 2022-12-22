@@ -135,8 +135,11 @@ public class Controller_Cultive : ControllerBehavior
         if (isChildCat)
             randomIndex = 2;
         
-        if (dragItem.itemFeedType == ItemFeedType.Food || dragItem.itemFeedType == ItemFeedType.Snack)
+        if (dragItem.itemFeedType == ItemFeedType.Food)
             catSkeleton.AnimationState.SetAnimation(0, $"AI_Main/Eat_0{randomIndex}_Feed", false);
+        
+        if (dragItem.itemFeedType == ItemFeedType.Snack)
+            catSkeleton.AnimationState.SetAnimation(0, $"AI_Main/Drink_0{randomIndex}_Meat Puree", false);
 
         if (dragItem.itemFeedType == ItemFeedType.Water)
             catSkeleton.AnimationState.SetAnimation(0, $"AI_Main/Drink_0{randomIndex}_Water", false);
@@ -225,9 +228,12 @@ public class Controller_Cultive : ControllerBehavior
         float newMoisture = cat.cloudCatData.CatSurviveData.Moisture;
         float newFavourbility = cat.cloudCatData.CatSurviveData.Favourbility;
 
-        OnAddFun?.Invoke(newFavourbility - lastFavourbility);
-        OnAddSatiety?.Invoke(newSatiety - lastSatiety);
-        OnAddMoisture?.Invoke(newMoisture - lastMoisture);
+        // OnAddFun?.Invoke(newFavourbility - lastFavourbility);
+        OnAddFun?.Invoke(funValue);
+        // OnAddSatiety?.Invoke(newSatiety - lastSatiety);
+        OnAddSatiety?.Invoke(satietyValue);
+        // OnAddMoisture?.Invoke(newMoisture - lastMoisture);
+        OnAddMoisture?.Invoke(moistureValue);
         
         if (lastSatiety < 90f && newSatiety >= 90f)
             cat.cloudCatData.CatDiaryData.DiarySatietyScore++;

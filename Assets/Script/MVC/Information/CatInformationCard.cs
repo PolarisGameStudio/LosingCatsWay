@@ -63,4 +63,9 @@ public class CatInformationCard : MvcBehaviour
         gameObject.SetActive(active);
         catSkin.SetActive(active);
     }
+
+    public void OpenMap()
+    {
+        App.controller.information.OpenMap();
+    }
 }

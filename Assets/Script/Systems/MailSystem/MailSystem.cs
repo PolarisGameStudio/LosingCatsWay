@@ -77,7 +77,7 @@ public class MailSystem : MvcBehaviour
             _mailButtons[prevIndex].SetStatus(status);
         }
 
-        receiveButtonMask.SetActive(_mailDatas[prevIndex].IsReceived(mailReceivedDatas));
+        receiveButtonMask.SetActive(_mailDatas[index].IsReceived(mailReceivedDatas));
         var currentLanguageCode = LocalizationManager.CurrentLanguageCode;
 
         MailData mailData = _mailDatas[index];

@@ -76,7 +76,7 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
             if (item.itemType == ItemType.Feed && item.itemFeedType == ItemFeedType.Snack)
             {
                 // 不喜歡零食
-                if (cat.cloudCatData.CatSurviveData.LikeSnackIndex != (int)item.snackType)
+                if ((int)item.snackType != cat.cloudCatData.CatSurviveData.LikeSnackIndex)
                 {
                     App.controller.cultive.Reject();
                     return;

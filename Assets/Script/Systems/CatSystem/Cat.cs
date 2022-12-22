@@ -575,7 +575,10 @@ public class Cat : MvcBehaviour
         if (!String.IsNullOrEmpty(cloudCatData.CatHealthData.SickId)) return;
         float sickPercent = App.factory.catFactory.GetSickPercent(cloudCatData);
         if (Random.value < sickPercent)
+        {
             cloudCatData.CatHealthData.SickId = App.factory.sickFactory.GetSick(cloudCatData);
+            ChangeSkin();
+        }
     }
 
     // 檢查長蟲
@@ -590,6 +593,7 @@ public class Cat : MvcBehaviour
         {
             cloudCatData.CatHealthData.IsBug = true;
             App.system.cloudSave.UpdateCloudCatHealthData(cloudCatData);
+            ChangeSkin();
         }
     }
 
@@ -618,7 +622,7 @@ public class Cat : MvcBehaviour
 
     public void GetLikeSnack()
     {
-        cloudCatData.CatSurviveData.LikeSnackIndex = Random.Range(0, 4);
+        cloudCatData.CatSurviveData.LikeSnackIndex = Random.Range(0, 3);
         SaveLikeSnackIndex();
     }
 
@@ -631,10 +635,7 @@ public class Cat : MvcBehaviour
     {
         cloudCatData.CatSurviveData.LikeSnackIndex = PlayerPrefs.GetInt($"{cloudCatData.CatData.CatId}_LikeSnackIndex", -1);
         if (cloudCatData.CatSurviveData.LikeSnackIndex == -1)
-        {
-            cloudCatData.CatSurviveData.LikeSnackIndex = Random.Range(0, 4);
-            SaveLikeSnackIndex();
-        }
+            GetLikeSnack();
     }
 
     public void GetLikeSoup()
@@ -652,10 +653,7 @@ public class Cat : MvcBehaviour
     {
         cloudCatData.CatSurviveData.LikeSoupIndex = PlayerPrefs.GetInt($"{cloudCatData.CatData.CatId}_LikeSoupIndex", -1);
         if (cloudCatData.CatSurviveData.LikeSoupIndex == -1)
-        {
-            cloudCatData.CatSurviveData.LikeSoupIndex = Random.Range(1, 4);
-            SaveLikeSoupIndex();
-        }
+            GetLikeSoup();
     }
     
     #endregion
@@ -678,6 +676,13 @@ public class Cat : MvcBehaviour
     {
         cloudCatData.CatHealthData.IsBug = true;
         catSkin.ChangeSkin(cloudCatData);
+    }
+
+    [Button]
+    private void DebugPrint()
+    {
+        print($"LikeSnack: {cloudCatData.CatSurviveData.LikeSnackIndex}");
+        print($"LikeSoup:{cloudCatData.CatSurviveData.LikeSoupIndex}");
     }
 
     #endregion

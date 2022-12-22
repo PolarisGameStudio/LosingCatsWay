@@ -101,12 +101,7 @@ public class FindCatSystem : MvcBehaviour
 
     public void GoAbandon()
     {
-        App.system.transition.OnlyOpen();
-        DOVirtual.DelayedCall(1f, () =>
-        {
-            gateView.InstantHide();
-            App.system.abandon.Active($"Location{mapIndex}");
-        });
+        App.system.abandon.Active($"Location{mapIndex}");
     }
 
     public void ActiveCurrentGate()

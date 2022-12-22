@@ -94,6 +94,19 @@ public class Controller_Information : ControllerBehavior
         });
     }
 
+    public void OpenMap() // 獲得新貓咪的卡片可點擊
+    {
+        App.system.cat.ToggleCatsGameTimer(true);
+
+        App.system.bgm.FadeOut();
+        App.system.transition.Active(0, () =>
+        {
+            Close();
+            App.system.room.CloseRooms();
+            App.controller.map.Open();
+        });
+    }
+
     public void SelectTab(int index)
     {
         App.system.soundEffect.Play("Button");
@@ -123,6 +136,8 @@ public class Controller_Information : ControllerBehavior
         App.view.information.view_SubInformation.CloseStatus();
     }
 
+    #region ChooseSkin
+    
     private void OpenChooseSkin()
     {
         App.system.soundEffect.Play("Button");
@@ -223,4 +238,6 @@ public class Controller_Information : ControllerBehavior
         trackEntry.Complete -= WaitSpineSetSkinHappy;
         App.view.information.view_SubInformation.catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "AI_Main/IDLE_Ordinary01", true);
     }
+    
+    #endregion
 }

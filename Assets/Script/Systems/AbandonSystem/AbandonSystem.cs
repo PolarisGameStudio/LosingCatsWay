@@ -25,6 +25,10 @@ public class AbandonSystem : MvcBehaviour
     [Title("FinalConfirm")] [SerializeField]
     private UIView finalConfirmView;
 
+    [Title("Background")] [SerializeField] private Image confirmBg;
+    [SerializeField] private Sprite[] locationBgs;
+    [SerializeField] private Sprite shelterBg;
+
     private List<Cat> Cats;
     private Cat selectedCat;
 
@@ -71,6 +75,14 @@ public class AbandonSystem : MvcBehaviour
         Open();
 
         AbandonLocation = abandonLocation;
+
+        if (abandonLocation.Contains("Location"))
+        {
+            var index = int.Parse(abandonLocation.Replace("Location", ""));
+            confirmBg.sprite = locationBgs[index];
+        }
+        else
+            confirmBg.sprite = shelterBg;
         
         chooseCatButton.gameObject.SetActive(false);
         selectedCat = null;

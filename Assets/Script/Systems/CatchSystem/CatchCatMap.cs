@@ -868,7 +868,10 @@ public class CatchCatMap : MvcBehaviour
 
     private void SpineCatHappy()
     {
-        TrackEntry t = catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "Rearing_Cat/Rearing_Rub_IDLE", false);
+        string animationName = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) == 0
+            ? "Catch_Cat/Catch_Win"
+            : "Rearing_Cat/Rearing_Rub_IDLE";
+        TrackEntry t = catSkin.skeletonGraphic.AnimationState.SetAnimation(0, animationName, false);
         t.Complete += WaitSpineIdle;
     }
 

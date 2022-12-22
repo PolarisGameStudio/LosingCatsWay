@@ -327,6 +327,7 @@ public class Controller_Clinic : ControllerBehavior
             cloudCatData.CatHealthData.IsMetDoctor = false;
         }
         App.system.cloudSave.UpdateCloudCatHealthData(cloudCatData);
+        App.model.clinic.SelectedCat.ChangeSkin();
     }
 
     #endregion

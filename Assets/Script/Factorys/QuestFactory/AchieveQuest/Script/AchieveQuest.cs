@@ -31,7 +31,7 @@ public class AchieveQuest : Quest
         {
             int status = Convert.ToInt32(id.Split('_')[1]);
             int receivedStatus = App.system.quest.QuestReceivedStatusData[commonId];
-            return receivedStatus == status;
+            return receivedStatus >= status;
         }
         set
         {

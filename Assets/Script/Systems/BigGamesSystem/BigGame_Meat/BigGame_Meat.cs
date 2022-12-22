@@ -130,7 +130,7 @@ public class BigGame_Meat : BigGameBehaviour
         if (happy > 0)
         {
             float origin = happy / 50;
-            happy -= 4f;
+            happy -= 5f;
             happy = Mathf.Clamp(happy, 0f, 50f);
 
             percentText.text = $"{happy * 2}%";

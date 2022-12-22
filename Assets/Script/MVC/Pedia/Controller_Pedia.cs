@@ -270,7 +270,7 @@ public class Controller_Pedia : ControllerBehavior
     {
         Quest result = null;
 
-        for (int i = 1; i <= 3; i++)
+        for (int i = 1; i < 4; i++)
         {
             result = App.factory.questFactory.AchieveQuests[id + "_" + i];
 

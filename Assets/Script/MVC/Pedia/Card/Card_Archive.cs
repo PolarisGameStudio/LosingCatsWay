@@ -34,8 +34,8 @@ public class Card_Archive : Card_Quest
         {
             string tmpId = strings[0] + "_" + (i + 1);
             bool isReach = App.factory.questFactory.GetQuestById(tmpId).IsReach;
-            bool isReceived = App.factory.questFactory.GetQuestById(tmpId).IsReceived;
-            if (isReach && !isReceived)
+            int receiveStatus = App.system.quest.QuestReceivedStatusData[strings[0]];
+            if (isReach && receiveStatus == i)
             {
                 reachObjects[i].SetActive(true);
                 break;

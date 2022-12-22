@@ -108,7 +108,11 @@ public class CatSkin : MvcBehaviour
         if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) != 0)
         {
             ChangeCatSkin(cloudCatData);
-            SetSkin(cloudCatData);
+            
+            if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
+                SetSkin(cloudCatData);
+            else
+                SetSkinNull();
         }
         else
             ChangeKittySkin(cloudCatData);
@@ -183,10 +187,8 @@ public class CatSkin : MvcBehaviour
         catSkeleton.SetSkin("Normal_Cat/" + variety);
         SetSkinAttachment(catSkeleton, catSkinData);
 
-        var catSickId = cloudCatData.CatHealthData.SickId;
-        if (!String.IsNullOrEmpty(catSickId))
-            SetCatSick(cloudCatData, catSkeleton);
-
+        SetCatSick(cloudCatData, catSkeleton);
+        
         SetCatBodyScale(cloudCatData);
     }
 
@@ -219,16 +221,32 @@ public class CatSkin : MvcBehaviour
 
     private void SetCatSick(CloudCatData cloudCatData, Skeleton catSkeleton)
     {
-        var sickId = cloudCatData.CatHealthData.SickId;
-        var sickLevel = App.factory.sickFactory.GetSickLevel(sickId);
+        catSkeleton.SetAttachment(sick_Expression_Eye, null);
+        catSkeleton.SetAttachment(sick_Expression_Flush, null);
+        catSkeleton.SetAttachment(thermometer, null);
+        catSkeleton.SetAttachment(ice_Bag, null);
+        
+        if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId) && !cloudCatData.CatHealthData.IsBug)
+            return;
 
         catSkeleton.SetAttachment(slot_eyeLeft, null);
         catSkeleton.SetAttachment(slot_eyeRight, null);
         catSkeleton.SetAttachment(slot_pupilLeft, null);
         catSkeleton.SetAttachment(slot_pupilRight, null);
+        
+        if (cloudCatData.CatHealthData.IsBug)
+        {
+            catSkeleton.SetAttachment(sick_Expression_Eye, sick_Expression_Eye);
+            catSkeleton.SetAttachment(sick_Expression_Flush, sick_Expression_Flush);
+        }
+        
+        if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
+            return;
+        
+        var sickId = cloudCatData.CatHealthData.SickId;
+        var sickLevel = App.factory.sickFactory.GetSickLevel(sickId);
 
-
-        if (sickLevel >= 0 || sickLevel == -1 || cloudCatData.CatHealthData.IsBug)
+        if (sickLevel >= 0 || sickLevel == -1)
         {
             catSkeleton.SetAttachment(sick_Expression_Eye, sick_Expression_Eye);
             catSkeleton.SetAttachment(sick_Expression_Flush, sick_Expression_Flush);
@@ -433,7 +451,7 @@ public class CatSkin : MvcBehaviour
     {
         var useSkinId = cloudCatData.CatSkinData.UseSkinId;
 
-        SetAttachmentNull();
+        SetSkinNull();
         
         if (String.IsNullOrEmpty(useSkinId))
         {
@@ -505,7 +523,7 @@ public class CatSkin : MvcBehaviour
         }
     }
 
-    private void SetAttachmentNull()
+    private void SetSkinNull()
     {
         Skeleton catSkeleton = null;
         
