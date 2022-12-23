@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Doozy.Runtime.UIManager.Components;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -58,6 +59,9 @@ public class View_Cultive : ViewBehaviour
     [SerializeField] private RectTransform topRect;
     [SerializeField] private RectTransform leftBotStart; //開始位置
     [SerializeField] private RectTransform[] leftBotButtons;
+
+    [Title("UI")] [SerializeField] private UIButton openChooseSkinButton;
+    [SerializeField] private GameObject openChooseSkinMask;
 
     Vector2 topOrigin;
     Vector2 topOffset;
@@ -131,6 +135,15 @@ public class View_Cultive : ViewBehaviour
         satietyText.text = $"{cat.cloudCatData.CatSurviveData.Satiety:0} / 100";
         moistureText.text = $"{cat.cloudCatData.CatSurviveData.Moisture:0} / 100";
         funText.text = $"{cat.cloudCatData.CatSurviveData.Favourbility:0} / 100";
+
+        openChooseSkinButton.interactable = false;
+        openChooseSkinMask.SetActive(true);
+        if (CatExtension.GetCatAgeLevel(cat.cloudCatData.CatData.SurviveDays) == 0)
+            return;
+        if (!string.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId) || cat.cloudCatData.CatHealthData.IsBug)
+            return;
+        openChooseSkinButton.interactable = true;
+        openChooseSkinMask.SetActive(false);
     }
 
     private void OnSelectedTypeChange(object value)
@@ -303,14 +316,11 @@ public class View_Cultive : ViewBehaviour
 
                 for (int i = 0; i < leftBotButtons.Length; i++)
                 {
-                    Button button = leftBotButtons[i].GetComponent<Button>();
-
                     leftBotButtons[i]
                         .DOAnchorPos(leftBotOrigins[i], 0.25f)
                         .From(leftBotStart.anchoredPosition)
                         .SetEase(Ease.OutBack)
-                        .SetDelay(0.25f + i * 0.0625f)
-                        .OnComplete(() => button.interactable = true);
+                        .SetDelay(0.25f + i * 0.0625f);
                 }
             });
     }
@@ -326,14 +336,6 @@ public class View_Cultive : ViewBehaviour
             {
                 for (int i = 0; i < leftBotButtons.Length; i++)
                 {
-                    Button button = leftBotButtons[i].GetComponent<Button>();
-                    button.interactable = false;
-                }
-
-                for (int i = 0; i < leftBotButtons.Length; i++)
-                {
-                    Button button = leftBotButtons[i].GetComponent<Button>();
-
                     leftBotButtons[i].DOAnchorPos(leftBotStart.anchoredPosition, 0.25f)
                         .SetEase(Ease.InBack)
                         .SetDelay(i * 0.0625f);

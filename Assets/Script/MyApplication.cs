@@ -49,6 +49,7 @@ public class MyApplication : MonoBehaviour
 
         #region 啓動的流程順序(OpenFlow.Init)
 
+        system.choosePlayerGenderSystem.Init();
         controller.events.Init();
         controller.monthSign.Init();
         controller.entrance.Init();
@@ -96,6 +97,8 @@ public class MyApplication : MonoBehaviour
         player.DiamondCatSlot = playerData.DiamondCatSlot;
         player.GridSize = playerData.GridSize;
         player.PlayerGender = playerData.PlayerGender;
+        player.UsingIcon = playerData.UsingIcon;
+        player.UsingAvatar = playerData.UsingAvatar;
 
         // FriendData
         model.friend.Friends = await system.cloudSave.LoadFriends();
@@ -127,6 +130,8 @@ public class MyApplication : MonoBehaviour
         inventory.LitterData = itemData.LitterData;
         inventory.SkinData = itemData.SkinData;
         inventory.itemsCanBuyAtStore = itemData.ItemsCanBuyAtStore;
+        inventory.PlayerIconData = itemData.PlayerIconData;
+        inventory.PlayerAvatarData = itemData.PlayerAvatarData;
 
         // MissionDatas
         var quest = system.quest;

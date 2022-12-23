@@ -91,12 +91,18 @@ public class FindCatSystem : MvcBehaviour
     {
         App.system.soundEffect.Play("Button");
         
-        App.system.transition.OnlyOpen();
-        DOVirtual.DelayedCall(1f, () =>
+        if (App.system.player.CanAdoptCatCount <= 0)
         {
-            gateView.InstantHide();
-            ActiveMap();
-        });
+            App.system.confirm.Active(ConfirmTable.ConfirmFindCatWithoutAdopt, () =>
+            {
+                App.system.transition.OnlyOpen();
+                DOVirtual.DelayedCall(1f, () =>
+                {
+                    gateView.InstantHide();
+                    ActiveMap();
+                });
+            });
+        }
     }
 
     public void GoAbandon()

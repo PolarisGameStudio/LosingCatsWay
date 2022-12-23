@@ -668,19 +668,25 @@ public class Controller_Cultive : ControllerBehavior
     {
         if (!isCanDrag)
             return;
-        
         App.system.soundEffect.Play("Button");
-        
         App.view.cultive.cultiveInfo.Open();
-        SelectTab(1);
+        SelectTab(0);
     }
 
     public void CloseCultiveInfo()
     {
         App.system.soundEffect.Play("Button");
-        
         App.view.cultive.cultiveInfo.Close();
         CancelPreviewSkin();
+    }
+
+    public void OpenCultiveChooseSkin()
+    {
+        if (!isCanDrag)
+            return;
+        App.system.soundEffect.Play("Button");
+        App.view.cultive.cultiveInfo.Open();
+        SelectTab(1);
     }
 
     public void SelectTab(int index)

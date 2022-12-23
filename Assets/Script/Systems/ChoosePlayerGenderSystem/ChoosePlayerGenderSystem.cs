@@ -13,6 +13,14 @@ public class ChoosePlayerGenderSystem : MvcBehaviour
 
     private int genderIndex = -1;
 
+    public void Init()
+    {
+        int gender = App.system.player.PlayerGender;
+        if (gender != -1)
+            return;
+        App.system.openFlow.AddAction(Open);
+    }
+
     [Button]
     public void Open()
     {
@@ -22,6 +30,7 @@ public class ChoosePlayerGenderSystem : MvcBehaviour
     private void Close()
     {
         uiView.InstantHide();
+        App.system.openFlow.NextAction();
     }
 
     public void SelectGender(int index)
@@ -47,11 +56,39 @@ public class ChoosePlayerGenderSystem : MvcBehaviour
     {
         if (genderIndex == -1)
             return;
+
+        string genderString = string.Empty;
+        switch (genderIndex)
+        {
+            case 0:
+                genderString = App.factory.stringFactory.GetBoyString();
+                break;
+            case 1:
+                genderString = App.factory.stringFactory.GetGirlString();
+                break;
+        }
         
-        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        App.system.confirm.ActiveByInsert(ConfirmTable.ChooseGenderConfirm, null, genderString, () =>
         {
             App.system.player.PlayerGender = genderIndex;
+            RefreshPlayerIcon(genderIndex);
             Close();
         });
+    }
+
+    private void RefreshPlayerIcon(int index)
+    {
+        string id = string.Empty;
+        switch (index)
+        {
+            case 0:
+                id = "PIC001";
+                break;
+            case 1:
+                id = "PIC002";
+                break;
+        }
+
+        App.system.player.UsingIcon = id;
     }
 }

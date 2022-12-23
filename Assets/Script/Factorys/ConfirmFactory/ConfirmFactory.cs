@@ -123,6 +123,8 @@ public enum ConfirmTable
     NeedMoreFeedRoom,
     NeedMoreCatSlot,
     CatchCatGameEnd,
+    ConfirmFindCatWithoutAdopt, // 確定在無法收養下進入找貓
+    ChooseGenderConfirm,
 
     #endregion
 }

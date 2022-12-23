@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Vector2 = UnityEngine.Vector2;
 
 public class Card_MonthSign : MvcBehaviour
 {
@@ -10,6 +13,7 @@ public class Card_MonthSign : MvcBehaviour
     [SerializeField] private TextMeshProUGUI dateText;
     [SerializeField] private TextMeshProUGUI countText;
     [SerializeField] private Image icon;
+    [SerializeField] private Transform getIconTransform;
 
     bool isSign;
 
@@ -36,8 +40,27 @@ public class Card_MonthSign : MvcBehaviour
         get => isSign;
         set
         {
+            if (!isSign && value)
+                DoGetIconJump();
             isSign = value;
             signMark.SetActive(value);
         }
+    }
+    
+    private void DoGetIconJump()
+    {
+        Transform fromParent = transform.parent;
+        Transform toParent = App.controller.monthSign.FrontTransform;
+        int siblingIndex = transform.GetSiblingIndex();
+
+        transform.SetParent(toParent);
+        getIconTransform.DOScale(new Vector2(2, 2), 0.15f).From(new Vector2(1.5f, 1.5f)).SetEase(Ease.OutExpo);
+        getIconTransform.DOScale(new Vector2(0.8f, 0.8f), 0.1f).SetEase(Ease.OutExpo).SetDelay(0.15f);
+        getIconTransform.DOScale(Vector2.one, 0.05f).SetDelay(0.25f)
+            .OnComplete(() =>
+            {
+                transform.SetParent(fromParent);
+                transform.SetSiblingIndex(siblingIndex);
+            });
     }
 }

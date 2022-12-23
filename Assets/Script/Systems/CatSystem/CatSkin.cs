@@ -221,10 +221,10 @@ public class CatSkin : MvcBehaviour
 
     private void SetCatSick(CloudCatData cloudCatData, Skeleton catSkeleton)
     {
-        catSkeleton.SetAttachment(sick_Expression_Eye, null);
-        catSkeleton.SetAttachment(sick_Expression_Flush, null);
-        catSkeleton.SetAttachment(thermometer, null);
-        catSkeleton.SetAttachment(ice_Bag, null);
+        // catSkeleton.SetAttachment(sick_Expression_Eye, null);
+        // catSkeleton.SetAttachment(sick_Expression_Flush, null);
+        // catSkeleton.SetAttachment(thermometer, null);
+        // catSkeleton.SetAttachment(ice_Bag, null);
         
         if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId) && !cloudCatData.CatHealthData.IsBug)
             return;

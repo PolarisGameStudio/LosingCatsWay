@@ -54,6 +54,8 @@ public class CloudSaveSystem : MvcBehaviour
         playerData.DiamondCatSlot = App.system.player.DiamondCatSlot;
         playerData.GridSize = App.system.player.GridSize;
         playerData.PlayerGender = App.system.player.PlayerGender;
+        playerData.UsingIcon = App.system.player.UsingIcon;
+        playerData.UsingAvatar = App.system.player.UsingAvatar;
 
         // CloudSave_FriendData
         CloudSave_FriendData friendData = new CloudSave_FriendData();
@@ -90,6 +92,8 @@ public class CloudSaveSystem : MvcBehaviour
         itemData.LitterData = App.system.inventory.LitterData;
         itemData.SkinData = App.system.inventory.SkinData;
         itemData.ItemsCanBuyAtStore = App.system.inventory.itemsCanBuyAtStore;
+        itemData.PlayerIconData = App.system.inventory.PlayerIconData;
+        itemData.PlayerAvatarData = App.system.inventory.PlayerAvatarData;
 
         // MissionDatas
         CloudSave_MissionData missionData = new CloudSave_MissionData();
@@ -141,7 +145,7 @@ public class CloudSaveSystem : MvcBehaviour
         // CloudSave_PlayerData
         CloudSave_PlayerData playerData = new CloudSave_PlayerData();
 
-        playerData.PlayerName = "???";
+        playerData.PlayerName = "HelloWorld";
         playerData.PlayerId = CloudSaveExtension.CurrentUserId;
         playerData.Level = 1;
         playerData.Exp = 0;
@@ -150,6 +154,8 @@ public class CloudSaveSystem : MvcBehaviour
         playerData.DiamondCatSlot = 0;
         playerData.GridSize = 31;
         playerData.PlayerGender = -1;
+        playerData.UsingIcon = string.Empty;
+        playerData.UsingAvatar = "PAT001";
 
         // CloudSave_FriendData
         CloudSave_FriendData friendData = new CloudSave_FriendData();
@@ -181,6 +187,8 @@ public class CloudSaveSystem : MvcBehaviour
         itemData.LitterData = App.system.inventory.LitterData;
         itemData.SkinData = App.system.inventory.SkinData;
         itemData.ItemsCanBuyAtStore = App.system.inventory.itemsCanBuyAtStore;
+        itemData.PlayerIconData = App.system.inventory.PlayerIconData;
+        itemData.PlayerAvatarData = App.system.inventory.PlayerAvatarData;
 
         // MissionDatas
         CloudSave_MissionData missionData = new CloudSave_MissionData();

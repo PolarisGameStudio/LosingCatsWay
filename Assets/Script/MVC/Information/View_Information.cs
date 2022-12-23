@@ -6,13 +6,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using Sirenix.OdinInspector;
+using UnityEngine.Serialization;
 
 public class View_Information : ViewBehaviour
 {
     public View_SubInformation view_SubInformation;
 
+    [FormerlySerializedAs("playerHeadImage")]
     [Title("Player")]
-    [SerializeField] private Image playerHeadImage;
+    [SerializeField] private Image playerIcon;
+    [SerializeField] private Image playerAvatar;
     [SerializeField] private TextMeshProUGUI playerNameText;
     [SerializeField] private TextMeshProUGUI playerIdText;
     [SerializeField] private TextMeshProUGUI playerLevelText;
@@ -45,6 +48,21 @@ public class View_Information : ViewBehaviour
         App.system.player.OnCoinChange += OnCoinChange;
         App.system.player.OnDiamondChange += OnDiamondChange;
         App.system.player.OnCatSlotChange += OnCatSlotChange;
+        App.system.player.OnUsingIconChange += OnUsingIconChange;
+        App.system.player.OnUsingAvatarChange += OnUsingAvatarChange;
+    }
+
+    private void OnUsingAvatarChange(object value)
+    {
+        string id = value.ToString();
+        playerAvatar.sprite = App.factory.itemFactory.GetItem(id).icon;
+        //todo effect
+    }
+
+    private void OnUsingIconChange(object value)
+    {
+        string id = value.ToString();
+        playerIcon.sprite = App.factory.itemFactory.GetItem(id).icon;
     }
 
     public override void Close()

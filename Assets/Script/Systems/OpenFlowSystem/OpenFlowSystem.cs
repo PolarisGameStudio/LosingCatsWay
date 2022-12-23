@@ -26,10 +26,10 @@ public class OpenFlowSystem : MvcBehaviour
         openFlowActions.Add(action);
     }
 
-    public void RemoveAction(UnityAction action)
-    {
-        openFlowActions.Remove(action);
-    }
+    // public void RemoveAction(UnityAction action)
+    // {
+    //     openFlowActions.Remove(action);
+    // }
 
     [Button]
     public void StartAction()

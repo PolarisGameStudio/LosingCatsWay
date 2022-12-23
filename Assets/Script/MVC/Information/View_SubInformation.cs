@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Doozy.Runtime.UIManager.Components;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class View_SubInformation : ViewBehaviour
@@ -16,6 +18,7 @@ public class View_SubInformation : ViewBehaviour
     [SerializeField] private View_SubInfo_ChooseSkin chooseSkin;
 
     [Title("Tab")] [SerializeField] private GameObject[] tabMasks;
+    [SerializeField] private UIButton chooseSkinButton;
 
     public override void Init()
     {
@@ -62,6 +65,13 @@ public class View_SubInformation : ViewBehaviour
         string tmpID = "ID:" + cat.cloudCatData.CatData.CatId;
         catIdText.text = tmpID;
         catSkin.ChangeSkin(cat.cloudCatData);
+
+        chooseSkinButton.interactable = false;
+        if (CatExtension.GetCatAgeLevel(cat.cloudCatData.CatData.SurviveDays) == 0)
+            return;
+        if (!string.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId) || cat.cloudCatData.CatHealthData.IsBug)
+            return;
+        chooseSkinButton.interactable = true;
     }
 
     private void OnTabIndexChange(object value)

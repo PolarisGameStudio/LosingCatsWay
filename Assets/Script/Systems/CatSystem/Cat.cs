@@ -440,9 +440,6 @@ public class Cat : MvcBehaviour
         if (App.model.build.IsCanMoveOrRemove)
             return;
 
-        if (App.controller.followCat.isFollowing)
-            return;
-
         CancelGame();
 
         App.system.littleGame.Active(this);
@@ -459,9 +456,6 @@ public class Cat : MvcBehaviour
         if (App.model.build.IsCanMoveOrRemove)
             return;
 
-        if (App.controller.followCat.isFollowing)
-            return;
-        
         CancelGame();
         CloseBigGame();
 

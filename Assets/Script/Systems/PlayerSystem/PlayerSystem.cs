@@ -35,6 +35,9 @@ public class PlayerSystem : MvcBehaviour
     public ValueChange OnFriendIdsChange;
     public ValueChange OnReceiveFriendInvitesChange;
 
+    public ValueChange OnUsingIconChange;
+    public ValueChange OnUsingAvatarChange;
+
     #endregion
 
     #region Variable
@@ -48,6 +51,8 @@ public class PlayerSystem : MvcBehaviour
     private int diamondCatSlot;
     private int gridSize;
     private int playerGender = -1; //0:Male 1:Female
+    private string usingIcon;
+    private string usingAvatar;
 
     #endregion
 
@@ -130,11 +135,8 @@ public class PlayerSystem : MvcBehaviour
     public int DiamondCatSlot
     {
         get => diamondCatSlot;
-        set
-        {
-            diamondCatSlot = value;
-            //Todo ValueChange
-        }
+        set => diamondCatSlot = value;
+        //Todo ValueChange
     }
 
     public int GridSize
@@ -150,6 +152,30 @@ public class PlayerSystem : MvcBehaviour
         {
             playerGender = value;
             OnPlayerGenderChange?.Invoke(value); //TODO Icon
+        }
+    }
+
+    public string UsingIcon
+    {
+        get => usingIcon;
+        set
+        {
+            usingIcon = value;
+            if (string.IsNullOrEmpty(value))
+                return;
+            OnUsingIconChange?.Invoke(value);
+        }
+    }
+
+    public string UsingAvatar
+    {
+        get => usingAvatar;
+        set
+        {
+            usingAvatar = value;
+            if (string.IsNullOrEmpty(value))
+                return;
+            OnUsingAvatarChange?.Invoke(value);
         }
     }
 

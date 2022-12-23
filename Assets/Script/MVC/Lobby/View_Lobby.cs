@@ -9,6 +9,8 @@ using UnityEngine.UI;
 
 public class View_Lobby : ViewBehaviour
 {
+    [SerializeField] private Image playerIcon;
+    [SerializeField] private Image playerAvatar;
     [SerializeField] private TextMeshProUGUI playerNameText;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI coinText;
@@ -22,7 +24,7 @@ public class View_Lobby : ViewBehaviour
     [Title("Tween-Bottom")] public Transform downBg;
     public RectTransform buildButton;
     public RectTransform[] downButtons;
-    List<Vector2> downButtonsOrigins; //因爲按鈕還沒播完動畫再被Open的話 origin會偏移(動畫被打斷的位置變成新Origin)
+    private List<Vector2> downButtonsOrigins; //因爲按鈕還沒播完動畫再被Open的話 origin會偏移(動畫被打斷的位置變成新Origin)
 
     [Title("Tween-Left")] public Transform[] leftButtons;
 
@@ -74,6 +76,8 @@ public class View_Lobby : ViewBehaviour
         App.system.player.OnExpChange += OnExpChange;
         App.system.player.OnCoinChange += OnCoinChange;
         App.system.player.OnDiamondChange += OnDiamondChange;
+        App.system.player.OnUsingIconChange += OnUsingIconChange;
+        App.system.player.OnUsingAvatarChange += OnUsingAvatarChange;
 
         App.system.cat.OnCatsChange += OnCatsChange;
         App.system.room.OnRoomsChange += OnRoomsChange;
@@ -90,6 +94,19 @@ public class View_Lobby : ViewBehaviour
         }
 
         #endregion
+    }
+
+    private void OnUsingAvatarChange(object value)
+    {
+        string id = value.ToString();
+        playerAvatar.sprite = App.factory.itemFactory.GetItem(id).icon;
+        //todo effect
+    }
+
+    private void OnUsingIconChange(object value)
+    {
+        string id = value.ToString();
+        playerIcon.sprite = App.factory.itemFactory.GetItem(id).icon;
     }
 
     private void OnCurrentLevelBestRewardChange(object value)

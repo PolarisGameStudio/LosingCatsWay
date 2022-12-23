@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Doozy.Runtime.UIManager.Components;
 using Doozy.Runtime.UIManager.Containers;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -15,6 +16,7 @@ public class View_CultiveInfo : ViewBehaviour
     public View_CultiveInfo_ChooseSkin chooseSkin;
 
     [Title("Tab")] [SerializeField] private GameObject[] tabMasks;
+    [SerializeField] private UIButton chooseSkinButton; //Tab
 
     public override void Init()
     {
@@ -40,6 +42,13 @@ public class View_CultiveInfo : ViewBehaviour
         var cat = (Cat)value;
         catSkin.ChangeSkin(cat.cloudCatData);
         idText.text = $"ID:{cat.cloudCatData.CatData.CatId}";
+
+        chooseSkinButton.interactable = false;
+        if (CatExtension.GetCatAgeLevel(cat.cloudCatData.CatData.SurviveDays) == 0)
+            return;
+        if (!string.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId) || cat.cloudCatData.CatHealthData.IsBug)
+            return;
+        chooseSkinButton.interactable = true;
     }
 
     private void OnSelectedTabChange(object value)

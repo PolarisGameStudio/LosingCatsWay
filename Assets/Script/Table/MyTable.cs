@@ -85,7 +85,8 @@ public enum ItemType
     Coin = 9,
     Diamond = 10,
     Play = 11,
-    Unlock = 12
+    Unlock = 12,
+    Avatar = 13,
 }
 
 public enum ItemBoughtType

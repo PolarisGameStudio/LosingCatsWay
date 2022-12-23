@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Coffee.UIExtensions;
 using Firebase.Firestore;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class MyEvent7Days : MyEvent
 {
     public GameObject[] masks;
     public List<Reward[]> Rewards;
+    [SerializeField] private UIParticle[] uiParticles;
 
     public override void Open()
     {
@@ -16,6 +18,12 @@ public class MyEvent7Days : MyEvent
 
         for (int i = 0; i < receivedStatus; i++)
             masks[i].SetActive(true);
+
+        for (int i = 0; i < uiParticles.Length; i++)
+            uiParticles[i].gameObject.SetActive(false);
+
+        uiParticles[receivedStatus].gameObject.SetActive(true);
+        uiParticles[receivedStatus].Play();
     }
 
     public override void Init()

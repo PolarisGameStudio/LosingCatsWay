@@ -40,6 +40,7 @@ public class BigGame_Meat : BigGameBehaviour
     private float happy;
     private int feedCount;
     private bool isPointerPause;
+    private int turn;
 
     #endregion
 
@@ -70,7 +71,8 @@ public class BigGame_Meat : BigGameBehaviour
         chance = hearts.Length;
 
         feedCount = 0;
-        turnText.text = $"{feedCount}/3";
+        turn = 0;
+        RefreshTurnText();
 
         CancelInvoke(nameof(CheckStatus));
         ResetPercent();
@@ -84,6 +86,7 @@ public class BigGame_Meat : BigGameBehaviour
     {
         if (feedCount >= 3) return;
         if (chance <= 0) return;
+        if (turn >= 3) return;
         if (direction) return;
         if (isPointerPause) return;
 
@@ -98,6 +101,7 @@ public class BigGame_Meat : BigGameBehaviour
     {
         if (feedCount >= 3) return;
         if (chance <= 0) return;
+        if (turn >= 3) return;
         if (!direction) return;
         if (isPointerPause) return;
 
@@ -121,6 +125,8 @@ public class BigGame_Meat : BigGameBehaviour
 
             if (happy >= 50f)
             {
+                turn++;
+                RefreshTurnText();
                 Hit();
             }
 
@@ -138,6 +144,8 @@ public class BigGame_Meat : BigGameBehaviour
         }
         else
         {
+            turn++;
+            RefreshTurnText();
             Miss();
         }
     }
@@ -205,12 +213,16 @@ public class BigGame_Meat : BigGameBehaviour
         
         CancelInvoke(nameof(CheckStatus));
         feedCount++;
-        turnText.text = $"{feedCount}/3";
         isPointerPause = true;
         curveBar.PointerPause();
         curveBar.ResetPointer();
         
         PlayWinMeat();
+    }
+
+    private void RefreshTurnText()
+    {
+        turnText.text = $"{turn}/3";
     }
 
     #endregion
@@ -239,7 +251,7 @@ public class BigGame_Meat : BigGameBehaviour
         trackentry.Complete -= TrackToWaitMeat;
         PlayWaitMeat();
 
-        if (feedCount >= 3 || chance <= 0)
+        if (feedCount >= 3 || chance <= 0 || turn == 3)
         {
             OpenSettle();
             return;

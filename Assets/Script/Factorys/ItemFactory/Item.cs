@@ -97,7 +97,11 @@ public class Item : ScriptableObject
                 case ItemType.Special:
                     value = app.system.inventory.ToolData[id];
                     break;
-                default:
+                case ItemType.Icon:
+                    value = app.system.inventory.PlayerIconData[id];
+                    break;
+                case ItemType.Avatar:
+                    value = app.system.inventory.PlayerAvatarData[id];
                     break;
             }
 
@@ -130,7 +134,13 @@ public class Item : ScriptableObject
                     fromValue = app.system.inventory.SkinData[id];
                     app.system.inventory.SkinData[id] = value;
                     break;
-                default:
+                case ItemType.Icon:
+                    fromValue = app.system.inventory.PlayerIconData[id];
+                    app.system.inventory.PlayerIconData[id] = value;
+                    break;
+                case ItemType.Avatar:
+                    fromValue = app.system.inventory.PlayerAvatarData[id];
+                    app.system.inventory.PlayerAvatarData[id] = value;
                     break;
             }
 

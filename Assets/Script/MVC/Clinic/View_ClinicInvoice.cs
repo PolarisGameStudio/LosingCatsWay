@@ -43,7 +43,6 @@ public class View_ClinicInvoice : ViewBehaviour
 
         ownCoinText.text = App.system.player.Coin.ToString();
 
-        //總金額
         int total = 0;
         for (int i = 0; i < payment.Count; i++)
         {
@@ -97,11 +96,9 @@ public class View_ClinicInvoice : ViewBehaviour
 
     public override void Open()
     {
-        //重設帳單位置
         scrollRect.enabled = false;
         invoiceRect.DOAnchorPosY(invoice_StartY, 0);
 
-        //關付款按鈕
         for (int i = 0; i < invoiceButtons.Length; i++)
         {
             invoiceButtons[i].SetActive(false);

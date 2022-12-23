@@ -9,6 +9,7 @@ using UnityEngine;
 public class Controller_MonthSign : ControllerBehavior
 {
     [SerializeField] private MonthSignRewardData[] monthSignRewardDatas; //12個月的獎勵資料
+    public Transform FrontTransform; // 圖層解決
 
     public void Init()
     {

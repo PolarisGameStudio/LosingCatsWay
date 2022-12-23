@@ -7,6 +7,7 @@ using Spine;
 using Spine.Unity;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using AnimationState = Spine.AnimationState;
 using Random = UnityEngine.Random;
@@ -32,7 +33,7 @@ public class BigGame_Teaser : BigGameBehaviour
 
     [SerializeField] private GameObject[] swingButtons;
 
-    [SerializeField] private TextMeshProUGUI hitCountText;
+    [SerializeField] private TextMeshProUGUI turnText;
 
     [Title("UI")]
     [SerializeField] private RectTransform pauseRect;
@@ -47,6 +48,7 @@ public class BigGame_Teaser : BigGameBehaviour
     [SerializeField] private Vector2 turnOrigin;
 
     private int hitCount; //成功貓玩次數
+    private int turn;
 
     #endregion
 
@@ -71,7 +73,8 @@ public class BigGame_Teaser : BigGameBehaviour
 
         chance = hearts.Length;
         hitCount = 0;
-        RefreshHitCountText();
+        turn = 0;
+        RefreshTurnText();
 
         TweenIn();
         StartSwingBar();
@@ -105,6 +108,9 @@ public class BigGame_Teaser : BigGameBehaviour
 
     void StartSwingBar()
     {
+        turn++;
+        RefreshTurnText();
+        
         swingBar.SetActive(true);
         swingBar.transform.DOScale(Vector2.one, 0.5f).SetEase(Ease.OutBack).From(Vector2.zero);
 
@@ -181,9 +187,8 @@ public class BigGame_Teaser : BigGameBehaviour
         stickSkeleton.AnimationState.SetAnimation(0, "WinStick", false);
         
         hitCount++;
-        RefreshHitCountText();
 
-        if (hitCount == 3)
+        if (hitCount == 3 || turn == 3)
         {
             DOVirtual.DelayedCall(2f, OpenSettle);
             return;
@@ -265,9 +270,9 @@ public class BigGame_Teaser : BigGameBehaviour
 
     #endregion
 
-    private void RefreshHitCountText()
+    private void RefreshTurnText()
     {
-        hitCountText.text = hitCount + "/3";
+        turnText.text = turn + "/3";
     }
 
     #region Invoke
