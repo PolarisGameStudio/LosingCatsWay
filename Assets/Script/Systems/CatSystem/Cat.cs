@@ -5,6 +5,7 @@ using System.Runtime.InteropServices.ComTypes;
 using DG.Tweening;
 using Doozy.Runtime.Common.Extensions;
 using Firebase.Firestore;
+using PolyNav;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;

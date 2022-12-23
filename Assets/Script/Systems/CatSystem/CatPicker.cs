@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Lean.Touch;
+using PolyNav;
 
 public class CatPicker : MvcBehaviour
 {

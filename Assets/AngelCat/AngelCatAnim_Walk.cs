@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using PolyNav;
 using UnityEngine;
 
 public class AngelCatAnim_Walk : StateMachineBehaviour
