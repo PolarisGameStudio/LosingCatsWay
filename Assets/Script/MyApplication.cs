@@ -62,7 +62,7 @@ public class MyApplication : MonoBehaviour
 
         controller.settings.Init(); //BGM SE 之後
 
-        // await system.flowTask.Init(); // TODO 要重做
+        system.flowTask.Init(); // TODO 要重做
         FindObjectOfType<LoadScene>()?.Close();
 
         canSave = true;

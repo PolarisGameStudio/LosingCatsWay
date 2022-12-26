@@ -39,9 +39,7 @@ public class PlayerRenameSystem : MvcBehaviour
 
     public void Open()
     {
-        inputField.text = "InputYourName...";
         uIView.Show();
-
         IsFreeRename = false;
         CanCancel = true;
     }
@@ -51,7 +49,6 @@ public class PlayerRenameSystem : MvcBehaviour
         uIView.Hide();
     }
 
-    //TODO OnSelect �M�ſ�J��
     public void Rename()
     {
         if (!IsFreeRename)

@@ -21,13 +21,13 @@ public class FlowTask : SerializedMonoBehaviour
 
     public string flowId;
     public float exitDelay;
-    public bool UseDragCamera = false;
-    public bool UsePinchCamera = false;
-    public bool useBgMask = false;
-    public bool useUiView = false;
-    public bool showLobby = false;
+    public bool UseDragCamera;
+    public bool UsePinchCamera;
+    public bool useBgMask;
+    public bool useUiView;
+    public bool showLobby;
 
-    [ShowIf("useUiView", false)] public UIView uIView;
+    [ShowIf("useUiView")] public UIView uIView;
 
     public virtual void Enter()
     {
@@ -36,18 +36,12 @@ public class FlowTask : SerializedMonoBehaviour
         App.system.flowTask.ActiveBgMask(useBgMask);
 
         if (useUiView)
-        {
             uIView.Show();
-        }
 
         if (showLobby)
-        {
             App.controller.lobby.Open();
-        }
         else
-        {
             App.controller.lobby.Close();
-        }
     }
 
     public virtual void Exit()
@@ -55,9 +49,7 @@ public class FlowTask : SerializedMonoBehaviour
         DOVirtual.DelayedCall(exitDelay, () => 
         {
             if (useUiView)
-            {
                 uIView.InstantHide();
-            }
 
             App.system.flowTask.NextTask();
         });

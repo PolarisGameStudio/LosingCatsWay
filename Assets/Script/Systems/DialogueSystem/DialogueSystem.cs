@@ -10,13 +10,7 @@ using UnityEngine.UI;
 
 public class DialogueSystem : MvcBehaviour
 {
-    #region Callback
-
-    public delegate void DialogueCallback();
-
-    public DialogueCallback OnDialogueEnd;
-
-    #endregion
+    public Callback OnDialogueEnd;
 
     public Image npcImage;
     public TextMeshProUGUI dialogueText;

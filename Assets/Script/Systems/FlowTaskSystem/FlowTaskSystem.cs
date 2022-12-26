@@ -15,6 +15,7 @@ public class FlowTaskSystem : MvcBehaviour
 {
     [Title("UI")]
     public UIView bgMask;
+    public UIView uIView;
 
     [Title("Focus")]
     public UIView focusMaskView;
@@ -24,26 +25,24 @@ public class FlowTaskSystem : MvcBehaviour
     [Title("GameObject")]
     public GameObject CloudBg;
 
-    [Title("Flags")]
-    public bool hasEndStartTutorial = false;
+    [Title("Flags")] public int flowState = -1; //0=新手教學
 
     [Title("FlowTasks")]
     public List<FlowTask> flowTasks;
 
-    int checkpoint = 0;
+    private int checkpoint;
 
-    Camera cam;
-    UIView uIView;
+    private Camera cam;
 
     public Callback OnClose;
 
-    public async Task Init()
+    public void Init()
     {
         cam = Camera.main;
         FocusMaskClose();
         CloudBg.SetActive(false);
 
-        if (hasEndStartTutorial) //新手已過
+        if (flowState >= 0) //新手已過
         {
             CloudBg.SetActive(false);
             ActiveDragCamera(true);
@@ -56,19 +55,15 @@ public class FlowTaskSystem : MvcBehaviour
             Open();
             StartTask();
         }
-
-        await Task.Yield();
     }
 
     public void Open()
     {
-        uIView = GetComponent<UIView>();
         uIView.Show();
     }
 
     public void Close()
     {
-        uIView = GetComponent<UIView>();
         uIView.Hide();
         OnClose?.Invoke();
     }
@@ -93,8 +88,8 @@ public class FlowTaskSystem : MvcBehaviour
             ActiveDragCamera(true);
             ActivePinchCamera(true);
 
-            //新手結束
-            hasEndStartTutorial = true;
+            //教學State結束
+            flowState++;
 
             Close();
 

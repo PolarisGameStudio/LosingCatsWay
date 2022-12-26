@@ -9,6 +9,6 @@ public class DebugTool_Screenshot : MonoBehaviour
     [Button]
     private void TakeScreenshot()
     {
-        ScreenCapture.CaptureScreenshot(DateTime.Now.ToLocalTime().ToLongDateString() + ".png");
+        ScreenCapture.CaptureScreenshot(DateTimeExtension.CurrentDateTime().ToString("dd-MM-yy-hh-mm-ss") + ".png");
     }
 }

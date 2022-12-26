@@ -25,10 +25,10 @@ public class CatFlower : MonoBehaviour
     #endregion
 
     [Button]
-    public async void Test()
+    public async void Test(string id)
     {
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        DocumentReference docRef = db.Collection("LosingCats").Document("ed948bb51cf340efa168e7f1ac10f080");
+        DocumentReference docRef = db.Collection("LosingCats").Document(id);
     
         DocumentSnapshot result = await docRef.GetSnapshotAsync();
         var data = result.ConvertTo<CloudLosingCatData>();

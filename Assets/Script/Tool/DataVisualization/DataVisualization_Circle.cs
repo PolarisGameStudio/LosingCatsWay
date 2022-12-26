@@ -31,7 +31,7 @@ public class DataVisualization_Circle : MonoBehaviour
         for (int i = 0; i < values.Length; i++)
         {
             total += values[i];
-            texts[i].text = values[i] + "%";
+            // texts[i].text = (values[i] / total * 100).ToString("0") + "%";
         }
 
         float prevPercent = 0;
@@ -39,7 +39,8 @@ public class DataVisualization_Circle : MonoBehaviour
         for (int i = 0; i < values.Length; i++)
         {
             float percent = values[i] / total;
-
+            texts[i].text = (percent * 100).ToString("0") + "%";
+            
             images[i].fillAmount = prevPercent + percent;
 
             // 字的位置
