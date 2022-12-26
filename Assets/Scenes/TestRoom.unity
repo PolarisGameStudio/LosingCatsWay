@@ -172,7 +172,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   polyNavMap: {fileID: 24263266}
   polygonCollider2D: {fileID: 24263267}
-  room: {fileID: 0}
 --- !u!114 &24263266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,14 +216,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -5.12, y: -5.12}
-      - {x: 0, y: -5.12}
-      - {x: 5.12, y: -5.12}
-      - {x: 5.12, y: 0}
-      - {x: 5.12, y: 5.12}
-      - {x: 0, y: 5.12}
-      - {x: -5.12, y: 5.12}
-      - {x: -5.12, y: 0}
+    - - {x: 0, y: 0}
+      - {x: 1, y: 0}
+      - {x: 1, y: 1}
+      - {x: 0, y: 1}
 --- !u!1 &618884493
 GameObject:
   m_ObjectHideFlags: 0

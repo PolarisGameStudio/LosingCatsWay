@@ -9,10 +9,11 @@ public class JustTestRoom : MonoBehaviour
 {
     public PolyNavMap polyNavMap;
     public PolygonCollider2D polygonCollider2D;
-    public Room room;
 
-    public List<MyEdge> CreateEdges(Vector2 originPoint, int roomSize)
+    public List<MyEdge> CreateEdges(int x, int y, int roomSize)
     {
+        var originPoint = new Vector2(x * 5.12f, y * 5.12f);
+
         List<Vector2> points = new List<Vector2>();
         points.Add(originPoint);
 
@@ -101,18 +102,18 @@ public class JustTestRoom : MonoBehaviour
 
             if (myEdge.IsVertical())
             {
-                if (myEdges.Find(x => x.HasA(myEdge.B)) != null)
+                if (myEdges.Find(x => x.Equal(myEdge.B, myEdge.B + new Vector2(0, 5.12f))) != null)
                     v = myEdge.B;
 
-                if (myEdges.Find(x => x.HasB(myEdge.A)) != null)
+                if (myEdges.Find(x => x.Equal(myEdge.A - new Vector2(0, 5.12f), myEdge.A)) != null)
                     v = myEdge.A;
             }
             else
             {
-                if (myEdges.Find(x => x.HasA(myEdge.B)) != null)
+                if (myEdges.Find(x => x.Equal(myEdge.B, myEdge.B + new Vector2(5.12f, 0))) != null)
                     v = myEdge.B;
 
-                if (myEdges.Find(x => x.HasB(myEdge.A)) != null)
+                if (myEdges.Find(x => x.Equal(myEdge.A - new Vector2(5.12f, 0), myEdge.A)) != null)
                     v = myEdge.A;
             }
 
@@ -127,16 +128,15 @@ public class JustTestRoom : MonoBehaviour
         result.Add(myEdges[0].B);
 
         Vector2 prevVector2 = myEdges[0].B;
-
+        
         myEdges.RemoveAt(0);
 
-        while (myEdges.Count != 0)
+        int count = myEdges.Count - 1;
+        
+        for (int i = 0; i < count; i++)
         {
-            if (myEdges.Count == 1)
-                break;
-
             int index = myEdges.FindIndex(x => x.HasVector2(prevVector2));
-
+            
             if (index != -1)
             {
                 var myEdge = myEdges[index];
@@ -147,8 +147,6 @@ public class JustTestRoom : MonoBehaviour
             }
         }
 
-        print(deletePoints.Count);
-
         // 刪除多餘點
         for (int i = 0; i < deletePoints.Count; i++)
         {
@@ -156,7 +154,10 @@ public class JustTestRoom : MonoBehaviour
             int index = result.FindIndex(x => x == deletePoint);
 
             if (index != -1)
+            {
+                // print(result[index]);
                 result.RemoveAt(index);
+            }
         }
 
         return result;
@@ -167,8 +168,31 @@ public class JustTestRoom : MonoBehaviour
     {
         List<List<MyEdge>> allEdges = new List<List<MyEdge>>();
 
-        List<MyEdge> edgesA = CreateEdges(new Vector2(-5.12f, -5.12f), 2);
+        List<MyEdge> edgesA = CreateEdges(0, 0, 1);
+        List<MyEdge> edgesB = CreateEdges(1, 0, 1);
+        List<MyEdge> edgesC = CreateEdges(2, 0, 1);
+        List<MyEdge> edgesD = CreateEdges(3, 0, 1);
+        List<MyEdge> edgesE = CreateEdges(4, 0, 1);
+
+        List<MyEdge> edgesF = CreateEdges(2, 1, 1);
+
+        List<MyEdge> edgesG = CreateEdges(1, 2, 1);
+        List<MyEdge> edgesH = CreateEdges(2, 2, 1);
+        List<MyEdge> edgesI = CreateEdges(3, 2, 1);
+
+        List<MyEdge> edgesJ = CreateEdges(2, 3, 1);
+
+
         allEdges.Add(edgesA);
+        allEdges.Add(edgesB);
+        allEdges.Add(edgesC);
+        allEdges.Add(edgesD);
+        allEdges.Add(edgesE);
+        allEdges.Add(edgesF);
+        allEdges.Add(edgesG);
+        allEdges.Add(edgesH);
+        allEdges.Add(edgesI);
+        allEdges.Add(edgesJ);
 
         List<Vector2> mapPoints = CreateMapPoints(allEdges);
 
@@ -210,7 +234,7 @@ public class MyEdge
             B = v1;
         }
 
-        Id = (int)(A.x / 5.12f) + "." + (int)(A.y / 5.12f) + "-" + (int)(B.x / 5.12f) + "." + (int)(B.y / 5.12f);
+        Id = (int)(A.x) + "." + (int)(A.y) + "-" + (int)(B.x) + "." + (int)(B.y);
     }
 
     public Vector2 A;
@@ -231,17 +255,9 @@ public class MyEdge
         return false;
     }
 
-    public bool HasA(Vector2 vector2)
+    public bool Equal(Vector2 a, Vector2 b)
     {
-        if (vector2 == A)
-            return true;
-
-        return false;
-    }
-
-    public bool HasB(Vector2 vector2)
-    {
-        if (vector2 == B)
+        if (A == a && B == b)
             return true;
 
         return false;
