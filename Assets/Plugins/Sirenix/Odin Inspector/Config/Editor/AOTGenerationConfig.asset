@@ -16,9 +16,17 @@ MonoBehaviour:
   deleteDllAfterBuilds: 1
   AutomateForAllAOTPlatforms: 1
   automateForPlatforms: 090000000d000000
-  lastScan: 638042922679637868
+  lastScan: 638076820106394507
   supportSerializedTypes:
-  - TypeName: System.Collections.Generic.List`1[[Reward[], Assembly-CSharp]], mscorlib
+  - TypeName: System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[Reward,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[MultilineString,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: MultilineString, Assembly-CSharp
     IsCustom: 0
     Emit: 1
   - TypeName: UnityEngine.AudioClip, UnityEngine.AudioModule
@@ -40,10 +48,6 @@ MonoBehaviour:
     Emit: 1
   - TypeName: System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[System.Int32,
       mscorlib]], mscorlib
-    IsCustom: 0
-    Emit: 1
-  - TypeName: System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[Item_Reward,
-      Assembly-CSharp]], mscorlib
     IsCustom: 0
     Emit: 1
   - TypeName: System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[Reward[],
@@ -68,10 +72,6 @@ MonoBehaviour:
     Emit: 1
   - TypeName: System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Int32,
       mscorlib]], mscorlib
-    IsCustom: 0
-    Emit: 1
-  - TypeName: System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[Item_Reward[],
-      Assembly-CSharp]], mscorlib
     IsCustom: 0
     Emit: 1
   - TypeName: System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[Quest,
@@ -136,10 +136,7 @@ MonoBehaviour:
   - TypeName: Item, Assembly-CSharp
     IsCustom: 0
     Emit: 1
-  - TypeName: Item_Reward, Assembly-CSharp
-    IsCustom: 0
-    Emit: 1
-  - TypeName: Item_Reward[], Assembly-CSharp
+  - TypeName: System.Collections.Generic.List`1[[Reward[], Assembly-CSharp]], mscorlib
     IsCustom: 0
     Emit: 1
   - TypeName: Quest, Assembly-CSharp

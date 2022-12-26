@@ -15,10 +15,10 @@ public class ChoosePlayerGenderSystem : MvcBehaviour
 
     public void Init()
     {
-        int gender = App.system.player.PlayerGender;
-        if (gender != -1)
-            return;
-        App.system.openFlow.AddAction(Open);
+        // int gender = App.system.player.PlayerGender;
+        // if (gender != -1)
+        //     return;
+        Open();
     }
 
     [Button]
@@ -30,7 +30,7 @@ public class ChoosePlayerGenderSystem : MvcBehaviour
     private void Close()
     {
         uiView.InstantHide();
-        App.system.openFlow.NextAction();
+        App.system.tutorial.Init();
     }
 
     public void SelectGender(int index)

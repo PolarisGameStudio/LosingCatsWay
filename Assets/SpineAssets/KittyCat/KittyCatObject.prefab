@@ -5852,16 +5852,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _map: {fileID: 0}
   maxSpeed: 2
-  mass: 1
+  maxForce: 10
   stoppingDistance: 0.1
   slowingDistance: 1
-  accelerationRate: 2
-  decelerationRate: 2
   lookAheadDistance: 0.5
   avoidRadius: 0.1
-  centerOffset: {x: 0.175, y: 0.3}
+  avoidanceConsiderStuckedTime: 3
+  avoidanceConsiderReachedDistance: 1
   rotateTransform: 0
   rotateSpeed: 350
+  centerOffset: {x: 0.175, y: 0.3}
   repath: 0
   restrict: 0
   closerPointOnInvalid: 1

@@ -16,12 +16,11 @@ public class CatchCatSystem : MvcBehaviour
 
     [ReadOnly] public bool IsWatchAd;
 
-    public void Active(int index, CloudCatData cloudCatData, bool isTutorial = false)
+    public void Active(int index, CloudCatData cloudCatData)
     {
         IsWatchAd = false;
         
         catchCatBg.sprite = mapSprites[index];
-        map.IsTutorial = isTutorial;
         
         map.Open(cloudCatData);
         view.Show();

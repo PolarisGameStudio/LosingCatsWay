@@ -53,6 +53,8 @@ public class FindCatSystem : MvcBehaviour
 
     public void Pause()
     {
+        if (App.system.tutorial.isTutorial)
+            return;
         if (activeMap == null)
             return;
         
@@ -61,6 +63,8 @@ public class FindCatSystem : MvcBehaviour
 
     public void Exit()
     {
+        if (App.system.tutorial.isTutorial)
+            return;
         if (activeMap == null)
             return;
         
@@ -101,6 +105,15 @@ public class FindCatSystem : MvcBehaviour
                     gateView.InstantHide();
                     ActiveMap();
                 });
+            });
+        }
+        else
+        {
+            App.system.transition.OnlyOpen();
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                gateView.InstantHide();
+                ActiveMap();
             });
         }
     }

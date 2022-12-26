@@ -18,6 +18,8 @@ public class ConfirmSystem : MvcBehaviour
     private UnityAction _okEvent;
     private UnityAction _cancelEvent;
 
+    private int siblingIndex = -1;
+
     public ConfirmSystem OnlyConfirm()
     {
         cancelButton.SetActive(false);
@@ -28,7 +30,7 @@ public class ConfirmSystem : MvcBehaviour
     {
         UnityAction action = () =>
         {
-            view.Show();
+            Open();
 
             string id = key.ToString();
 
@@ -53,7 +55,7 @@ public class ConfirmSystem : MvcBehaviour
     {
         UnityAction action = () =>
         {
-            view.Show();
+            Open();
 
             string id = key.ToString();
 
@@ -97,6 +99,12 @@ public class ConfirmSystem : MvcBehaviour
         App.system.soundEffect.Play("Button");
     }
 
+    private void Open()
+    {
+        SetLastSibling();
+        view.Show();
+    }
+    
     private void Close()
     {
         view.InstantHide();
@@ -105,5 +113,20 @@ public class ConfirmSystem : MvcBehaviour
         _cancelEvent = null;
 
         cancelButton.SetActive(true);
+        ResetSibling();
+    }
+
+    private void SetLastSibling()
+    {
+        siblingIndex = transform.GetSiblingIndex();
+        transform.SetAsLastSibling();
+    }
+
+    private void ResetSibling()
+    {
+        if (siblingIndex == -1)
+            return;
+        transform.SetSiblingIndex(siblingIndex);
+        siblingIndex = -1;
     }
 }

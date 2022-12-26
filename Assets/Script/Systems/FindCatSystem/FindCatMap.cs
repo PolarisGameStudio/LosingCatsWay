@@ -23,8 +23,6 @@ public class FindCatMap : MvcBehaviour
     private float countDown = 15f;
     [ReadOnly] public int dollCount;
     
-    [ReadOnly] public bool IsTutorial;
-
     [Title("Cat")] public FindCatObject[] cats;
     [SerializeField] private UIParticle[] catLoves;
 
@@ -36,13 +34,19 @@ public class FindCatMap : MvcBehaviour
     {
         uiView.InstantShow();
         
+        if (!App.system.tutorial.isTutorial)
+            ShowHowToPlay();
+        
+        Init();
+    }
+
+    public void ShowHowToPlay()
+    {
         string country = App.factory.stringFactory.GetCountryByLocaleIndex();
         string title = howToPlayData.titleData[country];
         string[] descripts = howToPlayData.descriptData[country];
         Sprite[] sprites = howToPlayData.sprites;
         App.system.howToPlay.SetData(title, descripts, sprites).Open(true, null, StartGame);
-        
-        Init();
     }
 
     public void SetCloudCatData(CloudCatData cloudCatData)
@@ -162,7 +166,10 @@ public class FindCatMap : MvcBehaviour
                 OnGameEnd?.Invoke();
                 uiView.Hide();
                 App.system.findCat.Close();
-                App.system.catchCat.Active(mapIndex, cloudCatData, IsTutorial);
+                App.system.catchCat.Active(mapIndex, cloudCatData);
+
+                if (App.system.tutorial.isTutorial)
+                    App.system.tutorial.NextDirector();
             });
         });
     }
@@ -171,6 +178,16 @@ public class FindCatMap : MvcBehaviour
     {
         App.system.confirm.OnlyConfirm().Active(ConfirmTable.FindGameFailed, () =>
         {
+            if (App.system.tutorial.isTutorial)
+            {
+                App.system.transition.Active(1f, () =>
+                {
+                    Open();
+                    ShowHowToPlay();
+                });
+                return;
+            }
+            
             OnGameEnd?.Invoke();
             Close();
         });

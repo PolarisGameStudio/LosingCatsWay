@@ -49,7 +49,6 @@ public class MyApplication : MonoBehaviour
 
         #region 啓動的流程順序(OpenFlow.Init)
 
-        system.choosePlayerGenderSystem.Init();
         controller.events.Init();
         controller.monthSign.Init();
         controller.entrance.Init();
@@ -62,15 +61,18 @@ public class MyApplication : MonoBehaviour
 
         controller.settings.Init(); //BGM SE 之後
 
-        system.flowTask.Init(); // TODO 要重做
+        //system.flowTask.Init(); // TODO 要重做
+        // system.tutorial.Init();
+        system.choosePlayerGenderSystem.Init();
+        
         FindObjectOfType<LoadScene>()?.Close();
 
         canSave = true;
 
         system.transition.OnlyClose();
 
-        if (backStatus != 2)
-            system.openFlow.Init();
+        // if (backStatus != 2)
+        //     system.openFlow.Init();
 
         // MyTime 一定要放最後
         system.myTime.Init();

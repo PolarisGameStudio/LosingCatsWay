@@ -21,6 +21,8 @@ public class RewardSystem : MvcBehaviour
     public Transform content;
     public Card_RewardSystem itemObject;
 
+    private int siblingIndex;
+
     [Button]
     public void Test()
     {
@@ -29,6 +31,7 @@ public class RewardSystem : MvcBehaviour
 
     public void Open(Reward[] value, bool setData = true)
     {
+        SetLastSibling();
         view.InstantShow();
         rewards = value;
 
@@ -62,6 +65,7 @@ public class RewardSystem : MvcBehaviour
         view.InstantHide();
         OnClose?.Invoke();
         OnClose = null;
+        ResetSibling();
     }
 
     public void SetDatas(Reward[] rewards)
@@ -109,5 +113,19 @@ public class RewardSystem : MvcBehaviour
 
         isAnimationEnd = true;
         CancelInvoke("WaitAnimationEnd");
+    }
+
+    private void SetLastSibling()
+    {
+        siblingIndex = transform.GetSiblingIndex();
+        transform.SetAsLastSibling();
+    }
+
+    private void ResetSibling()
+    {
+        if (siblingIndex == -1)
+            return;
+        transform.SetSiblingIndex(siblingIndex);
+        siblingIndex = -1;
     }
 }

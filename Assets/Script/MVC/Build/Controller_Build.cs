@@ -6,6 +6,7 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class Controller_Build : ControllerBehavior
 {
@@ -14,6 +15,11 @@ public class Controller_Build : ControllerBehavior
 
     [Title("MoveBuild")] [SerializeField] private GameObject cantMoveDialog;
     [SerializeField] private GameObject removeMask;
+
+    [Title("Tutorial")] //TODO 優化
+    [SerializeField]
+    private Button closeButton;
+    [SerializeField] private Button cancelButton;
     
 
     private Tweener jumpTween;
@@ -36,6 +42,9 @@ public class Controller_Build : ControllerBehavior
         App.model.build.IsMoving = false;
 
         App.model.build.IsCanMoveOrRemove = true;
+
+        closeButton.interactable = !App.system.tutorial.isTutorial;
+        cancelButton.interactable = !App.system.tutorial.isTutorial;
     }
 
     public void Close()

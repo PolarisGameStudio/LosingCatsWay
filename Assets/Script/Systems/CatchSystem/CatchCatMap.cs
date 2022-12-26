@@ -85,8 +85,6 @@ public class CatchCatMap : MvcBehaviour
     private int exp;
     private int coin;
 
-    [HideInInspector] public bool IsTutorial;
-
     #endregion
 
     #region 基本開關+暫停離開
@@ -99,6 +97,12 @@ public class CatchCatMap : MvcBehaviour
         this.cloudCatData = cloudCatData;
         catSkin.ChangeSkin(cloudCatData);
 
+        if (!App.system.tutorial.isTutorial)
+            ShowHowToPlay();
+    }
+
+    public void ShowHowToPlay()
+    {
         string country = App.factory.stringFactory.GetCountryByLocaleIndex();
         string title = howToPlayData.titleData[country];
         string[] descripts = howToPlayData.descriptData[country];
@@ -310,7 +314,8 @@ public class CatchCatMap : MvcBehaviour
             tmp = 0;
         if (tmp >= 6)
             tmp = 6;
-        runChanceText.text = $"{runChances[tmp] * 100:0}%";
+        float chance = Mathf.Clamp(runChance, 0, 1);
+        runChanceText.text = $"{chance * 100:0}%";
     }
 
     // 允許玩家行動
@@ -500,7 +505,7 @@ public class CatchCatMap : MvcBehaviour
         
         catchFlowerAnimator.SetTrigger("Catch");
 
-        if (IsTutorial) //新手教學必定失敗
+        if (App.system.tutorial.isTutorial) //新手教學必定失敗
         {
             SpineCatCatchFail();
             return;
@@ -515,6 +520,9 @@ public class CatchCatMap : MvcBehaviour
     
     private bool CheckIsCatRun()
     {
+        if (turn >= 7)
+            return true;
+        
         int index = turn - 1;
         if (index < 0)
             index = 0;
@@ -580,10 +588,20 @@ public class CatchCatMap : MvcBehaviour
     {
         catSkin.SetActive(false);
 
+        if (App.system.tutorial.isTutorial)
+        {
+            SetCloudCatDataToUse(false);
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchCatGameEnd, () =>
+            {
+                CloseToMap();
+                App.system.tutorial.NextDirector();
+            });
+            return;
+        }
+
         if (turn >= 7)
         {
             SetCloudCatDataToUse(false);
-            
             App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchCatGameEnd, () =>
             {
                 if (hp <= 51)

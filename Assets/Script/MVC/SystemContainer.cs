@@ -52,6 +52,7 @@ public class SystemContainer : MvcBehaviour
 
     public TnrSystem tnr;
     public TransitionsSystem transition;
+    public TutorialSystem tutorial;
 
     public UseItemSystem useItem;
     

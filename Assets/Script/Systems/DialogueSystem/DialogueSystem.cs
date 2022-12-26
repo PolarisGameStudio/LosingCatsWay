@@ -6,31 +6,34 @@ using DG.Tweening;
 using UnityEngine;
 using TMPro;
 using Doozy.Runtime.UIManager.Containers;
+using Sirenix.OdinInspector;
 using UnityEngine.UI;
 
 public class DialogueSystem : MvcBehaviour
 {
     public Callback OnDialogueEnd;
 
+    [Title("NPC")]
     public Image npcImage;
+    public Sprite[] npcFaces;
+    
+    [Title("UI")]
     public TextMeshProUGUI dialogueText;
     public TextMeshProUGUI[] chooseTexts;
     public Image nextIcon;
-    [Space(10)]
-
     public GameObject mainNameObject;
     public GameObject npcNameObject;
     public TextMeshProUGUI mainNameText;
     public TextMeshProUGUI npcNameText;
+
+    [Title("UIView")]
     public UIView dialogueView;
-
     public UIView chooseView;
+
     private string[] answers;
-
-    List<string> sentences;
-    int checkpoint;
-
-    bool isComplete;
+    private List<string> sentences;
+    private int checkpoint;
+    private bool isComplete;
 
     public void StartSentence(string content)
     {
@@ -61,7 +64,7 @@ public class DialogueSystem : MvcBehaviour
         string characterIndex = sentence.Split(':')[0];
         //string characterName = "";
         string content = sentence.Split(':')[1];
-        bool isMainCharacter = (characterIndex == "0");
+        bool isMainCharacter = characterIndex == "0";
 
         if (characterIndex == "C") // 選項
         {
@@ -79,6 +82,16 @@ public class DialogueSystem : MvcBehaviour
             chooseView.Show();
             isComplete = true; //對話結束
             return;
+        }
+
+        if (sentence.Split(':').Length >= 3) //表情
+        {
+            string faceString = sentence.Split(':')[2];
+            if (faceString.Contains("F"))
+            {
+                int faceIndex = int.Parse(faceString.Replace("F", ""));
+                npcImage.sprite = npcFaces[faceIndex];
+            }
         }
 
         if (isMainCharacter)
