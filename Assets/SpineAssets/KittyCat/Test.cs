@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using PolyNav;
 using Sirenix.OdinInspector;
 using Spine;
 using Spine.Unity;
@@ -8,6 +9,9 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
+    public PolyNavMap polyNavMap;
+    
+    // public 
     public SkeletonGraphic skeletonRenderer;
 
     public SkeletonDataAsset a;
@@ -38,5 +42,11 @@ public class Test : MonoBehaviour
         skeletonRenderer.gameObject.transform.DOScale(Vector3.one * bS, 0);
 
         skeletonRenderer.AnimationState.SetAnimation(0, "AI_Main/IDLE_Ordinary01", true);
+    }
+
+    [Button]
+    public void C()
+    {
+        polyNavMap.GenerateMap();
     }
 }

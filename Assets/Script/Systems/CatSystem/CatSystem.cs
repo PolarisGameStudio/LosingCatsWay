@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
+using PolyNav;
 using Sirenix.OdinInspector;
 using Spine.Unity;
 using UnityEngine;
@@ -187,12 +188,12 @@ public class CatSystem : MvcBehaviour
     //為了優化 不關會過度消耗
     public void OpenPolyNav2D()
     {
-        transform.GetComponent<PolyNav2D>().enabled = true;
+        transform.GetComponent<PolyNavMap>().enabled = true;
     }
 
     public void ClosePolyNav2D()
     {
-        transform.GetComponent<PolyNav2D>().enabled = false;
+        transform.GetComponent<PolyNavMap>().enabled = false;
     }
 
     #endregion

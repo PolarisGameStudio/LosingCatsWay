@@ -5,6 +5,7 @@ using System.Runtime.InteropServices.ComTypes;
 using DG.Tweening;
 using Doozy.Runtime.Common.Extensions;
 using Firebase.Firestore;
+using PolyNav;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -168,20 +169,31 @@ public class Cat : MvcBehaviour
             return;
         }
 
-        Vector2 target = room.transform.position;
-
-        target.x += Random.Range(1f, 5f) * Random.Range(0, 2);
-        target.y += Random.Range(1f, 5f) * Random.Range(0, 2);
-
-        polyNavAgent.SetDestination(target);
+        int t = 0;
         
-        if (polyNavAgent.hasPath)
+        for (int i = 0; i < 50; i++)
         {
-            specialSpineRoom = room;
-            specialSpineRoom.spcialSpineIsUse = true;
-            InvokeRepeating("WaitMoveEnd", 0, 0.1f);
+            Vector2 target = room.transform.position;
+        
+            target.x += Random.Range(1f, 5f) * Random.Range(0, 2);
+            target.y += Random.Range(1f, 5f) * Random.Range(0, 2);
+        
+            polyNavAgent.SetDestination(target);
+
+            t++;
+            
+            if (polyNavAgent.hasPath)
+            {
+                specialSpineRoom = room;
+                specialSpineRoom.spcialSpineIsUse = true;
+                InvokeRepeating("WaitMoveEnd", 0, 0.1f);
+                break;
+            }
         }
-        else
+
+        print(t);
+        
+        if (!polyNavAgent.hasPath)
             RandomMoveAtRoom();
     }
 
