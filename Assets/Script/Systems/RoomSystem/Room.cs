@@ -18,9 +18,8 @@ public class Room : MvcBehaviour
     public GameObject[] upCoverWalls;
 
     public GameObject[] upDoorWalls;
-
     public GameObject[] downWalls;
-
+    
     public GameObject[] leftWalls;
     public GameObject[] rightWalls;
 

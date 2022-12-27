@@ -139,16 +139,16 @@ public class Cat : MvcBehaviour
 
     public void MoveToSpecialSpineRoom()
     {
-        print("開始");
+        // print("開始");
         Room room = null;
 
         if (!isFriendMode)
         {
             room = App.system.room.GetRandomSpecialSpineRoom();
-            if (room != null)
-                print(room.roomData.id);
-            else
-                print("找不到");
+            // if (room != null)
+            //     print(room.roomData.id);
+            // else
+            //     print("找不到");
         }
         else
         {

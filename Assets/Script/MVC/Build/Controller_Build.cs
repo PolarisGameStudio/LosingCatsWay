@@ -134,6 +134,7 @@ public class Controller_Build : ControllerBehavior
 
         App.controller.chooseBuild.ClearTmp();
         App.system.cat.OpenPolyNav2D();
+        App.system.map.GenerateMap();
 
         App.system.room.OpenExistRoomsSensor();
     }
@@ -161,6 +162,8 @@ public class Controller_Build : ControllerBehavior
 
         App.system.grid.Remove(room.x, room.y, roomWidth, roomHeight);
         App.system.room.Remove(room);
+
+        App.system.map.GenerateMap();
 
         CloseMoveBuild();
         App.system.cat.CheckCatNeedLeftRoom();

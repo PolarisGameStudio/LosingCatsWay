@@ -60,7 +60,7 @@ public class MyApplication : MonoBehaviour
         // system.quest.Init();
 
         controller.settings.Init(); //BGM SE 之後
-
+        
         //system.flowTask.Init(); // TODO 要重做
         // system.tutorial.Init();
         system.choosePlayerGenderSystem.Init();
@@ -79,6 +79,7 @@ public class MyApplication : MonoBehaviour
         
         // myTime 弄死貓之後再叫
         controller.cloister.Init();
+        
         await system.mail.Init();
         
         DOVirtual.DelayedCall(0.35f, controller.lobby.Open);
@@ -163,6 +164,8 @@ public class MyApplication : MonoBehaviour
             build.FirestoreBuild(roomData.Id, roomData.X, roomData.Y);
         }
 
+        system.map.GenerateMap();
+        
         // Purchase
         model.mall.PurchaseRecords = cloudSaveData.PurchaseRecords;
 
