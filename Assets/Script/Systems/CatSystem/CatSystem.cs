@@ -188,12 +188,12 @@ public class CatSystem : MvcBehaviour
     //為了優化 不關會過度消耗
     public void OpenPolyNav2D()
     {
-        transform.GetComponent<PolyNavMap>().enabled = true;
+        // transform.GetComponent<PolyNavMap>().enabled = true;
     }
 
     public void ClosePolyNav2D()
     {
-        transform.GetComponent<PolyNavMap>().enabled = false;
+        // transform.GetComponent<PolyNavMap>().enabled = false;
     }
 
     #endregion

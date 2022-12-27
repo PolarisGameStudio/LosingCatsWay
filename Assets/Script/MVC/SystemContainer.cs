@@ -30,8 +30,9 @@ public class SystemContainer : MvcBehaviour
     public LevelUpSystem levelUp;
     public LittleGameSystem littleGame;
     public InventorySystem inventory;
-
+    
     public MailSystem mail;
+    public MapSystem map;
     public MyTimeSystem myTime;
 
     public OpenFlowSystem openFlow;

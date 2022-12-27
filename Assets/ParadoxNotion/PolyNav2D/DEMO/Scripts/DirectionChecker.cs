@@ -64,11 +64,11 @@ public class DirectionChecker : MonoBehaviour
         if ( dir != lastDir ) {
 
             if ( dir == Vector2.zero ) {
-                Debug.Log("IDLE");
+                // Debug.Log("IDLE");
             }
 
             if ( dir.x == 1 ) {
-                Debug.Log("RIGHT");
+                // Debug.Log("RIGHT");
                 if ( doFlip ) {
                     var scale = transform.localScale;
                     scale.x = originalScaleX;
@@ -77,7 +77,7 @@ public class DirectionChecker : MonoBehaviour
             }
 
             if ( dir.x == -1 ) {
-                Debug.Log("LEFT");
+                // Debug.Log("LEFT");
                 if ( doFlip ) {
                     var scale = transform.localScale;
                     scale.x = -originalScaleX;
@@ -86,11 +86,11 @@ public class DirectionChecker : MonoBehaviour
             }
 
             if ( dir.y == 1 ) {
-                Debug.Log("UP");
+                // Debug.Log("UP");
             }
 
             if ( dir.y == -1 ) {
-                Debug.Log("DOWN");
+                // Debug.Log("DOWN");
             }
 
             lastDir = dir;

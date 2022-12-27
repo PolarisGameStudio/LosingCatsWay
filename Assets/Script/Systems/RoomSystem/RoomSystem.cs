@@ -124,6 +124,9 @@ public class RoomSystem : MvcBehaviour
                 room.OpenDownWall(i);
         }
 
+        if (room.roomData.roomType != RoomType.Path)
+            return;
+        
         //左偵查
         
         for (int i = 0; i < roomHeight; i++)
