@@ -94,6 +94,9 @@ public class Controller_Cultive : ControllerBehavior
         {
             App.view.cultive.Close();
 
+            if (App.system.tutorial.isTutorial)
+                return;
+            
             if (index == 0)
                 App.controller.feed.Open();
             if (index == 1)
@@ -425,8 +428,11 @@ public class Controller_Cultive : ControllerBehavior
         
         funEffects.Play();
         funPop.Pop(40);
+
+        bool isAdult = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) != 0;
+        string animName = isAdult ? "Rearing_Cat/Rearing_Smile_IDLE" : "Rearing_Cat/Rearing_Smile_Sit";
         
-        var t = catSkeleton.AnimationState.SetAnimation(0, "Rearing_Cat/Rearing_Smile_IDLE", false);
+        var t = catSkeleton.AnimationState.SetAnimation(0, animName, false);
         DOVirtual.DelayedCall(t.Animation.Duration, () => App.model.cultive.SelectedCat = App.model.cultive.SelectedCat);
         
         OnChangeLitter?.Invoke();

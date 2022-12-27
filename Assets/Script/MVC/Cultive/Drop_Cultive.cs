@@ -22,6 +22,8 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
+        App.controller.cultive.isDragging = false;
+        
         Item item = App.model.cultive.DragItem; //TODO 解偶
         Cat cat = App.model.cultive.SelectedCat;
         

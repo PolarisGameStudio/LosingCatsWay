@@ -43,11 +43,7 @@ public class Drag_CultiveItem : MvcBehaviour, IBeginDragHandler, IDragHandler, I
     {
         if (!App.controller.cultive.isCanDrag)
             return;
-        if (App.controller.cultive.isDragging)
-            return;
         
-        App.controller.cultive.isDragging = true;
-
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
 
         App.controller.cultive.OpenDropSensor();

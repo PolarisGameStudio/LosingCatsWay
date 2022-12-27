@@ -14,7 +14,7 @@ public class DebugTool_Cat
 
         CloudSave_CatData catData = new CloudSave_CatData();
         catData.CatId = FirebaseFirestore.DefaultInstance.Collection("Cats").Document().Id;
-        catData.CatName = "???";
+        catData.CatName = "-";
         catData.Sex = Random.value > .5f ? (byte)1 : (byte)0;
         catData.Variety = GetRandomCatVariety();
         catData.Owner = owner;

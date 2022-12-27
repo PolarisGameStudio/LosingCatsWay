@@ -37,6 +37,9 @@ public class TutorialSystem : MvcBehaviour
         {
             Debug.LogWarning("Director not found.");
             Close();
+            SetCameraDrag(true);
+            SetCameraPinch(true);
+            SetBlackBg(false);
             return;
         }
 

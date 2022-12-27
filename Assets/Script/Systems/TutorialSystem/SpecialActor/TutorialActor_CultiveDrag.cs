@@ -6,33 +6,34 @@ using UnityEngine;
 public class TutorialActor_CultiveDrag : TutorialActor
 {
     [SerializeField] private int dragIndex;
-    [SerializeField] private Drop_Cultive dropCultive;
+    [SerializeField] private Drop_Cultive dropCat;
+    [SerializeField] private Drop_Cultive dropLitter;
     
     public override void Enter()
     {
         if (dragIndex == 0)
         {
-            dropCultive.canFeedFood = true;
-            dropCultive.canFeedWater = false;
-            dropCultive.canChangeLitter = false;
+            dropCat.canFeedFood = true;
+            dropCat.canFeedWater = false;
+            dropLitter.canChangeLitter = false;
             
             App.controller.cultive.OnFeedFood += Exit;
             App.controller.cultive.SelectType(1);
         }
         if (dragIndex == 1)
         {
-            dropCultive.canFeedFood = false;
-            dropCultive.canFeedWater = true;
-            dropCultive.canChangeLitter = false;
+            dropCat.canFeedFood = false;
+            dropCat.canFeedWater = true;
+            dropLitter.canChangeLitter = false;
 
             App.controller.cultive.OnFeedWater += Exit;
             App.controller.cultive.SelectType(1);
         }
         if (dragIndex == 2)
         {
-            dropCultive.canFeedFood = false;
-            dropCultive.canFeedWater = false;
-            dropCultive.canChangeLitter = true;
+            dropCat.canFeedFood = false;
+            dropCat.canFeedWater = false;
+            dropLitter.canChangeLitter = true;
 
             App.controller.cultive.OnChangeLitter += Exit;
             App.controller.cultive.SelectType(3);
@@ -49,6 +50,10 @@ public class TutorialActor_CultiveDrag : TutorialActor
             App.controller.cultive.OnFeedWater -= Exit;
         if (dragIndex == 2)
             App.controller.cultive.OnChangeLitter -= Exit;
+        
+        dropCat.canFeedFood = true;
+        dropCat.canFeedWater = true;
+        dropLitter.canChangeLitter = true;
         
         base.Exit();
     }

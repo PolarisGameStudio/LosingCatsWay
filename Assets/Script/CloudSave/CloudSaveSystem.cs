@@ -145,7 +145,7 @@ public class CloudSaveSystem : MvcBehaviour
         // CloudSave_PlayerData
         CloudSave_PlayerData playerData = new CloudSave_PlayerData();
 
-        playerData.PlayerName = "HelloWorld";
+        playerData.PlayerName = "-";
         playerData.PlayerId = CloudSaveExtension.CurrentUserId;
         playerData.Level = 1;
         playerData.Exp = 0;

@@ -17,6 +17,8 @@ public class LevelUpSystem : MvcBehaviour
     [Title("UI")] public GameObject[] unlocks;
     public TextMeshProUGUI[] unlockContents;
 
+    private int siblingIndex;
+
     [Button]
     public void Up()
     {
@@ -25,6 +27,7 @@ public class LevelUpSystem : MvcBehaviour
 
     public void Open()
     {
+        SetLastSibling();
         view.InstantShow();
 
         int level = App.system.player.Level;
@@ -78,7 +81,22 @@ public class LevelUpSystem : MvcBehaviour
 
     public void Close()
     {
+        ResetSibling();
         view.InstantHide();
         App.system.reward.Open(App.factory.itemFactory.LevelRewards[App.system.player.Level], false);
+    }
+
+    private void SetLastSibling()
+    {
+        siblingIndex = transform.GetSiblingIndex();
+        transform.SetAsLastSibling();
+    }
+
+    private void ResetSibling()
+    {
+        if (siblingIndex == -1)
+            return;
+        transform.SetSiblingIndex(siblingIndex);
+        siblingIndex = -1;
     }
 }

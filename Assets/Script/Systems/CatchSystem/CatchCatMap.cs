@@ -152,11 +152,15 @@ public class CatchCatMap : MvcBehaviour
 
     public void OpenPause()
     {
+        if (App.system.tutorial.isTutorial)
+            return;
         App.system.howToPlay.Open(false);
     }
 
     public void Exit()
     {
+        if (App.system.tutorial.isTutorial)
+            return;
         App.system.confirm.Active(ConfirmTable.ExitComfirm, () =>
         {
             SetCloudCatDataToUse(false);

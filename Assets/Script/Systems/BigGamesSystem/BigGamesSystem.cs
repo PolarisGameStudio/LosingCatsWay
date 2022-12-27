@@ -133,5 +133,8 @@ public class BigGamesSystem : MvcBehaviour
         App.system.room.OpenRooms();
         view.InstantHide();
         OnClose?.Invoke();
+        
+        if (App.system.tutorial.isTutorial)
+            App.system.tutorial.NextDirector();
     }
 }

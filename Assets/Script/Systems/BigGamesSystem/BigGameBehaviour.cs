@@ -48,12 +48,16 @@ public class BigGameBehaviour : MvcBehaviour
 
     public virtual void OpenAbout()
     {
+        if (App.system.tutorial.isTutorial)
+            return;
         App.system.howToPlay.Open(false, null, () => isPause = false);
         //TODO Pause every game
     }
 
     public virtual void OpenPause()
     {
+        if (App.system.tutorial.isTutorial)
+            return;
         isPause = true;
         //TODO Pause every game
     }

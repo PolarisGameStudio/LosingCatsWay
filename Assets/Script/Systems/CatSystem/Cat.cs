@@ -310,7 +310,7 @@ public class Cat : MvcBehaviour
     }
 
     [Button]
-    private void DrawGame()
+    public void DrawGame()
     {
         CancelInvoke(nameof(CountTimerDrawGame));
         if (App.system.bigGames.GetBigGames().Count > 0)
