@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,6 +9,11 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
 {
     public bool isCat;
     // public ItemType dropItemType;
+    
+    [Title("Tutorial")]
+    public bool canFeedFood = true;
+    public bool canFeedWater = true;
+    public bool canChangeLitter = true;
 
     public void SetActive(bool value)
     {
@@ -39,6 +45,12 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
             // 食物拒絕
             if (item.itemType == ItemType.Feed && item.itemFeedType == ItemFeedType.Food)
             {
+                if (!canFeedFood)
+                {
+                    App.controller.cultive.Reject();
+                    return;
+                }
+                
                 // 飽足大等於100不接受
                 if (cat.cloudCatData.CatSurviveData.Satiety >= 100f)
                 {
@@ -57,6 +69,12 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
             // 水拒絕
             if (item.itemType == ItemType.Feed && item.itemFeedType == ItemFeedType.Water)
             {
+                if (!canFeedWater)
+                {
+                    App.controller.cultive.Reject();
+                    return;
+                }
+                
                 // 水分大等於100不接受
                 if (cat.cloudCatData.CatSurviveData.Moisture >= 100f)
                 {
@@ -92,6 +110,13 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
                     App.controller.cultive.Reject();
                     return;
                 }
+            }
+            
+            // 貓砂拒絕
+            if (item.itemType == ItemType.Litter)
+            {
+                if (!canChangeLitter)
+                    return;
             }
         }
         

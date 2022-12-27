@@ -57,7 +57,7 @@ public class TutorialSystem : MvcBehaviour
 
     public void Open()
     {
-        uiView.Show();
+        uiView.InstantShow();
     }
     
     public void Close()

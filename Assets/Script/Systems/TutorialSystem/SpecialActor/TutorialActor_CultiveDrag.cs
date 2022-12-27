@@ -6,21 +6,34 @@ using UnityEngine;
 public class TutorialActor_CultiveDrag : TutorialActor
 {
     [SerializeField] private int dragIndex;
+    [SerializeField] private Drop_Cultive dropCultive;
     
     public override void Enter()
     {
         if (dragIndex == 0)
         {
+            dropCultive.canFeedFood = true;
+            dropCultive.canFeedWater = false;
+            dropCultive.canChangeLitter = false;
+            
             App.controller.cultive.OnFeedFood += Exit;
             App.controller.cultive.SelectType(1);
         }
         if (dragIndex == 1)
         {
+            dropCultive.canFeedFood = false;
+            dropCultive.canFeedWater = true;
+            dropCultive.canChangeLitter = false;
+
             App.controller.cultive.OnFeedWater += Exit;
             App.controller.cultive.SelectType(1);
         }
         if (dragIndex == 2)
         {
+            dropCultive.canFeedFood = false;
+            dropCultive.canFeedWater = false;
+            dropCultive.canChangeLitter = true;
+
             App.controller.cultive.OnChangeLitter += Exit;
             App.controller.cultive.SelectType(3);
         }

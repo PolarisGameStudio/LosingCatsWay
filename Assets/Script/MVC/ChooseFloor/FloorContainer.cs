@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -17,6 +18,8 @@ public class FloorContainer : SerializedScriptableObject
     [Title("Object","OutSide")]
     public Dictionary<string, GameObject> outsides;
 
+    public GameObject[] outSides;
+
     public GameObject[] outSides_Left;
     public GameObject[] outSides_Right;
 
@@ -30,6 +33,11 @@ public class FloorContainer : SerializedScriptableObject
     public Sprite GetRandomSprite()
     {
         return floorSprites[Random.Range(0, floorSprites.Length)];
+    }
+
+    public GameObject GetOutside(OutsideEnum outsideEnum)
+    {
+        return outSides[(int)outsideEnum];
     }
     
     public enum OutsideEnum
@@ -54,5 +62,13 @@ public class FloorContainer : SerializedScriptableObject
         FloorDown,
         FloorLeft,
         FloorRight,
+    }
+
+    [Button]
+    private void DebugGet()
+    {
+        var tmp = outsides.ToList();
+        for (int i = 0; i < outsides.Count; i++)
+            outSides[i] = tmp[i].Value;
     }
 }

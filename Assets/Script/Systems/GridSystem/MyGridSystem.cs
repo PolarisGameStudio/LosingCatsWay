@@ -367,16 +367,16 @@ public class MyGridSystem : MvcBehaviour
     {
         var factory = App.factory.roomFactory.floorContainers["Spring"];
         
-        GameObject up = Instantiate(factory.outsides["CenterUp"], viewMap);
+        GameObject up = Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.CenterUp), viewMap);
         up.transform.position = GetWorldPosition(width / 2, height);
 
-        GameObject down = Instantiate(factory.outsides["CenterDown"], viewMap);
+        GameObject down = Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.CenterDown), viewMap);
         down.transform.position = GetWorldPosition(width / 2, -2);
 
-        GameObject left = Instantiate(factory.outsides["CenterLeft"], viewMap);
+        GameObject left = Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.CenterLeft), viewMap);
         left.transform.position = GetWorldPosition(-2, height / 2);
 
-        GameObject right = Instantiate(factory.outsides["CenterRight"], viewMap);
+        GameObject right = Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.CenterRight), viewMap);
         right.transform.position = GetWorldPosition(width, height / 2);
     }
 
@@ -386,52 +386,52 @@ public class MyGridSystem : MvcBehaviour
 
         // UpRight
 
-        GameObject upRight1 = Instantiate(factory.outsides["UpRight1"], viewMap);
+        GameObject upRight1 = Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.UpRight1), viewMap);
         upRight1.transform.position = GetWorldPosition(width, height);
 
-        GameObject upRight2 = Instantiate(factory.outsides["UpRight2"], viewMap);
+        GameObject upRight2 = Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.UpRight2), viewMap);
         upRight2.transform.position = GetWorldPosition(width - 2, height);
 
-        GameObject upRight3 = Instantiate(factory.outsides["UpRight3"], viewMap);
+        GameObject upRight3 = Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.UpRight3), viewMap);
         upRight3.transform.position = GetWorldPosition(width, height - 2);
 
         // UpLeft
 
-        GameObject upLeft1 = Instantiate(factory.outsides["UpLeft1"], viewMap);
+        GameObject upLeft1 = Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.UpLeft1), viewMap);
         upLeft1.transform.position = GetWorldPosition(-2, height);
 
-        GameObject upLeft2 = Instantiate(factory.outsides["UpLeft2"], viewMap);
+        GameObject upLeft2 = Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.UpLeft2), viewMap);
         upLeft2.transform.position = GetWorldPosition(0, height);
 
-        GameObject upLeft3 = Instantiate(factory.outsides["UpLeft3"], viewMap);
+        GameObject upLeft3 = Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.UpLeft3), viewMap);
         upLeft3.transform.position = GetWorldPosition(-2, height - 2);
 
         // DownRight
 
         GameObject downRight1 =
-            Instantiate(factory.outsides["DownRight1"], viewMap);
+            Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.DownRight1), viewMap);
         downRight1.transform.position = GetWorldPosition(width, -2);
 
         GameObject downRight2 =
-            Instantiate(factory.outsides["DownRight2"], viewMap);
+            Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.DownRight2), viewMap);
         downRight2.transform.position = GetWorldPosition(width - 2, -2);
 
         GameObject downRight3 =
-            Instantiate(factory.outsides["DownRight3"], viewMap);
+            Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.DownRight3), viewMap);
         downRight3.transform.position = GetWorldPosition(width, 0);
 
         // DownLeft
 
         GameObject downLeft1 =
-            Instantiate(factory.outsides["DownLeft1"], viewMap);
+            Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.DownLeft1), viewMap);
         downLeft1.transform.position = GetWorldPosition(-2, -2);
 
         GameObject downLeft2 =
-            Instantiate(factory.outsides["DownLeft2"], viewMap);
+            Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.DownLeft2), viewMap);
         downLeft2.transform.position = GetWorldPosition(0, -2);
 
         GameObject downLeft3 =
-            Instantiate(factory.outsides["DownLeft3"], viewMap);
+            Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.DownLeft3), viewMap);
         downLeft3.transform.position = GetWorldPosition(-2, 0);
     }
 
@@ -445,8 +445,8 @@ public class MyGridSystem : MvcBehaviour
         int x = width / 2;
         int y = height / 2;
 
-        var upWall = factory.outsides["FloorUp"];
-        var downWall = factory.outsides["FloorDown"];
+        var upWall = factory.GetOutside(FloorContainer.OutsideEnum.FloorUp);
+        var downWall = factory.GetOutside(FloorContainer.OutsideEnum.FloorDown);
         // var leftWall = factory.outSides[FloorContainer.OutsideEnum.FloorLeft];
         // var rightWall = factory.outSides[FloorContainer.OutsideEnum.FloorRight];
 
