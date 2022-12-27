@@ -11,10 +11,16 @@ public class ChoosePlayerGenderSystem : MvcBehaviour
     [SerializeField] private GameObject[] selectedObjects;
     [SerializeField] private GameObject[] selectedCorners;
 
+    //Debug
+    public bool debugAutoStart;
+    
     private int genderIndex = -1;
 
     public void Init()
     {
+        if (!debugAutoStart)
+            return;
+        
         // int gender = App.system.player.PlayerGender;
         // if (gender != -1)
         //     return;

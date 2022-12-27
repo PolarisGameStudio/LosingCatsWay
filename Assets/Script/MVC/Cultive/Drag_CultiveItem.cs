@@ -24,7 +24,11 @@ public class Drag_CultiveItem : MvcBehaviour, IBeginDragHandler, IDragHandler, I
     {
         if (!App.controller.cultive.isCanDrag)
             return;
-
+        if (App.controller.cultive.isDragging)
+            return;
+        
+        App.controller.cultive.isDragging = true;
+        
         VibrateExtension.Vibrate(VibrateType.Nope);
         
         App.controller.cultive.CloseClickCat();
@@ -39,7 +43,11 @@ public class Drag_CultiveItem : MvcBehaviour, IBeginDragHandler, IDragHandler, I
     {
         if (!App.controller.cultive.isCanDrag)
             return;
+        if (App.controller.cultive.isDragging)
+            return;
         
+        App.controller.cultive.isDragging = true;
+
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
 
         App.controller.cultive.OpenDropSensor();
@@ -50,6 +58,8 @@ public class Drag_CultiveItem : MvcBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        App.controller.cultive.isDragging = false;
+
         App.controller.cultive.OpenClickCat();
         App.controller.cultive.CloseDropSensor();
 

@@ -37,10 +37,11 @@ public class Controller_Cultive : ControllerBehavior
     [SerializeField] private UIButton screenshotButton;
     [SerializeField] private Button[] tabButtons;
 
-    private bool isOpen = false;
+    private bool isOpen;
 
     [Title("Sensor")]
     [ReadOnly] public bool isCanDrag = true;
+    [ReadOnly] public bool isDragging; // 不能同時Drag數個物件
 
     private string skinBeforePreview;
     
@@ -76,7 +77,10 @@ public class Controller_Cultive : ControllerBehavior
 
     public void Close()
     {
-        if (!isCanDrag) return;
+        if (!isCanDrag) 
+            return;
+        if (isDragging) 
+            return;
         
         App.system.soundEffect.Play("Button");
 
@@ -102,6 +106,8 @@ public class Controller_Cultive : ControllerBehavior
     public void SelectType(int index)
     {
         if (!isCanDrag)
+            return;
+        if (isDragging)
             return;
 
         App.system.soundEffect.Play("Button");
@@ -324,10 +330,6 @@ public class Controller_Cultive : ControllerBehavior
     }
 
     private void SetPlayData(TrackEntry entry)
-    
-    
-    
-    
     {
         if (!entry.Animation.Name.Contains("ToIdle"))
             return;
@@ -479,7 +481,8 @@ public class Controller_Cultive : ControllerBehavior
 
     public void ClickCat()
     {
-        if (!isCanDrag){
+        if (!isCanDrag)
+        {
             var track = catSkeleton.AnimationState.GetCurrent(0);
             track.TrackTime = 25;
             return;
@@ -654,6 +657,8 @@ public class Controller_Cultive : ControllerBehavior
     {
         if (!isCanDrag)
             return;
+        if (isDragging)
+            return;
         
         App.system.soundEffect.Play("Button");
         
@@ -681,6 +686,9 @@ public class Controller_Cultive : ControllerBehavior
     {
         if (!isCanDrag)
             return;
+        if (isDragging)
+            return;
+        
         App.system.soundEffect.Play("Button");
         App.view.cultive.cultiveInfo.Open();
         SelectTab(0);
@@ -697,6 +705,9 @@ public class Controller_Cultive : ControllerBehavior
     {
         if (!isCanDrag)
             return;
+        if (isDragging)
+            return;
+        
         App.system.soundEffect.Play("Button");
         App.view.cultive.cultiveInfo.Open();
         SelectTab(1);

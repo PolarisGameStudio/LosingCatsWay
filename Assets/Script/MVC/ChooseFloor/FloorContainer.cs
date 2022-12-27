@@ -15,7 +15,7 @@ public class FloorContainer : SerializedScriptableObject
     public GameObject[] floorType3; 
 
     [Title("Object","OutSide")]
-    public Dictionary<OutsideEnum, GameObject> outSides;
+    public Dictionary<string, GameObject> outsides;
 
     public GameObject[] outSides_Left;
     public GameObject[] outSides_Right;

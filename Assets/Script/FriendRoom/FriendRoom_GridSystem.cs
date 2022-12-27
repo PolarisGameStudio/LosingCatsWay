@@ -191,16 +191,16 @@ public class FriendRoom_GridSystem : MonoBehaviour
     {
         var floorFactory = factory.roomFactory.floorContainers["Spring"];
 
-        GameObject up = Instantiate(floorFactory.outSides[FloorContainer.OutsideEnum.CenterUp], viewMap);
+        GameObject up = Instantiate(floorFactory.outsides["CenterUp"], viewMap);
         up.transform.position = GetWorldPosition(width / 2, height);
 
-        GameObject down = Instantiate(floorFactory.outSides[FloorContainer.OutsideEnum.CenterDown], viewMap);
+        GameObject down = Instantiate(floorFactory.outsides["CenterDown"], viewMap);
         down.transform.position = GetWorldPosition(width / 2, -2);
 
-        GameObject left = Instantiate(floorFactory.outSides[FloorContainer.OutsideEnum.CenterLeft], viewMap);
+        GameObject left = Instantiate(floorFactory.outsides["CenterLeft"], viewMap);
         left.transform.position = GetWorldPosition(-2, height / 2);
 
-        GameObject right = Instantiate(floorFactory.outSides[FloorContainer.OutsideEnum.CenterRight], viewMap);
+        GameObject right = Instantiate(floorFactory.outsides["CenterRight"], viewMap);
         right.transform.position = GetWorldPosition(width, height / 2);
     }
 
@@ -210,52 +210,52 @@ public class FriendRoom_GridSystem : MonoBehaviour
 
         // UpRight
 
-        GameObject upRight1 = Instantiate(floorFactory.outSides[FloorContainer.OutsideEnum.UpRight1], viewMap);
+        GameObject upRight1 = Instantiate(floorFactory.outsides["UpRight1"], viewMap);
         upRight1.transform.position = GetWorldPosition(width, height);
 
-        GameObject upRight2 = Instantiate(floorFactory.outSides[FloorContainer.OutsideEnum.UpRight2], viewMap);
+        GameObject upRight2 = Instantiate(floorFactory.outsides["UpRight2"], viewMap);
         upRight2.transform.position = GetWorldPosition(width - 2, height);
 
-        GameObject upRight3 = Instantiate(floorFactory.outSides[FloorContainer.OutsideEnum.UpRight3], viewMap);
+        GameObject upRight3 = Instantiate(floorFactory.outsides["UpRight3"], viewMap);
         upRight3.transform.position = GetWorldPosition(width, height - 2);
 
         // UpLeft
 
-        GameObject upLeft1 = Instantiate(floorFactory.outSides[FloorContainer.OutsideEnum.UpLeft1], viewMap);
+        GameObject upLeft1 = Instantiate(floorFactory.outsides["UpLeft1"], viewMap);
         upLeft1.transform.position = GetWorldPosition(-2, height);
 
-        GameObject upLeft2 = Instantiate(floorFactory.outSides[FloorContainer.OutsideEnum.UpLeft2], viewMap);
+        GameObject upLeft2 = Instantiate(floorFactory.outsides["UpLeft2"], viewMap);
         upLeft2.transform.position = GetWorldPosition(0, height);
 
-        GameObject upLeft3 = Instantiate(floorFactory.outSides[FloorContainer.OutsideEnum.UpLeft3], viewMap);
+        GameObject upLeft3 = Instantiate(floorFactory.outsides["UpLeft3"], viewMap);
         upLeft3.transform.position = GetWorldPosition(-2, height - 2);
 
         // DownRight
 
         GameObject downRight1 =
-            Instantiate(floorFactory.outSides[FloorContainer.OutsideEnum.DownRight1], viewMap);
+            Instantiate(floorFactory.outsides["DownRight1"], viewMap);
         downRight1.transform.position = GetWorldPosition(width, -2);
 
         GameObject downRight2 =
-            Instantiate(floorFactory.outSides[FloorContainer.OutsideEnum.DownRight2], viewMap);
+            Instantiate(floorFactory.outsides["DownRight2"], viewMap);
         downRight2.transform.position = GetWorldPosition(width - 2, -2);
 
         GameObject downRight3 =
-            Instantiate(floorFactory.outSides[FloorContainer.OutsideEnum.DownRight3], viewMap);
+            Instantiate(floorFactory.outsides["DownRight3"], viewMap);
         downRight3.transform.position = GetWorldPosition(width, 0);
 
         // DownLeft
 
         GameObject downLeft1 =
-            Instantiate(floorFactory.outSides[FloorContainer.OutsideEnum.DownLeft1], viewMap);
+            Instantiate(floorFactory.outsides["DownLeft1"], viewMap);
         downLeft1.transform.position = GetWorldPosition(-2, -2);
 
         GameObject downLeft2 =
-            Instantiate(floorFactory.outSides[FloorContainer.OutsideEnum.DownLeft2], viewMap);
+            Instantiate(floorFactory.outsides["DownLeft2"], viewMap);
         downLeft2.transform.position = GetWorldPosition(0, -2);
 
         GameObject downLeft3 =
-            Instantiate(floorFactory.outSides[FloorContainer.OutsideEnum.DownLeft3], viewMap);
+            Instantiate(floorFactory.outsides["DownLeft3"], viewMap);
         downLeft3.transform.position = GetWorldPosition(-2, 0);
     }
 
@@ -269,10 +269,10 @@ public class FriendRoom_GridSystem : MonoBehaviour
         int x = width / 2;
         int y = height / 2;
 
-        var upWall = floorFactory.outSides[FloorContainer.OutsideEnum.FloorUp];
-        var downWall = floorFactory.outSides[FloorContainer.OutsideEnum.FloorDown];
-        var leftWall = floorFactory.outSides[FloorContainer.OutsideEnum.FloorLeft];
-        var rightWall = floorFactory.outSides[FloorContainer.OutsideEnum.FloorRight];
+        var upWall = floorFactory.outsides["FloorUp"];
+        var downWall = floorFactory.outsides["FloorDown"];
+        var leftWall = floorFactory.outsides["FloorLeft"];
+        var rightWall = floorFactory.outsides["FloorRight"];
 
         for (int i = center - x + 2; i <= center + x - 2; i++)
         {
