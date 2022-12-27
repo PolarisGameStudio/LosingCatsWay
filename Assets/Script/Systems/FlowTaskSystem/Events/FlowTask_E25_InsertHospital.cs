@@ -19,7 +19,6 @@ public class FlowTask_E25_InsertHospital : FlowTask_Mask
 
     public override void Exit()
     {
-        App.controller.clinic.IsTutorial = false;
         App.controller.clinic.OnFunctionComplete -= Exit;
         App.controller.clinic.Close();
         base.Exit();

@@ -291,6 +291,11 @@ public class CatSkin : MvcBehaviour
             else
                 catSkeleton = skeletonMecanim.Skeleton;
 
+            catSkeleton.SetAttachment(slot_eyeLeft, null);
+            catSkeleton.SetAttachment(slot_eyeRight, null);
+            catSkeleton.SetAttachment(slot_pupilLeft, null);
+            catSkeleton.SetAttachment(slot_pupilRight, null);
+            
             catSkeleton.SetAttachment(sick_Expression_Eye, sick_Expression_Eye);
             catSkeleton.SetAttachment(sick_Expression_Flush, sick_Expression_Flush);
             

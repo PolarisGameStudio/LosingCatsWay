@@ -11,17 +11,12 @@ public class TutorialActor_AdoptCat : TutorialActor
 
     private async void GetCat()
     {
-        int randomIndex = Random.Range(0, 2);
-        var cloudCatDatas = await App.system.cloudSave.LoadCloudCatDatasByOwner($"Location{randomIndex}", 1);
-        var cloudCatData = cloudCatDatas.Count > 0 ? cloudCatDatas[0] : null;
-        
-        if (cloudCatData == null || cloudCatData.CatSurviveData.IsUseToFind || CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) != 0)
-        {
-            Invoke("GetCat", 0.25f);
-            return;
-        }
+        DebugTool_Cat debugToolCat = new DebugTool_Cat();
+        debugToolCat.CreateCat(App.system.player.PlayerId, false);
 
-        CancelInvoke("GetCat");
+        var cloudCatDatas = await App.system.cloudSave.LoadCloudCatDatas();
+        CloudCatData cloudCatData = cloudCatDatas[0];
+        
         App.system.catRename.CantCancel().Active(cloudCatData, () =>
         {
             cloudCatData.CatData.Owner = App.system.player.PlayerId;

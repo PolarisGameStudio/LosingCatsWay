@@ -7,6 +7,7 @@ using System.Linq;
 using Firebase.Firestore;
 using Spine.Unity;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Controller_Clinic : ControllerBehavior
 {
@@ -14,9 +15,10 @@ public class Controller_Clinic : ControllerBehavior
     [SerializeField] private GameObject chooseCatButton;
     [SerializeField] private GameObject maskObject;
 
+    [Title("Tutorial")] [SerializeField] private Button closeButton;
+    [SerializeField] private Button cancelPayButton;
+    
     [Title("Debug")] [SerializeField] private SkeletonGraphic[] skippingGraphics;
-
-    [ReadOnly] public bool IsTutorial;
 
     public Callback OnFunctionComplete;
 
@@ -26,6 +28,9 @@ public class Controller_Clinic : ControllerBehavior
         npcObject.SetActive(true);
         App.view.clinic.Open();
         OpenChooseFunction();
+
+        closeButton.interactable = !App.system.tutorial.isTutorial;
+        cancelPayButton.interactable = !App.system.tutorial.isTutorial;
     }
 
     public void Close()
@@ -217,7 +222,7 @@ public class Controller_Clinic : ControllerBehavior
             totalCost += payment.ElementAt(i).Value;
         }
 
-        if (!IsTutorial)
+        if (!App.system.tutorial.isTutorial)
         {
             if (App.system.player.Coin < totalCost)
             {
@@ -315,7 +320,10 @@ public class Controller_Clinic : ControllerBehavior
     {
         ClearCatSick();
         App.view.clinic.result.Close();
+        
         OnFunctionComplete?.Invoke();
+        if (App.system.tutorial.isTutorial)
+            App.system.tutorial.NextDirector();
     }
 
     private void ClearCatSick()

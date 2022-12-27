@@ -8,7 +8,7 @@ public class TutorialDirector : MvcBehaviour
 {
     public List<TutorialActor> actors = new List<TutorialActor>();
     public UnityEvent OnDirectorStart;
-    public UnityEvent OnDirectorEnd;
+    [HideIf("hasNextDirector")] public UnityEvent OnDirectorEnd;
     public bool hasNextDirector;
 
     private int stepIndex;
@@ -30,6 +30,7 @@ public class TutorialDirector : MvcBehaviour
         if (index >= actors.Count)
         {
             App.system.tutorial.Close();
+            print($"{gameObject.name} was ended.");
             
             if (hasNextDirector)
             {

@@ -4,11 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Coffee.UIExtensions;
 using Doozy.Runtime.Common.Extensions;
+using Doozy.Runtime.UIManager.Components;
 using Firebase.Firestore;
 using Sirenix.OdinInspector;
 using Spine;
 using Spine.Unity;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class Controller_Cultive : ControllerBehavior
@@ -20,8 +22,6 @@ public class Controller_Cultive : ControllerBehavior
     [SerializeField] private PopValue_Cultive moisturePop;
     [SerializeField] private PopValue_Cultive funPop;
 
-    [HideInInspector] public bool IsTutorial = false;
-
     [Title("Spine")] public SkeletonGraphic catSkeleton;
 
     [Title("Effects")] [SerializeField] private UIParticle satietyEffect;
@@ -31,6 +31,11 @@ public class Controller_Cultive : ControllerBehavior
     [Title("LitterPop")] [SerializeField] private PopValue_Cultive diamondPop;
     [SerializeField] private PopValue_Cultive moneyPop;
     [SerializeField] private PopValue_Cultive shitPop;
+
+    [Title("Tutorial")] [SerializeField] private Button closeButton;
+    [SerializeField] private UIButton infoButton;
+    [SerializeField] private UIButton screenshotButton;
+    [SerializeField] private Button[] tabButtons;
 
     private bool isOpen = false;
 
@@ -52,11 +57,20 @@ public class Controller_Cultive : ControllerBehavior
 
     public void Open()
     {
+        closeButton.interactable = !App.system.tutorial.isTutorial;
+        infoButton.interactable = !App.system.tutorial.isTutorial;
+        screenshotButton.interactable = !App.system.tutorial.isTutorial;
+        for (int i = 0; i < tabButtons.Length; i++)
+            tabButtons[i].interactable = !App.system.tutorial.isTutorial;
+        
         isOpen = true;
+        
         App.system.bgm.FadeIn().Play("Cultive");
         App.view.cultive.Open();
+        
         CloseDropSensor();
         LocalLoadCultiveLitter();
+        
         DOVirtual.DelayedCall(0.3f, () => SelectType(1));
     }
 
@@ -84,7 +98,6 @@ public class Controller_Cultive : ControllerBehavior
     }
 
     #endregion
-
 
     public void SelectType(int index)
     {
@@ -244,7 +257,7 @@ public class Controller_Cultive : ControllerBehavior
         if (lastFavourbility < 90f && newFavourbility >= 90f)
             cat.cloudCatData.CatDiaryData.DiaryFavourbilityScore++;
 
-        if (!IsTutorial) item.Count--;
+        if (!App.system.tutorial.isTutorial) item.Count--;
 
         App.system.cloudSave.UpdateCloudItemData();
         App.system.cloudSave.UpdateCloudCatSurviveData(cat.cloudCatData);
@@ -389,7 +402,7 @@ public class Controller_Cultive : ControllerBehavior
         //開始計算
         InvokeRepeating(nameof(CountDownTimer), 0.1f, 0.1f);
 
-        if (!IsTutorial) item.Count--;
+        if (!App.system.tutorial.isTutorial) item.Count--;
 
         var items = App.model.cultive.SelectedItems;
 

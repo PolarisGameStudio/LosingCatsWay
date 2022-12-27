@@ -31,6 +31,9 @@ public class SideMenuSystem : MvcBehaviour
 
     public void Open()
     {
+        if (App.system.tutorial.isTutorial)
+            return;
+        
         OnOpen?.Invoke();
         OnOpen = null;
         

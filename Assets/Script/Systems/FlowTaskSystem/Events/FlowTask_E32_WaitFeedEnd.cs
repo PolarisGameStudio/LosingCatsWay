@@ -16,7 +16,6 @@ public class FlowTask_E32_WaitFeedEnd : FlowTask
     {
         base.Enter();
         backButton.SetActive(false);
-        App.controller.cultive.IsTutorial = true;
         App.controller.cultive.OnFeedFood += Exit;
         App.controller.cultive.SelectType(1);
     }
