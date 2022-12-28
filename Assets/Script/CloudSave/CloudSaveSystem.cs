@@ -56,6 +56,7 @@ public class CloudSaveSystem : MvcBehaviour
         playerData.PlayerGender = App.system.player.PlayerGender;
         playerData.UsingIcon = App.system.player.UsingIcon;
         playerData.UsingAvatar = App.system.player.UsingAvatar;
+        playerData.TutorialIndex = App.system.tutorial.directorIndex;
 
         // CloudSave_FriendData
         CloudSave_FriendData friendData = new CloudSave_FriendData();
@@ -156,6 +157,7 @@ public class CloudSaveSystem : MvcBehaviour
         playerData.PlayerGender = -1;
         playerData.UsingIcon = string.Empty;
         playerData.UsingAvatar = "PAT001";
+        playerData.TutorialIndex = App.system.tutorial.directorIndex;
 
         // CloudSave_FriendData
         CloudSave_FriendData friendData = new CloudSave_FriendData();

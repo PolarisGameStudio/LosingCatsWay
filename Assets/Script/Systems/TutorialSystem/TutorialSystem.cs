@@ -19,7 +19,7 @@ public class TutorialSystem : MvcBehaviour
     [SerializeField] private UIView blackBg;
     [SerializeField] private Image bgImage;
 
-    private int directorIndex = -1;
+    [ReadOnly] public int directorIndex = -1;
     [ReadOnly] public bool isTutorial;
 
     public void Init()
@@ -43,8 +43,6 @@ public class TutorialSystem : MvcBehaviour
         }
 
         Open();
-        PlayerPrefs.SetInt("DirectorIndex", index);
-        
         currentDirector = directors[index];
         currentDirector.gameObject.SetActive(true);
         currentDirector.Init();

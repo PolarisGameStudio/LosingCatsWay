@@ -30,7 +30,7 @@ public class ChoosePlayerGenderSystem : MvcBehaviour
     private void Close()
     {
         uiView.InstantHide();
-        App.system.tutorial.Init();
+        App.system.openFlow.NextAction();
     }
 
     public void SelectGender(int index)

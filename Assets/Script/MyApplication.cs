@@ -48,10 +48,13 @@ public class MyApplication : MonoBehaviour
         controller.pedia.Init();
 
         // 啓動的流程順序(OpenFlow.Init)
-        if (PlayerPrefs.GetInt("DirectorIndex", -1) < 0)
+        if (system.tutorial.directorIndex < 0)
         {
             system.openFlow.AddAction(system.choosePlayerGenderSystem.Init);
             system.openFlow.AddAction(system.tutorial.Init);
+            system.openFlow.AddAction(controller.events.Init);
+            system.openFlow.AddAction(controller.monthSign.Init);
+            system.openFlow.AddAction(controller.entrance.Init);
         }
         else
         {
@@ -103,6 +106,8 @@ public class MyApplication : MonoBehaviour
         player.PlayerGender = playerData.PlayerGender;
         player.UsingIcon = playerData.UsingIcon;
         player.UsingAvatar = playerData.UsingAvatar;
+
+        system.tutorial.directorIndex = playerData.TutorialIndex;
 
         // FriendData
         model.friend.Friends = await system.cloudSave.LoadFriends();

@@ -17,4 +17,5 @@ public class CloudSave_PlayerData
     [FirestoreProperty] public int PlayerGender { get; set; }
     [FirestoreProperty] public string UsingIcon { get; set; }
     [FirestoreProperty] public string UsingAvatar { get; set; }
+    [FirestoreProperty] public int TutorialIndex { get; set; }
 }
