@@ -9,7 +9,7 @@ public class Controller_Entrance : ControllerBehavior
     
     public void Init()
     {
-        App.system.openFlow.AddAction(Open);
+        Open();
     }
 
     public void Open()

@@ -2,6 +2,7 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +14,7 @@ public class View_Shop : ViewBehaviour
     [Title("Items")]
     [SerializeField] private Transform layerContent;
     [SerializeField] private GameObject layerPrefab;
-    [SerializeField] private GameObject shopItemPrefab;
+    [SerializeField] private Card_ShopItem shopItemPrefab;
     [SerializeField] private Transform content;
     
     [Title("UI")]
@@ -94,8 +95,7 @@ public class View_Shop : ViewBehaviour
 
         for (int i = 0; i < items.Count; i++)
         {
-            GameObject go = Instantiate(shopItemPrefab, content);
-            Card_ShopItem card = go.GetComponent<Card_ShopItem>();
+            Card_ShopItem card = Instantiate(shopItemPrefab, content);
             card.SetData(items[i]);
         }
         

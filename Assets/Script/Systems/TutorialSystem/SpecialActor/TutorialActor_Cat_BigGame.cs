@@ -8,6 +8,7 @@ public class TutorialActor_Cat_BigGame : TutorialActor
     {
         var cat = App.system.cat.GetCats()[0];
         cat.StartBigGame();
+        App.controller.followCat.CloseByOpenLobby();
         base.Exit();
     }
 }

@@ -47,13 +47,18 @@ public class MyApplication : MonoBehaviour
         controller.dailyQuest.Init();
         controller.pedia.Init();
 
-        #region 啓動的流程順序(OpenFlow.Init)
-
-        controller.events.Init();
-        controller.monthSign.Init();
-        controller.entrance.Init();
-
-        #endregion
+        // 啓動的流程順序(OpenFlow.Init)
+        if (PlayerPrefs.GetInt("DirectorIndex", -1) < 0)
+        {
+            system.openFlow.AddAction(system.choosePlayerGenderSystem.Init);
+            system.openFlow.AddAction(system.tutorial.Init);
+        }
+        else
+        {
+            system.openFlow.AddAction(controller.events.Init);
+            system.openFlow.AddAction(controller.monthSign.Init);
+            system.openFlow.AddAction(controller.entrance.Init);
+        }
 
         system.bgm.Init();
         system.soundEffect.Init();
@@ -61,18 +66,14 @@ public class MyApplication : MonoBehaviour
 
         controller.settings.Init(); //BGM SE 之後
         
-        //system.flowTask.Init(); // TODO 要重做
-        // system.tutorial.Init();
-        system.choosePlayerGenderSystem.Init();
-        
         FindObjectOfType<LoadScene>()?.Close();
 
         canSave = true;
 
         system.transition.OnlyClose();
 
-        // if (backStatus != 2)
-        //     system.openFlow.Init();
+        if (backStatus != 2)
+            system.openFlow.Init();
 
         // MyTime 一定要放最後
         system.myTime.Init();

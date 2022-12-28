@@ -11,16 +11,10 @@ public class ChoosePlayerGenderSystem : MvcBehaviour
     [SerializeField] private GameObject[] selectedObjects;
     [SerializeField] private GameObject[] selectedCorners;
 
-    //Debug
-    public bool debugAutoStart;
-    
     private int genderIndex = -1;
 
     public void Init()
     {
-        if (!debugAutoStart)
-            return;
-        
         int gender = App.system.player.PlayerGender;
         if (gender != -1)
             return;
@@ -41,6 +35,7 @@ public class ChoosePlayerGenderSystem : MvcBehaviour
 
     public void SelectGender(int index)
     {
+        App.system.soundEffect.Play("Button");
         genderIndex = index;
 
         for (int i = 0; i < selectedObjects.Length; i++)
@@ -60,6 +55,8 @@ public class ChoosePlayerGenderSystem : MvcBehaviour
 
     public void ConfirmGender()
     {
+        App.system.soundEffect.Play("Button");
+        
         if (genderIndex == -1)
             return;
 

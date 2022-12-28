@@ -24,6 +24,8 @@ public class TutorialActor : SerializedMonoBehaviour
     [SerializeField] private bool cameraDrag;
     [SerializeField] private bool cameraPinch;
 
+    [Title("Bgm")] [SerializeField] private string bgmString;
+
     // private void Reset()
     // {
     //     order = transform.GetSiblingIndex();
@@ -39,6 +41,9 @@ public class TutorialActor : SerializedMonoBehaviour
             uiView.Show();
         
         App.system.tutorial.SetBg(bgSprite);
+        
+        if (!string.IsNullOrEmpty(bgmString))
+            App.system.bgm.Play(bgmString);
     }
 
     public virtual void Exit()

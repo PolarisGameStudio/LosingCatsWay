@@ -130,7 +130,7 @@ public class DialogueSystem : MvcBehaviour
         checkpoint++;
     }
 
-    void EndDialogue()
+    private void EndDialogue()
     {
         mainNameText.text = string.Empty;
         npcNameText.text = string.Empty;
@@ -143,6 +143,7 @@ public class DialogueSystem : MvcBehaviour
 
     public void Choose(int index)
     {
+        App.system.soundEffect.Play("Button");
         sentences.Add("0:" + answers[index]);
         chooseView.Hide();
 

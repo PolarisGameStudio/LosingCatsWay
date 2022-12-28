@@ -79,8 +79,8 @@ public class MyGridSystem : MvcBehaviour
 
     public void SetCameraToOrigin(bool tween = false)
     {
-        float x = width / 2 * cellSize + (cellSize / 2);
-        float y = height / 2 * cellSize + (cellSize / 2);
+        float x = width / 2 * cellSize + cellSize / 2;
+        float y = height / 2 * cellSize + cellSize / 2;
 
         Camera cam = Camera.main;
 

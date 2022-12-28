@@ -14,14 +14,9 @@ public class Controller_MonthSign : ControllerBehavior
     public void Init()
     {
         if ((int)(App.model.monthSign.LastMonthSignDate - App.system.myTime.MyTimeNow).TotalDays != 0)
-        {
             SetEnableFlow(0);
-        }
-
         if(GetEnableFlow() == 0)
-        {
-            App.system.openFlow.AddAction(Open);
-        }
+            Open();
     }
 
     [HorizontalGroup("Split", 0.5f)]

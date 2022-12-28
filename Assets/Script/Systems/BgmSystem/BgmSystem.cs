@@ -27,7 +27,7 @@ public class BgmSystem : SerializedMonoBehaviour
     public void Init()
     {
         App.model.settings.OnBgmVolumeChange += OnBgmVolumeChange;
-        Play("Lobby");
+        // Play("Lobby");
     }
 
     public void SetVolume(float volume)

@@ -26,9 +26,8 @@ public class TutorialSystem : MvcBehaviour
     {
         for (int i = 0; i < directors.Count; i++)
             directors[i].gameObject.SetActive(false);
-        
-        if (directorIndex == -1) // TODO 新手教學結束Index記錄
-            NextDirector();
+
+        NextDirector();
     }
 
     private void SetDirector(int index)
@@ -44,6 +43,9 @@ public class TutorialSystem : MvcBehaviour
         }
 
         Open();
+        directorIndex = index;
+        PlayerPrefs.SetInt("DirectorIndex", directorIndex);
+        
         currentDirector = directors[index];
         currentDirector.gameObject.SetActive(true);
         currentDirector.Init();

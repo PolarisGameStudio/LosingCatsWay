@@ -19,7 +19,6 @@ public class TutorialDirector : MvcBehaviour
         for (int i = 0; i < actors.Count; i++)
             actors[i].gameObject.SetActive(false);
         stepIndex = -1;
-        
         OnDirectorStart?.Invoke();
     }
 
@@ -30,15 +29,12 @@ public class TutorialDirector : MvcBehaviour
         if (index >= actors.Count)
         {
             App.system.tutorial.Close();
-            print($"{gameObject.name} was ended.");
-            
+            App.system.tutorial.SetCameraDrag(true);
+            App.system.tutorial.SetCameraPinch(true);
+            App.system.tutorial.SetBlackBg(false);
+
             if (hasNextDirector)
-            {
-                App.system.tutorial.SetCameraDrag(true);
-                App.system.tutorial.SetCameraPinch(true);
-                App.system.tutorial.SetBlackBg(false);
                 return;
-            }
             
             OnDirectorEnd?.Invoke();
             App.system.tutorial.isTutorial = false;
