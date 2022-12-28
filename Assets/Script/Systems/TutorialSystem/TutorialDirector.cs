@@ -15,7 +15,7 @@ public class TutorialDirector : MvcBehaviour
 
     public void Init()
     {
-        actors.Sort((x, y) => x.order.CompareTo(y.order));
+        // actors.Sort((x, y) => x.order.CompareTo(y.order));
         for (int i = 0; i < actors.Count; i++)
             actors[i].gameObject.SetActive(false);
         stepIndex = -1;

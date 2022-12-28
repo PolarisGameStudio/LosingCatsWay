@@ -6,15 +6,15 @@ using UnityEngine.Events;
 
 public class TutorialActor_WaitTransition : TutorialActor
 {
-    [Title("WaitTransition")] [SerializeField]
-    private UnityEvent OnTransitionStart;
-    [SerializeField] private UnityEvent OnTransition;
-    [SerializeField] private float waitTime;
-
     public override void Enter()
     {
+        App.system.transition.OnTransitionEnd += Exit;
         base.Enter();
-        OnTransitionStart?.Invoke();
-        App.system.transition.Active(waitTime, () => OnTransition?.Invoke());
+    }
+
+    public override void Exit()
+    {
+        App.system.transition.OnTransitionEnd -= Exit;
+        base.Exit();
     }
 }

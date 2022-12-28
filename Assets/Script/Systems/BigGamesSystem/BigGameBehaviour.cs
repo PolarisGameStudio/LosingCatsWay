@@ -56,8 +56,6 @@ public class BigGameBehaviour : MvcBehaviour
 
     public virtual void OpenPause()
     {
-        if (App.system.tutorial.isTutorial)
-            return;
         isPause = true;
         //TODO Pause every game
     }

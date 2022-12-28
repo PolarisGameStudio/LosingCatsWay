@@ -53,13 +53,6 @@ public class DirectionChecker : MonoBehaviour
     void Update() {
 
         var dir = agent.movingDirection;
-        var x = Mathf.Round(dir.x);
-        var y = Mathf.Round(dir.y);
-
-        //eliminate diagonals favoring x over y
-        y = Mathf.Abs(y) == Mathf.Abs(x) ? 0 : y;
-
-        dir = new Vector2(x, y);
 
         if ( dir != lastDir ) {
 
@@ -67,7 +60,7 @@ public class DirectionChecker : MonoBehaviour
                 // Debug.Log("IDLE");
             }
 
-            if ( dir.x == 1 ) {
+            if ( dir.x > 0 ) {
                 // Debug.Log("RIGHT");
                 if ( doFlip ) {
                     var scale = transform.localScale;
@@ -76,21 +69,13 @@ public class DirectionChecker : MonoBehaviour
                 }
             }
 
-            if ( dir.x == -1 ) {
+            if ( dir.x < 0 ) {
                 // Debug.Log("LEFT");
                 if ( doFlip ) {
                     var scale = transform.localScale;
                     scale.x = -originalScaleX;
                     transform.localScale = scale;
                 }
-            }
-
-            if ( dir.y == 1 ) {
-                // Debug.Log("UP");
-            }
-
-            if ( dir.y == -1 ) {
-                // Debug.Log("DOWN");
             }
 
             lastDir = dir;

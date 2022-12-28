@@ -135,7 +135,7 @@ public class CatchCatMap : MvcBehaviour
         }, GameEndAction);
     }
 
-    private void CloseToMap()
+    public void CloseToMap()
     {
         for (int i = 0; i < cardPersonalitys.Length; i++)
         {
@@ -597,7 +597,7 @@ public class CatchCatMap : MvcBehaviour
             SetCloudCatDataToUse(false);
             App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchCatGameEnd, () =>
             {
-                CloseToMap();
+                // CloseToMap();
                 App.system.tutorial.NextDirector();
             });
             return;

@@ -21,9 +21,9 @@ public class ChoosePlayerGenderSystem : MvcBehaviour
         if (!debugAutoStart)
             return;
         
-        // int gender = App.system.player.PlayerGender;
-        // if (gender != -1)
-        //     return;
+        int gender = App.system.player.PlayerGender;
+        if (gender != -1)
+            return;
         Open();
     }
 

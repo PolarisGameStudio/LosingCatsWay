@@ -76,6 +76,9 @@ public class Controller_Build : ControllerBehavior
 
     public void Build()
     {
+        if (!App.model.build.CanBuild)
+            return;
+        
         MyGridSystem myGridSystem = App.system.grid;
         RoomSizeType sizeType = App.model.build.SelectedRoom.roomData.roomSizeType;
 

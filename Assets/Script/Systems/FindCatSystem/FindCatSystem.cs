@@ -24,24 +24,34 @@ public class FindCatSystem : MvcBehaviour
     private async void ActiveMap()
     {
         FindCatMaps[mapIndex].SetCloudCatData(null);
-        
-        var cloudCatDatas = await App.system.cloudSave.LoadCloudCatDatasByOwner($"Location{mapIndex}", 1);
-        var cloudCatData = cloudCatDatas.Count > 0 ? cloudCatDatas[0] : null;
-        
-        if (cloudCatData == null || cloudCatData.CatSurviveData.IsUseToFind)
+
+        CloudCatData cloudCatData = null;
+
+        if (App.system.tutorial.isTutorial)
         {
-            if (IsFindLimit())
-                App.system.confirm.OnlyConfirm().Active(ConfirmTable.MapNoCats, () =>
-                {
-                    App.system.findCat.ActiveGate(mapIndex);
-                    DOVirtual.DelayedCall(1f, App.system.transition.OnlyClose);
-                });
-            else
+            DebugTool_Cat debugToolCat = new DebugTool_Cat();
+            cloudCatData = await debugToolCat.GetCreateCat($"Location{mapIndex}", true);
+        }
+        else
+        {
+            var cloudCatDatas = await App.system.cloudSave.LoadCloudCatDatasByOwner($"Location{mapIndex}", 1);
+            cloudCatData = cloudCatDatas.Count > 0 ? cloudCatDatas[0] : null;
+        
+            if (cloudCatData == null || cloudCatData.CatSurviveData.IsUseToFind)
             {
-                alreadyFindCount++;
-                DOVirtual.DelayedCall(0.25f, ActiveMap);
+                if (IsFindLimit())
+                    App.system.confirm.OnlyConfirm().Active(ConfirmTable.MapNoCats, () =>
+                    {
+                        App.system.findCat.ActiveGate(mapIndex);
+                        DOVirtual.DelayedCall(1f, App.system.transition.OnlyClose);
+                    });
+                else
+                {
+                    alreadyFindCount++;
+                    DOVirtual.DelayedCall(0.25f, ActiveMap);
+                }
+                return;
             }
-            return;
         }
         
         App.system.transition.OnlyClose();

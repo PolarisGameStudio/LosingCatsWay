@@ -256,6 +256,8 @@ public class BigGame_CutNails : BigGameBehaviour, IBeginDragHandler, IDragHandle
 
     public override void OpenPause()
     {
+        if (App.system.tutorial.isTutorial)
+            return;
         base.OpenPause();
         pauseBg.DOFade(1, 0.45f).From(0).OnStart(() =>
         {

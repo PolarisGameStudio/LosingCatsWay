@@ -21,6 +21,8 @@ public class TransitionsSystem : MvcBehaviour
     private float closeOriginValue = 16.5f;
     private string propertyName = "_HalftoneFade";
 
+    public Callback OnTransitionEnd;
+
     public void Active(float waitTime, UnityAction coverAction = null, UnityAction endAction = null)
     {
         view.InstantShow();
@@ -44,6 +46,7 @@ public class TransitionsSystem : MvcBehaviour
             {
                 view.InstantHide();
                 endAction?.Invoke();
+                OnTransitionEnd?.Invoke();
             });
         });
     }
@@ -57,7 +60,11 @@ public class TransitionsSystem : MvcBehaviour
         DOTween.To(() => originValue, x => originValue = x, closeOriginValue, openTime).OnUpdate(() =>
         {
             bg.material.SetFloat(propertyName, originValue);
-        }).OnComplete(() => { endAction?.Invoke(); });
+        }).OnComplete(() =>
+        {
+            endAction?.Invoke();
+            OnTransitionEnd?.Invoke();
+        });
     }
 
     public void OnlyClose()

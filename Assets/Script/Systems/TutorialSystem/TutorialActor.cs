@@ -11,7 +11,7 @@ public class TutorialActor : SerializedMonoBehaviour
 {
     protected MyApplication App => FindObjectOfType<MyApplication>();
 
-    public int order;
+    // public int order;
     [SerializeField] private UIView uiView;
     [SerializeField] private float exitDelay;
     [SerializeField] private bool instantHide;
@@ -24,10 +24,10 @@ public class TutorialActor : SerializedMonoBehaviour
     [SerializeField] private bool cameraDrag;
     [SerializeField] private bool cameraPinch;
 
-    private void Reset()
-    {
-        order = transform.GetSiblingIndex();
-    }
+    // private void Reset()
+    // {
+    //     order = transform.GetSiblingIndex();
+    // }
 
     public virtual void Enter()
     {

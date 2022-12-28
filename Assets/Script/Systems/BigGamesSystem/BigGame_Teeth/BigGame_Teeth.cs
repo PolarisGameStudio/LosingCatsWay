@@ -250,6 +250,8 @@ public class BigGame_Teeth : BigGameBehaviour
 
     public override void OpenPause()
     {
+        if (App.system.tutorial.isTutorial)
+            return;
         base.OpenPause();
         pauseBg.DOFade(1, 0.45f).From(0).OnStart(() =>
         {
