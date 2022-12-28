@@ -43,8 +43,7 @@ public class TutorialSystem : MvcBehaviour
         }
 
         Open();
-        directorIndex = index;
-        PlayerPrefs.SetInt("DirectorIndex", directorIndex);
+        PlayerPrefs.SetInt("DirectorIndex", index);
         
         currentDirector = directors[index];
         currentDirector.gameObject.SetActive(true);
