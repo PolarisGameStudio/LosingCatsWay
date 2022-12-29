@@ -9,8 +9,9 @@ public class TutorialDirector : MvcBehaviour
     public List<TutorialActor> actors = new List<TutorialActor>();
     public UnityEvent OnDirectorStart;
     [HideIf("hasNextDirector")] public UnityEvent OnDirectorEnd;
+    
     public bool hasNextDirector;
-
+    
     private int stepIndex;
 
     public void Init()
@@ -18,7 +19,9 @@ public class TutorialDirector : MvcBehaviour
         // actors.Sort((x, y) => x.order.CompareTo(y.order));
         for (int i = 0; i < actors.Count; i++)
             actors[i].gameObject.SetActive(false);
+        
         stepIndex = -1;
+        
         OnDirectorStart?.Invoke();
     }
 

@@ -22,7 +22,7 @@ public class MyApplication : MonoBehaviour
 
         canSave = false;
 
-        system.tnr.Init(); // Init(ValueChange) -> SetData (Diamond Coin) //TODO App.system.player.Diamond = App.system.player.Diamond 就好
+        system.tnr.Init(); // 觸發ValueChange
         system.grid.Init(); // 生成格子 // TODO 讀玩家擁有格生格子
         // 初始化系統
         controller.build.Init(); // 中心房要排序在myRooms的第0個
@@ -48,10 +48,14 @@ public class MyApplication : MonoBehaviour
         controller.pedia.Init();
 
         // 啓動的流程順序(OpenFlow.Init)
-        if (system.tutorial.directorIndex < 0)
+        if (system.tutorial.directorIndex < system.tutorial.directors.Count - 1)
         {
-            system.openFlow.AddAction(system.choosePlayerGenderSystem.Init);
+            if (system.player.PlayerGender == -1)
+                system.openFlow.AddAction(system.choosePlayerGenderSystem.Open);
+            
+            system.tutorial.directorIndex = -1;
             system.openFlow.AddAction(system.tutorial.Init);
+            
             system.openFlow.AddAction(controller.events.Init);
             system.openFlow.AddAction(controller.monthSign.Init);
             system.openFlow.AddAction(controller.entrance.Init);

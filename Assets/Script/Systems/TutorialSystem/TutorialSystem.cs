@@ -10,7 +10,7 @@ public class TutorialSystem : MvcBehaviour
 {
     [SerializeField] private UIView uiView;
     
-    [Title("Directors")] [SerializeField] private List<TutorialDirector> directors;
+    [Title("Directors")] public List<TutorialDirector> directors;
     [ReadOnly] public TutorialDirector currentDirector;
     
     [Title("Setup")]
@@ -102,7 +102,8 @@ public class TutorialSystem : MvcBehaviour
         rect.anchorMax = new Vector2(0.5f, 0.5f);
         rect.anchoredPosition = Vector2.zero;
     }
-
+    
+    // Debug
     [Button]
     private void RefreshDirectors()
     {

@@ -88,7 +88,7 @@ public class MailSystem : MvcBehaviour
         _rewards.Clear();
         
         for (int i = 0; i < mailRewardContent.childCount; i++)
-            Destroy(mailRewardContent.GetChild(i));
+            Destroy(mailRewardContent.GetChild(i).gameObject);
 
         for (int i = 0; i < mailData.Rewards.Count; i++)
         {

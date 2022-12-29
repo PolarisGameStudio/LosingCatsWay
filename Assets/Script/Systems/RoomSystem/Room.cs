@@ -193,21 +193,37 @@ public class Room : MvcBehaviour
 
     public void OpenLeftWall(int index)
     {
+        if (index >= leftWalls.Length)
+            return;
+        if (leftWalls[index] == null)
+            return;
         leftWalls[index].SetActive(true);
     }
 
     public void CloseLeftWall(int index)
     {
+        if (index >= leftWalls.Length)
+            return;
+        if (leftWalls[index] == null)
+            return;
         leftWalls[index].SetActive(false);
     }
 
     public void OpenRightWall(int index)
     {
+        if (index >= rightWalls.Length)
+            return;
+        if (rightWalls[index] == null)
+            return;
         rightWalls[index].SetActive(true);
     }
 
     public void CloseRightWall(int index)
     {
+        if (index >= rightWalls.Length)
+            return;
+        if (rightWalls[index] == null)
+            return;
         rightWalls[index].SetActive(false);
     }
 
