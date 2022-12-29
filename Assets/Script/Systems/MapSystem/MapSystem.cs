@@ -205,7 +205,12 @@ public class MyEdge
     {
         Count = 1;
 
-        if (v1.x < v2.x)
+        int x1 = (int)v1.x;
+        int x2 = (int)v2.x;
+        int y1 = (int)v1.y;
+        int y2 = (int)v2.y;
+
+        if (x1 < x2)
         {
             A = v1;
             B = v2;
@@ -213,7 +218,7 @@ public class MyEdge
             return;
         }
 
-        if (v1.x > v2.x)
+        if (x1 > x2)
         {
             A = v2;
             B = v1;
@@ -221,7 +226,7 @@ public class MyEdge
             return;
         }
 
-        if (v1.y < v2.y)
+        if (y1 < y2)
         {
             A = v1;
             B = v2;

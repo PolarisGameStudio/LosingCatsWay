@@ -35,7 +35,7 @@ public class LevelUpSystem : MvcBehaviour
         levelUpText.text = (level + 1).ToString();
         levelDownText.text = level.ToString();
 
-        var rewards = App.factory.itemFactory.LevelRewards[level];
+        var rewards = App.factory.itemFactory.LevelRewards[level + 1]; // todo 上限的抓不到
         App.system.reward.SetDatas(rewards);
         
         List<string> unlockIds = new List<string>();
