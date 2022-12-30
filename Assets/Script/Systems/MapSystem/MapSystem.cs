@@ -20,17 +20,22 @@ public class MapSystem : MvcBehaviour
     {
         List<List<MyEdge>> allEdges = new List<List<MyEdge>>();
         List<Room> rooms = App.system.room.MyRooms;
-        
+
         for (int i = 0; i < rooms.Count; i++)
         {
             List<MyEdge> edges = CreateEdges(rooms[i]);
             allEdges.Add(edges);
         }
 
-        List<Vector2> mapPoints = CreateMapPoints(allEdges);
+        List<List<Vector2>> mapPoints = CreateMapPoints(allEdges);
+
+        _polygonCollider2D.pathCount = mapPoints.Count;
         
-        _polygonCollider2D.SetPath(0, mapPoints);
-        _polyNavMap.GenerateMap();
+        for (int i = 0; i < mapPoints.Count; i++)
+        {
+            _polygonCollider2D.SetPath(i, mapPoints[i]);
+            _polyNavMap.GenerateMap();
+        }
     }
 
     private List<MyEdge> CreateEdges(Room room)
@@ -38,7 +43,7 @@ public class MapSystem : MvcBehaviour
         Vector2 originPoint = room.transform.position;
 
         int roomSize = 1;
-        
+
         switch (room.roomData.roomSizeType)
         {
             case RoomSizeType.Two_Two:
@@ -48,7 +53,7 @@ public class MapSystem : MvcBehaviour
                 roomSize = 3;
                 break;
         }
-        
+
         List<Vector2> points = new List<Vector2>();
         points.Add(originPoint);
 
@@ -88,7 +93,7 @@ public class MapSystem : MvcBehaviour
         return result;
     }
 
-    private List<Vector2> CreateMapPoints(List<List<MyEdge>> allEdges)
+    private List<List<Vector2>> CreateMapPoints(List<List<MyEdge>> allEdges)
     {
         List<MyEdge> myEdges = new List<MyEdge>();
 
@@ -157,46 +162,74 @@ public class MapSystem : MvcBehaviour
                     deletePoints.Add((Vector2)v);
         }
 
-        List<Vector2> result = new List<Vector2>();
+        // 連線
 
-        result.Add(myEdges[0].A);
-        result.Add(myEdges[0].B);
+        List<List<Vector2>> result = new List<List<Vector2>>();
 
-        Vector2 prevVector2 = myEdges[0].B;
-
-        myEdges.RemoveAt(0);
-
-        int count = myEdges.Count - 1;
-
-        for (int i = 0; i < count; i++)
+        while (myEdges.Count != 0)
         {
-            int index = myEdges.FindIndex(x => x.HasVector2(prevVector2));
+            List<Vector2> tmp = new List<Vector2>();
 
-            if (index != -1)
+            tmp.Add(myEdges[0].A);
+            tmp.Add(myEdges[0].B);
+
+            Vector2 prevVector2 = myEdges[0].B;
+            myEdges.RemoveAt(0);
+
+            int originX = (int)tmp[0].x;
+            int originY = (int)tmp[0].y;
+
+            int count = myEdges.Count;
+
+            for (int i = 0; i < count; i++)
             {
-                var myEdge = myEdges[index];
-                Vector2 anotherPoint = myEdge.GetAnotherVector2(prevVector2);
-                result.Add(anotherPoint);
-                prevVector2 = anotherPoint;
-                myEdges.RemoveAt(index);
+                int index = myEdges.FindIndex(x => x.HasVector2(prevVector2));
+
+                if (index != -1)
+                {
+                    var myEdge = myEdges[index];
+                    Vector2 anotherPoint = myEdge.GetAnotherVector2(prevVector2);
+                    prevVector2 = anotherPoint;
+                    myEdges.RemoveAt(index);
+
+                    int nowX = (int)anotherPoint.x;
+                    int nowY = (int)anotherPoint.y;
+
+                    if (!(originX == nowX && originY == nowY))
+                        tmp.Add(anotherPoint);
+                }
             }
+
+            result.Add(tmp);
         }
+
+        print(deletePoints.Count);
         
         // 刪除多餘點
-        for (int i = 0; i < deletePoints.Count; i++)
-        {
-            Vector2 deletePoint = deletePoints[i];
-            int index = result.FindIndex(x => x == deletePoint);
 
-            if (index != -1)
+        while (deletePoints.Count != 0)
+        {
+            Vector2 deletePoint = deletePoints[0];
+            int deleteX = (int)deletePoint.x;
+            int deleteY = (int)deletePoint.y;
+        
+            for (int i = 0; i < result.Count; i++)
             {
-                // print(result[index]);
-                result.RemoveAt(index);
+                List<Vector2> tmp = result[i];
+                int index = tmp.FindIndex(x => (int)x.x == deleteX && (int)x.y == deleteY);
+
+                if (index != -1)
+                {
+                    tmp.RemoveAt(index);
+                    deletePoints.RemoveAt(0);
+                }
             }
         }
 
         return result;
     }
+
+    public GameObject TestPoint;
 }
 
 public class MyEdge
@@ -260,7 +293,13 @@ public class MyEdge
 
     public bool Equal(Vector2 a, Vector2 b)
     {
-        if (A == a && B == b)
+        int ax = (int)a.x;
+        int ay = (int)a.y;
+
+        int bx = (int)b.x;
+        int by = (int)b.y;
+
+        if ((ax == (int)A.x && ay == (int)A.y) && (bx == (int)B.x && by == (int)B.y))
             return true;
 
         return false;
