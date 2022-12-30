@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Firebase.Firestore;
 using UnityEngine;
 using I2.Loc;
+using UnityEngine.SceneManagement;
 
 public class Controller_Settings : ControllerBehavior
 {
@@ -46,6 +48,33 @@ public class Controller_Settings : ControllerBehavior
         PlayerPrefs.SetInt("LanguageIndex", App.model.settings.LanguageIndex);
     }
 
+    public async void DeleteAccount()
+    {
+        string playerId = App.system.player.PlayerId;
+
+        App.system.confirm.Active(ConfirmTable.Fix, async () =>
+        {
+            FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+            DocumentReference cityRef = db.Collection("Players").Document(playerId);
+            await cityRef.DeleteAsync();
+
+            Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+            auth.SignOut();
+            
+            App.system.confirm.Active(ConfirmTable.Fix, () =>
+            {
+                StartCoroutine(LoadLoginScene());
+            });
+        });
+    }
+
+    IEnumerator LoadLoginScene()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Login");
+        while (!asyncLoad.isDone)
+            yield return null;
+    }
+    
     private void LoadSettings()
     {
         if (!PlayerPrefs.HasKey("SeVolume"))
