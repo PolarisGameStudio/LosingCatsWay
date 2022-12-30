@@ -7,8 +7,7 @@ public class Model_ChooseOrigin : ModelBehavior
     private List<Room> centerRooms;
     private int usingRoomIndex = 0;
     private int previewRoomIndex = -1;
-    private GameObject usingRoomObject;
-    private GameObject previewRoomObject;
+    private Room previewRoom;
 
     public List<Room> CenterRooms
     {
@@ -40,16 +39,10 @@ public class Model_ChooseOrigin : ModelBehavior
         }
     }
 
-    public GameObject UsingRoomObject
+    public Room PreviewRoom
     {
-        get => usingRoomObject;
-        set => usingRoomObject = value;
-    }
-
-    public GameObject PreviewRoomObject
-    {
-        get => previewRoomObject;
-        set => previewRoomObject = value;
+        get => previewRoom;
+        set => previewRoom = value;
     }
 
     public ValueChange OnCenterRoomsChange;

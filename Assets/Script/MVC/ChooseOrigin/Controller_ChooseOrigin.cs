@@ -10,11 +10,12 @@ public class Controller_ChooseOrigin : ControllerBehavior
     public void Open()
     {
         RefreshCenterRooms();
-        App.model.chooseOrigin.UsingRoomObject = App.system.room.MyRooms[0].gameObject;
+        
         App.view.chooseOrigin.Open();
 
         DOVirtual.DelayedCall(0.25f, () =>
         {
+            App.system.room.MyRooms[0].gameObject.SetActive(false);
             Select(App.model.chooseOrigin.UsingRoomIndex);
         });
     }
@@ -24,58 +25,58 @@ public class Controller_ChooseOrigin : ControllerBehavior
         App.view.chooseOrigin.Close();
         App.controller.build.Open();
 
-        App.model.chooseOrigin.UsingRoomObject.SetActive(true);
-        if (App.model.chooseOrigin.PreviewRoomObject == null)
+        App.system.room.MyRooms[0].gameObject.SetActive(true);
+        
+        if (App.model.chooseOrigin.PreviewRoom == null)
             return;
-        ClearPreviewRoomObject();
+        ClearPreviewRoom();
     }
 
     public void Select(int index)
     {
-        if (index == App.model.chooseOrigin.PreviewRoomIndex)
-            return;
-
         Room selectedRoom = App.model.chooseOrigin.CenterRooms[index];
         Item roomItem = App.factory.itemFactory.GetItem(selectedRoom.roomData.id);
 
         if (!roomItem.CanBuyAtStore)
             return;
-
-        App.model.chooseOrigin.UsingRoomObject.SetActive(false);
-        ClearPreviewRoomObject();
+        
+        ClearPreviewRoom();
         
         var tmp = Instantiate(selectedRoom, viewMap);
-        tmp.transform.position = App.model.chooseOrigin.UsingRoomObject.transform.position;
+        tmp.transform.position = App.system.room.MyRooms[0].transform.position;
         
-        App.model.chooseOrigin.PreviewRoomObject = tmp.gameObject;
+        App.model.chooseOrigin.PreviewRoom = tmp;
         App.model.chooseOrigin.PreviewRoomIndex = index;
     }
 
-    private void ClearPreviewRoomObject()
+    private void ClearPreviewRoom()
     {
-        if (App.model.chooseOrigin.PreviewRoomObject == null)
+        if (App.model.chooseOrigin.PreviewRoom == null)
             return;
-        
-        Destroy(App.model.chooseOrigin.PreviewRoomObject);
-        App.model.chooseOrigin.PreviewRoomObject = null;
-    }
-
-    private void ClearUsingRoomObject()
-    {
-        if (App.model.chooseOrigin.UsingRoomObject == null)
-            return;
-        
-        Destroy(App.model.chooseOrigin.UsingRoomObject);
-        App.model.chooseOrigin.UsingRoomObject = null;
+        Destroy(App.model.chooseOrigin.PreviewRoom.gameObject);
+        App.model.chooseOrigin.PreviewRoom = null;
     }
 
     public void ChangePreviewToUsing()
     {
         App.model.chooseOrigin.UsingRoomIndex = App.model.chooseOrigin.PreviewRoomIndex;
-        ClearUsingRoomObject();
-        App.model.chooseOrigin.UsingRoomObject = App.model.chooseOrigin.PreviewRoomObject;
-        App.system.room.MyRooms[0] = App.model.chooseOrigin.UsingRoomObject.GetComponent<Room>();
-        ClearPreviewRoomObject();
+
+        Room room = App.system.room.MyRooms[0];
+        RoomSizeType sizeTpye = room.roomData.roomSizeType;
+        
+        int roomWidth = MyTable.GetRoomWidth(sizeTpye);
+        int roomHeight = MyTable.GetRoomHeight(sizeTpye);
+        
+        App.system.grid.Remove(room.x, room.y, roomWidth, roomHeight);
+        App.system.room.Remove(room);
+        
+        int centerX = App.system.grid.width / 2;
+        int centerY = App.system.grid.height / 2;
+        App.system.grid.BuildOrigin(centerX, centerY, 1, 1, App.model.chooseOrigin.PreviewRoom.gameObject);
+        
+        App.system.map.GenerateMap();
+        
+        ClearPreviewRoom();
         Close();
     }
 

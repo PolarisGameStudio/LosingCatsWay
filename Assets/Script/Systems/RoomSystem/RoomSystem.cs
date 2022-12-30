@@ -52,6 +52,13 @@ public class RoomSystem : MvcBehaviour
         OnRoomsChange?.Invoke(myRooms);
     }
 
+    public void Insert(Room room, int index)
+    {
+        myRooms.Insert(index, room);
+        RefreshRoomsWall();
+        OnRoomsChange?.Invoke(myRooms);
+    }
+
     public void Remove(Room room)
     {
         RefreshRoomsWall();

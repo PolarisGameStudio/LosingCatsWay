@@ -26,7 +26,11 @@ public class Controller_Build : ControllerBehavior
 
     public void Init()
     {
-        BuildOrigin();
+        if (App.system.room.MyRooms.Count <= 0)
+        {
+            BuildOrigin();
+            App.system.map.GenerateMap();
+        }
         buildTmpSensor.buildTmpPositionChange += BuildTmpPositionChange;
     }
 

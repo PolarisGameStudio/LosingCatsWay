@@ -228,6 +228,35 @@ public class MyGridSystem : MvcBehaviour
         buildMap.gameObject.SetActive(false);
     }
 
+    public void BuildOrigin(int x, int y, int roomWidth, int roomHeight, GameObject content)
+    {
+        GameObject tmp = Instantiate(content, viewMap);
+
+        for (int i = 0; i < roomWidth; i++)
+        {
+            for (int j = 0; j < roomHeight; j++)
+            {
+                MyGrid myGrid = GetGrid(x + i, y + j);
+                myGrid.Value = 1;
+
+                Destroy(myGrid.Content);
+                myGrid.Content = null;
+
+                myGrid.Content = tmp;
+            }
+        }
+
+        Room room = tmp.GetComponent<Room>();
+        room.x = x;
+        room.y = y;
+
+        //todo 優化 要拆耦合
+        App.system.room.Insert(room, 0);
+
+        tmp.transform.position = GetWorldPosition(x, y);
+        RefreshGirdValues();
+    }
+
     public void Build(int x, int y, int roomWidth, int roomHeight, GameObject content)
     {
         GameObject tmp = Instantiate(content, viewMap);

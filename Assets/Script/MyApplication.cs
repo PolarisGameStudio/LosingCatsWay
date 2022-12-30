@@ -26,8 +26,6 @@ public class MyApplication : MonoBehaviour
 
         system.tnr.Init(); // 觸發ValueChange
         system.grid.Init(); // 生成格子 // TODO 讀玩家擁有格生格子
-        // 初始化系統
-        controller.build.Init(); // 中心房要排序在myRooms的第0個
 
         // 讀取資料
         bool isCloudSaveDataExist = await system.cloudSave.IsCloudSaveDataExist();
@@ -45,6 +43,8 @@ public class MyApplication : MonoBehaviour
         if (backStatus == 2)
             PlayerPrefs.DeleteKey("FriendRoomId");
         
+        // 初始化系統
+        controller.build.Init(); // 中心房要排序在myRooms的第0個
         system.cat.Init();
         controller.dailyQuest.Init();
         controller.pedia.Init();
@@ -174,12 +174,12 @@ public class MyApplication : MonoBehaviour
         for (int i = 0; i < existRoomDatas.Count; i++)
         {
             var roomData = existRoomDatas[i];
-        
-            if (roomData.Id == factory.roomFactory.originRoomId) continue; //迴避中心房
+            // if (roomData.Id == factory.roomFactory.originRoomId) continue; //迴避中心房
             build.FirestoreBuild(roomData.Id, roomData.X, roomData.Y);
         }
 
-        system.map.GenerateMap();
+        if (system.room.MyRooms.Count > 0)
+            system.map.GenerateMap();
         
         // Purchase
         model.mall.PurchaseRecords = cloudSaveData.PurchaseRecords;
