@@ -7,7 +7,6 @@ using Sirenix.OdinInspector;
 using Spine;
 using Spine.Unity;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Room : MvcBehaviour
 {

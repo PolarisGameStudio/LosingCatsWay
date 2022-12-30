@@ -20,25 +20,6 @@ public class RoomFactory : SerializedMonoBehaviour
     ///用容器讓之後新增地板系列更方便
     public Dictionary<string, FloorContainer> floorContainers;
 
-    // public List<Room> GetRooms(int boughtType, int type)
-    // {
-    //     List<Room> tmp = new List<Room>();
-    //
-    //     for (int i = 0; i < rooms.Count; i++)
-    //     {
-    //         Room room = rooms[i];
-    //
-    //         if (boughtType != 0)
-    //             if (boughtType != (int) room.roomData.roomBoughtType)
-    //                 continue;
-    //
-    //         if (type == (int) room.roomData.roomType)
-    //             tmp.Add(room);
-    //     }
-    //
-    //     return tmp;
-    // }
-
     public List<Room> GetRoomsBySort(int sortType, int type)
     {
         List<Room> tmp = new List<Room>();
@@ -58,13 +39,6 @@ public class RoomFactory : SerializedMonoBehaviour
         return tmp;
     }
 
-    public Room GetRoom(Room room)
-    {
-        Room result = rooms.Find(x => x.roomData.id == room.roomData.id);
-        return result;
-    }
-
-    //20220406
     public Room GetRoomById(string id)
     {
         Room result = rooms.Find(x => x.roomData.id == id);
@@ -85,6 +59,21 @@ public class RoomFactory : SerializedMonoBehaviour
     {
         int index = (int) type;
         return buildRoomBgs[index];
+    }
+
+    public List<Room> GetCenterRooms()
+    {
+        List<Room> result = new List<Room>();
+        for (int i = 0; i < rooms.Count; i++)
+        {
+            if (rooms[i].roomData.roomType != RoomType.Other)
+                continue;
+            if (rooms[i].roomData.roomOtherType != RoomOtherType.Decorate)
+                continue;
+            result.Add(rooms[i]);
+        }
+
+        return result;
     }
 
     #region Floors

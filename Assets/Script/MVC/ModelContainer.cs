@@ -12,6 +12,7 @@ public class ModelContainer : MvcBehaviour
     public Model_Clinic clinic;
     public Model_Cloister cloister;
     public Model_Cultive cultive;
+    public Model_ChooseOrigin chooseOrigin;
     
     public Model_DailyQuest dailyQuest;
     public Model_Diary diary;

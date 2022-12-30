@@ -22,4 +22,10 @@ public class Card_BagItem : MvcBehaviour
         focus.transform.DOScale(Vector3.one, 0.25f).From(Vector3.one * 1.25f).SetEase(Ease.OutBack);
         focus.SetActive(flag);
     }
+
+    public void Select()
+    {
+        int index = transform.GetSiblingIndex();
+        App.controller.bag.ChooseItem(index);
+    }
 }

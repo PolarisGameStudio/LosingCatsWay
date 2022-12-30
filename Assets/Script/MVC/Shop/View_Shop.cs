@@ -26,7 +26,10 @@ public class View_Shop : ViewBehaviour
 
     [Title("Spine")] 
     public GameObject npc;
-    
+
+    private List<Card_ShopItem> itemPool = new List<Card_ShopItem>();
+    private List<GameObject> layerPool = new List<GameObject>();
+
     public override void Init()
     {
         base.Init();
@@ -47,6 +50,15 @@ public class View_Shop : ViewBehaviour
     {
         base.Close();
         npc.SetActive(false);
+
+        for (int i = 0; i < itemPool.Count; i++)
+            Destroy(itemPool[i].gameObject);
+
+        for (int i = 0; i < layerPool.Count; i++)
+            Destroy(layerPool[i].gameObject);
+        
+        itemPool.Clear();
+        layerPool.Clear();
     }
 
     public void OpenShopBuy()
@@ -64,9 +76,7 @@ public class View_Shop : ViewBehaviour
         int type = Convert.ToInt32(value);
 
         for (int i = 0; i < tabs.Length; i++)
-        {
             tabs[i].SetActive(false);
-        }
 
         tabs[type].SetActive(true);
     }
@@ -75,28 +85,68 @@ public class View_Shop : ViewBehaviour
     {
         List<Item> items = (List<Item>) value;
 
+        // Pool
+        if (items.Count > itemPool.Count)
+        {
+            int refillCount = items.Count - itemPool.Count;
+            for (int i = 0; i < refillCount; i++)
+            {
+                var newCard = Instantiate(shopItemPrefab, content);
+                itemPool.Add(newCard);
+            }
+        }
+        
+        items = items.OrderByDescending(i => i.CanBuyAtStore).ToList();
+
         #region 生架子層數
 
-        for (int i = 0; i < layerContent.childCount; i++)
-            Destroy(layerContent.GetChild(i).gameObject);
-        
         float f = items.Count / 3f;
         int layerCount = (int)Mathf.Ceil(f);
 
-        for (int i = 0; i < layerCount; i++)
-            Instantiate(layerPrefab, layerContent);
-
-        #endregion
-        
-        for (int i = 1; i < content.childCount; i++)
+        if (layerCount > layerPool.Count)
         {
-            Destroy(content.GetChild(i).gameObject);
+            int refillCount = layerCount - layerPool.Count;
+            for (int i = 0; i < refillCount; i++)
+            {
+                var newLayer = Instantiate(layerPrefab, layerContent);
+                layerPool.Add(newLayer);
+            }
         }
 
-        for (int i = 0; i < items.Count; i++)
+        for (int i = 0; i < layerPool.Count; i++)
+            if (layerPool[i].activeSelf)
+                layerPool[i].SetActive(false);
+
+        for (int i = 0; i < layerPool.Count; i++)
         {
-            Card_ShopItem card = Instantiate(shopItemPrefab, content);
+            if (i >= layerCount)
+            {
+                if (layerPool[i].activeSelf)
+                    layerPool[i].SetActive(false);
+                continue;
+            }
+
+            layerPool[i].SetActive(true);
+        }
+        
+        #endregion
+        
+        for (int i = 0; i < itemPool.Count; i++)
+            if (itemPool[i].gameObject.activeSelf)
+                itemPool[i].gameObject.SetActive(false);
+
+        for (int i = 0; i < itemPool.Count; i++)
+        {
+            if (i >= items.Count)
+            {
+                if (itemPool[i].gameObject.activeSelf)
+                    itemPool[i].gameObject.SetActive(false);
+                continue;
+            }
+
+            var card = itemPool[i];
             card.SetData(items[i]);
+            card.gameObject.SetActive(true);
         }
         
         itemsScrollBar.value = 1;

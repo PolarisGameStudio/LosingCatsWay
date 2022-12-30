@@ -174,6 +174,7 @@ public class Controller_ChooseBuild : ControllerBehavior
 
         // 導入預覽圖
         GameObject moveBuildTmpModel = Instantiate(App.model.build.SelectedRoom.gameObject, buildTmp);
+        moveBuildTmpModel.transform.localPosition = Vector3.zero;
 
         moveBuildTmpModel.GetComponent<Room>().enabled = false;
         moveBuildTmpModel.GetComponent<BoxCollider2D>().enabled = false;

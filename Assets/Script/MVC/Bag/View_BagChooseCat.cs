@@ -9,6 +9,22 @@ public class View_BagChooseCat : ViewBehaviour
     public override void Init()
     {
         base.Init();
-        //TODO ValueChange
+        App.system.cat.OnCatsChange += OnCatsChange;
+    }
+
+    private void OnCatsChange(object value)
+    {
+        List<Cat> cats = (List<Cat>)value;
+        for (int i = 0; i < cards.Length; i++)
+        {
+            if (i >= cats.Count)
+                cards[i].SetActive(false);
+            else
+            {
+                cards[i].SetActive(true);
+                cards[i].SetData(cats[i].cloudCatData);
+                cards[i].SetSelect(false);
+            }
+        }
     }
 }

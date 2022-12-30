@@ -9,6 +9,7 @@
     public View_Clinic clinic;
     public View_Cloister cloister;
     public View_Cultive cultive;
+    public View_ChooseOrigin chooseOrigin;
 
     public View_DailyQuest dailyQuest;
     public View_Diary diary;

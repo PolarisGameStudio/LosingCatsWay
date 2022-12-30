@@ -30,6 +30,9 @@ public class PlayerSystem : MvcBehaviour
     public ValueChange OnReduceCoinChange;
     
     public ValueChange OnDiamondChange;
+    public ValueChange OnAddDiamondChange;
+    public ValueChange OnReduceDiamondChange;
+    
     public ValueChange OnCatSlotChange;
     public ValueChange OnPlayerGenderChange;
     public ValueChange OnFriendIdsChange;
@@ -244,11 +247,27 @@ public class PlayerSystem : MvcBehaviour
     
     public bool ReduceMoney(int value)
     {
-        if ((coin - value) < 0)
+        if (coin - value < 0)
             return false;
         
         coin -= value;
         OnReduceCoinChange?.Invoke(value);
+        return true;
+    }
+
+    public void AddDiamond(int value)
+    {
+        diamond += value;
+        OnAddDiamondChange?.Invoke(value);
+    }
+
+    public bool ReduceDiamond(int value)
+    {
+        if (diamond - value < 0)
+            return false;
+
+        diamond -= value;
+        OnReduceDiamondChange?.Invoke(value);
         return true;
     }
 

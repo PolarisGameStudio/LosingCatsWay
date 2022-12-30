@@ -9,21 +9,21 @@ using UnityEngine.UI;
 
 public class Card_CatNotify : MvcBehaviour
 {
-    public CatSkin catSkin;
-    public RectTransform bubbleRect;
-    public RectTransform chatRect;
-    public TextMeshProUGUI text;
+    [SerializeField] private CatSkin catSkin;
+    [SerializeField] private RectTransform bubbleRect;
+    [SerializeField] private RectTransform chatRect;
+    [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private GameObject redDot;
-    public Button button;
+    [SerializeField] private Button button;
 
     [Title("Dotween")]
-    public float popDuration;
-    public Ease openEase;
-    public Ease closeEase;
+    [SerializeField] private float popDuration;
+    [SerializeField] private Ease openEase;
+    [SerializeField] private Ease closeEase;
 
     public Callback OnClick;
 
-    Sequence popSeq;
+    private Sequence popSeq;
 
     public void Init()
     {

@@ -237,14 +237,18 @@ public class Controller_Build : ControllerBehavior
 
     public void OpenMoveBuild(Room room)
     {
-        if (CheckIsCenter(room))
-            return;
-
         if (!App.model.build.IsCanMoveOrRemove)
             return;
-
+        
         if (App.model.build.IsBuilding)
             return;
+
+        if (CheckIsCenter(room))
+        {
+            App.view.build.Close();
+            App.controller.chooseOrigin.Open();
+            return;
+        }
 
         if (!App.system.room.CheckMovePossibility(room))
             return;

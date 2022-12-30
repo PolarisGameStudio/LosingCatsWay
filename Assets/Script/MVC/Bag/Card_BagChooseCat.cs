@@ -49,6 +49,6 @@ public class Card_BagChooseCat : MvcBehaviour
     public void Select()
     {
         int index = transform.GetSiblingIndex();
-        //TODO Select貓做什麼Callback
+        //todo
     }
 }

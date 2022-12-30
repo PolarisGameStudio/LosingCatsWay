@@ -13,7 +13,7 @@ public class View_Bag : ViewBehaviour
     
     [Title("Tab")]
     [SerializeField] private GameObject[] showButtons;
-    [SerializeField] private GameObject item;
+    [SerializeField] private Card_BagItem item;
     [SerializeField] private Transform content;
 
     [Title("UI")] 
@@ -28,6 +28,16 @@ public class View_Bag : ViewBehaviour
     [SerializeField] private TextMeshProUGUI diamondText;
 
     private List<Card_BagItem> cardBagItems = new List<Card_BagItem>();
+
+    public override void Close()
+    {
+        base.Close();
+
+        for (int i = 0; i < cardBagItems.Count; i++)
+            Destroy(cardBagItems[i].gameObject);
+        
+        cardBagItems.Clear();
+    }
 
     public override void Init()
     {
@@ -54,32 +64,35 @@ public class View_Bag : ViewBehaviour
 
     public void OnSelectedItemsChange(object value)
     {
-        cardBagItems.Clear();
-
         List<Item> items = (List<Item>) value;
 
-        for (int i = 0; i < content.childCount; i++)
+        // Pooling
+        if (items.Count > cardBagItems.Count)
         {
-            GameObject tmp = content.GetChild(i).gameObject;
-            tmp.transform.DOKill();
-            Destroy(tmp);
+            int refillCount = items.Count - cardBagItems.Count;
+            for (int i = 0; i < refillCount; i++)
+            {
+                Card_BagItem newCard = Instantiate(item, content);
+                newCard.gameObject.SetActive(false);
+                cardBagItems.Add(newCard);
+            }
         }
 
-        for (int i = 0; i < items.Count; i++)
+        for (int i = 0; i < cardBagItems.Count; i++)
+            cardBagItems[i].gameObject.SetActive(false);
+
+        for (int i = 0; i < cardBagItems.Count; i++)
         {
-            GameObject tmp = Instantiate(item, content);
-            Card_BagItem card = tmp.GetComponent<Card_BagItem>();
-            cardBagItems.Add(card);
-
+            if (i >= items.Count)
+            {
+                cardBagItems[i].gameObject.SetActive(false);
+                continue;
+            }
+            
+            Card_BagItem card = cardBagItems[i];
             card.SetData(items[i]);
-
-            Button button = tmp.GetComponent<Button>();
-
-            var i1 = i;
-            button.onClick.RemoveAllListeners();
-            button.onClick.AddListener(() => { App.controller.bag.ChooseItem(i1); });
-
-            tmp.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutExpo).SetDelay(i * 0.0625f);
+            card.gameObject.SetActive(true);
+            card.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutExpo).SetDelay(i * 0.0625f);
         }
     }
 
@@ -115,7 +128,6 @@ public class View_Bag : ViewBehaviour
         {
             useButton.SetActive(false);
         }
-
     }
 
     public void OnTypeChange(object from, object to)
@@ -125,8 +137,8 @@ public class View_Bag : ViewBehaviour
 
         if (value1 != -1)
             showButtons[value1].SetActive(false);
-
-        showButtons[value2].SetActive(true);
+        if (value2 != -1)
+            showButtons[value2].SetActive(true);
     }
 
     public void SetItemFocus(int index)

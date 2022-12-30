@@ -20,7 +20,6 @@ public class CatNotifySystem : MvcBehaviour
     public void Remove(Cat cat)
     {
         if (!cats.Contains(cat)) return;
-
         cats.Remove(cat);
         PopUp();
     }
@@ -29,9 +28,7 @@ public class CatNotifySystem : MvcBehaviour
     public void PopUp()
     {
         for (int i = 0; i < card_CatNotifies.Length; i++)
-        {
             card_CatNotifies[i].Init();
-        }
 
         for (int i = 0; i < card_CatNotifies.Length; i++)
         {
@@ -42,10 +39,11 @@ public class CatNotifySystem : MvcBehaviour
             var cat = cats[index];
 
             card.Open(cat);
-            card.OnClick = () => 
+            card.OnClick = () =>
             {
                 cat.FollowCat();
-                if (cats.Contains(cat)) cats.Remove(cat);
+                if (cats.Contains(cat))
+                    cats.Remove(cat);
             };
         }
     }

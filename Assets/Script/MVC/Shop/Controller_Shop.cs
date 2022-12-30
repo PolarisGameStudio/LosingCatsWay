@@ -66,10 +66,8 @@ public class Controller_Shop : ControllerBehavior
         List<Item> items = App.factory.itemFactory.GetItemByType((int)targetType);
 
         for (int i = items.Count - 1; i >= 0; i--)
-        {
             if (items[i].notShowAtStore)
                 items.RemoveAt(i);
-        }
         
         App.model.shop.SelectedItems = items;
     }

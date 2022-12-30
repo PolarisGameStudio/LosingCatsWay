@@ -9,6 +9,7 @@
     public Controller_Clinic clinic;
     public Controller_Cloister cloister;
     public Controller_Cultive cultive;
+    public Controller_ChooseOrigin chooseOrigin;
 
     public Controller_DailyQuest dailyQuest;
     public Controller_Diary diary;

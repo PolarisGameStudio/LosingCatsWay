@@ -11,6 +11,8 @@ public class MyApplication : MonoBehaviour
     public FactoryContainer factory;
     public SystemContainer system;
 
+    [SerializeField] private bool skipTutorial;
+
     private bool canSave;
 
     private async void Start()
@@ -53,8 +55,11 @@ public class MyApplication : MonoBehaviour
             if (system.player.PlayerGender == -1)
                 system.openFlow.AddAction(system.choosePlayerGenderSystem.Open);
             
-            system.tutorial.directorIndex = -1;
-            system.openFlow.AddAction(system.tutorial.Init);
+            if (!skipTutorial)
+            {
+                system.tutorial.directorIndex = -1;
+                system.openFlow.AddAction(system.tutorial.Init);
+            }
             
             system.openFlow.AddAction(controller.events.Init);
             system.openFlow.AddAction(controller.monthSign.Init);

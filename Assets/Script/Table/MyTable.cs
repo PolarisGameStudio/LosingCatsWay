@@ -162,7 +162,8 @@ public enum RoomType
     Features = 0,
     Game = 1,
     Path = 2,
-    Special = 3
+    Special = 3,
+    Other = 4,
 }
 
 public enum RoomFeaturesType
@@ -180,6 +181,12 @@ public enum RoomGameType
     Teaser = 3,
     Teeth = 4,
     Nail = 5
+}
+
+public enum RoomOtherType
+{
+    Decorate = 0,
+    //todo 因爲會加更多細項在「其他」
 }
 
 public enum RoomBoughtType

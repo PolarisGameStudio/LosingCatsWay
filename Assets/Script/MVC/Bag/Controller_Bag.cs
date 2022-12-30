@@ -14,9 +14,10 @@ public class Controller_Bag : ControllerBehavior
 
     public void Close()
     {
+        App.system.soundEffect.Play("Button");
         App.controller.lobby.Open();
         App.view.bag.Close();
-        App.system.soundEffect.Play("Button");
+        ChooseType(-1);
     }
 
     public void OpenChooseCat()
@@ -32,7 +33,7 @@ public class Controller_Bag : ControllerBehavior
     public void ChooseType(int type)
     {
         App.system.soundEffect.Play("Button");
-        
+
         if (App.model.bag.Type == type)
             return;
 
@@ -201,4 +202,7 @@ public class Controller_Bag : ControllerBehavior
             return;
         }
     }
+    
+    //todo chooseCat
+    //todo chooseCat + useItem
 }

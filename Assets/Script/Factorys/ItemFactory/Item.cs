@@ -191,12 +191,16 @@ public class Item : ScriptableObject
         get
         {
             MyApplication app = FindObjectOfType<MyApplication>();
-            return app.system.inventory.itemsCanBuyAtStore[id];
+            if (app.system.inventory.itemsCanBuyAtStore.ContainsKey(id))
+                return app.system.inventory.itemsCanBuyAtStore[id];
+            else
+                return false;
         }
         set
         {
             MyApplication app = FindObjectOfType<MyApplication>();
-            app.system.inventory.itemsCanBuyAtStore[id] = value;
+            if (app.system.inventory.itemsCanBuyAtStore.ContainsKey(id))
+                app.system.inventory.itemsCanBuyAtStore[id] = value;
         }
     }
 
