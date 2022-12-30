@@ -10,7 +10,9 @@ using Doozy.Runtime.UIManager.Containers;
 using Google;
 using Sirenix.OdinInspector;
 using TMPro;
+using Unity.Advertisement.IosSupport;
 using UnityEngine.Serialization;
+using UnityEngine.tvOS;
 
 //debug
 using UnityEngine.UI;
@@ -30,6 +32,20 @@ public class Login : MonoBehaviour
     
     private async void Start()
     {
+        #if UNITY_IOS
+
+        var status = ATTrackingStatusBinding.GetAuthorizationTrackingStatus();
+        Version currentVersion = new Version(Device.systemVersion);
+        Version ios14 = new Version("14.5");
+
+        if (status == ATTrackingStatusBinding.AuthorizationTrackingStatus.NOT_DETERMINED && currentVersion >= ios14)
+        {
+            Debug.Log("申請廣告權限");
+            ATTrackingStatusBinding.RequestAuthorizationTracking();
+        }
+
+        #endif
+        
         await FindObjectOfType<PostSystem>().Init();
         
         GoogleSignIn.Configuration = new GoogleSignInConfiguration
