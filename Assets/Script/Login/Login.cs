@@ -1,7 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
+using AppleAuth;
+using AppleAuth.Enums;
+using AppleAuth.Extensions;
+using AppleAuth.Interfaces;
+using AppleAuth.Native;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
@@ -19,21 +26,21 @@ using UnityEngine.UI;
 
 public class Login : MonoBehaviour
 {
-    [Title("UI")] 
-    public GameObject startGameButton;
+    [Title("UI")] public GameObject startGameButton;
     [SerializeField] TextMeshProUGUI idText;
 
-    [FormerlySerializedAs("notice")] [Title("NoticeSystem")] public PostSystem post;
+    [FormerlySerializedAs("notice")] [Title("NoticeSystem")]
+    public PostSystem post;
 
     [Title("Login")] public UIView loginView;
     [Title("Confirm")] [SerializeField] private UIView confirmView;
 
     private bool isRequest = false;
-    
+    private IAppleAuthManager appleAuthManager;
+
     private async void Start()
     {
-        #if UNITY_IOS
-
+#if UNITY_IOS
         var status = ATTrackingStatusBinding.GetAuthorizationTrackingStatus();
         Version currentVersion = new Version(Device.systemVersion);
         Version ios14 = new Version("14.5");
@@ -44,10 +51,18 @@ public class Login : MonoBehaviour
             ATTrackingStatusBinding.RequestAuthorizationTracking();
         }
 
-        #endif
-        
+#endif
+
         await FindObjectOfType<PostSystem>().Init();
-        
+
+        if (AppleAuthManager.IsCurrentPlatformSupported)
+        {
+            // Creates a default JSON deserializer, to transform JSON Native responses to C# instances
+            var deserializer = new PayloadDeserializer();
+            // Creates an Apple Authentication manager with the deserializer
+            appleAuthManager = new AppleAuthManager(deserializer);
+        }
+
         GoogleSignIn.Configuration = new GoogleSignInConfiguration
         {
             RequestIdToken = true,
@@ -68,6 +83,71 @@ public class Login : MonoBehaviour
             startGameButton.SetActive(false);
             loginView.InstantShow();
         }
+    }
+
+    private void Update()
+    {
+        if (appleAuthManager != null)
+        {
+            appleAuthManager.Update();
+        }
+    }
+
+    public async void LoginByApple()
+    {
+        Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+        var rawNonce = GenerateRandomString(32);
+        var nonce = GenerateSHA256NonceFromRawNonce(rawNonce);
+
+        var loginArgs = new AppleAuthLoginArgs(LoginOptions.IncludeEmail | LoginOptions.IncludeFullName, nonce);
+
+        this.appleAuthManager.LoginWithAppleId(
+            loginArgs,
+            credential =>
+            {
+                // Obtained credential, cast it to IAppleIDCredential
+                var appleIdCredential = credential as IAppleIDCredential;
+                if (appleIdCredential != null)
+                {
+                    // Identity token
+                    var identityToken = Encoding.UTF8.GetString(
+                        appleIdCredential.IdentityToken,
+                        0,
+                        appleIdCredential.IdentityToken.Length);
+
+                    // And now you have all the information to create/login a user in your system
+                    Firebase.Auth.Credential firebaseCredential =
+                        Firebase.Auth.OAuthProvider.GetCredential("apple.com", identityToken, rawNonce, null);
+
+                    auth.SignInWithCredentialAsync(firebaseCredential).ContinueWith(task =>
+                    {
+                        if (task.IsCanceled)
+                        {
+                            Debug.LogError("SignInWithCredentialAsync was canceled.");
+                            return;
+                        }
+
+                        if (task.IsFaulted)
+                        {
+                            Debug.LogError("SignInWithCredentialAsync encountered an error: " + task.Exception);
+                            return;
+                        }
+
+                        Firebase.Auth.FirebaseUser newUser = task.Result;
+                        
+                        idText.text = $"UID: {auth.CurrentUser.UserId}";
+                        post.Open();
+                        loginView.InstantHide();
+                        startGameButton.SetActive(true);
+                    });
+                }
+            },
+            error =>
+            {
+                // Something went wrong
+                var authorizationErrorCode = error.GetAuthorizationErrorCode();
+                print(authorizationErrorCode);
+            });
     }
 
     public async void LoginByGoogle()
@@ -103,7 +183,7 @@ public class Login : MonoBehaviour
             return;
 
         isRequest = true;
-        
+
         Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
         var result = await auth.SignInAnonymouslyAsync();
 
@@ -128,7 +208,7 @@ public class Login : MonoBehaviour
         startGameButton.SetActive(false);
         loginView.InstantShow();
         idText.text = $"UID: -";
-        
+
         CloseConfirm();
     }
 
@@ -145,5 +225,61 @@ public class Login : MonoBehaviour
     public void CloseConfirm()
     {
         confirmView.InstantHide();
+    }
+
+    private string GenerateRandomString(int length)
+    {
+        if (length <= 0)
+        {
+            throw new Exception("Expected nonce to have positive length");
+        }
+
+        const string charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._";
+        var cryptographicallySecureRandomNumberGenerator = new RNGCryptoServiceProvider();
+        var result = string.Empty;
+        var remainingLength = length;
+
+        var randomNumberHolder = new byte[1];
+        while (remainingLength > 0)
+        {
+            var randomNumbers = new List<int>(16);
+            for (var randomNumberCount = 0; randomNumberCount < 16; randomNumberCount++)
+            {
+                cryptographicallySecureRandomNumberGenerator.GetBytes(randomNumberHolder);
+                randomNumbers.Add(randomNumberHolder[0]);
+            }
+
+            for (var randomNumberIndex = 0; randomNumberIndex < randomNumbers.Count; randomNumberIndex++)
+            {
+                if (remainingLength == 0)
+                {
+                    break;
+                }
+
+                var randomNumber = randomNumbers[randomNumberIndex];
+                if (randomNumber < charset.Length)
+                {
+                    result += charset[randomNumber];
+                    remainingLength--;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private string GenerateSHA256NonceFromRawNonce(string rawNonce)
+    {
+        var sha = new SHA256Managed();
+        var utf8RawNonce = Encoding.UTF8.GetBytes(rawNonce);
+        var hash = sha.ComputeHash(utf8RawNonce);
+
+        var result = string.Empty;
+        for (var i = 0; i < hash.Length; i++)
+        {
+            result += hash[i].ToString("x2");
+        }
+
+        return result;
     }
 }
