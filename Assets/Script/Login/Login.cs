@@ -109,15 +109,12 @@ public class Login : MonoBehaviour
                 var appleIdCredential = credential as IAppleIDCredential;
                 if (appleIdCredential != null)
                 {
-                    // Identity token
-                    var identityToken = Encoding.UTF8.GetString(
-                        appleIdCredential.IdentityToken,
-                        0,
-                        appleIdCredential.IdentityToken.Length);
+                    var identityToken = Encoding.UTF8.GetString(appleIdCredential.IdentityToken);
+                    var authorizationCode = Encoding.UTF8.GetString(appleIdCredential.IdentityToken);
 
                     // And now you have all the information to create/login a user in your system
                     Firebase.Auth.Credential firebaseCredential =
-                        Firebase.Auth.OAuthProvider.GetCredential("apple.com", identityToken, rawNonce, null);
+                        Firebase.Auth.OAuthProvider.GetCredential("apple.com", identityToken, rawNonce, authorizationCode);
 
                     auth.SignInWithCredentialAsync(firebaseCredential).ContinueWith(task =>
                     {
@@ -132,8 +129,6 @@ public class Login : MonoBehaviour
                             Debug.LogError("SignInWithCredentialAsync encountered an error: " + task.Exception);
                             return;
                         }
-
-                        Firebase.Auth.FirebaseUser newUser = task.Result;
                         
                         idText.text = $"UID: {auth.CurrentUser.UserId}";
                         post.Open();
