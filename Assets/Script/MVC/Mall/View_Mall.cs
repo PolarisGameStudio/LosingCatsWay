@@ -6,6 +6,7 @@ using Doozy.Runtime.UIManager.Containers;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Purchasing;
 using UnityEngine.UI;
 
 public class View_Mall : ViewBehaviour
@@ -143,5 +144,10 @@ public class View_Mall : ViewBehaviour
     public void CloseRule()
     {
         ruleView.InstantHide();
+    }
+
+    public void OnPurchaseComplete(Product product)
+    {
+        print("T");
     }
 }
