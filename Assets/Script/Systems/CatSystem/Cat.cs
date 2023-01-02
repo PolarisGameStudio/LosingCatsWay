@@ -31,9 +31,8 @@ public class Cat : MvcBehaviour
     [HideInInspector] public string catNotifyId; //每次刷遊戲覆蓋
 
     public CatRewardCanvas CatRewardCanvas;
-    
-    [Title("Effects")]
-    public ParticleSystem catHeartEffect;
+
+    [Title("Effects")] public ParticleSystem catHeartEffect;
 
     // ID變化
 
@@ -48,7 +47,7 @@ public class Cat : MvcBehaviour
     #endregion
 
     private Room specialSpineRoom;
-    
+
     public void Active()
     {
         polyNavAgent = GetComponent<PolyNavAgent>();
@@ -145,10 +144,10 @@ public class Cat : MvcBehaviour
         if (!isFriendMode)
         {
             room = App.system.room.GetRandomSpecialSpineRoom();
-            // if (room != null)
-            //     print(room.roomData.id);
-            // else
-            //     print("找不到");
+            if (room != null)
+                print(room.roomData.id);
+            else
+                print("找不到");
         }
         else
         {
@@ -169,43 +168,34 @@ public class Cat : MvcBehaviour
             return;
         }
 
-        int t = 0;
+        Vector2 target = room.transform.position;
+
+        target.x += Random.Range(1f, 5f) * Random.Range(0, 2);
+        target.y += Random.Range(1f, 5f) * Random.Range(0, 2);
+
+        polyNavAgent.SetDestination(target);
         
-        for (int i = 0; i < 50; i++)
+        if (polyNavAgent.hasPath)
         {
-            Vector2 target = room.transform.position;
-        
-            target.x += Random.Range(1f, 5f) * Random.Range(0, 2);
-            target.y += Random.Range(1f, 5f) * Random.Range(0, 2);
-        
-            polyNavAgent.SetDestination(target);
-
-            t++;
-            
-            if (polyNavAgent.hasPath)
-            {
-                specialSpineRoom = room;
-                specialSpineRoom.spcialSpineIsUse = true;
-                InvokeRepeating("WaitMoveEnd", 0, 0.1f);
-                break;
-            }
+            specialSpineRoom = room;
+            specialSpineRoom.spcialSpineIsUse = true;
+            InvokeRepeating("WaitMoveEnd", 0, 0.1f);
         }
-
-        print(t);
-        
-        if (!polyNavAgent.hasPath)
+        else
+        {
             RandomMoveAtRoom();
+        }
     }
 
     private void WaitMoveEnd()
     {
-        // print("正在走");
-        
+        print("正在走");
+
         if (directionChecker.CheckIsMoving())
             return;
 
         print("走到");
-        
+
         if (specialSpineRoom == null) // 房間爆掉
         {
             specialSpineRoom.spcialSpineIsUse = false;
@@ -214,12 +204,13 @@ public class Cat : MvcBehaviour
         }
 
         transform.position = specialSpineRoom.spcialSpinePosition.position;
-        //
-        // int roomIndex = Convert.ToInt32(specialSpineRoom.roomData.id.Split("IRM")[1]);
-        // anim.SetInteger(CatAnimTable.SpcialSpineRoomId.ToString(), roomIndex);
-        // anim.Play("SpecialSpine");
-        // specialSpineRoom.PlaySpecialSpine();
         
+        directionChecker.TurnLeft();
+        int roomIndex = Convert.ToInt32(specialSpineRoom.roomData.id.Split("IRM")[1]);
+        anim.SetInteger(CatAnimTable.SpcialSpineRoomId.ToString(), roomIndex);
+        anim.Play("SpecialSpine");
+        specialSpineRoom.PlaySpecialSpine();
+
         directionChecker.Stop();
         specialSpineRoom.spcialSpineIsUse = false;
         CancelInvoke("WaitMoveEnd");
@@ -239,7 +230,7 @@ public class Cat : MvcBehaviour
             int y = (int)(target.y / 5.12f);
 
             Room room = null;
-            
+
             if (!isFriendMode)
                 room = App.system.grid.GetGrid(x, y).Content.GetComponent<Room>();
             else
@@ -569,8 +560,9 @@ public class Cat : MvcBehaviour
             SetSatiety();
             SetFavorability();
         }
+
         App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
-        
+
         // 載入今日最愛零食
         LoadLikeSnackIndex();
         LoadLikeSoupIndex();
@@ -607,18 +599,19 @@ public class Cat : MvcBehaviour
     {
         ToggleCancelGamePause(true);
         ToggleDrawGamePause(true);
-        
+
         App.model.entrance.OpenType = 1;
         App.system.catNotify.Remove(this);
 
         // 造型給我還回來
         if (!cloudCatData.CatSkinData.UseSkinId.IsNullOrEmpty())
             App.factory.itemFactory.GetItem(cloudCatData.CatSkinData.UseSkinId).Count += 1;
-        
+
         cloudCatData.CatData.DeathTime = Timestamp.GetCurrentTimestamp();
-        cloudCatData.CatDiaryData.FlowerExpiredTimestamp = Timestamp.FromDateTime(App.system.myTime.MyTimeNow.AddDays(7));
+        cloudCatData.CatDiaryData.FlowerExpiredTimestamp =
+            Timestamp.FromDateTime(App.system.myTime.MyTimeNow.AddDays(7));
         cloudCatData.CatDiaryData.DiaryDatas = App.factory.diaryFactory.GetDiaryDatas(cloudCatData);
-        
+
         App.system.cat.SetDead(this);
     }
 
@@ -639,7 +632,8 @@ public class Cat : MvcBehaviour
 
     private void LoadLikeSnackIndex()
     {
-        cloudCatData.CatSurviveData.LikeSnackIndex = PlayerPrefs.GetInt($"{cloudCatData.CatData.CatId}_LikeSnackIndex", -1);
+        cloudCatData.CatSurviveData.LikeSnackIndex =
+            PlayerPrefs.GetInt($"{cloudCatData.CatData.CatId}_LikeSnackIndex", -1);
         if (cloudCatData.CatSurviveData.LikeSnackIndex == -1)
             GetLikeSnack();
     }
@@ -657,11 +651,12 @@ public class Cat : MvcBehaviour
 
     private void LoadLikeSoupIndex()
     {
-        cloudCatData.CatSurviveData.LikeSoupIndex = PlayerPrefs.GetInt($"{cloudCatData.CatData.CatId}_LikeSoupIndex", -1);
+        cloudCatData.CatSurviveData.LikeSoupIndex =
+            PlayerPrefs.GetInt($"{cloudCatData.CatData.CatId}_LikeSoupIndex", -1);
         if (cloudCatData.CatSurviveData.LikeSoupIndex == -1)
             GetLikeSoup();
     }
-    
+
     #endregion
 
     #region Debug

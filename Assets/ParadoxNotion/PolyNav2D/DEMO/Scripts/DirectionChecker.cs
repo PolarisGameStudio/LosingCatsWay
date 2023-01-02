@@ -49,7 +49,25 @@ public class DirectionChecker : MonoBehaviour
     {
         return isMoving;
     }
-    
+
+    public void TurnLeft()
+    {
+        if ( doFlip ) {
+            var scale = transform.localScale;
+            scale.x = -originalScaleX;
+            transform.localScale = scale;
+        }
+    }
+
+    public void TurnRight()
+    {
+        if ( doFlip ) {
+            var scale = transform.localScale;
+            scale.x = originalScaleX;
+            transform.localScale = scale;
+        }
+    }
+
     void Update() {
 
         var dir = agent.movingDirection;
@@ -62,20 +80,12 @@ public class DirectionChecker : MonoBehaviour
 
             if ( dir.x > 0 ) {
                 // Debug.Log("RIGHT");
-                if ( doFlip ) {
-                    var scale = transform.localScale;
-                    scale.x = originalScaleX;
-                    transform.localScale = scale;
-                }
+                TurnRight();
             }
 
             if ( dir.x < 0 ) {
                 // Debug.Log("LEFT");
-                if ( doFlip ) {
-                    var scale = transform.localScale;
-                    scale.x = -originalScaleX;
-                    transform.localScale = scale;
-                }
+               TurnLeft();
             }
 
             lastDir = dir;

@@ -17,9 +17,12 @@ using Doozy.Runtime.UIManager.Containers;
 using Google;
 using Sirenix.OdinInspector;
 using TMPro;
-using Unity.Advertisement.IosSupport;
 using UnityEngine.Serialization;
+
+#if UNITY_IOS && !UNITY_EDITOR
+using Unity.Advertisement.IosSupport;
 using UnityEngine.tvOS;
+#endif
 
 //debug
 using UnityEngine.UI;
@@ -40,7 +43,8 @@ public class Login : MonoBehaviour
 
     private async void Start()
     {
-#if UNITY_IOS
+    
+#if UNITY_IOS && !UNITY_EDITOR
         var status = ATTrackingStatusBinding.GetAuthorizationTrackingStatus();
         Version currentVersion = new Version(Device.systemVersion);
         Version ios14 = new Version("14.5");

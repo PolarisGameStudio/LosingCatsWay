@@ -227,7 +227,9 @@ namespace PolyNav
                     continue;
                 }
 
-                var rad = radiusOffset + obstacle.extraOffset;
+                // var rad = radiusOffset + obstacle.extraOffset;
+                var rad = obstacle.extraOffset;
+
                 for ( var p = 0; p < obstacle.GetPathCount(); p++ ) {
                     var points = obstacle.GetPathPoints(p);
                     var transformed = TransformPoints(ref points, obstacle.transform);
