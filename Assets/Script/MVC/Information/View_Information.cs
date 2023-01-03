@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Coffee.UIExtensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -56,7 +57,15 @@ public class View_Information : ViewBehaviour
     {
         string id = value.ToString();
         playerAvatar.sprite = App.factory.itemFactory.GetItem(id).icon;
-        //todo effect
+
+        if (!App.factory.itemFactory.avatarEffects.ContainsKey(id))
+            return;
+        GameObject effectObject = App.factory.itemFactory.avatarEffects[id];
+        GameObject tmp = Instantiate(effectObject, playerAvatar.transform);
+        
+        UIParticle uiParticle = tmp.GetComponent<UIParticle>();
+        if (uiParticle != null)
+            uiParticle.scale = 48;
     }
 
     private void OnUsingIconChange(object value)

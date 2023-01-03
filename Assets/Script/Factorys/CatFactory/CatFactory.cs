@@ -15,14 +15,11 @@ public class CatFactory : SerializedMonoBehaviour
     [InlineEditor(InlineEditorModes.LargePreview)] [SerializeField] private Sprite[] personalitySprites;
     [SerializeField] private Sprite[] personalityLevelSprites;
     [InlineEditor(InlineEditorModes.LargePreview)] [SerializeField] private Sprite[] personalityTipSprites;
+    [SerializeField] private Dictionary<string, Sprite> personalityImages;
 
     #region GetSprite
 
-    /// <summary>
     /// 0:Male 1:Female
-    /// </summary>
-    /// <param name="sex"></param>
-    /// <returns></returns>
     public Sprite GetCatSexSpriteEW(int sex) //Blue Red Icon
     {
         return ew_SexSprites[sex];
@@ -51,6 +48,11 @@ public class CatFactory : SerializedMonoBehaviour
     public Sprite GetPersonalityTipsSprite(int personality)
     {
         return personalityTipSprites[personality];
+    }
+
+    public Sprite GetPersonalityImage(string id)
+    {
+        return personalityImages[id];
     }
 
     #endregion

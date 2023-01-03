@@ -7,8 +7,8 @@ using Sirenix.OdinInspector;
 public class ItemFactory : SerializedMonoBehaviour
 {
     [Searchable] [SerializeField] private List<Item> items;
-
     public Dictionary<int, Reward[]> LevelRewards = new Dictionary<int, Reward[]>();
+    public Dictionary<string, GameObject> avatarEffects;
 
     #region MVC
 

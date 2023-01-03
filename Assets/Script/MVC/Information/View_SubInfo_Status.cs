@@ -32,11 +32,8 @@ public class View_SubInfo_Status : ViewBehaviour
     
     [Title("Status")]
     [SerializeField] private TextMeshProUGUI satietyValueText;
-    [SerializeField] private TextMeshProUGUI satietyValueText_Back;
     [SerializeField] private TextMeshProUGUI favorabilityValueText;
-    [SerializeField] private TextMeshProUGUI favorabilityValueText_Back;
     [SerializeField] private TextMeshProUGUI moistureValueText;
-    [SerializeField] private TextMeshProUGUI moistureValueText_Back;
     
     [Title("Mood")]
     [SerializeField] private Image moodImage;
@@ -93,11 +90,6 @@ public class View_SubInfo_Status : ViewBehaviour
         satietyValueText.text = Convert.ToInt32(cat.cloudCatData.CatSurviveData.Satiety) + "/100%";
         favorabilityValueText.text = Convert.ToInt32(cat.cloudCatData.CatSurviveData.Favourbility) + "/100%";
         moistureValueText.text = Convert.ToInt32(cat.cloudCatData.CatSurviveData.Moisture) + "/100%";
-
-        //色違字
-        satietyValueText_Back.text = Convert.ToInt32(cat.cloudCatData.CatSurviveData.Satiety) + "/100%";
-        favorabilityValueText_Back.text = Convert.ToInt32(cat.cloudCatData.CatSurviveData.Favourbility) + "/100%";
-        moistureValueText_Back.text = Convert.ToInt32(cat.cloudCatData.CatSurviveData.Moisture) + "/100%";
 
         healthText.text =
             String.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId) ? App.factory.stringFactory.GetHealthString() : App.factory.stringFactory.GetSickString();

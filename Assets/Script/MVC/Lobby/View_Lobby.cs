@@ -100,7 +100,11 @@ public class View_Lobby : ViewBehaviour
     {
         string id = value.ToString();
         playerAvatar.sprite = App.factory.itemFactory.GetItem(id).icon;
-        //todo effect
+
+        if (!App.factory.itemFactory.avatarEffects.ContainsKey(id))
+            return;
+        GameObject effectObject = App.factory.itemFactory.avatarEffects[id];
+        Instantiate(effectObject, playerAvatar.transform);
     }
 
     private void OnUsingIconChange(object value)

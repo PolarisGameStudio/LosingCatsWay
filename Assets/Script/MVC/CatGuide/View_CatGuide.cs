@@ -31,9 +31,11 @@ public class View_CatGuide : ViewBehaviour
 
     public override void Open()
     {
-        UIView.InstantShow();
-        bg.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutExpo);
         scrollbar.value = 0;
+        
+        UIView.InstantShow();
+        
+        bg.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutExpo);
 
         topRect.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutExpo).SetDelay(0.1f);
         topCanvasGroup.DOFade(1, 0.25f).From(0).SetDelay(0.1f).SetEase(Ease.InCubic);

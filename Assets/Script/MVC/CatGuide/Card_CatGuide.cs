@@ -12,6 +12,7 @@ public class Card_CatGuide : MvcBehaviour
     
     [Title("Level")]
     [SerializeField] private TextMeshProUGUI levelText;
+    [ShowIf("@IsTopCard"), SerializeField] private TextMeshProUGUI maskLevelText;
     
     [Title("Info")]
     [SerializeField] private GameObject[] infoObjects;
@@ -32,6 +33,10 @@ public class Card_CatGuide : MvcBehaviour
     [HideIf("IsTopCard")] [SerializeField] private GameObject getObject;
     [HideIf("IsTopCard")] [SerializeField] private Image topIcon;
     [HideIf("IsTopCard")] [SerializeField] private Sprite[] topIconSprites; //0:NoGet 1:Get
+
+    [HideIf("IsTopCard")] [Title("TextColor")] [HideIf("IsTopCard")] [SerializeField]
+    private Color32 normalColor;
+    [SerializeField] private Color32 selectColor;
     
     public void SetData(Reward[] rewards)
     {
@@ -110,14 +115,31 @@ public class Card_CatGuide : MvcBehaviour
         if (!IsTopCard)
             levelText.text = $"LV.{level:00}";
         else
+        {
             levelText.text = level.ToString("00");
+            maskLevelText.text = level.ToString("00");
+        }
     }
 
     public void SetSelect(bool value)
     {
-        if (IsTopCard) return;
+        if (IsTopCard)
+        {
+            for (int i = 0; i < infoIcons.Length; i++)
+                infoIcons[i].color = normalColor;
+            for (int i = 0; i < infoTexts.Length; i++)
+                infoTexts[i].color = normalColor;
+            return;
+        }
+
         selectObject.SetActive(value);
-        bgImage.sprite = (value) ? bgSprites[1] : bgSprites[0];
+        bgImage.sprite = value ? bgSprites[1] : bgSprites[0];
+
+        Color32 color = value ? selectColor : normalColor;
+        for (int i = 0; i < infoIcons.Length; i++)
+            infoIcons[i].color = color;
+        for (int i = 0; i < infoTexts.Length; i++)
+            infoTexts[i].color = color;
     }
 
     public void IsGet(bool value)

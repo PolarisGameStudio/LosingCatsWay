@@ -63,6 +63,9 @@ public class Item : ScriptableObject
     public bool canUse;
     public bool notShowAtStore;
     public bool notShowAtBag;
+
+    [ShowIf("@itemType == ItemType.CatSkin")]
+    public int skinLevel;
     
     #region Properties
 
