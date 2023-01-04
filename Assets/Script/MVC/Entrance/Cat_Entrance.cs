@@ -124,6 +124,9 @@ public class Cat_Entrance : MvcBehaviour
     {
         trackEntry.Complete -= ShowDiaryButton;
 
+        DOTween.To(() => catSkin.skeletonGraphic.color, x => catSkin.skeletonGraphic.color = x,
+            new Color32(255, 255, 255, 0), 0.5f);
+        
         catRect.DOScale(Vector2.zero, 0.45f).From(startScale).SetEase(Ease.InBack);
         diaryButtonRect.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.45f);
     }

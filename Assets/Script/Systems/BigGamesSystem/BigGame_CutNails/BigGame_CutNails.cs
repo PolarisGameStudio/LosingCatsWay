@@ -70,6 +70,8 @@ public class BigGame_CutNails : BigGameBehaviour, IBeginDragHandler, IDragHandle
         base.Init();
         chance = hearts.Length;
 
+        cutEffect.gameObject.SetActive(false);
+        
         for (int i = 0; i < nailSensors.Length; i++)
             nailSensors[i].ResetNail();
 
@@ -301,7 +303,7 @@ public class BigGame_CutNails : BigGameBehaviour, IBeginDragHandler, IDragHandle
         if (chance <= 0) return;
         if (CheckIsNailsCut()) return;
 
-        cutEffect.anchoredPosition = Input.mousePosition;
+        cutEffect.position = eventData.position;
     }
 
     public void OnEndDrag(PointerEventData eventData)

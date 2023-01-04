@@ -109,4 +109,9 @@ public class Controller_Lobby : ControllerBehavior
     {
         App.controller.dailyQuest.Open();
     }
+
+    public void OpenPost()
+    {
+        App.system.post.Open();
+    }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Doozy.Runtime.Common.Extensions;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +14,19 @@ public class View_Entrance : ViewBehaviour
     [SerializeField] private Cat_Entrance deadCat;
     [SerializeField] private GameObject closeButton;
     [SerializeField] private Button maskButton;
+
+    [Title("Bg")] [SerializeField] private Image bg;
+    [SerializeField] private Sprite normalBg;
+    [SerializeField] private Sprite naturalDeadSprite;
+    [SerializeField] private Sprite sickDeadSprite;
+    [SerializeField] private GameObject[] normalBgObjects;
+
+    [Title("Fog")] [SerializeField] private Image fog;
+    [SerializeField] private Sprite naturalFog;
+    [SerializeField] private Sprite sickFog;
+
+    [Title("Title")] [SerializeField] private GameObject normalTitle;
+    [SerializeField] private GameObject deadTitle;
 
     [Title("ChooseDiary")] [SerializeField]
     private View_EntranceDiary chooseDiary;
@@ -66,6 +80,17 @@ public class View_Entrance : ViewBehaviour
         deadCat.SetActive(true);
         deadCat.StartDead();
 
+        if (cat.cloudCatData.CatHealthData.SickId.IsNullOrEmpty())
+        {
+            bg.sprite = naturalDeadSprite;
+            fog.sprite = naturalFog;
+        }
+        else
+        {
+            bg.sprite = sickDeadSprite;
+            fog.sprite = sickFog;
+        }
+
         closeButton.SetActive(false);
     }
 
@@ -78,6 +103,16 @@ public class View_Entrance : ViewBehaviour
             //正常
             closeButton.SetActive(true);
             maskButton.interactable = true;
+            bg.sprite = normalBg;
+
+            for (int i = 0; i < normalBgObjects.Length; i++)
+                normalBgObjects[i].SetActive(true);
+
+            fog.gameObject.SetActive(false);
+
+            normalTitle.SetActive(true);
+            deadTitle.SetActive(false);
+            
             return;
         }
 
@@ -86,6 +121,14 @@ public class View_Entrance : ViewBehaviour
             //死
             closeButton.SetActive(false);
             maskButton.interactable = false;
+            
+            for (int i = 0; i < normalBgObjects.Length; i++)
+                normalBgObjects[i].SetActive(false);
+
+            fog.gameObject.SetActive(true);
+            
+            normalTitle.SetActive(false);
+            deadTitle.SetActive(true);
         }
     }
 

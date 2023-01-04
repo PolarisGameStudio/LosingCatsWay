@@ -7,11 +7,6 @@ public class Controller_Entrance : ControllerBehavior
 {
     [SerializeField] private GameObject leftObject, rightObject;
     
-    public void Init()
-    {
-        Open();
-    }
-
     public void Open()
     {
         App.view.entrance.Open();

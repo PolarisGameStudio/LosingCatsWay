@@ -12,11 +12,8 @@ public class TutorialActor_AdoptCat : TutorialActor
     private async void GetCat()
     {
         DebugTool_Cat debugToolCat = new DebugTool_Cat();
-        debugToolCat.CreateCat(App.system.player.PlayerId, false);
+        CloudCatData cloudCatData = await debugToolCat.GetCreateCat(App.system.player.PlayerId, false);
 
-        var cloudCatDatas = await App.system.cloudSave.LoadCloudCatDatas();
-        CloudCatData cloudCatData = cloudCatDatas[0];
-        
         App.system.catRename.CantCancel().Active(cloudCatData, () =>
         {
             cloudCatData.CatData.Owner = App.system.player.PlayerId;

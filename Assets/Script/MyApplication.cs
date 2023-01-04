@@ -47,6 +47,10 @@ public class MyApplication : MonoBehaviour
         system.cat.Init();
         controller.dailyQuest.Init();
         controller.pedia.Init();
+        
+        await system.post.Init();
+        controller.events.Init();
+        controller.monthSign.Init();
 
         // 啓動的流程順序(OpenFlow.Init)
         if (system.tutorial.directorIndex < system.tutorial.directors.Count - 1)
@@ -60,15 +64,17 @@ public class MyApplication : MonoBehaviour
                 system.openFlow.AddAction(system.tutorial.Init);
             }
             
-            system.openFlow.AddAction(controller.events.Init);
-            system.openFlow.AddAction(controller.monthSign.Init);
-            system.openFlow.AddAction(controller.entrance.Init);
+            system.openFlow.AddAction(system.post.Open);
+            system.openFlow.AddAction(controller.events.Open);
+            system.openFlow.AddAction(controller.monthSign.Open);
+            system.openFlow.AddAction(controller.entrance.Open);
         }
         else
         {
-            system.openFlow.AddAction(controller.events.Init);
-            system.openFlow.AddAction(controller.monthSign.Init);
-            system.openFlow.AddAction(controller.entrance.Init);
+            system.openFlow.AddAction(system.post.Open);
+            system.openFlow.AddAction(controller.events.Open);
+            system.openFlow.AddAction(controller.monthSign.Open);
+            system.openFlow.AddAction(controller.entrance.Open);
         }
 
         system.bgm.Init();

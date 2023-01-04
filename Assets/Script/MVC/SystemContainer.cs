@@ -39,6 +39,7 @@ public class SystemContainer : MvcBehaviour
 
     public PlayerSystem player;
     public PlayerRenameSystem playerRename;
+    public PostSystem post;
 
     public QuestSystem quest;
 

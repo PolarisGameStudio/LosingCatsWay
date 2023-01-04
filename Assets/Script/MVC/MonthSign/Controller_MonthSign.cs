@@ -15,20 +15,16 @@ public class Controller_MonthSign : ControllerBehavior
     {
         if ((int)(App.model.monthSign.LastMonthSignDate - App.system.myTime.MyTimeNow).TotalDays != 0)
             SetEnableFlow(0);
-        if(GetEnableFlow() == 0)
-            Open();
     }
 
-    [HorizontalGroup("Split", 0.5f)]
-    [Button(30)]
     public void Open()
     {
+        if (GetEnableFlow() != 0)
+            return;
         App.view.monthSign.Open();
         CheckCalender();
     }
 
-    [HorizontalGroup("Split", 0.5f)]
-    [Button(30)]
     public void Close()
     {
         App.view.monthSign.Close();

@@ -37,6 +37,7 @@ public class PostSystem : MvcBehaviour
         {
             var postCartTmp = Instantiate(postCardObject, postCardContent);
             postCartTmp.SetData(i, GetPostSubData(i).Title, this);
+            postCartTmp.Deselect();
             
             _postCards.Add(postCartTmp);
         }
@@ -49,7 +50,6 @@ public class PostSystem : MvcBehaviour
     {
         if (_postCards.Count == 0)
             return;
-        
         uiView.Show();
     }
 
@@ -57,7 +57,11 @@ public class PostSystem : MvcBehaviour
     {
         if (!uiView.isVisible)
             return;
-        uiView.Hide();
+        uiView.InstantHide();
+
+        if (App == null)
+            return;
+        App.system.openFlow.NextAction();
     }
 
     public void Select(int index)
