@@ -12,6 +12,8 @@ public class Card_CultiveChooseSkin : MvcBehaviour
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI countText;
     [SerializeField] private GameObject darkMask;
+    [SerializeField] private GameObject starBorder;
+    [SerializeField] private GameObject[] stars;
 
     [Title("Selected")] [SerializeField] private GameObject selectedBg;
     [SerializeField] private Transform borderTransform;
@@ -20,6 +22,7 @@ public class Card_CultiveChooseSkin : MvcBehaviour
     public void SetSelect(bool value)
     {
         selectedBg.SetActive(value);
+        borderTransform.gameObject.SetActive(value);
 
         if (value)
             borderTransform.DOScale(new Vector2(1.05f, 1.05f), 0.1f).From(Vector2.one).SetLoops(2, LoopType.Yoyo);
@@ -34,7 +37,21 @@ public class Card_CultiveChooseSkin : MvcBehaviour
         nameText.text = item.Name;
         countText.text = item.Count.ToString();
         
+        //todo 數量0就消失
         darkMask.SetActive(item.Count <= 0);
+
+        if (item.skinLevel <= 0)
+        {
+            starBorder.SetActive(false);
+            return;
+        }
+        
+        starBorder.SetActive(true);
+
+        for (int i = 0; i < stars.Length; i++)
+            stars[i].SetActive(false);
+        for (int i = 0; i < item.skinLevel; i++)
+            stars[i].SetActive(true);
     }
 
     public void Select()

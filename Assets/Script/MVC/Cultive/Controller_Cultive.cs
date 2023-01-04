@@ -38,6 +38,7 @@ public class Controller_Cultive : ControllerBehavior
     [SerializeField] private Button[] tabButtons;
 
     private bool isOpen;
+    private bool isRecordSkin;
 
     [Title("Sensor")]
     [ReadOnly] public bool isCanDrag = true;
@@ -780,12 +781,14 @@ public class Controller_Cultive : ControllerBehavior
     {
         App.system.soundEffect.Play("Button");
         App.model.cultive.SelectedSkinIndex = index;
-        var cat = App.model.cultive.SelectedCat;
-        string currentSkin = cat.cloudCatData.CatSkinData.UseSkinId;
         
-        if (skinBeforePreview.IsNullOrEmpty() && !currentSkin.IsNullOrEmpty())
+        if (!isRecordSkin)
+        {
+            var cat = App.model.information.SelectedCat;
             skinBeforePreview = cat.cloudCatData.CatSkinData.UseSkinId;
-        
+            isRecordSkin = true;
+        }
+
         PreviewSkin();
     }
 
@@ -807,10 +810,14 @@ public class Controller_Cultive : ControllerBehavior
 
     private void CancelPreviewSkin()
     {
-        if (skinBeforePreview.IsNullOrEmpty())
+        if (!isRecordSkin)
             return;
         
-        var cat = App.model.cultive.SelectedCat;
+        var cat = App.model.information.SelectedCat;
+        
+        if (skinBeforePreview.IsNullOrEmpty() && cat.cloudCatData.CatSkinData.UseSkinId.IsNullOrEmpty())
+            return;
+
         cat.cloudCatData.CatSkinData.UseSkinId = skinBeforePreview;
         App.model.cultive.SelectedCat = cat;
         skinBeforePreview = String.Empty;
@@ -825,6 +832,8 @@ public class Controller_Cultive : ControllerBehavior
         var cat = App.model.cultive.SelectedCat;
         App.system.cloudSave.UpdateCloudCatSkinData(cat.cloudCatData);
         
+        isRecordSkin = false;
+
         SpineSetSkinHappy();
 
         if (!skinBeforePreview.IsNullOrEmpty())

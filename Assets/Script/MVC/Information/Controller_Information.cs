@@ -9,6 +9,7 @@ using UnityEngine;
 public class Controller_Information : ControllerBehavior
 {
     private string skinBeforePreview;
+    private bool isRecordSkin;
     
     public void Open()
     {
@@ -156,11 +157,13 @@ public class Controller_Information : ControllerBehavior
     {
         App.system.soundEffect.Play("Button");
         App.model.information.SelectedSkinIndex = index;
-        var cat = App.model.information.SelectedCat;
-        string currentSkin = cat.cloudCatData.CatSkinData.UseSkinId;
-        
-        if (skinBeforePreview.IsNullOrEmpty() && !currentSkin.IsNullOrEmpty())
+
+        if (!isRecordSkin)
+        {
+            var cat = App.model.information.SelectedCat;
             skinBeforePreview = cat.cloudCatData.CatSkinData.UseSkinId;
+            isRecordSkin = true;
+        }
         
         PreviewSkin();
     }
@@ -183,14 +186,19 @@ public class Controller_Information : ControllerBehavior
 
     private void CancelPreviewSkin()
     {
-        if (skinBeforePreview.IsNullOrEmpty())
+        if (!isRecordSkin)
             return;
         
         var cat = App.model.information.SelectedCat;
+        
+        if (skinBeforePreview.IsNullOrEmpty() && cat.cloudCatData.CatSkinData.UseSkinId.IsNullOrEmpty())
+            return;
+        
         cat.cloudCatData.CatSkinData.UseSkinId = skinBeforePreview;
         App.model.information.SelectedCat = cat;
         App.model.information.MyCats = App.model.information.MyCats;
-        skinBeforePreview = String.Empty;
+        skinBeforePreview = string.Empty;
+        isRecordSkin = false;
     }
 
     public void ConfirmChooseSkin()
@@ -201,6 +209,8 @@ public class Controller_Information : ControllerBehavior
         int index = App.model.information.SelectedSkinIndex;
         var cat = App.model.information.SelectedCat;
         App.system.cloudSave.UpdateCloudCatSkinData(cat.cloudCatData);
+
+        isRecordSkin = false;
         
         SpineSetSkinHappy();
         
