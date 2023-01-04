@@ -35,7 +35,7 @@ public class MyGridSystem : MvcBehaviour
     {
         width = GetGridSize();
         height = width;
-        
+
         CreateFloor();
         SetCameraToOrigin();
         CreateOutSide();
@@ -47,7 +47,7 @@ public class MyGridSystem : MvcBehaviour
     {
         // width = App.system.player.GridSize;
         // height = App.system.player.GridSize;
-        
+
         viewGridArray = new MyGrid[width, height];
         buildGridArray = new SpriteRenderer[width, height];
 
@@ -59,7 +59,7 @@ public class MyGridSystem : MvcBehaviour
             for (int j = 0; j < height; j++)
             {
                 var floor = App.factory.roomFactory.GetFloorObject("Spring");
-                
+
                 GameObject viewBuffer = Instantiate(floor, viewMap);
                 viewBuffer.transform.position = GetWorldPosition(i, j);
 
@@ -77,7 +77,7 @@ public class MyGridSystem : MvcBehaviour
     }
 
     #endregion
-    
+
     #region utiliy
 
     public void SetCameraToOrigin(bool tween = false)
@@ -117,7 +117,7 @@ public class MyGridSystem : MvcBehaviour
         int gridX = Convert.ToInt32(x / cellSize);
         int gridY = Convert.ToInt32(y / cellSize);
 
-        return new int[] {gridX, gridY};
+        return new int[] { gridX, gridY };
     }
 
     public SpriteRenderer GetBuildGrid(int x, int y)
@@ -398,7 +398,7 @@ public class MyGridSystem : MvcBehaviour
     private void CreateOutSideCenter()
     {
         var factory = App.factory.roomFactory.floorContainers["Spring"];
-        
+
         GameObject up = Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.CenterUp), viewMap);
         up.transform.position = GetWorldPosition(width / 2, height);
 
@@ -554,9 +554,9 @@ public class MyGridSystem : MvcBehaviour
 
     private int GetGridSize()
     {
-        int level = Math.Clamp(App.system.player.GridSizeLevel,1, 11);
+        int level = Math.Clamp(App.system.player.GridSizeLevel, 1, 11);
         int result = 9 + level * 2;
-        
+
         return result;
     }
 }

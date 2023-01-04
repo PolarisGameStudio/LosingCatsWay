@@ -37,17 +37,11 @@ public class DebugTool : MvcBehaviour
         cat.CreateCat($"Location{index}", false);
     }
 
-    [Button]
-    public void Test()
+    public void GetMonthLastTime()
     {
-        List<int> r = new List<int>();
-        
-        r.Add(0);
-        r.Add(1);
-        r.Add(2);
-        r.Add(3);
-        
-        print(r.FindIndex(x => x == 4));
+        DateTime notTime = DateTime.Now;
+        DateTime lastDay = notTime.AddMonths(1).AddDays(-DateTime.Now.AddMonths(1).Day).AddHours(-notTime.Hour + 23).AddMinutes(-notTime.Minute + 59).AddSeconds(-notTime.Second + 59);
+        print(lastDay);
     }
 
     [Button]
