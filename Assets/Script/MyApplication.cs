@@ -25,7 +25,6 @@ public class MyApplication : MonoBehaviour
         canSave = false;
 
         system.tnr.Init(); // 觸發ValueChange
-        system.grid.Init(); // 生成格子 // TODO 讀玩家擁有格生格子
 
         // 讀取資料
         bool isCloudSaveDataExist = await system.cloudSave.IsCloudSaveDataExist();
@@ -111,12 +110,13 @@ public class MyApplication : MonoBehaviour
         player.Coin = playerData.Coin;
         player.Diamond = playerData.Diamond;
         player.DiamondCatSlot = playerData.DiamondCatSlot;
-        player.GridSize = playerData.GridSize;
+        player.GridSizeLevel = playerData.GridSizeLevel;
         player.PlayerGender = playerData.PlayerGender;
         player.UsingIcon = playerData.UsingIcon;
         player.UsingAvatar = playerData.UsingAvatar;
 
         system.tutorial.directorIndex = playerData.TutorialIndex;
+        system.grid.Init(); // 生成格子
 
         // FriendData
         model.friend.Friends = await system.cloudSave.LoadFriends();
