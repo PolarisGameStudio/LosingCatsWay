@@ -5,8 +5,9 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using System;
 using I2.Loc;
+using UnityEngine.SceneManagement;
 
-public class DebugTool : MonoBehaviour
+public class DebugTool : MvcBehaviour
 {
     DebugTool_Cat cat = new DebugTool_Cat();
 
@@ -47,5 +48,15 @@ public class DebugTool : MonoBehaviour
         r.Add(3);
         
         print(r.FindIndex(x => x == 4));
+    }
+
+    [Button]
+    public void LoadScene()
+    {
+        App.system.transition.OnlyOpen(() =>
+        {
+            PlayerPrefs.SetString("FriendRoomId", "JUSTBUILD");
+            SceneManager.LoadSceneAsync("SampleScene", LoadSceneMode.Single);
+        });
     }
 }

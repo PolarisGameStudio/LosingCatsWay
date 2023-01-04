@@ -8,7 +8,8 @@ using UnityEngine.UI;
 
 public class UseItemSystem : MvcBehaviour
 {
-    [Title("View")] [SerializeField] private UIView uiView;
+    [Title("View")] 
+    [SerializeField] private UIView uiView;
     
     [Title("UI")]
     [SerializeField] private TextMeshProUGUI titleText;

@@ -52,7 +52,7 @@ public class PlayerSystem : MvcBehaviour
     private int diamond;
     private int coin;
     private int diamondCatSlot;
-    private int gridSize;
+    private int gridSizeLevel;
     private int playerGender = -1; //0:Male 1:Female
     private string usingIcon;
     private string usingAvatar;
@@ -142,10 +142,10 @@ public class PlayerSystem : MvcBehaviour
         //Todo ValueChange
     }
 
-    public int GridSize
+    public int GridSizeLevel
     {
-        get => gridSize;
-        set => gridSize = value;
+        get => gridSizeLevel;
+        set => gridSizeLevel = value;
     }
 
     public int PlayerGender

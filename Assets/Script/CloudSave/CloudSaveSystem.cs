@@ -52,7 +52,7 @@ public class CloudSaveSystem : MvcBehaviour
         playerData.Coin = App.system.player.Coin;
         playerData.Diamond = App.system.player.Diamond;
         playerData.DiamondCatSlot = App.system.player.DiamondCatSlot;
-        playerData.GridSize = App.system.player.GridSize;
+        playerData.GridSizeLevel = App.system.player.GridSizeLevel;
         playerData.PlayerGender = App.system.player.PlayerGender;
         playerData.UsingIcon = App.system.player.UsingIcon;
         playerData.UsingAvatar = App.system.player.UsingAvatar;
@@ -153,7 +153,7 @@ public class CloudSaveSystem : MvcBehaviour
         playerData.Coin = 1000;
         playerData.Diamond = 0;
         playerData.DiamondCatSlot = 0;
-        playerData.GridSize = 31;
+        playerData.GridSizeLevel = 1;
         playerData.PlayerGender = -1;
         playerData.UsingIcon = string.Empty;
         playerData.UsingAvatar = "PAT001";
@@ -233,7 +233,7 @@ public class CloudSaveSystem : MvcBehaviour
         playerData.Coin = App.system.player.Coin;
         playerData.Diamond = App.system.player.Diamond;
         playerData.DiamondCatSlot = App.system.player.DiamondCatSlot;
-        playerData.GridSize = App.system.player.GridSize;
+        playerData.GridSizeLevel = App.system.player.GridSizeLevel;
         playerData.PlayerGender = App.system.player.PlayerGender;
 
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;

@@ -33,6 +33,9 @@ public class MyGridSystem : MvcBehaviour
 
     public void Init()
     {
+        width = GetGridSize();
+        height = width;
+        
         CreateFloor();
         SetCameraToOrigin();
         CreateOutSide();
@@ -548,4 +551,12 @@ public class MyGridSystem : MvcBehaviour
     }
 
     #endregion
+
+    private int GetGridSize()
+    {
+        int level = Math.Clamp(1, 11, App.system.player.GridSizeLevel);
+        int result = 9 + level * 2;
+        
+        return result;
+    }
 }
