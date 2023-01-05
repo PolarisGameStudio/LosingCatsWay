@@ -112,7 +112,6 @@ public class CatSystem : MvcBehaviour
     public void Remove(Cat cat)
     {
         myCats.Remove(cat);
-        //Destroy(cat.gameObject);
         cat.gameObject.SetActive(false);
         OnCatsChange?.Invoke(myCats);
     }

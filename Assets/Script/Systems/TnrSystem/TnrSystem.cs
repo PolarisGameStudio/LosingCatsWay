@@ -108,6 +108,7 @@ public class TnrSystem : MvcBehaviour
 
     public void DoAdopt()
     {
+        Close();
         App.system.confirm.Active(ConfirmTable.AdoptConfirm, () =>
         {
             App.system.catRename.CantCancel().Active(cloudCatData, () =>
@@ -130,7 +131,6 @@ public class TnrSystem : MvcBehaviour
                     {
                         OnAdoptCat?.Invoke(cloudCatData);
                         OnDoAdopt?.Invoke();
-                        Close();
                     }));
             });
         }, () => Open());
@@ -204,6 +204,7 @@ public class TnrSystem : MvcBehaviour
     private void DoLigationComplete(TrackEntry trackentry)
     {
         trackentry.Complete -= DoLigationComplete;
+        catGraphic.AnimationState.SetAnimation(0, "AI_Main/IDLE_Ordinary01", true);
         Open();
         functionGraphic.gameObject.SetActive(false);
     }

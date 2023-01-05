@@ -594,7 +594,7 @@ public class CatchCatMap : MvcBehaviour
 
         if (App.system.tutorial.isTutorial)
         {
-            SetCloudCatDataToUse(false);
+            App.system.cloudSave.DeleteCloudCatData(cloudCatData);
             App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchCatGameEnd, () =>
             {
                 // CloseToMap();

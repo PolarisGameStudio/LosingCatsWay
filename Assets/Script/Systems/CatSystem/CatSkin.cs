@@ -49,6 +49,8 @@ public class CatSkin : MvcBehaviour
     
     // private string slot_faceSinisterSmile = "Face_Sinister Smile";
 
+    private string slot_DeathQuilt = "Death_Quilt";
+
     #endregion
 
     #region Key
@@ -77,7 +79,7 @@ public class CatSkin : MvcBehaviour
     private string key_faceCry = "Face_Cry";
     private string key_faceLove = "Face_Love";
     
-    private string key_sinisterSmile = "Face_Sinister Smile";
+    // private string key_sinisterSmile = "Face_Sinister Smile";
 
     private string key_docile = "Face_Docile";
 
@@ -606,4 +608,24 @@ public class CatSkin : MvcBehaviour
     }
 
     #endregion
+
+    private Skeleton GetCatSkeleton()
+    {
+        Skeleton catSkeleton = null;
+        
+        if (isGUI)
+            catSkeleton = skeletonGraphic.Skeleton;
+        else
+            catSkeleton = skeletonMecanim.Skeleton;
+        
+        return catSkeleton;
+    }
+    
+    public void SetDeathQuilt(bool value)
+    {
+        if (value)
+            GetCatSkeleton().SetAttachment(slot_DeathQuilt, slot_DeathQuilt);
+        else
+            GetCatSkeleton().SetAttachment(slot_DeathQuilt, null);
+    }
 }

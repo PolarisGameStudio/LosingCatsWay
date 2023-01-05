@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Coffee.UIExtensions;
 using Doozy.Runtime.Common.Extensions;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -24,6 +25,9 @@ public class View_Entrance : ViewBehaviour
     [Title("Fog")] [SerializeField] private Image fog;
     [SerializeField] private Sprite naturalFog;
     [SerializeField] private Sprite sickFog;
+
+    [Title("Effects")] [SerializeField] private UIParticle naturalEffect;
+    [SerializeField] private UIParticle sickEffect;
 
     [Title("Title")] [SerializeField] private GameObject normalTitle;
     [SerializeField] private GameObject deadTitle;
@@ -72,23 +76,31 @@ public class View_Entrance : ViewBehaviour
 
     private void OnDeadCatChange(object value)
     {
-        if (value == null) return;
+        if (value == null)
+            return;
+        
         HideAllCats();
         
         Cat cat = (Cat)value;
         deadCat.SetCatData(cat.cloudCatData);
         deadCat.SetActive(true);
         deadCat.StartDead();
+        
+        print(cat.cloudCatData.CatHealthData.SickId);
 
         if (cat.cloudCatData.CatHealthData.SickId.IsNullOrEmpty())
         {
             bg.sprite = naturalDeadSprite;
             fog.sprite = naturalFog;
+            naturalEffect.gameObject.SetActive(true);
+            naturalEffect.Play();
         }
         else
         {
             bg.sprite = sickDeadSprite;
             fog.sprite = sickFog;
+            sickEffect.gameObject.SetActive(false);
+            sickEffect.Play();
         }
 
         closeButton.SetActive(false);
@@ -112,6 +124,9 @@ public class View_Entrance : ViewBehaviour
 
             normalTitle.SetActive(true);
             deadTitle.SetActive(false);
+
+            naturalEffect.gameObject.SetActive(false);
+            sickEffect.gameObject.SetActive(false);
             
             return;
         }

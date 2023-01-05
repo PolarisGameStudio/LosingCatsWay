@@ -10,9 +10,10 @@ public class Controller_Entrance : ControllerBehavior
     public void Open()
     {
         App.view.entrance.Open();
-
+        
         if (App.model.entrance.OpenType == 0)
         {
+            App.model.entrance.OpenType = 0; // 刷新Value
             App.model.entrance.Cats = App.system.cat.GetCats();
             return;
         }
@@ -27,6 +28,7 @@ public class Controller_Entrance : ControllerBehavior
     {
         App.view.entrance.CloseChooseDiary();
         App.view.entrance.Close();
+        App.model.entrance.OpenType = 0;
         App.system.openFlow.NextAction();
     }
 

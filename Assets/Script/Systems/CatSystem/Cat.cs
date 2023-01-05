@@ -542,7 +542,7 @@ public class Cat : MvcBehaviour
             if (Random.value < 0.9f)
             {
                 cloudCatData.CatServerData.IsDead = true;
-                App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
+                App.system.cloudSave.UpdateCloudCatServerData(cloudCatData);
                 return;
             }
         }

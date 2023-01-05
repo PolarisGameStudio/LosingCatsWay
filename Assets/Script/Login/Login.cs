@@ -38,13 +38,22 @@ public class Login : MonoBehaviour
     [Title("Login")] public UIView loginView;
     [Title("Confirm")] [SerializeField] private UIView confirmView;
 
+    [Title("LoginButtons")] [SerializeField]
+    private GameObject googleButton;
+    [SerializeField] private GameObject appleButton;
+
     private bool isRequest = false;
     private IAppleAuthManager appleAuthManager;
 
     private async void Start()
     {
-    
+        googleButton.SetActive(false);
+        appleButton.SetActive(false);
+        
 #if UNITY_IOS && !UNITY_EDITOR
+
+        appleButton.SetActive(true);
+
         var status = ATTrackingStatusBinding.GetAuthorizationTrackingStatus();
         Version currentVersion = new Version(Device.systemVersion);
         Version ios14 = new Version("14.5");
@@ -54,7 +63,10 @@ public class Login : MonoBehaviour
             Debug.Log("申請廣告權限");
             ATTrackingStatusBinding.RequestAuthorizationTracking();
         }
-
+#else
+        
+        googleButton.SetActive(true);
+        
 #endif
 
         await FindObjectOfType<PostSystem>().Init();

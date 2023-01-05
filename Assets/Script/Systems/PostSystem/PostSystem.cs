@@ -58,10 +58,6 @@ public class PostSystem : MvcBehaviour
         if (!uiView.isVisible)
             return;
         uiView.InstantHide();
-
-        if (App == null)
-            return;
-        App.system.openFlow.NextAction();
     }
 
     public void Select(int index)

@@ -19,15 +19,15 @@ public class TutorialSystem : MvcBehaviour
     [SerializeField] private UIView blackBg;
     [SerializeField] private Image bgImage;
 
+    [Title("Value")]
     [ReadOnly] public int directorIndex = -1;
     [ReadOnly] public bool isTutorial;
+    public int startTutorialEndPoint; // 新手教學結束點 // Director (4) 就寫 4
 
     public void Init()
     {
         for (int i = 0; i < directors.Count; i++)
             directors[i].gameObject.SetActive(false);
-
-        NextDirector();
     }
 
     private void SetDirector(int index)

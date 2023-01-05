@@ -49,29 +49,26 @@ public class MyApplication : MonoBehaviour
         controller.pedia.Init();
         
         await system.post.Init();
+
         controller.events.Init();
         controller.monthSign.Init();
+        system.tutorial.Init();
 
         // 啓動的流程順序(OpenFlow.Init)
-        if (system.tutorial.directorIndex < system.tutorial.directors.Count - 1)
+        if (system.tutorial.directorIndex < system.tutorial.startTutorialEndPoint && !skipTutorial)
         {
             if (system.player.PlayerGender == -1)
                 system.openFlow.AddAction(system.choosePlayerGenderSystem.Open);
-            
-            if (!skipTutorial)
-            {
-                system.tutorial.directorIndex = -1;
-                system.openFlow.AddAction(system.tutorial.Init);
-            }
-            
-            system.openFlow.AddAction(system.post.Open);
+
+            system.tutorial.directorIndex = -1;
+            system.openFlow.AddAction(system.tutorial.NextDirector);
+
             system.openFlow.AddAction(controller.events.Open);
             system.openFlow.AddAction(controller.monthSign.Open);
             system.openFlow.AddAction(controller.entrance.Open);
         }
         else
         {
-            system.openFlow.AddAction(system.post.Open);
             system.openFlow.AddAction(controller.events.Open);
             system.openFlow.AddAction(controller.monthSign.Open);
             system.openFlow.AddAction(controller.entrance.Open);
