@@ -198,6 +198,7 @@ public class Cat : MvcBehaviour
 
         if (specialSpineRoom == null) // 房間爆掉
         {
+            print("測試");
             specialSpineRoom.spcialSpineIsUse = false;
             CancelInvoke("WaitMoveEnd");
             return;
