@@ -348,7 +348,7 @@ MonoBehaviour:
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
   _animationName: Interactive_Room_CatAnimation/Interactive_Room_1/CatTree_Jump
-  loop: 1
+  loop: 0
   timeScale: 0
 --- !u!33 &7379425003265216619
 MeshFilter:
@@ -782,7 +782,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.08, y: 1.19}
   m_EdgeRadius: 0
 --- !u!114 &68567277560627254
 MonoBehaviour:
@@ -1776,11 +1776,11 @@ MonoBehaviour:
   rightWalls: []
   sensor: {fileID: 414904160531166096}
   hasSpcialSpine: 1
-  spcialSpineType: 0
+  spcialSpineType: 1
   spcialSpineIsUse: 0
   spcialSpinePosition: {fileID: 1662862839767714471}
-  specialSpines: []
-  specialSpineObjects: []
+  specialSpines:
+  - {fileID: 6144959383643702570}
 --- !u!61 &414904160531166096
 BoxCollider2D:
   m_ObjectHideFlags: 0

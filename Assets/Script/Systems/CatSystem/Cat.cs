@@ -198,21 +198,22 @@ public class Cat : MvcBehaviour
 
         if (specialSpineRoom == null) // 房間爆掉
         {
-            print("測試");
             specialSpineRoom.spcialSpineIsUse = false;
             CancelInvoke("WaitMoveEnd");
             return;
         }
-
+        
         transform.position = specialSpineRoom.spcialSpinePosition.position;
         
         directionChecker.TurnLeft();
+        directionChecker.Stop();
+
         int roomIndex = Convert.ToInt32(specialSpineRoom.roomData.id.Split("IRM")[1]);
         anim.SetInteger(CatAnimTable.SpcialSpineRoomId.ToString(), roomIndex);
         anim.Play("SpecialSpine");
+        
         specialSpineRoom.PlaySpecialSpine();
-
-        directionChecker.Stop();
+        
         specialSpineRoom.spcialSpineIsUse = false;
         CancelInvoke("WaitMoveEnd");
     }

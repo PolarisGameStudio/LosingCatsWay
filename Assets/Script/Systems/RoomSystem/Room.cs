@@ -18,7 +18,7 @@ public class Room : MvcBehaviour
 
     public GameObject[] upDoorWalls;
     public GameObject[] downWalls;
-    
+
     public GameObject[] leftWalls;
     public GameObject[] rightWalls;
 
@@ -32,9 +32,6 @@ public class Room : MvcBehaviour
 
     [ShowIf("@hasSpcialSpine && spcialSpineType != 0")]
     public SkeletonAnimation[] specialSpines;
-
-    [ShowIf("@hasSpcialSpine && spcialSpineType == 2")]
-    public GameObject[] specialSpineObjects;
 
     #region GetSet
 
@@ -114,20 +111,9 @@ public class Room : MvcBehaviour
                 {
                     var skeletonAnimationName = specialSpines[i].AnimationName;
                     specialSpines[i].state.SetAnimation(0, skeletonAnimationName, false);
+                    specialSpines[i].timeScale = 1;
                     specialSpines[i].state.Complete += OnSpecialSpineEnd;
                 }
-
-                break;
-            case 2:
-                for (int i = 0; i < specialSpines.Length; i++)
-                {
-                    var skeletonAnimationName = specialSpines[i].AnimationName;
-                    specialSpines[i].state.SetAnimation(0, skeletonAnimationName, false);
-                    specialSpines[i].state.Complete += OnSpecialSpineEnd;
-                }
-
-                for (int i = 0; i < specialSpineObjects.Length; i++)
-                    specialSpineObjects[i].SetActive(false);
 
                 break;
         }
@@ -140,14 +126,17 @@ public class Room : MvcBehaviour
         if (endCount == specialSpines.Length)
         {
             for (int i = 0; i < specialSpines.Length; i++)
+            {
                 specialSpines[i].state.Complete -= OnSpecialSpineEnd;
-            
-            for (int i = 0; i < specialSpineObjects.Length; i++)
-                specialSpineObjects[i].SetActive(true);
+
+                var skeletonAnimationName = specialSpines[i].AnimationName;
+                specialSpines[i].state.SetAnimation(0, skeletonAnimationName, false);
+                specialSpines[i].timeScale = 0;
+            }
         }
     }
 
-    #region basic
+    #region Basic
 
     public void OpenAllWall()
     {
@@ -246,7 +235,7 @@ public class Room : MvcBehaviour
 
             if (downGrid == null)
                 continue;
-            
+
             if (upGrid.Value == 1)
             {
                 Room upRoom = upGrid.Content.GetComponent<Room>();
@@ -268,12 +257,12 @@ public class Room : MvcBehaviour
             MyGrid leftGrid = myGridSystem.GetLeftGrid(x, y + i);
             MyGrid rightGrid = myGridSystem.GetRightGrid(x + width - 1, y + i);
 
-            if (leftGrid == null) 
+            if (leftGrid == null)
                 continue;
-            
+
             if (rightGrid == null)
                 continue;
-            
+
             if (leftGrid.Value == 1)
             {
                 Room leftRoom = leftGrid.Content.GetComponent<Room>();
@@ -288,7 +277,7 @@ public class Room : MvcBehaviour
                     result.Add(rightRoom);
             }
         }
-        
+
         return result;
     }
 

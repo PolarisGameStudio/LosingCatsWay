@@ -273,7 +273,7 @@ MonoBehaviour:
   disableRenderingOnOverride: 1
   _animationName: Interactive_Room_CatAnimation/Interactive_Room_2/CatHamster_Hit_2
   loop: 0
-  timeScale: 1
+  timeScale: 0
 --- !u!33 &550797207032691376
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -761,7 +761,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4736601026156217222}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.3, y: 7.7, z: 0}
+  m_LocalPosition: {x: 5.189, y: 7.972, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1105,7 +1105,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8792944628027597166}
-  - component: {fileID: 3472784016860235519}
   - component: {fileID: 1025756675222395626}
   - component: {fileID: 7619058284893800268}
   m_Layer: 0
@@ -1130,58 +1129,6 @@ Transform:
   m_Father: {fileID: 1860949284183002143}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &3472784016860235519
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6086594911136714286}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 07527a12f1074ee448dc0aaa632a4c7b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 3.28, y: 3.72}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!61 &1025756675222395626
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1662,11 +1609,11 @@ MonoBehaviour:
   rightWalls: []
   sensor: {fileID: 414904160531166096}
   hasSpcialSpine: 1
-  spcialSpineType: 0
+  spcialSpineType: 1
   spcialSpineIsUse: 0
   spcialSpinePosition: {fileID: 5426680035171346618}
-  specialSpines: []
-  specialSpineObjects: []
+  specialSpines:
+  - {fileID: 1729611498669878638}
 --- !u!61 &414904160531166096
 BoxCollider2D:
   m_ObjectHideFlags: 0
