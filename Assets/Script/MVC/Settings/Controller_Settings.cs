@@ -48,7 +48,7 @@ public class Controller_Settings : ControllerBehavior
         PlayerPrefs.SetInt("LanguageIndex", App.model.settings.LanguageIndex);
     }
 
-    public async void DeleteAccount()
+    public void DeleteAccount()
     {
         string playerId = App.system.player.PlayerId;
 

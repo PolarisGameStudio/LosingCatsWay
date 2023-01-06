@@ -611,8 +611,6 @@ public class Cat : MvcBehaviour
         cloudCatData.CatDiaryData.FlowerExpiredTimestamp =
             Timestamp.FromDateTime(App.system.myTime.MyTimeNow.AddDays(7));
         cloudCatData.CatDiaryData.DiaryDatas = App.factory.diaryFactory.GetDiaryDatas(cloudCatData);
-
-        App.system.cat.SetDead(this);
     }
 
     #endregion

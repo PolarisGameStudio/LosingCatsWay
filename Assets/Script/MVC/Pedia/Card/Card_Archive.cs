@@ -29,12 +29,15 @@ public class Card_Archive : Card_Quest
         
         string id = quest.id;
         var strings = id.Split('_');
+        int receiveStatus = App.system.quest.QuestReceivedStatusData[strings[0]];
+
+        for (int i = 0; i < receiveStatus; i++)
+            reachObjects[i].SetActive(true);
 
         for (int i = 0; i < 3; i++)
         {
             string tmpId = strings[0] + "_" + (i + 1);
             bool isReach = App.factory.questFactory.GetQuestById(tmpId).IsReach;
-            int receiveStatus = App.system.quest.QuestReceivedStatusData[strings[0]];
             if (isReach && receiveStatus == i)
             {
                 reachObjects[i].SetActive(true);
@@ -48,7 +51,7 @@ public class Card_Archive : Card_Quest
         if (isLastReceived)
         {
             receiveMask.SetActive(true);
-            reachObjects[2].SetActive(true);
+            // reachObjects[2].SetActive(true);
             progressText.text = $"{lastQuest.TargetCount}/{lastQuest.TargetCount}";
         }
     }

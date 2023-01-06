@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class Card_Cloister : MvcBehaviour
 {
     #region Variables
-    
+
     [SerializeField] private CatSkin catSkin;
 
     [Title("CatInfo")] [SerializeField] private TextMeshProUGUI catNameText;
@@ -20,34 +20,22 @@ public class Card_Cloister : MvcBehaviour
     [Title("Timer")] [SerializeField] private TextMeshProUGUI daysText;
     [SerializeField] private TextMeshProUGUI timeText;
 
-    [TabGroup("Images")]
-    [SerializeField] private Image leftImage;
-    [TabGroup("Images")]
-    [SerializeField] private Image timerImage;
-    [TabGroup("Images")]
-    [SerializeField] private Image buttonImage;
-    [TabGroup("Images")]
-    [SerializeField] private Image borderImage;
+    [TabGroup("Images"), SerializeField] private Image leftImage;
+    [TabGroup("Images"), SerializeField] private Image timerImage;
+    [TabGroup("Images"), SerializeField] private Image buttonImage;
+    [TabGroup("Images"), SerializeField] private Image borderImage;
+    [TabGroup("Images"), SerializeField] private Image holeImage;
 
-    [TabGroup("Sprites")]
-    [Title("Border")]
-    [TabGroup("Sprites")]
-    [SerializeField] private Sprite redBorder;
-    [TabGroup("Sprites")]
-    [Title("Timer")]
-    [TabGroup("Sprites")]
-    [SerializeField] private Sprite redTimer;
-    [TabGroup("Sprites")]
-    [Title("Button")]
-    [TabGroup("Sprites")]
-    [SerializeField] private Sprite redButton;
-    [TabGroup("Sprites")]
-    [Title("Left")]
-    [TabGroup("Sprites")]
-    [SerializeField] private Sprite redLeft;
+    [TabGroup("Sprites"), SerializeField] private Sprite redBorder;
+    [TabGroup("Sprites"), SerializeField] private Sprite redTimer;
+    [TabGroup("Sprites"), SerializeField] private Sprite redButton;
+    [TabGroup("Sprites"), SerializeField] private Sprite redLeft;
+    [TabGroup("Sprites"), SerializeField] private Sprite redHole;
     
     [Title("UsedFlower")] [SerializeField] private GameObject usedIcon;
     [SerializeField] private GameObject usedText;
+
+    [Title("Select")] [SerializeField] private GameObject selectObject;
 
     private DateTime expiredDate;
     
@@ -86,6 +74,17 @@ public class Card_Cloister : MvcBehaviour
         
         daysText.text = days.ToString();
         timeText.text = $"{hours:00}:{minutes:00}:{seconds:00}";
+        
+        if (expiredDate <= now) //Expired
+        {
+            SetActive(false);
+            App.controller.cloister.Select(-1); //如果在時間到的時候保持選中，則隱藏花
+            CancelInvoke(nameof(CountDown));
+            
+            int index = transform.GetSiblingIndex();
+            App.controller.cloister.Remove(index);
+            return;
+        }
 
         if ((expiredDate - now).TotalDays < 1) //Under a day
         {
@@ -93,15 +92,7 @@ public class Card_Cloister : MvcBehaviour
             timerImage.sprite = redTimer;
             buttonImage.sprite = redButton;
             borderImage.sprite = redBorder;
-            return;
-        }
-
-        if ((expiredDate - now).TotalSeconds <= 0) //Expired
-        {
-            SetActive(false);
-            App.controller.cloister.Select(-1); //如果在時間到的時候保持選中，則隱藏花
-            //TODO DeleteLosingCat
-            CancelInvoke(nameof(CountDown));
+            holeImage.sprite = redHole;
         }
     }
 
@@ -118,15 +109,14 @@ public class Card_Cloister : MvcBehaviour
         App.controller.cloister.Select(index);
     }
 
-    public void UseFlower()
-    {
-        Select();
-        App.controller.cloister.UseFlower();
-    }
-
     public void SetActive(bool active)
     {
         gameObject.SetActive(active);
         catSkin.SetActive(active);
+    }
+
+    public void SetSelect(bool value)
+    {
+        selectObject.SetActive(value);
     }
 }

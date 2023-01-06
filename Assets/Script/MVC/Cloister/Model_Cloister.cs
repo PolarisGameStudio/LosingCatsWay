@@ -35,10 +35,11 @@ public class Model_Cloister : ModelBehavior
         set
         {
             selectedIndex = value;
-            //TODO ValueChange
+            OnSelectedIndexChange(value);
         }
     }
 
     public ValueChange OnLosingCatDatasChange;
     public ValueChange OnSelectedLosingCatChange;
+    public ValueChange OnSelectedIndexChange;
 }

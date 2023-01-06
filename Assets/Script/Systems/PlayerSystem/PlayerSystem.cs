@@ -41,6 +41,8 @@ public class PlayerSystem : MvcBehaviour
     public ValueChange OnUsingIconChange;
     public ValueChange OnUsingAvatarChange;
 
+    public ValueChange OnCatDeadCountChange;
+
     #endregion
 
     #region Variable
@@ -56,6 +58,7 @@ public class PlayerSystem : MvcBehaviour
     private int playerGender = -1; //0:Male 1:Female
     private string usingIcon;
     private string usingAvatar;
+    private int catDeadCount;
 
     #endregion
 
@@ -179,6 +182,16 @@ public class PlayerSystem : MvcBehaviour
             if (string.IsNullOrEmpty(value))
                 return;
             OnUsingAvatarChange?.Invoke(value);
+        }
+    }
+
+    public int CatDeadCount
+    {
+        get => catDeadCount;
+        set
+        {
+            catDeadCount = value;
+            OnCatDeadCountChange?.Invoke(value);
         }
     }
 

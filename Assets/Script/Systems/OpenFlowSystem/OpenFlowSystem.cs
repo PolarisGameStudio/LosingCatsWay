@@ -5,9 +5,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-/// <summary>
-/// The game start flow
-/// </summary>
 public class OpenFlowSystem : MvcBehaviour
 {
     private List<UnityAction> openFlowActions = new List<UnityAction>();
@@ -50,7 +47,6 @@ public class OpenFlowSystem : MvcBehaviour
             isEnd = true;
             isActive = false;
             print("End of actions.");
-            // App.system.myTime.LastLoginDateTime = DateTime.Now;
             return;
         }
 

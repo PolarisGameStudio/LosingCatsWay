@@ -6,6 +6,11 @@ using UnityEngine;
 public class Controller_Entrance : ControllerBehavior
 {
     [SerializeField] private GameObject leftObject, rightObject;
+
+    public void Init()
+    {
+        App.system.openFlow.AddAction(Open);
+    }
     
     public void Open()
     {

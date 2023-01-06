@@ -13,14 +13,14 @@ public class Controller_MonthSign : ControllerBehavior
 
     public void Init()
     {
-        if ((int)(App.model.monthSign.LastMonthSignDate - App.system.myTime.MyTimeNow).TotalDays != 0)
-            SetEnableFlow(0);
+        int day = App.system.myTime.MyTimeNow.Day;
+        if (App.model.monthSign.SignIndexs[day - 1] == 1)
+            return;
+        App.system.openFlow.AddAction(Open);
     }
 
     public void Open()
     {
-        if (GetEnableFlow() != 0)
-            return;
         App.view.monthSign.Open();
         CheckCalender();
     }
@@ -62,8 +62,6 @@ public class Controller_MonthSign : ControllerBehavior
         signIndexs[day - 1] = 1;
         App.model.monthSign.SignIndexs = signIndexs;
         App.model.monthSign.LastMonthSignDate = App.system.myTime.MyTimeNow;
-
-        SetEnableFlow(1);
     }
 
     /// 按鈕補簽
@@ -130,24 +128,4 @@ public class Controller_MonthSign : ControllerBehavior
         //這邊是可以直接加Count的東西
         reward.item.Count += reward.count;
     }
-
-    #region Prefs
-
-    /// 設定下次是否自動加入流程的索引
-    /// 0:加入
-    /// 1:不加入
-    private void SetEnableFlow(int value)
-    {
-        PlayerPrefs.SetInt("MonthEnableFlow", value);
-    }
-
-    /// 取得是否自動加入流程的索引
-    /// 0:加入
-    /// 1:不加入
-    private int GetEnableFlow()
-    {
-        return PlayerPrefs.GetInt("MonthEnableFlow", 0);
-    }
-
-    #endregion
 }

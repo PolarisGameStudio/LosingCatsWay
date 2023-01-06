@@ -24,10 +24,21 @@ public class TutorialSystem : MvcBehaviour
     [ReadOnly] public bool isTutorial;
     public int startTutorialEndPoint; // 新手教學結束點 // Director (4) 就寫 4
 
+    [Title("Debug")] [SerializeField] private bool skipTutorial;
+    
     public void Init()
     {
         for (int i = 0; i < directors.Count; i++)
             directors[i].gameObject.SetActive(false);
+
+        if (skipTutorial)
+            return;
+        
+        if (directorIndex < startTutorialEndPoint)
+        {
+            directorIndex = -1;
+            App.system.openFlow.AddAction(NextDirector);
+        }
     }
 
     private void SetDirector(int index)

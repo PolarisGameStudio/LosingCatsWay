@@ -13,6 +13,12 @@ public class ChoosePlayerGenderSystem : MvcBehaviour
 
     private int genderIndex = -1;
 
+    public void Init()
+    {
+        if (App.system.player.PlayerGender == -1)
+            App.system.openFlow.AddAction(Open);
+    }
+    
     [Button]
     public void Open()
     {

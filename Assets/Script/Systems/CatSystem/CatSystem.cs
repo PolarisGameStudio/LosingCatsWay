@@ -48,10 +48,8 @@ public class CatSystem : MvcBehaviour
             myCats[i].LoginCheckStatus();
 
         for (int i = myCats.Count - 1; i >= 0; i--)
-        {
             if (myCats[i].cloudCatData.CatServerData.IsDead)
-                myCats[i].Death();
-        }
+                SetDead(myCats[i]);
     }
 
     private void CheckCatStatus()
@@ -117,12 +115,17 @@ public class CatSystem : MvcBehaviour
     }
 
     /// 讓貓移動到墓地
-    public void SetDead(Cat cat)
+    private void SetDead(Cat cat)
     {
+        cat.Death();
         Remove(cat);
+
+        App.system.player.CatDeadCount += 1;
         deadCats.Insert(0, cat);
+        
         App.system.cloudSave.CreateCloudLosingCatData(cat.cloudCatData);
         App.system.cloudSave.DeleteCloudCatData(cat.cloudCatData);
+        
         OnCatDead?.Invoke();
     }
 

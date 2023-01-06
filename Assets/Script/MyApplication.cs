@@ -11,8 +11,6 @@ public class MyApplication : MonoBehaviour
     public FactoryContainer factory;
     public SystemContainer system;
 
-    [SerializeField] private bool skipTutorial;
-
     private bool canSave;
 
     private async void Start()
@@ -45,34 +43,20 @@ public class MyApplication : MonoBehaviour
         // 初始化系統
         controller.build.Init(); // 中心房要排序在myRooms的第0個
         system.cat.Init();
-        controller.dailyQuest.Init();
         controller.pedia.Init();
         
         await system.post.Init();
 
+        #region 啓動畫面順序
+        
+        system.choosePlayerGenderSystem.Init();
+        system.tutorial.Init();
         controller.events.Init();
         controller.monthSign.Init();
-        system.tutorial.Init();
-
-        // 啓動的流程順序(OpenFlow.Init)
-        if (system.tutorial.directorIndex < system.tutorial.startTutorialEndPoint && !skipTutorial)
-        {
-            if (system.player.PlayerGender == -1)
-                system.openFlow.AddAction(system.choosePlayerGenderSystem.Open);
-
-            system.tutorial.directorIndex = -1;
-            system.openFlow.AddAction(system.tutorial.NextDirector);
-
-            system.openFlow.AddAction(controller.events.Open);
-            system.openFlow.AddAction(controller.monthSign.Open);
-            system.openFlow.AddAction(controller.entrance.Open);
-        }
-        else
-        {
-            system.openFlow.AddAction(controller.events.Open);
-            system.openFlow.AddAction(controller.monthSign.Open);
-            system.openFlow.AddAction(controller.entrance.Open);
-        }
+        controller.entrance.Init();
+        controller.dailyQuest.Init();
+        
+        #endregion
 
         system.bgm.Init();
         system.soundEffect.Init();
@@ -117,6 +101,7 @@ public class MyApplication : MonoBehaviour
         player.PlayerGender = playerData.PlayerGender;
         player.UsingIcon = playerData.UsingIcon;
         player.UsingAvatar = playerData.UsingAvatar;
+        player.CatDeadCount = playerData.CatDeadCount;
 
         system.tutorial.directorIndex = playerData.TutorialIndex;
         system.grid.Init(); // 生成格子

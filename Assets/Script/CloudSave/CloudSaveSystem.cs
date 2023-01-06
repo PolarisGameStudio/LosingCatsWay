@@ -57,6 +57,7 @@ public class CloudSaveSystem : MvcBehaviour
         playerData.UsingIcon = App.system.player.UsingIcon;
         playerData.UsingAvatar = App.system.player.UsingAvatar;
         playerData.TutorialIndex = App.system.tutorial.directorIndex;
+        playerData.CatDeadCount = App.system.player.CatDeadCount;
 
         // CloudSave_FriendData
         CloudSave_FriendData friendData = new CloudSave_FriendData();
@@ -158,6 +159,7 @@ public class CloudSaveSystem : MvcBehaviour
         playerData.UsingIcon = string.Empty;
         playerData.UsingAvatar = "PAT001";
         playerData.TutorialIndex = App.system.tutorial.directorIndex;
+        playerData.CatDeadCount = 0;
 
         // CloudSave_FriendData
         CloudSave_FriendData friendData = new CloudSave_FriendData();
@@ -177,7 +179,7 @@ public class CloudSaveSystem : MvcBehaviour
         // CloudSave_SignData
         CloudSave_SignData signData = new CloudSave_SignData();
 
-        signData.MonthSigns = new List<int>();
+        signData.MonthSigns = new List<int>(new int[30]);
         signData.MonthResignCount = 0;
         signData.LastMonthSignDate = Timestamp.FromDateTime(DateTime.MinValue) ;
 
@@ -235,6 +237,10 @@ public class CloudSaveSystem : MvcBehaviour
         playerData.DiamondCatSlot = App.system.player.DiamondCatSlot;
         playerData.GridSizeLevel = App.system.player.GridSizeLevel;
         playerData.PlayerGender = App.system.player.PlayerGender;
+        playerData.UsingIcon = App.system.player.UsingIcon;
+        playerData.UsingAvatar = App.system.player.UsingAvatar;
+        playerData.TutorialIndex = App.system.tutorial.directorIndex;
+        playerData.CatDeadCount = App.system.player.CatDeadCount;
 
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
@@ -473,6 +479,13 @@ public class CloudSaveSystem : MvcBehaviour
             { "CatDiaryData", cloudLosingCatData.CatDiaryData }
         };
         await docRef.UpdateAsync(updates);
+    }
+
+    public async void DeleteLosingCatData(CloudLosingCatData cloudLosingCatData)
+    {
+        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+        var docRef = db.Collection("LosingCats").Document(cloudLosingCatData.CatData.CatId);
+        await docRef.DeleteAsync();
     }
 
     #endregion

@@ -8,19 +8,9 @@ public class MyEventEa : MyEvent
     
     public override void Open()
     {
-        print("EA");
     }
 
     public override void Init()
     {
-        // for (int i = 0; i < quests.Length; i++)
-        // {
-        //     Quest quest = quests[i];
-        //     
-        //     if (quest.IsReceived)
-        //         continue;
-        //     
-        //     
-        // }
     }
 }

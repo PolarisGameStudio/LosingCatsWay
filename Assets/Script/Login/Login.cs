@@ -109,7 +109,7 @@ public class Login : MonoBehaviour
         }
     }
 
-    public async void LoginByApple()
+    public void LoginByApple()
     {
         Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
         var rawNonce = GenerateRandomString(32);

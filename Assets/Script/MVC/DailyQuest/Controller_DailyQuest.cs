@@ -19,6 +19,8 @@ public class Controller_DailyQuest : ControllerBehavior
         App.system.myTime.OnFirstLogin += DrawQuests;
         App.system.myTime.OnAlreadyLogin += InitQuests;
         App.model.dailyQuest.TotalQuest = App.factory.questFactory.TotalDailyQuest;
+        
+        App.system.openFlow.AddAction(Open);
     }
 
     [Button]
@@ -93,6 +95,7 @@ public class Controller_DailyQuest : ControllerBehavior
         App.view.dailyQuest.Close();
         OnClose?.Invoke();
         OnClose = null;
+        App.system.openFlow.NextAction();
     }
 
     public void OpenCatGuide()
