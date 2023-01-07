@@ -784,7 +784,7 @@ public class Controller_Cultive : ControllerBehavior
         
         if (!isRecordSkin)
         {
-            var cat = App.model.information.SelectedCat;
+            var cat = App.model.cultive.SelectedCat;
             skinBeforePreview = cat.cloudCatData.CatSkinData.UseSkinId;
             isRecordSkin = true;
         }
