@@ -189,12 +189,12 @@ public class Cat : MvcBehaviour
 
     private void WaitMoveEnd()
     {
-        print("正在走");
+        // print("正在走");
 
         if (directionChecker.CheckIsMoving())
             return;
 
-        print("走到");
+        // print("走到");
 
         if (specialSpineRoom == null) // 房間爆掉
         {

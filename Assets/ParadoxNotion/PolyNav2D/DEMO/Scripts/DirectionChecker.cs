@@ -61,7 +61,6 @@ public class DirectionChecker : MonoBehaviour
 
     public void TurnRight()
     {
-        print("測試");
         if ( doFlip ) {
             var scale = transform.localScale;
             scale.x = originalScaleX;

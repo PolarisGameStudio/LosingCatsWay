@@ -56,6 +56,8 @@ public class SystemContainer : MvcBehaviour
     public TransitionsSystem transition;
     public TutorialSystem tutorial;
 
+    public WaitingSystem waiting;
+    
     [FormerlySerializedAs("useItem")] public UnlockGridSystem unlockGrid;
     
     [Title("Save")]

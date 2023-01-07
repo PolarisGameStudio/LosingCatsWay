@@ -18,6 +18,10 @@ public class MallContainer : ViewBehaviour
             scrollBar.value = 0;
     }
 
+    public void Purchase()
+    {
+    }
+
     public virtual void Refresh()
     {
     }
