@@ -207,7 +207,7 @@ public class Cat : MvcBehaviour
         
         directionChecker.TurnLeft();
         directionChecker.Stop();
-
+        
         int roomIndex = Convert.ToInt32(specialSpineRoom.roomData.id.Split("IRM")[1]);
         anim.SetInteger(CatAnimTable.SpcialSpineRoomId.ToString(), roomIndex);
         anim.Play("SpecialSpine");

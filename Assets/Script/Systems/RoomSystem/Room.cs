@@ -33,6 +33,11 @@ public class Room : MvcBehaviour
     [ShowIf("@hasSpcialSpine && spcialSpineType != 0")]
     public SkeletonAnimation[] specialSpines;
 
+    [ShowIf("@hasSpcialSpine")]
+    public SpriteRenderer[] specialSpineSpriteObjects;
+    
+    [ShowIf("@hasSpcialSpine")]
+    public MeshRenderer[] specialSpineMeshObjects;
     #region GetSet
 
     public string Name
@@ -114,9 +119,14 @@ public class Room : MvcBehaviour
                     specialSpines[i].timeScale = 1;
                     specialSpines[i].state.Complete += OnSpecialSpineEnd;
                 }
-
                 break;
         }
+
+        for (int i = 0; i < specialSpineSpriteObjects.Length; i++)
+            specialSpineSpriteObjects[i].sortingOrder = -2;
+        
+        for (int i = 0; i < specialSpineMeshObjects.Length; i++)
+            specialSpineMeshObjects[i].sortingOrder = -2;
     }
 
     private void OnSpecialSpineEnd(TrackEntry trackEntry)
@@ -133,6 +143,12 @@ public class Room : MvcBehaviour
                 specialSpines[i].state.SetAnimation(0, skeletonAnimationName, false);
                 specialSpines[i].timeScale = 0;
             }
+            
+            for (int i = 0; i < specialSpineSpriteObjects.Length; i++)
+                specialSpineSpriteObjects[i].sortingOrder = 0;
+            
+            for (int i = 0; i < specialSpineMeshObjects.Length; i++)
+                specialSpineMeshObjects[i].sortingOrder = 0;
         }
     }
 
