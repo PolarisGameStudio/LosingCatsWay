@@ -4,5 +4,4 @@ using UnityEngine;
 
 public class MallContainer_Diamond : MallContainer
 {
-   
 }
