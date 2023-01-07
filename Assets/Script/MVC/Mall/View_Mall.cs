@@ -153,9 +153,4 @@ public class View_Mall : ViewBehaviour
     {
         ruleView.InstantHide();
     }
-
-    public void OnPurchaseComplete(Product product)
-    {
-        print("T");
-    }
 }

@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class MallContainer_VIP : MallContainer
 {
-    
+    public override void Refresh()
+    {
+    }
 }

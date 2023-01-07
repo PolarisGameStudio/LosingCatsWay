@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class MallContainer_Cats : MallContainer
 {
-    public void BuyByDiamond()
+    public override void Refresh()
     {
-        
     }
 
-    public void BuyByItem()
+    public void BuyCat_Diamond()
     {
-        
+    }
+
+    public void BuyCat_Bottle()
+    {
     }
 }
