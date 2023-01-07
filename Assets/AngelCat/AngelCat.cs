@@ -14,7 +14,6 @@ public class AngelCat : MvcBehaviour
     void Start()
     {
         polyNavAgent = GetComponent<PolyNavAgent>();
-        
         SetAngelRing();
     }
 
