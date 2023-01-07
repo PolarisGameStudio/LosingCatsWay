@@ -42,6 +42,7 @@ public class PlayerRenameSystem : MvcBehaviour
         uIView.Show();
         IsFreeRename = false;
         CanCancel = true;
+        inputField.text = App.system.player.PlayerName;
     }
 
     public void Close()
@@ -72,12 +73,12 @@ public class PlayerRenameSystem : MvcBehaviour
             return;
         }
 
+        Close();
         App.system.confirm.Active(ConfirmTable.RenameConfirm, () => 
         {
             App.system.player.PlayerName = inputField.text;
             if (!IsFreeRename) App.system.player.Diamond -= 2000;
-            uIView.Hide();
             OnRenameComplete?.Invoke();
-        });
+        }, uIView.Show);
     }
 }

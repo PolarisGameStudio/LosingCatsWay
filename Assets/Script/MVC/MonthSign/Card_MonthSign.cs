@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,10 @@ public class Card_MonthSign : MvcBehaviour
     [SerializeField] private TextMeshProUGUI countText;
     [SerializeField] private Image icon;
     [SerializeField] private Transform getIconTransform;
+    [SerializeField] private GameObject doubleBg;
+
+    [Title("Color")] [SerializeField] private Color32 normalTextColor;
+    [SerializeField] private Color32 doubleTextColor;
 
     bool isSign;
 
@@ -27,12 +32,18 @@ public class Card_MonthSign : MvcBehaviour
         if (reward == null) return;
 
         icon.sprite = reward.item.icon;
-        countText.text = $"X{reward.count:00}";
+        countText.text = reward.count.ToString("00");
     }
 
     public void SetActive(bool active)
     {
         gameObject.SetActive(active);
+    }
+
+    public void SetDouble(bool value)
+    {
+        doubleBg.SetActive(value);
+        countText.color = value ? doubleTextColor : normalTextColor;
     }
 
     public bool IsSign

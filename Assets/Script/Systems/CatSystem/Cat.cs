@@ -610,8 +610,8 @@ public class Cat : MvcBehaviour
             App.factory.itemFactory.GetItem(cloudCatData.CatSkinData.UseSkinId).Count += 1;
 
         cloudCatData.CatData.DeathTime = Timestamp.GetCurrentTimestamp();
-        cloudCatData.CatDiaryData.FlowerExpiredTimestamp =
-            Timestamp.FromDateTime(App.system.myTime.MyTimeNow.AddDays(7));
+        // cloudCatData.CatDiaryData.FlowerExpiredTimestamp =
+        //     Timestamp.FromDateTime(App.system.myTime.MyTimeNow.AddDays(7));
         cloudCatData.CatDiaryData.DiaryDatas = App.factory.diaryFactory.GetDiaryDatas(cloudCatData);
     }
 

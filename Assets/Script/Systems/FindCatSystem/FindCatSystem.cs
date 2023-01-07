@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Doozy.Runtime.UIManager.Containers;
 using DG.Tweening;
+using Firebase.Firestore;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine.UI;
@@ -30,7 +31,11 @@ public class FindCatSystem : MvcBehaviour
         if (App.system.tutorial.isTutorial)
         {
             DebugTool_Cat debugToolCat = new DebugTool_Cat();
-            cloudCatData = await debugToolCat.GetCreateCat($"Location{mapIndex}", true);
+            cloudCatData = debugToolCat.GetCreateCat($"Location{mapIndex}", true);
+            
+            FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+            DocumentReference docRef = db.Collection("Cats").Document(cloudCatData.CatData.CatId);
+            await docRef.SetAsync(cloudCatData);
         }
         else
         {

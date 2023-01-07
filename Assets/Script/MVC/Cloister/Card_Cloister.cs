@@ -38,12 +38,13 @@ public class Card_Cloister : MvcBehaviour
     [Title("Select")] [SerializeField] private GameObject selectObject;
 
     private DateTime expiredDate;
+    private CloudLosingCatData _losingCatData;
     
     #endregion
 
     public void SetData(CloudLosingCatData losingCatData)
     {
-        expiredDate = losingCatData.CatDiaryData.FlowerExpiredTimestamp.ToDateTime().ToLocalTime();
+        expiredDate = losingCatData.ExpiredTimestamp.ToDateTime().ToLocalTime();
         
         //CatSkin
         catSkin.ChangeSkin(losingCatData);
@@ -53,19 +54,27 @@ public class Card_Cloister : MvcBehaviour
         genderImage.sprite = App.factory.catFactory.GetCatSexSpriteEW(losingCatData.CatData.Sex);
         
         //Timer
-        if (losingCatData.CatDiaryData.UsedFlower)
+        if (losingCatData.LosingCatStatus is "Flower" or "Angle")
             CancelInvoke(nameof(CountDown));
         else
             InvokeRepeating(nameof(CountDown), 1f, 1f);
         
         //Used
-        bool usedFlower = losingCatData.CatDiaryData.UsedFlower;
+        bool usedFlower = losingCatData.LosingCatStatus == "Flower";
         usedIcon.SetActive(usedFlower);
         usedText.SetActive(usedFlower);
+
+        _losingCatData = losingCatData;
     }
 
     private void CountDown()
     {
+        if (_losingCatData.LosingCatStatus is "Flower" or "Angle")
+        {
+            CancelInvoke(nameof(CountDown));
+            return;
+        }
+        
         DateTime now = App.system.myTime.MyTimeNow;
         int days = (expiredDate - now).Days;
         int hours = (expiredDate - now).Hours;

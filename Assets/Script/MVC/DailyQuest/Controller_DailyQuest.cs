@@ -16,11 +16,11 @@ public class Controller_DailyQuest : ControllerBehavior
 
     public void Init()
     {
+        App.system.openFlow.AddAction(Open);
+        
         App.system.myTime.OnFirstLogin += DrawQuests;
         App.system.myTime.OnAlreadyLogin += InitQuests;
         App.model.dailyQuest.TotalQuest = App.factory.questFactory.TotalDailyQuest;
-        
-        App.system.openFlow.AddAction(Open);
     }
 
     [Button]

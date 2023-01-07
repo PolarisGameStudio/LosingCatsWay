@@ -53,14 +53,15 @@ public class MyApplication : MonoBehaviour
         system.tutorial.Init();
         controller.events.Init();
         controller.monthSign.Init();
+        controller.dailyQuest.Init(); //todo 把迴廊改成進入條件式，如果是OpenFlow呼叫就日記返回不打開迴廊，並且OnClose加入NextAction，移除Entrance原本的NextAction
         controller.entrance.Init();
-        controller.dailyQuest.Init();
         
         #endregion
-
+         
+        system.mailFromDev.Init();
+        
         system.bgm.Init();
         system.soundEffect.Init();
-        // system.quest.Init();
 
         controller.settings.Init(); //BGM SE 之後
         
@@ -96,6 +97,7 @@ public class MyApplication : MonoBehaviour
         player.Exp = playerData.Exp;
         player.Coin = playerData.Coin;
         player.Diamond = playerData.Diamond;
+        player.CatMemory = playerData.CatMemory;
         player.DiamondCatSlot = playerData.DiamondCatSlot;
         player.GridSizeLevel = playerData.GridSizeLevel;
         player.PlayerGender = playerData.PlayerGender;

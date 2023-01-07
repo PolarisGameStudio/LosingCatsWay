@@ -3,20 +3,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Unity.Mathematics;
+using Firebase.Firestore;
 using UnityEngine;
 
 public class Controller_MonthSign : ControllerBehavior
 {
-    [SerializeField] private MonthSignRewardData[] monthSignRewardDatas; //12個月的獎勵資料
     public Transform FrontTransform; // 圖層解決
 
-    public void Init()
+    public async void Init()
     {
         int day = App.system.myTime.MyTimeNow.Day;
-        if (App.model.monthSign.SignIndexs[day - 1] == 1)
-            return;
-        App.system.openFlow.AddAction(Open);
+        if (App.model.monthSign.SignIndexs[day - 1] == 0)
+            App.system.openFlow.AddAction(Open);
+        
+        App.model.monthSign.MonthRewards = await LoadMonthRewardData(App.system.myTime.MyTimeNow.Month);
     }
 
     public void Open()
@@ -47,7 +47,6 @@ public class Controller_MonthSign : ControllerBehavior
             List<int> signs = App.model.monthSign.SignIndexs;
             App.model.monthSign.SignIndexs = signs;
             App.model.monthSign.Month = App.system.myTime.MyTimeNow.Month;
-            App.model.monthSign.SelectedMonthSignRewardData = monthSignRewardDatas[App.system.myTime.MyTimeNow.Month - 1];
         }
     }
 
@@ -57,7 +56,7 @@ public class Controller_MonthSign : ControllerBehavior
         int day = App.system.myTime.MyTimeNow.Day;
         var signIndexs = App.model.monthSign.SignIndexs;
 
-        ReceiveReward(App.system.myTime.MyTimeNow.Month, day);
+        ReceiveReward(day);
 
         signIndexs[day - 1] = 1;
         App.model.monthSign.SignIndexs = signIndexs;
@@ -77,7 +76,7 @@ public class Controller_MonthSign : ControllerBehavior
             if (i == App.system.myTime.MyTimeNow.Day - 1) break; //不超過今天
             if (signs[i] == 1) continue; //簽到了
 
-            ReceiveReward(App.system.myTime.MyTimeNow.Month, i + 1);
+            ReceiveReward(i + 1);
             signs[i] = 1;
             App.model.monthSign.ResignCount--;
             break;
@@ -92,40 +91,51 @@ public class Controller_MonthSign : ControllerBehavior
         List<int> signs = new List<int>();
 
         for (int i = 0; i < days; i++)
-        {
             signs.Add(0);
-        }
 
         App.model.monthSign.SignIndexs = signs;
         App.model.monthSign.Month = month;
-        App.model.monthSign.SelectedMonthSignRewardData = monthSignRewardDatas[App.system.myTime.MyTimeNow.Month - 1];
         App.model.monthSign.ResignCount = 7; //重設補簽次數
     }
 
-    private void ReceiveReward(int month, int day)
+    private void ReceiveReward(int day)
     {
-        var data = monthSignRewardDatas[month - 1];
-        var reward = data.GetReward(day);
-
-        if (reward.item.itemType == ItemType.Coin) //貓掌幣加
-        {
-            App.system.player.Coin += reward.count;
-            return;
-        }
-
-        if (reward.item.itemType == ItemType.Diamond) //鑽石加
-        {
-            App.system.player.Diamond += reward.count;
-            return;
-        }
-
-        if (reward.item.itemType == ItemType.Room) //房間加
-        {
-            App.system.inventory.RoomData[reward.item.id] += reward.count;
-            return;
-        }
-
-        //這邊是可以直接加Count的東西
-        reward.item.Count += reward.count;
+        var rewards = new List<Reward>();
+        var reward = App.model.monthSign.MonthRewards[day - 1];
+        rewards.Add(reward);
+        App.system.reward.Open(rewards.ToArray());
     }
+
+    private async Task<List<Reward>> LoadMonthRewardData(int month)
+    {
+        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+        var colRef = db.Collection("MonthRewards");
+        var docRef = await colRef.Document(month.ToString()).GetSnapshotAsync();
+        var data = docRef.ConvertTo<MonthRewardData>();
+
+        List<Reward> tmp = new List<Reward>();
+        var rewards = data.Rewards;
+        for (int i = 0; i < rewards.Count; i++)
+        {
+            Reward reward = new Reward();
+            reward.item = App.factory.itemFactory.GetItem(rewards[i].Id);
+            reward.count = rewards[i].Count;
+            tmp.Add(reward);
+        }
+
+        return tmp;
+    }
+}
+
+[FirestoreData]
+public class MonthRewardData
+{
+    [FirestoreProperty] public List<MonthReward> Rewards { get; set; }
+}
+
+[FirestoreData]
+public class MonthReward
+{
+    [FirestoreProperty] public string Id { get; set; }
+    [FirestoreProperty] public int Count { get; set; }
 }

@@ -112,8 +112,6 @@ public class Cat_Entrance : MvcBehaviour
         bubbleObject.SetActive(false);
         clickButton.SetActive(false);
         
-        catSkin.SetDeathQuilt(true);
-
         //先抓動畫
         Spine.Animation anim = catSkin.skeletonGraphic.SkeletonData.FindAnimation("Situation_Cat/Die");
         //播放動畫

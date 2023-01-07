@@ -9,10 +9,9 @@ public class Controller_Events : ControllerBehavior
 
     public void Init()
     {
+        App.system.openFlow.AddAction(Open);
         for (int i = 0; i < myEvents.Length; i++)
             myEvents[i].Init();
-        
-        App.system.openFlow.AddAction(Open);
     }
 
     [HorizontalGroup("Split", 0.5f)]

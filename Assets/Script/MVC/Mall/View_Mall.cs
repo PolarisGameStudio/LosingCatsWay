@@ -14,6 +14,7 @@ public class View_Mall : ViewBehaviour
     [Title("Top")] 
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI diamondText;
+    public TextMeshProUGUI catMemoryText;
 
     [Title("Sections")] public Transform selectedBlock;
     public Transform[] sections;
@@ -45,6 +46,7 @@ public class View_Mall : ViewBehaviour
 
         App.system.player.OnCoinChange += OnCoinChange;
         App.system.player.OnDiamondChange += OnDiamondChange;
+        App.system.player.OnCatMemoryChange += OnCatMemoryChange;
     }
 
     public void OpenPreviewPackageView()
@@ -98,6 +100,12 @@ public class View_Mall : ViewBehaviour
     {
         int diamond = (int)value;
         diamondText.text = diamond.ToString();
+    }
+
+    private void OnCatMemoryChange(object value)
+    {
+        int catMemory = (int)value;
+        catMemoryText.text = catMemory.ToString();
     }
 
     private void OnRuleIndexChange(object value)

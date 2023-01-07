@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class Model_MonthSign : ModelBehavior
 {
-    private List<int> signIndexs = new List<int>();
+    private List<int> signIndexs;
     private int month;
     private DateTime lastMonthSignDate;
-    private MonthSignRewardData selectedMonthSignRewardData;
     private int resignCount;
+    private List<Reward> monthRewards;
 
     public List<int> SignIndexs
     {
@@ -34,20 +34,7 @@ public class Model_MonthSign : ModelBehavior
     public DateTime LastMonthSignDate
     {
         get => lastMonthSignDate;
-        set
-        {
-            lastMonthSignDate = value;
-        }
-    }
-
-    public MonthSignRewardData SelectedMonthSignRewardData
-    {
-        get => selectedMonthSignRewardData;
-        set
-        {
-            selectedMonthSignRewardData = value;
-            OnSelectedMonthSignRewardDataChange(value);
-        }
+        set => lastMonthSignDate = value;
     }
 
     public int ResignCount
@@ -60,8 +47,18 @@ public class Model_MonthSign : ModelBehavior
         }
     }
 
+    public List<Reward> MonthRewards
+    {
+        get => monthRewards;
+        set
+        {
+            monthRewards = value;
+            OnMonthRewardsChange?.Invoke(value);
+        }
+    }
+
     public ValueChange OnSignIndexsChange;
     public ValueChange OnMonthChange;
-    public ValueChange OnSelectedMonthSignRewardDataChange;
     public ValueChange OnResignCountChange;
+    public ValueChange OnMonthRewardsChange;
 }

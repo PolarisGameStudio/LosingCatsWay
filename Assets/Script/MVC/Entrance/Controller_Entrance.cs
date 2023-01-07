@@ -41,10 +41,12 @@ public class Controller_Entrance : ControllerBehavior
     {
         App.model.entrance.SelectedDiaryIndex = 0;
         
+        // 這裡只要這次死的貓 不要之前的
         var deadCats = App.system.cat.MyDeadCats();
         List<CloudLosingCatData> tmpDatas = new List<CloudLosingCatData>();
         for (int i = 0; i < deadCats.Count; i++)
             tmpDatas.Add(CatExtension.CreateCloudLosingCatData(deadCats[i].cloudCatData));
+        
         App.model.entrance.LosingCatDatas = tmpDatas;
         
         leftObject.SetActive(App.model.entrance.LosingCatDatas.Count > 1);

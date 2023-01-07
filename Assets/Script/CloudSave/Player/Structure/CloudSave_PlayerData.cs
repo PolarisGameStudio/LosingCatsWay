@@ -12,6 +12,7 @@ public class CloudSave_PlayerData
     [FirestoreProperty] public int Exp { get; set; }
     [FirestoreProperty] public int Coin { get; set; }
     [FirestoreProperty] public int Diamond { get; set; }
+    [FirestoreProperty] public int CatMemory { get; set; }
     [FirestoreProperty] public int DiamondCatSlot { get; set; }
     [FirestoreProperty] public int GridSizeLevel { get; set; }
     [FirestoreProperty] public int PlayerGender { get; set; }

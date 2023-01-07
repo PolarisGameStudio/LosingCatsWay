@@ -32,6 +32,7 @@ public class SystemContainer : MvcBehaviour
     public InventorySystem inventory;
     
     public MailSystem mail;
+    public MailFromDevSystem mailFromDev;
     public MapSystem map;
     public MyTimeSystem myTime;
 

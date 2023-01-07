@@ -49,8 +49,6 @@ public class CatSkin : MvcBehaviour
     
     // private string slot_faceSinisterSmile = "Face_Sinister Smile";
 
-    private string slot_DeathQuilt = "Death_Quilt";
-
     #endregion
 
     #region Key
@@ -619,13 +617,5 @@ public class CatSkin : MvcBehaviour
             catSkeleton = skeletonMecanim.Skeleton;
         
         return catSkeleton;
-    }
-    
-    public void SetDeathQuilt(bool value)
-    {
-        if (value)
-            GetCatSkeleton().SetAttachment(slot_DeathQuilt, slot_DeathQuilt);
-        else
-            GetCatSkeleton().SetAttachment(slot_DeathQuilt, null);
     }
 }

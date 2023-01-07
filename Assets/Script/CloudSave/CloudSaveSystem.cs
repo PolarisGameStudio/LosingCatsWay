@@ -51,6 +51,7 @@ public class CloudSaveSystem : MvcBehaviour
         playerData.Exp = App.system.player.Exp;
         playerData.Coin = App.system.player.Coin;
         playerData.Diamond = App.system.player.Diamond;
+        playerData.CatMemory = App.system.player.CatMemory;
         playerData.DiamondCatSlot = App.system.player.DiamondCatSlot;
         playerData.GridSizeLevel = App.system.player.GridSizeLevel;
         playerData.PlayerGender = App.system.player.PlayerGender;
@@ -153,6 +154,7 @@ public class CloudSaveSystem : MvcBehaviour
         playerData.Exp = 0;
         playerData.Coin = 1000;
         playerData.Diamond = 0;
+        playerData.CatMemory = 0;
         playerData.DiamondCatSlot = 0;
         playerData.GridSizeLevel = 1;
         playerData.PlayerGender = -1;
@@ -179,7 +181,7 @@ public class CloudSaveSystem : MvcBehaviour
         // CloudSave_SignData
         CloudSave_SignData signData = new CloudSave_SignData();
 
-        signData.MonthSigns = new List<int>(new int[30]);
+        signData.MonthSigns = new List<int>(new int[31]);
         signData.MonthResignCount = 0;
         signData.LastMonthSignDate = Timestamp.FromDateTime(DateTime.MinValue) ;
 
@@ -234,6 +236,7 @@ public class CloudSaveSystem : MvcBehaviour
         playerData.Exp = App.system.player.Exp;
         playerData.Coin = App.system.player.Coin;
         playerData.Diamond = App.system.player.Diamond;
+        playerData.CatMemory = App.system.player.CatMemory;
         playerData.DiamondCatSlot = App.system.player.DiamondCatSlot;
         playerData.GridSizeLevel = App.system.player.GridSizeLevel;
         playerData.PlayerGender = App.system.player.PlayerGender;
@@ -450,6 +453,11 @@ public class CloudSaveSystem : MvcBehaviour
         losingCatData.CatData = cloudCatData.CatData;
         losingCatData.CatSkinData = cloudCatData.CatSkinData;
         losingCatData.CatDiaryData = cloudCatData.CatDiaryData;
+        
+        var losingCats = await App.system.cloudSave.LoadCloudLosingCatDatas(App.system.player.PlayerId);
+        losingCatData.LosingCatStatus = losingCats.Count <= 0 ? string.Empty : "First";
+        
+        losingCatData.ExpiredTimestamp = Timestamp.FromDateTime(App.system.myTime.MyTimeNow.AddDays(7));
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         var losingCatRef = db.Collection("LosingCats").Document(losingCatData.CatData.CatId);
         await losingCatRef.SetAsync(losingCatData);

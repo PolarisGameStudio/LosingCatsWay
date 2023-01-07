@@ -9,7 +9,8 @@ using Firebase.Auth;
 
 public class DebugTool_Cat
 {
-    public async Task<CloudCatData> GetCreateCat(string owner, bool isAdult)
+    /// No save
+    public CloudCatData GetCreateCat(string owner, bool isAdult)
     {
         CloudCatData cloudCatData = new CloudCatData();
 
@@ -31,7 +32,6 @@ public class DebugTool_Cat
         else
             catData.BornTime = Timestamp.GetCurrentTimestamp();
 
-        
         catData.ChipId = String.Empty;
 
         CloudSave_CatSkinData catSkinData = new CloudSave_CatSkinData();
@@ -74,8 +74,6 @@ public class DebugTool_Cat
         catDiaryData.DiaryLitterScore = 0;
         catDiaryData.DiaryMoistureScore = 0;
         catDiaryData.DiaryFavourbilityScore = 0;
-        catDiaryData.UsedFlower = false;
-        catDiaryData.FlowerExpiredTimestamp = new Timestamp();
 
         CloudSave_CatServerData catServerData = new CloudSave_CatServerData();
         catServerData.IsDead = false;
@@ -87,9 +85,6 @@ public class DebugTool_Cat
         cloudCatData.CatDiaryData = catDiaryData;
         cloudCatData.CatServerData = catServerData;
 
-        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        DocumentReference docRef = db.Collection("Cats").Document(catData.CatId);
-        await docRef.SetAsync(cloudCatData);
         return cloudCatData;
     }
     
@@ -115,7 +110,6 @@ public class DebugTool_Cat
         else
             catData.BornTime = Timestamp.GetCurrentTimestamp();
 
-        
         catData.ChipId = String.Empty;
 
         CloudSave_CatSkinData catSkinData = new CloudSave_CatSkinData();
@@ -158,8 +152,6 @@ public class DebugTool_Cat
         catDiaryData.DiaryLitterScore = 0;
         catDiaryData.DiaryMoistureScore = 0;
         catDiaryData.DiaryFavourbilityScore = 0;
-        catDiaryData.UsedFlower = false;
-        catDiaryData.FlowerExpiredTimestamp = new Timestamp();
 
         CloudSave_CatServerData catServerData = new CloudSave_CatServerData();
         catServerData.IsDead = false;

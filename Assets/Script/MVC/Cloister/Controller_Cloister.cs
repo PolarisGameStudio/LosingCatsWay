@@ -16,8 +16,10 @@ public class Controller_Cloister : ControllerBehavior
             if (losingCats[i].IsExpired)
             {
                 var tmp = losingCats[i];
-                App.system.cloudSave.DeleteLosingCatData(tmp);
                 losingCats.RemoveAt(i);
+                
+                if (tmp.LosingCatStatus != "First") //不是第一隻才刪掉
+                    App.system.cloudSave.DeleteLosingCatData(tmp);
             }
         }
         
@@ -72,7 +74,6 @@ public class Controller_Cloister : ControllerBehavior
         if (index == 0)
         {
             catFlowerObject.SetActive(false);
-            OpenZeroPointFiveLetter();
             App.model.cloister.SelectedIndex = 0;
             return;
         }
@@ -89,10 +90,11 @@ public class Controller_Cloister : ControllerBehavior
         index -= 1; //傳入的是卡片所在順序，所以減掉0.5的順位
 
         var datas = App.model.cloister.LosingCatDatas;
-        var dataToRemove = datas[index];
+        var data = datas[index];
+
         datas.RemoveAt(index);
         
-        App.system.cloudSave.DeleteLosingCatData(dataToRemove);
+        App.system.cloudSave.DeleteLosingCatData(data);
         App.model.cloister.LosingCatDatas = datas;
         
         Select(0);
@@ -101,7 +103,7 @@ public class Controller_Cloister : ControllerBehavior
     public void UseFlower()
     {
         var data = App.model.cloister.SelectedLosingCatData;
-        if (data.CatDiaryData.UsedFlower)
+        if (data.LosingCatStatus == "Flower")
         {
             App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
             return;
@@ -117,7 +119,7 @@ public class Controller_Cloister : ControllerBehavior
         App.system.confirm.Active(ConfirmTable.RefreshConfirm, () =>
         {
             item.Count -= 1;
-            data.CatDiaryData.UsedFlower = true;
+            data.LosingCatStatus = "Flower";
             App.system.cloudSave.UpdateLosingCatDiaryData(data);
             
             //ValueChange
@@ -127,9 +129,9 @@ public class Controller_Cloister : ControllerBehavior
         });
     }
 
-    private void OpenZeroPointFiveLetter()
+    public void OpenMailFromDev()
     {
-        //
+        App.system.mailFromDev.Open();
     }
     
     #endregion

@@ -24,6 +24,9 @@ public class View_ShopBuy : ViewBehaviour
     [SerializeField] private Image priceIcon;
     [SerializeField] private TextMeshProUGUI totalPriceText;
 
+    [Title("Nav")] [SerializeField] private TextMeshProUGUI coinText;
+    [SerializeField] private TextMeshProUGUI diamondText;
+
     public override void Open()
     {
         base.Open();
@@ -36,6 +39,21 @@ public class View_ShopBuy : ViewBehaviour
         App.model.shop.OnBuyCountChange += OnBuyCountChange;
         App.model.shop.OnTotalAmountChange += OnTotalAmountChange;
         App.model.shop.OnSelectedItemChange += OnSelectedItemChange;
+        
+        App.system.player.OnCoinChange += OnCoinChange;
+        App.system.player.OnDiamondChange += OnDiamondChange;
+    }
+
+    private void OnDiamondChange(object value)
+    {
+        int diamond = (int)value;
+        diamondText.text = diamond.ToString();
+    }
+
+    private void OnCoinChange(object value)
+    {
+        int coin = (int)value;
+        coinText.text = coin.ToString();
     }
 
     private void OnSelectedItemChange(object value)

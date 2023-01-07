@@ -77,10 +77,10 @@ public class View_Cloister : ViewBehaviour
         var data = (CloudLosingCatData)value;
 
         catFlower.ChangeSkin(data);
-        catFlower.DoAnimation(data.CatDiaryData.UsedFlower);
+        catFlower.DoAnimation(data.LosingCatStatus == "Flower");
         catFlower.gameObject.SetActive(true);
 
-        useFlowerMask.SetActive(data.CatDiaryData.UsedFlower);
+        useFlowerMask.SetActive(data.LosingCatStatus == "Flower");
     }
     
     private void OnLosingCatDatasChange(object value)

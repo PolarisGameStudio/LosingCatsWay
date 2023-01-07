@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
+using I2.Parallax;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,6 +29,11 @@ public class View_Shop : ViewBehaviour
     [Title("Spine")] 
     public GameObject npc;
 
+    [Title("MoneyBar")] [SerializeField] private Transform shopMoneyBar;
+    [SerializeField] private Transform shopBuyMoneyBar;
+
+    [Title("Gyro")] [SerializeField] private I2Parallax_Layer[] ParallaxLayers;
+
     private List<Card_ShopItem> itemPool = new List<Card_ShopItem>();
     private List<GameObject> layerPool = new List<GameObject>();
 
@@ -44,6 +51,8 @@ public class View_Shop : ViewBehaviour
         base.Open();
         npc.SetActive(true);
         itemsScrollBar.value = 1;
+
+        SetParallex(true);
     }
 
     public override void Close()
@@ -59,16 +68,24 @@ public class View_Shop : ViewBehaviour
         
         itemPool.Clear();
         layerPool.Clear();
+
+        SetParallex(false);
     }
 
     public void OpenShopBuy()
     {
         shopBuy.Open();
+        shopMoneyBar.DOScale(Vector2.zero, 0.25f).SetEase(Ease.InBack);
+        shopBuyMoneyBar.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.2f);
+        SetParallex(false);
     }
 
     public void CloseShopBuy()
     {
         shopBuy.Close();
+        shopBuyMoneyBar.DOScale(Vector2.zero, 0.25f).SetEase(Ease.InBack);
+        shopMoneyBar.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack);
+        SetParallex(true);
     }
 
     private void OnSelectedTypeChange(object value)
@@ -162,5 +179,14 @@ public class View_Shop : ViewBehaviour
     {
         int diamond = Convert.ToInt32(value);
         diamondText.text = diamond.ToString();
+    }
+
+    private void SetParallex(bool value)
+    {
+        for (int i = 0; i < ParallaxLayers.Length; i++)
+        {
+            ParallaxLayers[i].UpdateLayer(Vector2.zero);
+            ParallaxLayers[i].enabled = value;
+        }
     }
 }

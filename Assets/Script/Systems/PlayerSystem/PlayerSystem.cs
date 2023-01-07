@@ -32,6 +32,10 @@ public class PlayerSystem : MvcBehaviour
     public ValueChange OnDiamondChange;
     public ValueChange OnAddDiamondChange;
     public ValueChange OnReduceDiamondChange;
+
+    public ValueChange OnCatMemoryChange;
+    public ValueChange OnAddCatMemoryChange;
+    public ValueChange OnReduceCatMemoryChange;
     
     public ValueChange OnCatSlotChange;
     public ValueChange OnPlayerGenderChange;
@@ -49,15 +53,22 @@ public class PlayerSystem : MvcBehaviour
 
     private string playerId;
     private string playerName;
+    
     private int level;
     private int exp;
+    
     private int diamond;
     private int coin;
+    private int catMemory;
+    
     private int diamondCatSlot;
     private int gridSizeLevel;
+    
     private int playerGender = -1; //0:Male 1:Female
+    
     private string usingIcon;
     private string usingAvatar;
+    
     private int catDeadCount;
 
     #endregion
@@ -126,6 +137,16 @@ public class PlayerSystem : MvcBehaviour
         {
             diamond = value;
             OnDiamondChange?.Invoke(value);
+        }
+    }
+
+    public int CatMemory
+    {
+        get => catMemory;
+        set
+        {
+            catMemory = value;
+            OnCatMemoryChange?.Invoke(value);
         }
     }
 
@@ -281,6 +302,22 @@ public class PlayerSystem : MvcBehaviour
 
         diamond -= value;
         OnReduceDiamondChange?.Invoke(value);
+        return true;
+    }
+
+    public void AddCatMemory(int value)
+    {
+        catMemory += value;
+        OnAddCatMemoryChange?.Invoke(value);
+    }
+
+    public bool ReduceCatMemory(int value)
+    {
+        if (catMemory - value < 0)
+            return false;
+
+        catMemory -= value;
+        OnReduceCatMemoryChange?.Invoke(value);
         return true;
     }
 

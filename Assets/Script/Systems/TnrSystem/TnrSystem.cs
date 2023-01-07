@@ -204,7 +204,7 @@ public class TnrSystem : MvcBehaviour
     private void DoLigationComplete(TrackEntry trackentry)
     {
         trackentry.Complete -= DoLigationComplete;
-        catGraphic.AnimationState.SetAnimation(0, "AI_Main/IDLE_Ordinary01", true);
+        catGraphic.AnimationState.SetAnimation(0, "AI_Main/Sleep_01", true);
         Open();
         functionGraphic.gameObject.SetActive(false);
     }

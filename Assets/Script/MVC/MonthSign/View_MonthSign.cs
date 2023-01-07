@@ -20,17 +20,32 @@ public class View_MonthSign : ViewBehaviour
     public override void Init()
     {
         base.Init();
+        
+        RefreshDateObject();
+        
         App.model.monthSign.OnSignIndexsChange += OnSignIndexsChange;
         App.model.monthSign.OnMonthChange += OnMonthChange;
-        App.model.monthSign.OnSelectedMonthSignRewardDataChange += OnSelectedMonthSignRewardDataChange;
         App.model.monthSign.OnResignCountChange += OnResignCountChange;
+        App.model.monthSign.OnMonthRewardsChange += OnMonthRewardsChange;
+    }
+
+    private void OnMonthRewardsChange(object value)
+    {
+        List<Reward> rewards = (List<Reward>)value;
+        for (int i = 0; i < rewards.Count; i++)
+        {
+            if (i >= dateObjects.Length)
+                break;
+            dateObjects[i].SetReward(rewards[i]);
+        }
     }
 
     private void OnMonthChange(object value)
     {
         int month = Convert.ToInt32(value);
+        
         monthText.text = month.ToString("00");
-        string monthName = new DateTimeFormatInfo().GetMonthName(month).ToString();
+        string monthName = new DateTimeFormatInfo().GetMonthName(month);
         monthNameText.text = monthName.Substring(0, 3).ToUpper();
     }
 
@@ -38,7 +53,8 @@ public class View_MonthSign : ViewBehaviour
     {
         List<int> signIndexs = (List<int>)value;
 
-        if (signIndexs.Count <= 0) return; //ªÅ­È
+        if (signIndexs.Count <= 0)
+            return;
 
         #region CreateCalender/Sign
 
@@ -46,20 +62,13 @@ public class View_MonthSign : ViewBehaviour
         {
             int index = i;
 
-            if (index < signIndexs.Count)
-            {
-                dateObjects[index].SetActive(true);
-                dateObjects[index].SetDate(index + 1);
+            dateObjects[index].SetActive(true);
+            dateObjects[index].SetDate(index + 1);
                 
-                if (signIndexs[index] == 1)
-                    dateObjects[index].IsSign = true;
-                else
-                    dateObjects[index].IsSign = false;
-            }
+            if (signIndexs[index] == 1)
+                dateObjects[index].IsSign = true;
             else
-            {
-                dateObjects[index].SetActive(false);
-            }
+                dateObjects[index].IsSign = false;
         }
 
         int day = App.system.myTime.MyTimeNow.Day;
@@ -96,19 +105,6 @@ public class View_MonthSign : ViewBehaviour
         #endregion
     }
 
-    private void OnSelectedMonthSignRewardDataChange(object value)
-    {
-        MonthSignRewardData data = (MonthSignRewardData)value;
-
-        for (int i = 0; i < data.signRewards.Count; i++)
-        {
-            if (i >= dateObjects.Length) break;
-
-            var reward = data.GetReward(i);
-            dateObjects[i].SetReward(reward);
-        }
-    }
-
     private void OnResignCountChange(object value)
     {
         int count = Convert.ToInt32(value);
@@ -120,5 +116,20 @@ public class View_MonthSign : ViewBehaviour
         }
 
         resignButton.interactable = true;
+    }
+
+    private void RefreshDateObject()
+    {
+        var nowDate = App.system.myTime.MyTimeNow;
+        int dayInMonth = DateTime.DaysInMonth(nowDate.Year, nowDate.Month);
+
+        for (int i = 0; i < dateObjects.Length; i++)
+            dateObjects[i].SetActive(i < dayInMonth);
+        
+        //TODO 沒月卡return
+
+        List<int> vipDays = new List<int> { 4, 7, 11, 14, 18, 21, 25, 28 };
+        for (int i = 0; i < dateObjects.Length; i++)
+            dateObjects[i].SetDouble(vipDays.Contains(i + 1));
     }
 }

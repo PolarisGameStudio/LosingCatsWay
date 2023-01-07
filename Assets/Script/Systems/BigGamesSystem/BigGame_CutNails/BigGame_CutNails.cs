@@ -227,21 +227,17 @@ public class BigGame_CutNails : BigGameBehaviour, IBeginDragHandler, IDragHandle
     public void OpenSensors()
     {
         pawSensor.OpenSensor();
-
+        cutEffect.gameObject.SetActive(true);
         for (int i = 0; i < nailSensors.Length; i++)
-        {
             nailSensors[i].OpenSensor();
-        }
     }
 
     public void CloseSensors()
     {
         pawSensor.CloseSensor();
-
+        cutEffect.gameObject.SetActive(false);
         for (int i = 0; i < nailSensors.Length; i++)
-        {
             nailSensors[i].CloseSensor();
-        }
     }
 
     private bool CheckIsNailsCut()
