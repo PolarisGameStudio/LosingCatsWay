@@ -167,6 +167,7 @@ public class FindCatMap : MvcBehaviour
                 uiView.Hide();
                 App.system.findCat.Close();
                 App.system.catchCat.Active(mapIndex, cloudCatData);
+                cloudCatData = null;
 
                 if (App.system.tutorial.isTutorial)
                     App.system.tutorial.NextDirector();

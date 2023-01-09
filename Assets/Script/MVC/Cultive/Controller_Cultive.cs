@@ -576,7 +576,7 @@ public class Controller_Cultive : ControllerBehavior
 
     #endregion
 
-    #region LocalSave
+    #region LocalSave //todo 加進CloudSave比較安全
 
     public void LocalSaveCultiveLitter()
     {
@@ -771,7 +771,7 @@ public class Controller_Cultive : ControllerBehavior
 
     public void RenameCat()
     {
-        App.system.catRename.Active(App.model.cultive.SelectedCat.cloudCatData, () =>
+        App.system.catRename.Active(App.model.cultive.SelectedCat.cloudCatData, "Shelter", () =>
         {
             App.model.cultive.SelectedCat = App.model.cultive.SelectedCat;
         });
@@ -876,7 +876,9 @@ public class Controller_Cultive : ControllerBehavior
     //TODO Debug
     public void DebugSick()
     {
-        App.model.cultive.SelectedCat.SetSick();
+        App.model.cultive.SelectedCat.cloudCatData.CatHealthData.SickId = "SK008";
+        App.model.cultive.SelectedCat.cloudCatData.CatHealthData.MetDoctorCount =
+            App.factory.sickFactory.GetMetCount(App.model.cultive.SelectedCat.cloudCatData.CatHealthData.SickId);
         App.view.cultive.catSkin.ChangeSkin(App.model.cultive.SelectedCat.cloudCatData);
         App.system.cloudSave.UpdateCloudCatHealthData(App.model.cultive.SelectedCat.cloudCatData);
     }

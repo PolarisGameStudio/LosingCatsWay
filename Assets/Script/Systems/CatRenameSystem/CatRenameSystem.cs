@@ -5,15 +5,18 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
 using Doozy.Runtime.UIManager.Containers;
+using Sirenix.OdinInspector;
 
 public class CatRenameSystem : MvcBehaviour
 {
     [SerializeField] private CatSkin catSkin;
-    [Space(20)]
 
+    [Title("UI")]
     [SerializeField] private TMP_InputField inputField;
     [SerializeField] private GameObject closeButton;
     [SerializeField] private UIView view;
+
+    [Title("Bg")] [SerializeField] private Image bgImage;
 
     [HideInInspector] public CloudCatData cloudCatData;
 
@@ -26,13 +29,15 @@ public class CatRenameSystem : MvcBehaviour
         return this;
     }
 
-    public void Active(CloudCatData cloudCatData, UnityAction OnConfirm = null, UnityAction OnCancel = null)
+    public void Active(CloudCatData cloudCatData, string location, UnityAction OnConfirm = null, UnityAction OnCancel = null)
     {
         this.cloudCatData = cloudCatData;
         catSkin.ChangeSkin(cloudCatData);
 
         inputField.text = cloudCatData.CatData.CatName;
 
+        bgImage.sprite = App.factory.catFactory.GetCatLocationSprite(location);
+        
         onConfirm = OnConfirm;
         onCancel = OnCancel;
 

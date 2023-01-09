@@ -17,32 +17,36 @@ public class View_ClinicCheck : ViewBehaviour
     [SerializeField] private SkeletonGraphic tableGraphic;
     [SerializeField] private SkeletonGraphic functionGraphic;
 
-    [Title("Result")]
-
+    private string sickId;
+    private Cat cat;
+    
     public override void Init()
     {
         base.Init();
         App.model.clinic.OnSelectedCatChange += OnSelectedCatChange;
     }
 
-    #region ValueChange
-
     private void OnSelectedCatChange(object value)
     {
-        Cat cat = (Cat)value;
+        cat = (Cat)value;
 
         catSkin.ChangeSkin(cat.cloudCatData);
         resultCatSkin.ChangeSkin(cat.cloudCatData);
 
         functionGraphic.transform.localScale = catSkin.transform.localScale;
-    }
 
-    #endregion
+        sickId = cat.cloudCatData.CatHealthData.SickId;
+    }
 
     public override void Open()
     {
         base.Open();
+        
         catSkin.SetActive(true);
+        catSkin.ChangeSkin(cat.cloudCatData);
+        catSkin.CloseSickEye();
+        catSkin.OpenEye(cat.cloudCatData);
+        
         tableGraphic.gameObject.SetActive(true);
         functionGraphic.gameObject.SetActive(true);
 
@@ -58,6 +62,13 @@ public class View_ClinicCheck : ViewBehaviour
     {
         trackEntry.Complete -= CheckComplete;
         Close();
+
+        if (sickId is "SK001" or "SK002")
+        {
+            App.controller.clinic.OpenCheckResult();
+            return;
+        }
+        
         App.controller.clinic.OpenInvoice();
     }
 

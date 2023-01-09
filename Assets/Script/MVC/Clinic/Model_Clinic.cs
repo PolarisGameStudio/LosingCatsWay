@@ -10,10 +10,10 @@ public class Model_Clinic : ModelBehavior
     private int catIndex;
     private Cat selectedCat;
     private Dictionary<string, int> payment = new Dictionary<string, int>();
+    private string sickId;
+    private int metCount;
 
-    /// <summary>
     /// 返回鍵回去哪個介面
-    /// </summary>
     public int ViewIndex
     {
         get => viewIndex;
@@ -70,9 +70,31 @@ public class Model_Clinic : ModelBehavior
         }
     }
 
+    public string SickId
+    {
+        get => sickId;
+        set
+        {
+            sickId = value;
+            OnSickIdChange?.Invoke(value);
+        }
+    }
+
+    public int MetCount
+    {
+        get => metCount;
+        set
+        {
+            metCount = value;
+            OnMetCountChange?.Invoke(value);
+        }
+    }
+
     public ValueChange OnFunctionIndexChange;
     public ValueChange OnMyCatsChange;
     public ValueChange OnCatIndexChange;
     public ValueChange OnSelectedCatChange;
     public ValueChange OnPaymentChange;
+    public ValueChange OnSickIdChange;
+    public ValueChange OnMetCountChange;
 }

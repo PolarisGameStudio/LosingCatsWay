@@ -161,7 +161,7 @@ public class Controller_Shelter : ControllerBehavior
             
             OnAdoptCat?.Invoke(cloudCatData);
             
-            App.system.catRename.CantCancel().Active(cloudCatData, () =>
+            App.system.catRename.CantCancel().Active(cloudCatData, "Shelter", () =>
             {
                 DOVirtual.DelayedCall(0.1f, () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.HasNewCat));
             });

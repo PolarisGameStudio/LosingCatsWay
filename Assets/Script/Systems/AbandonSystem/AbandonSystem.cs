@@ -26,8 +26,6 @@ public class AbandonSystem : MvcBehaviour
     private UIView finalConfirmView;
 
     [Title("Background")] [SerializeField] private Image confirmBg;
-    [SerializeField] private Sprite[] locationBgs;
-    [SerializeField] private Sprite shelterBg;
 
     private List<Cat> Cats;
     private Cat selectedCat;
@@ -76,13 +74,7 @@ public class AbandonSystem : MvcBehaviour
 
         AbandonLocation = abandonLocation;
 
-        if (abandonLocation.Contains("Location"))
-        {
-            var index = int.Parse(abandonLocation.Replace("Location", ""));
-            confirmBg.sprite = locationBgs[index];
-        }
-        else
-            confirmBg.sprite = shelterBg;
+        confirmBg.sprite = App.factory.catFactory.GetCatLocationSprite(abandonLocation);
         
         chooseCatButton.gameObject.SetActive(false);
         selectedCat = null;

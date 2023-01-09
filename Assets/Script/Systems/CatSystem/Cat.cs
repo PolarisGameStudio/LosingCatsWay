@@ -476,7 +476,7 @@ public class Cat : MvcBehaviour
 
     #region Status
 
-    public void SetMoisture()
+    private void SetMoisture()
     {
         // 顯 水份數值
         float value = App.factory.catFactory.catDataSetting.basicMoisture;
@@ -489,7 +489,7 @@ public class Cat : MvcBehaviour
             Mathf.Clamp(cloudCatData.CatSurviveData.RealMoisture + realValue, 0, 100);
     }
 
-    public void SetSatiety()
+    private void SetSatiety()
     {
         // 顯 飽足數值
         float value = App.factory.catFactory.catDataSetting.SatietyByLevel(CatExtension.CatEatLevel(cloudCatData));
@@ -502,7 +502,7 @@ public class Cat : MvcBehaviour
             Mathf.Clamp(cloudCatData.CatSurviveData.RealSatiety + realValue, 0, 100);
     }
 
-    public void SetFavorability()
+    private void SetFavorability()
     {
         // 顯 好感數值
         float value = App.factory.catFactory.catDataSetting.FunByLevel(CatExtension.CatFunLevel(cloudCatData));
@@ -528,6 +528,13 @@ public class Cat : MvcBehaviour
     // 固定經過時間一次
     public void CheckStatus()
     {
+        for (int i = 0; i < 3; i++)
+        {
+            SetMoisture();
+            SetSatiety();
+            SetFavorability();
+        }
+        
         CheckSick();
     }
 
@@ -538,8 +545,8 @@ public class Cat : MvcBehaviour
         GetLikeSoup();
 
         if (cloudCatData.CatServerData.IsDead) return;
-
-        if (cloudCatData.CatHealthData.SickId == "SK001" || cloudCatData.CatHealthData.SickId == "SK002")
+        
+        if (cloudCatData.CatHealthData.SickId is "SK001" or "SK002")
         {
             if (Random.value < 0.9f)
             {
@@ -547,9 +554,35 @@ public class Cat : MvcBehaviour
                 App.system.cloudSave.UpdateCloudCatServerData(cloudCatData);
                 return;
             }
+
+            CheckNaturalDead();
         }
+        
+        CheckNaturalDead();
+        
+        if (cloudCatData.CatServerData.IsDead) return;
+
+        //表定順序
+        if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
+            App.factory.sickFactory.GetCatSick(cloudCatData);
+        if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
+            App.factory.sickFactory.GetVaccineSicks(cloudCatData);
+        if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
+            App.factory.sickFactory.GetLigationSicks(cloudCatData);
+        //得病換皮
+        if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
+            ChangeSkin();
 
         CheckBug();
+    }
+
+    private void CheckNaturalDead()
+    {
+        float percent = App.factory.catFactory.catDataSetting.NaturalDeadPercent(cloudCatData.CatData.SurviveDays);
+        if (Random.value > percent)
+            return;
+        cloudCatData.CatServerData.IsDead = true;
+        App.system.cloudSave.UpdateCloudCatServerData(cloudCatData);
     }
 
     // 每次上線執行一次
@@ -570,19 +603,23 @@ public class Cat : MvcBehaviour
         LoadLikeSoupIndex();
     }
 
-    void CheckSick()
+    private void CheckSick()
     {
-        if (!String.IsNullOrEmpty(cloudCatData.CatHealthData.SickId)) return;
-        float sickPercent = App.factory.catFactory.GetSickPercent(cloudCatData);
-        if (Random.value < sickPercent)
+        if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
+            return;
+        cloudCatData.CatHealthData.SickId = App.factory.sickFactory.GetCatSick(cloudCatData);
+        
+        if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
         {
-            cloudCatData.CatHealthData.SickId = App.factory.sickFactory.GetSick(cloudCatData);
+            cloudCatData.CatHealthData.MetDoctorCount =
+                App.factory.sickFactory.GetMetCount(cloudCatData.CatHealthData.SickId);
+            App.system.cloudSave.UpdateCloudCatHealthData(cloudCatData);
             ChangeSkin();
         }
     }
 
     // 檢查長蟲
-    void CheckBug()
+    private void CheckBug()
     {
         DateTime noBugExpiredDate = cloudCatData.CatHealthData.NoBugExpireTimestamp.ToDateTime().ToLocalTime();
         if (noBugExpiredDate > App.system.myTime.MyTimeNow)
@@ -610,8 +647,6 @@ public class Cat : MvcBehaviour
             App.factory.itemFactory.GetItem(cloudCatData.CatSkinData.UseSkinId).Count += 1;
 
         cloudCatData.CatData.DeathTime = Timestamp.GetCurrentTimestamp();
-        // cloudCatData.CatDiaryData.FlowerExpiredTimestamp =
-        //     Timestamp.FromDateTime(App.system.myTime.MyTimeNow.AddDays(7));
         cloudCatData.CatDiaryData.DiaryDatas = App.factory.diaryFactory.GetDiaryDatas(cloudCatData);
     }
 
@@ -660,25 +695,7 @@ public class Cat : MvcBehaviour
     #endregion
 
     #region Debug
-
-    public void SetSick()
-    {
-        cloudCatData.CatHealthData.SickId = App.factory.sickFactory.GetSick(cloudCatData);
-        catSkin.ChangeSkin(cloudCatData);
-    }
-
-    public void SetDeadSick()
-    {
-        cloudCatData.CatHealthData.SickId = "SK001";
-        catSkin.ChangeSkin(cloudCatData);
-    }
-
-    public void SetBug()
-    {
-        cloudCatData.CatHealthData.IsBug = true;
-        catSkin.ChangeSkin(cloudCatData);
-    }
-
+    
     [Button]
     private void DebugPrint()
     {

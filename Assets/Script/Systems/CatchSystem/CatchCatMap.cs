@@ -583,7 +583,7 @@ public class CatchCatMap : MvcBehaviour
                 App.system.tnr.OnDoAdopt += CloseToLobby;
                 App.system.tnr.OnDoRelease += CloseToLobby;
                 App.system.tnr.OnDoShelter += CloseToLobby;
-                App.system.tnr.Active(cloudCatData);
+                App.system.tnr.Active(cloudCatData, App.system.catchCat.Location);
             });
         });
     }
@@ -595,6 +595,8 @@ public class CatchCatMap : MvcBehaviour
         if (App.system.tutorial.isTutorial)
         {
             App.system.cloudSave.DeleteCloudCatData(cloudCatData);
+            cloudCatData = null;
+            
             App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchCatGameEnd, () =>
             {
                 // CloseToMap();

@@ -37,9 +37,7 @@ public class CatSystem : MvcBehaviour
     private void DailyCheckCatStatus()
     {
         for (int i = 0; i < myCats.Count; i++)
-        {
             myCats[i].DailyCheckStatus();
-        }
     }
 
     private void LoginCheckCatStatus()
@@ -55,25 +53,13 @@ public class CatSystem : MvcBehaviour
     private void CheckCatStatus()
     {
         for (int i = 0; i < myCats.Count; i++)
-        {
-            Cat cat = myCats[i];
-
-            for (int j = 0; j < 3; j++)
-            {
-                cat.SetMoisture();
-                cat.SetSatiety();
-                cat.SetFavorability();
-            }
-
-            cat.CheckStatus();
-        }
+            myCats[i].CheckStatus();
     }
 
     #endregion
 
     #region Cats
 
-    //TODO CallbackValue
     public List<Cat> GetCats()
     {
         return myCats;

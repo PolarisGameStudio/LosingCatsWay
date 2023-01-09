@@ -50,40 +50,13 @@ public class View_ClinicInvoice : ViewBehaviour
         }
         totalText.text = total.ToString();
 
-        if (payment.ContainsKey("CP001"))
-        {
-            subjects[0].SetActive(true);
-        }
-
-        if (payment.ContainsKey("CP002"))
-        {
-            subjects[1].SetActive(true);
-        }
-
-        if (payment.ContainsKey("CP003"))
-        {
-            subjects[2].SetActive(true);
-        }
-
-        if (payment.ContainsKey("CP004"))
-        {
-            subjects[3].SetActive(true);
-        }
-
-        if (payment.ContainsKey("CP005"))
-        {
-            subjects[4].SetActive(true);
-        }
-
-        if (payment.ContainsKey("CP006"))
-        {
-            subjects[5].SetActive(true);
-        }
-
-        if (payment.ContainsKey("CP007"))
-        {
-            subjects[6].SetActive(true);
-        }
+        subjects[0].SetActive(payment.ContainsKey("CP001"));
+        subjects[1].SetActive(payment.ContainsKey("CP002"));
+        subjects[2].SetActive(payment.ContainsKey("CP003"));
+        subjects[3].SetActive(payment.ContainsKey("CP004"));
+        subjects[4].SetActive(payment.ContainsKey("CP005"));
+        subjects[5].SetActive(payment.ContainsKey("CP006"));
+        subjects[6].SetActive(payment.ContainsKey("CP007"));
     }
 
     private void OnSelectedCatChange(object value)

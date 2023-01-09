@@ -15,7 +15,7 @@ public class View_ClinicFunction : ViewBehaviour
     [SerializeField] private SkeletonGraphic tableGraphic;
     [SerializeField] private SkeletonGraphic functionGraphic;
 
-    List<string> subjects = new List<string>();
+    private List<string> subjects = new List<string>();
     private Cat cat;
 
     public override void Init()
@@ -36,11 +36,8 @@ public class View_ClinicFunction : ViewBehaviour
     {
         var payment = (Dictionary<string, int>)value;
         subjects = new List<string>();
-
         for (int i = 0; i < payment.Count; i++)
-        {
             subjects.Add(payment.ElementAt(i).Key);
-        }
     }
 
     public override void Open()
@@ -48,10 +45,15 @@ public class View_ClinicFunction : ViewBehaviour
         base.Open();
 
         tableGraphic.gameObject.SetActive(true);
+        
         catSkin.SetActive(true);
+        catSkin.ChangeSkin(cat.cloudCatData);
+        catSkin.CloseSickEye();
+        catSkin.OpenEye(cat.cloudCatData);
+        
         functionGraphic.gameObject.SetActive(true);
 
-        bool isSick = !string.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId);
+        bool isSick = !string.IsNullOrEmpty(App.model.clinic.SickId); //TODO 解耦合
         
         #region Animation
 

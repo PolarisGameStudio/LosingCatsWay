@@ -28,7 +28,9 @@ public class PediaFactory : SerializedMonoBehaviour
 
     public Sprite GetPediaSprite(string id)
     {
-        return pediaSprites[id];
+        if (pediaSprites.ContainsKey(id))
+            return pediaSprites[id];
+        return null;
     }
 
     public bool GetPediaUnlock(string id)

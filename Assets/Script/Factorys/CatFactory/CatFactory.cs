@@ -16,6 +16,7 @@ public class CatFactory : SerializedMonoBehaviour
     [SerializeField] private Sprite[] personalityLevelSprites;
     [InlineEditor(InlineEditorModes.LargePreview)] [SerializeField] private Sprite[] personalityTipSprites;
     [SerializeField] private Dictionary<string, Sprite> personalityImages;
+    [SerializeField] private Dictionary<string, Sprite> catLocationSprites;
 
     #region GetSprite
 
@@ -55,13 +56,9 @@ public class CatFactory : SerializedMonoBehaviour
         return personalityImages[id];
     }
 
-    #endregion
-
-    #region Sick
-
-    public float GetSickPercent(CloudCatData cloudCatData)
+    public Sprite GetCatLocationSprite(string location)
     {
-        return catDataSetting.sickPercentBySurviveDay_Natural[cloudCatData.CatData.SurviveDays];
+        return catLocationSprites[location];
     }
 
     #endregion

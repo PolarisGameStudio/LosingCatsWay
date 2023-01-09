@@ -63,7 +63,7 @@ public class Controller_Information : ControllerBehavior
     {
         CloseSubInformation();
         CloudCatData cloudCatData = App.model.information.SelectedCat.cloudCatData;
-        App.system.catRename.Active(cloudCatData, () =>
+        App.system.catRename.Active(cloudCatData, "Shelter", () =>
         {
             var cat = App.model.information.SelectedCat;
             App.model.information.SelectedCat = cat;

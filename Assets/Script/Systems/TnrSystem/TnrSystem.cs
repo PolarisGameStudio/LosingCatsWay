@@ -18,6 +18,7 @@ public class TnrSystem : MvcBehaviour
     [SerializeField] private GameObject infoMask;
     [SerializeField] private GameObject idMask;
     [SerializeField] private Card_ChipInfo info;
+    [SerializeField] private Image locationBg;
 
     [Title("Currency")] [SerializeField] private TextMeshProUGUI coinText;
     [SerializeField] private TextMeshProUGUI diamondText;
@@ -35,8 +36,8 @@ public class TnrSystem : MvcBehaviour
     [SerializeField] private RectTransform titleRect;
     [SerializeField] private RectTransform[] bottomButtonRects;
     
-
     private CloudCatData cloudCatData;
+    private string _location;
     
     public Callback OnDoAdopt;
     public Callback OnDoRelease;
@@ -79,7 +80,7 @@ public class TnrSystem : MvcBehaviour
         uiView.InstantHide();
     }
 
-    public void Active(CloudCatData cloudCatData)
+    public void Active(CloudCatData cloudCatData, string location)
     {
         this.cloudCatData = cloudCatData;
         catSkin.ChangeSkin(cloudCatData);
@@ -89,7 +90,10 @@ public class TnrSystem : MvcBehaviour
         
         infoMask.SetActive(!cloudCatData.CatHealthData.IsChip);
         idMask.SetActive(!cloudCatData.CatHealthData.IsChip);
-        idText.text = (cloudCatData.CatHealthData.IsChip) ? $"ID:{cloudCatData.CatData.CatId}" : "ID:--";
+        idText.text = cloudCatData.CatHealthData.IsChip ? $"ID:{cloudCatData.CatData.CatId}" : "ID:--";
+
+        _location = location;
+        locationBg.sprite = App.factory.catFactory.GetCatLocationSprite(location);
         
         Open();
     }
@@ -111,7 +115,7 @@ public class TnrSystem : MvcBehaviour
         Close();
         App.system.confirm.Active(ConfirmTable.AdoptConfirm, () =>
         {
-            App.system.catRename.CantCancel().Active(cloudCatData, () =>
+            App.system.catRename.CantCancel().Active(cloudCatData, _location, () =>
             {
                 cloudCatData.CatData.Owner = App.system.player.PlayerId;
                 App.system.cloudSave.UpdateCloudCatData(cloudCatData);

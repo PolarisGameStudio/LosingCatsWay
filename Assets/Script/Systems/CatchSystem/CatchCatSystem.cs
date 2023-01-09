@@ -15,12 +15,14 @@ public class CatchCatSystem : MvcBehaviour
     public CatchCatRunAway runAway;
 
     [ReadOnly] public bool IsWatchAd;
+    [ReadOnly] public string Location;
 
     public void Active(int index, CloudCatData cloudCatData)
     {
         IsWatchAd = false;
         
         catchCatBg.sprite = mapSprites[index];
+        Location = $"Location" + index;
         
         map.Open(cloudCatData);
         view.Show();

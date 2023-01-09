@@ -9,10 +9,6 @@ public class CatDataSetting : SerializedScriptableObject
     public float basicMoisture;
     public float basicSatiety;
     public float basicFavorability;
-    [Space(10)]
-
-    [Title("Sick percent")]
-    public Dictionary<int, float> sickPercentBySurviveDay_Natural = new Dictionary<int, float>();
 
     public float SatietyByLevel(int level)
     {
@@ -58,5 +54,20 @@ public class CatDataSetting : SerializedScriptableObject
             default:
                 return result *= 1f;
         }
+    }
+
+    public float NaturalDeadPercent(int surviveDays)
+    {
+        if (surviveDays <= 27)
+            return 0;
+        if (surviveDays == 28)
+            return 0.25f;
+        if (surviveDays == 29)
+            return 0.5f;
+        if (surviveDays == 30)
+            return 0.7f;
+        if (surviveDays <= 39)
+            return 0.9f;
+        return 1;
     }
 }

@@ -43,7 +43,8 @@ public class Card_ClinicChooseCat : MvcBehaviour
         catNameText.text = cat.cloudCatData.CatData.CatName;
 
         CloudSave_CatHealthData catHealthData = cat.cloudCatData.CatHealthData;
-        deadMask.SetActive(catHealthData.MetDoctorCount == -1);
+        deadMask.SetActive((catHealthData.IsMetDoctor && catHealthData.SickId is "SK001" or "SK002") || cat.cloudCatData.CatServerData.IsDead);
+        
         DateTime noBugExpiredDate = catHealthData.NoBugExpireTimestamp.ToDateTime().ToLocalTime();
         
         ResetUI();

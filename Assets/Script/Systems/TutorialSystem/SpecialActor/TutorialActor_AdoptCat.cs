@@ -19,7 +19,7 @@ public class TutorialActor_AdoptCat : TutorialActor
         DocumentReference docRef = db.Collection("Cats").Document(cloudCatData.CatData.CatId);
         await docRef.SetAsync(cloudCatData);
 
-        App.system.catRename.CantCancel().Active(cloudCatData, () =>
+        App.system.catRename.CantCancel().Active(cloudCatData, "Shelter", () =>
         {
             cloudCatData.CatData.Owner = App.system.player.PlayerId;
             App.system.cloudSave.UpdateCloudCatData(cloudCatData);
