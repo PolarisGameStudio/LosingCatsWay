@@ -57,7 +57,6 @@ public class Controller_Lobby : ControllerBehavior
     public void OpenScreenshot()
     {
         App.system.screenshot.OnScreenshotComplete += CloseScreenshot;
-        App.system.screenshot.OnClose += CloseScreenshot;
         Close();
         App.system.screenshot.Open();
         App.system.soundEffect.Play("Button");
@@ -67,7 +66,6 @@ public class Controller_Lobby : ControllerBehavior
     {
         Open();
         App.system.screenshot.OnScreenshotComplete -= CloseScreenshot;
-        App.system.screenshot.OnClose -= CloseScreenshot;
     }
 
     public void OpenInformation()

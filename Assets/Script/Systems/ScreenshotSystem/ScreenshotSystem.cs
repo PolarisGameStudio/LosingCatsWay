@@ -11,7 +11,6 @@ public class ScreenshotSystem : MvcBehaviour
     private bool isShot;
     
     public Callback OnScreenshotComplete;
-    public Callback OnClose;
 
     public void Open()
     {
@@ -21,14 +20,12 @@ public class ScreenshotSystem : MvcBehaviour
     public void Close()
     {
         view.InstantHide();
-        OnClose?.Invoke();
     }
 
     public void TakeScreenshot()
     {
         if (isShot) return;
         isShot = true;
-        OnScreenshotComplete?.Invoke();
         StartCoroutine(Screenshot());
     }
 
@@ -58,5 +55,6 @@ public class ScreenshotSystem : MvcBehaviour
         App.system.confirm.OnlyConfirm().Active(ConfirmTable.CaptureScreenshotSuccess);
 
         isShot = false;
+        OnScreenshotComplete?.Invoke();
     }
 }

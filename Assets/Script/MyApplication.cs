@@ -44,6 +44,7 @@ public class MyApplication : MonoBehaviour
         controller.build.Init(); // 中心房要排序在myRooms的第0個
         system.cat.Init();
         controller.pedia.Init();
+        controller.shelter.Init();
         
         await system.post.Init();
 

@@ -27,14 +27,14 @@ public class View_Shelter : ViewBehaviour
 
     [Title("Spine")] 
     public GameObject npc;
-    
-    public override void Init()
-    {
-        base.Init();
-        App.model.shelter.OnCloudCatDatasChange += OnCloudCatDatasChange;
-        App.system.player.OnCoinChange += OnCoinChange;
-        App.system.player.OnDiamondChange += OnDiamondChange;
-    }
+
+    [Title("Refresh")] [SerializeField] private TextMeshProUGUI freeCount;
+    [SerializeField] private TextMeshProUGUI adsCount;
+    [SerializeField] private GameObject freeTitle;
+    [SerializeField] private GameObject adsTitle;
+    [SerializeField] private GameObject noCountTitle;
+    [SerializeField] private GameObject cooldownObject;
+    [SerializeField] private GameObject refreshObject;
 
     public override void Open()
     {
@@ -47,6 +47,66 @@ public class View_Shelter : ViewBehaviour
     {
         base.Close();
         npc.SetActive(false);
+    }
+    
+    public override void Init()
+    {
+        base.Init();
+        App.model.shelter.OnCloudCatDatasChange += OnCloudCatDatasChange;
+        App.model.shelter.OnFreeRefreshChange += OnFreeRefreshChange;
+        App.model.shelter.OnAdsRefreshChange += OnAdsRefreshChange;
+        App.model.shelter.OnCooldownChange += OnCooldownChange;
+        
+        App.system.player.OnCoinChange += OnCoinChange;
+        App.system.player.OnDiamondChange += OnDiamondChange;
+    }
+
+    private void OnCooldownChange(object value)
+    {
+        DateTime cooldown = (DateTime)value;
+        if (cooldown > App.system.myTime.MyTimeNow)
+        {
+            cooldownObject.SetActive(true);
+            refreshObject.SetActive(false);
+        }
+        else
+        {
+            cooldownObject.SetActive(false);
+            refreshObject.SetActive(true);
+        }
+    }
+
+    private void OnAdsRefreshChange(object value)
+    {
+        int count = (int)value;
+        if (count <= 0)
+        {
+            adsTitle.SetActive(false);
+            adsCount.gameObject.SetActive(false);
+            noCountTitle.SetActive(true);
+            return;
+        }
+
+        noCountTitle.SetActive(false);
+        adsTitle.SetActive(true);
+        adsCount.gameObject.SetActive(true);
+        adsCount.text = $"({count}/5)";
+    }
+
+    private void OnFreeRefreshChange(object value)
+    {
+        int count = (int)value;
+        if (count <= 0)
+        {
+            freeTitle.SetActive(false);
+            freeCount.gameObject.SetActive(false);
+            return;
+        }
+
+        noCountTitle.SetActive(false);
+        freeTitle.SetActive(true);
+        freeCount.gameObject.SetActive(true);
+        freeCount.text = $"({count}/3)";
     }
 
     private void OnCloudCatDatasChange(object value)

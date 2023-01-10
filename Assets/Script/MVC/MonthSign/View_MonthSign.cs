@@ -9,13 +9,21 @@ using UnityEngine.UI;
 
 public class View_MonthSign : ViewBehaviour
 {
+    [Title("Sign")]
     [SerializeField] private Button signButton;
     [SerializeField] private Button resignButton;
+    [SerializeField] private TextMeshProUGUI signText;
+    [SerializeField] private TextMeshProUGUI resignText;
+    
+    [Title("UI")]
     [SerializeField] private TextMeshProUGUI monthText;
     [SerializeField] private TextMeshProUGUI monthNameText;
     [SerializeField] private TextMeshProUGUI missDayText;
     [SerializeField] private TextMeshProUGUI continueDayText;
     [SerializeField] private Card_MonthSign[] dateObjects;
+
+    [Title("Color")] [SerializeField] private Color32 canSignColor;
+    [SerializeField] private Color32 noSignColor;
 
     public override void Init()
     {
@@ -72,7 +80,16 @@ public class View_MonthSign : ViewBehaviour
         }
 
         int day = App.system.myTime.MyTimeNow.Day;
-        if (dateObjects[day - 1].IsSign) signButton.interactable = false;
+        if (dateObjects[day - 1].IsSign)
+        {
+            signButton.interactable = false;
+            signText.color = noSignColor;
+        }
+        else
+        {
+            signButton.interactable = true;
+            signText.color = canSignColor;
+        }
 
         #endregion
 
@@ -112,10 +129,12 @@ public class View_MonthSign : ViewBehaviour
         if (count <= 0)
         {
             resignButton.interactable = false;
+            resignText.color = noSignColor;
             return;
         }
 
         resignButton.interactable = true;
+        resignText.color = canSignColor;
     }
 
     private void RefreshDateObject()

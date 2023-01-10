@@ -92,6 +92,9 @@ public class View_Shop : ViewBehaviour
     {
         int type = Convert.ToInt32(value);
 
+        if (type == -1)
+            return;
+
         for (int i = 0; i < tabs.Length; i++)
             tabs[i].SetActive(false);
 
@@ -113,8 +116,6 @@ public class View_Shop : ViewBehaviour
             }
         }
         
-        items = items.OrderByDescending(i => i.CanBuyAtStore).ToList();
-
         #region 生架子層數
 
         float f = items.Count / 3f;

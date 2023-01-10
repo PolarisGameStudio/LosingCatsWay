@@ -10,14 +10,7 @@ public class SoundEffectSystem : SerializedMonoBehaviour
     [SerializeField] private Dictionary<string, AudioClip> audioDatas = new Dictionary<string, AudioClip>();
     [SerializeField] private AudioSource audioSource;
 
-    #region MVC
-
-    public MyApplication App
-    {
-        get => FindObjectOfType<MyApplication>();
-    }
-
-    #endregion
+    private MyApplication App => FindObjectOfType<MyApplication>();
 
     public void Init()
     {
@@ -31,7 +24,8 @@ public class SoundEffectSystem : SerializedMonoBehaviour
 
     public void Play(string audioName)
     {
-        if (audioSource.isPlaying) audioSource.Stop();
+        if (audioSource.isPlaying) 
+            audioSource.Stop();
 
         if (!audioDatas.ContainsKey(audioName))
         {

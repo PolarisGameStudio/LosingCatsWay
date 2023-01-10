@@ -670,7 +670,6 @@ public class Controller_Cultive : ControllerBehavior
         App.system.soundEffect.Play("Button");
         
         App.system.screenshot.OnScreenshotComplete += CloseScreenshot;
-        App.system.screenshot.OnClose += CloseScreenshot;
         App.view.cultive.TweenOut();
 
         DOVirtual.DelayedCall(1f, App.system.screenshot.Open);
@@ -682,7 +681,6 @@ public class Controller_Cultive : ControllerBehavior
         
         App.view.cultive.TweenIn();
         App.system.screenshot.OnScreenshotComplete -= CloseScreenshot;
-        App.system.screenshot.OnClose -= CloseScreenshot;
     }
 
     #endregion
@@ -876,7 +874,7 @@ public class Controller_Cultive : ControllerBehavior
     //TODO Debug
     public void DebugSick()
     {
-        App.model.cultive.SelectedCat.cloudCatData.CatHealthData.SickId = "SK008";
+        App.model.cultive.SelectedCat.cloudCatData.CatHealthData.SickId = "SK001";
         App.model.cultive.SelectedCat.cloudCatData.CatHealthData.MetDoctorCount =
             App.factory.sickFactory.GetMetCount(App.model.cultive.SelectedCat.cloudCatData.CatHealthData.SickId);
         App.view.cultive.catSkin.ChangeSkin(App.model.cultive.SelectedCat.cloudCatData);

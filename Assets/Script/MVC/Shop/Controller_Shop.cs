@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
@@ -37,8 +38,13 @@ public class Controller_Shop : ControllerBehavior
 
     public void SelectType(int index)
     {
-        if (App.model.shop.SelectedType == index) return;
+        if (App.model.shop.SelectedType == index) 
+            return;
+        
         App.model.shop.SelectedType = index;
+
+        if (index == -1)
+            return;
 
         ItemType targetType = ItemType.All;
         switch (index)
@@ -68,6 +74,7 @@ public class Controller_Shop : ControllerBehavior
         for (int i = items.Count - 1; i >= 0; i--)
             if (items[i].notShowAtStore)
                 items.RemoveAt(i);
+        items = items.OrderByDescending(i => i.CanBuyAtStore).ToList();
         
         App.model.shop.SelectedItems = items;
     }

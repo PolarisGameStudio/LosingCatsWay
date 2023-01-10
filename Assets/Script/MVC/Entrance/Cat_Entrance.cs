@@ -11,6 +11,7 @@ using UnityEngine.UI;
 
 public class Cat_Entrance : MvcBehaviour
 {
+    [SerializeField] private bool isFront;
     [SerializeField] private CatSkin catSkin;
     [SerializeField] private RectTransform catRect;
     [SerializeField] private GameObject bubbleObject;
@@ -86,7 +87,13 @@ public class Cat_Entrance : MvcBehaviour
 
     public void Click()
     {
+        if (!isFront)
+            return;
+        
         bubbleObject.transform.DOScale(Vector2.zero, 0.25f).SetEase(Ease.OutExpo);
+
+        int index = transform.GetSiblingIndex() + 1;
+        App.system.soundEffect.Play($"DO_RE_MI_{index}");
         
         skeletonGraphic = catSkin.skeletonGraphic;
         skeletonGraphic.AnimationState.ClearTracks();

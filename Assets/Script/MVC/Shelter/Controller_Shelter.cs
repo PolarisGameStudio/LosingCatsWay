@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DG.Tweening;
 using Firebase.Firestore;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,9 +12,26 @@ public class Controller_Shelter : ControllerBehavior
 {
     [SerializeField] private Card_ChipInfo info;
     [SerializeField] private Scrollbar scrollbar;
+
+    [Title("Quest")] [SerializeField] private SHR001 freeRefresh;
+    [SerializeField] private SHR002 adsRefresh;
+
+    public CallbackValue OnAdoptCat;
+    public Callback OnFreeRefresh;
+    public Callback OnAdsRefresh;
     
     #region Basic
 
+    public void Init()
+    {
+        App.system.myTime.OnFirstLogin += ResetRefreshPerDay;
+
+        UpdateRefresh();
+        
+        freeRefresh.Init();
+        adsRefresh.Init();
+    }
+    
     public void Open()
     {
         App.system.bgm.FadeIn().Play("Shelter");
@@ -64,13 +83,67 @@ public class Controller_Shelter : ControllerBehavior
         }
     }
 
+    #endregion
+    
+    #region Refresh
+    
     public void RefreshShelterCats()
     {
-        App.system.confirm.Active(ConfirmTable.RefreshConfirm, () => 
+        if (!freeRefresh.IsReach)
         {
-            GetCloudCatDatas();
-            scrollbar.value = 0;
-        });
+            App.system.confirm.Active(ConfirmTable.RefreshConfirm, () => 
+            {
+                GetCloudCatDatas();
+                scrollbar.value = 0;
+                
+                OnFreeRefresh?.Invoke();
+                UpdateRefresh();
+            });
+            return;
+        }
+
+        if (!adsRefresh.IsReach)
+        {
+            //TODO Ads Refresh Confirm
+            App.system.confirm.Active(ConfirmTable.Fix, () => 
+            {
+                //TODO Ads
+                GetCloudCatDatas();
+                scrollbar.value = 0;
+                
+                OnAdsRefresh?.Invoke();
+                UpdateRefresh();
+
+                if (App.model.shelter.AdsRefresh <= 0)
+                    return;
+
+                App.model.shelter.Cooldown = App.system.myTime.MyTimeNow.AddMinutes(1);
+                InvokeRepeating(nameof(CooldownCounter), 1f, 1f);
+            });
+        }
+    }
+
+    private void CooldownCounter()
+    {
+        if (App.model.shelter.Cooldown <= App.system.myTime.MyTimeNow)
+            CancelInvoke(nameof(CooldownCounter));
+        App.model.shelter.Cooldown = App.model.shelter.Cooldown;
+    }
+
+    private void UpdateRefresh()
+    {
+        App.model.shelter.FreeRefresh = freeRefresh.TargetCount - freeRefresh.Progress;
+
+        if (App.model.shelter.FreeRefresh > 0)
+            return;
+        
+        App.model.shelter.AdsRefresh = adsRefresh.TargetCount - adsRefresh.Progress;
+    }
+    
+    private void ResetRefreshPerDay()
+    {
+        freeRefresh.Progress = 0;
+        adsRefresh.Progress = 0;
     }
 
     #endregion
@@ -104,12 +177,6 @@ public class Controller_Shelter : ControllerBehavior
 
     #endregion
 
-    #region Event
-
-    public CallbackValue OnAdoptCat;
-
-    #endregion
-    
     #region Adopt
 
     public void SelectAdopt(int index)

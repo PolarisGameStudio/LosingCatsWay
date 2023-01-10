@@ -143,6 +143,12 @@ public class Controller_FollowCat : ControllerBehavior
             traitIndex = 2;
             duration = 17.45f;
         }
+
+        if (skinId == "Magic_Hat")
+        {
+            traitIndex = 3;
+            duration = 13.67f;
+        }
         
         var animator = followCat.GetComponent<Animator>();
         animator.SetInteger(CatAnimTable.TraitType.ToString(), 2);
@@ -170,7 +176,6 @@ public class Controller_FollowCat : ControllerBehavior
     public void OpenScreenshot()
     {
         App.system.screenshot.OnScreenshotComplete += CloseScreenshot;
-        App.system.screenshot.OnClose += CloseScreenshot;
         Close();
         App.system.screenshot.Open();
     }
@@ -179,7 +184,6 @@ public class Controller_FollowCat : ControllerBehavior
     {
         Open();
         App.system.screenshot.OnScreenshotComplete -= CloseScreenshot;
-        App.system.screenshot.OnClose -= CloseScreenshot;
     }
 
     #endregion
