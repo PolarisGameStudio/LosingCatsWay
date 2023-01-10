@@ -8,19 +8,25 @@ public class ACR0006 : AchieveQuest
 {
     public override void Init()
     {
+        App.system.myTime.OnFirstLogin += AddProgress;
     }
 
-    public override int Progress
+    private void AddProgress()
     {
-        get
-        {
-            var day = (Timestamp.GetCurrentTimestamp().ToDateTime() - App.system.myTime.FirstLoginDateTime).Days;
-            App.system.quest.QuestProgressData[commonId] = day;
-            return App.system.quest.QuestProgressData[commonId];
-        }
-        set
-        {
-            App.system.quest.QuestProgressData[commonId] = value;
-        }
+        Progress++;
     }
+
+    // public override int Progress
+    // {
+    //     get
+    //     {
+    //         var day = (Timestamp.GetCurrentTimestamp().ToDateTime() - App.system.myTime.AccountCreateDateTime).Days;
+    //         App.system.quest.QuestProgressData[commonId] = day;
+    //         return App.system.quest.QuestProgressData[commonId];
+    //     }
+    //     set
+    //     {
+    //         App.system.quest.QuestProgressData[commonId] = value;
+    //     }
+    // }
 }

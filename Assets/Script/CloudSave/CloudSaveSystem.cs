@@ -76,7 +76,7 @@ public class CloudSaveSystem : MvcBehaviour
         // CloudSave_TimeData
         CloudSave_TimeData timeData = new CloudSave_TimeData();
 
-        timeData.FirstLoginDateTime = Timestamp.FromDateTime(App.system.myTime.FirstLoginDateTime);
+        timeData.FirstLoginDateTime = Timestamp.FromDateTime(App.system.myTime.AccountCreateDateTime);
         timeData.PerDayLoginDateTime = Timestamp.FromDateTime(App.system.myTime.PerDayLoginDateTime);
         timeData.LastLoginDateTime = Timestamp.FromDateTime(App.system.myTime.LastLoginDateTime);
         
@@ -278,7 +278,7 @@ public class CloudSaveSystem : MvcBehaviour
         CloudSave_TimeData timeData = new CloudSave_TimeData();
         timeData.LastLoginDateTime = Timestamp.FromDateTime(App.system.myTime.LastLoginDateTime);
         timeData.PerDayLoginDateTime = Timestamp.FromDateTime(App.system.myTime.PerDayLoginDateTime);
-        timeData.FirstLoginDateTime = Timestamp.FromDateTime(App.system.myTime.FirstLoginDateTime);
+        timeData.FirstLoginDateTime = Timestamp.FromDateTime(App.system.myTime.AccountCreateDateTime);
 
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
@@ -447,7 +447,7 @@ public class CloudSaveSystem : MvcBehaviour
 
     #region LosingCats
 
-    public async void CreateCloudLosingCatData(CloudCatData cloudCatData)
+    public async Task<CloudLosingCatData> CreateCloudLosingCatData(CloudCatData cloudCatData)
     {
         CloudLosingCatData losingCatData = new CloudLosingCatData();
         losingCatData.CatData = cloudCatData.CatData;
@@ -463,6 +463,8 @@ public class CloudSaveSystem : MvcBehaviour
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         var losingCatRef = db.Collection("LosingCats").Document(losingCatData.CatData.CatId);
         await losingCatRef.SetAsync(losingCatData);
+
+        return losingCatData;
     }
 
     public async Task<List<CloudLosingCatData>> LoadCloudLosingCatDatas(string owner)

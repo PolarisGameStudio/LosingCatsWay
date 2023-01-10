@@ -1,14 +1,13 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
 using Spine;
 using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Coffee.UIExtensions;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public class Cat_Entrance : MvcBehaviour
 {
@@ -20,11 +19,14 @@ public class Cat_Entrance : MvcBehaviour
     [SerializeField] private GameObject clickButton;
     [SerializeField] private bool hasBubble;
 
-    [Title("Sprites")] [SerializeField] private Sprite angrySprite;
-    [SerializeField] private Sprite waterSprite;
-    [SerializeField] private Sprite sadSprite;
-    [SerializeField] private Sprite heartSprite;
-    [SerializeField] private Sprite brokenHeartSprite;
+    [SerializeField, HideIf("@hasBubble == true")] private UIParticle deadEffect;
+
+    [Title("Sprites")]
+    [SerializeField, HideIf("@hasBubble == false")] private Sprite angrySprite;
+    [SerializeField, HideIf("@hasBubble == false")] private Sprite waterSprite;
+    [SerializeField, HideIf("@hasBubble == false")] private Sprite sadSprite;
+    [SerializeField, HideIf("@hasBubble == false")] private Sprite heartSprite;
+    [SerializeField, HideIf("@hasBubble == false")] private Sprite brokenHeartSprite;
     
     private Vector2 startScale;
     private SkeletonGraphic skeletonGraphic;
@@ -72,6 +74,8 @@ public class Cat_Entrance : MvcBehaviour
             return;
         }
         statusImage.sprite = angrySprite;
+
+        // deadEffect.gameObject.SetActive(false);
     }
 
     public void SetActive(bool active)
@@ -104,13 +108,16 @@ public class Cat_Entrance : MvcBehaviour
         skeletonGraphic = catSkin.skeletonGraphic;
         skeletonGraphic.AnimationState.ClearTracks();
         // int random = isKitty ? 1 : Random.Range(1, 3);
-        skeletonGraphic.AnimationState.SetAnimation(0, $"AI_Main/Sit_0{1}", true); // TODO KittyBug
+        skeletonGraphic.AnimationState.SetAnimation(0, "AI_Main/Sit_01", true); // TODO KittyBug
     }
 
     public void StartDead()
     {
         bubbleObject.SetActive(false);
         clickButton.SetActive(false);
+        
+        // deadEffect.gameObject.SetActive(true);
+        // deadEffect.Play();
         
         //先抓動畫
         Spine.Animation anim = catSkin.skeletonGraphic.SkeletonData.FindAnimation("Situation_Cat/Die");

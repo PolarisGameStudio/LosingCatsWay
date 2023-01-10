@@ -185,32 +185,5 @@ public static class CatExtension
         return result;
     }
 
-    public static int GetCatSizeType(CloudCatData cloudCatData)
-    {
-        var size = cloudCatData.CatData.BodyScale;
-        var result = 0;
-        
-        if (size > 1.04)
-            return 1;
-        
-        if (size < 0.96)
-            return 2;
-        
-        return result;
-    }
-
-    #endregion
-
-    #region Convert
-
-    public static CloudLosingCatData CreateCloudLosingCatData(CloudCatData cloudCatData)
-    {
-        CloudLosingCatData result = new CloudLosingCatData();
-        result.CatData = cloudCatData.CatData;
-        result.CatDiaryData = cloudCatData.CatDiaryData;
-        result.CatSkinData = cloudCatData.CatSkinData;
-        return result;
-    }
-
     #endregion
 }

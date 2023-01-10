@@ -17,7 +17,8 @@ public class CatSystem : MvcBehaviour
     [PropertyRange(0, 1)] [SerializeField] private float littleGameChance;
 
     private List<Cat> myCats = new List<Cat>();
-    private List<Cat> deadCats = new List<Cat>();
+    // private List<Cat> deadCats = new List<Cat>();
+    private List<CloudLosingCatData> _losingCatDatas = new List<CloudLosingCatData>();
 
     public CallbackValue OnCatsChange;
     public Callback OnCatDead;
@@ -40,14 +41,20 @@ public class CatSystem : MvcBehaviour
             myCats[i].DailyCheckStatus();
     }
 
-    private void LoginCheckCatStatus()
+    private async void LoginCheckCatStatus()
     {
         for (int i = 0; i < myCats.Count; i++)
             myCats[i].LoginCheckStatus();
 
         for (int i = myCats.Count - 1; i >= 0; i--)
             if (myCats[i].cloudCatData.CatServerData.IsDead)
-                SetDead(myCats[i]);
+            {
+                if (i == 0)
+                    App.model.entrance.DeadCat = myCats[i];
+                await SetDead(myCats[i]);
+            }
+
+        App.model.entrance.LosingCatDatas = _losingCatDatas;
     }
 
     private void CheckCatStatus()
@@ -101,25 +108,29 @@ public class CatSystem : MvcBehaviour
     }
 
     /// 讓貓移動到墓地
-    private void SetDead(Cat cat)
+    private async Task SetDead(Cat cat)
     {
         cat.Death();
         Remove(cat);
 
         App.system.player.CatDeadCount += 1;
-        deadCats.Insert(0, cat);
+        // deadCats.Insert(0, cat);
         
-        App.system.cloudSave.CreateCloudLosingCatData(cat.cloudCatData);
+        var losingCatData = await App.system.cloudSave.CreateCloudLosingCatData(cat.cloudCatData);
+        _losingCatDatas.Add(losingCatData);
+        
         App.system.cloudSave.DeleteCloudCatData(cat.cloudCatData);
+        
+        //TODO ValueChange
         
         OnCatDead?.Invoke();
     }
 
     /// 取得所有墓地的貓
-    public List<Cat> MyDeadCats()
-    {
-        return deadCats;
-    }
+    // public List<Cat> MyDeadCats()
+    // {
+    //     return deadCats;
+    // }
 
     public void RefreshCatSkin()
     {

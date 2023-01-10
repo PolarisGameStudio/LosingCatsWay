@@ -1,5 +1,4 @@
 using System;
-using Google.Impl;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -311,6 +310,7 @@ public class Controller_Clinic : ControllerBehavior
     public void OpenCheckResult()
     {
         // DoFunction();
+        App.model.clinic.SelectedCat = App.model.clinic.SelectedCat; //ValueChange
         App.view.clinic.result.Open();
     }
 

@@ -116,7 +116,7 @@ public class MyApplication : MonoBehaviour
         var myTime = system.myTime;
         var timeData = cloudSaveData.TimeData;
         
-        myTime.FirstLoginDateTime = timeData.FirstLoginDateTime.ToDateTime().ToLocalTime();
+        myTime.AccountCreateDateTime = timeData.FirstLoginDateTime.ToDateTime().ToLocalTime();
         myTime.PerDayLoginDateTime = timeData.PerDayLoginDateTime.ToDateTime().ToLocalTime();
         myTime.LastLoginDateTime = timeData.LastLoginDateTime.ToDateTime().ToLocalTime();
 

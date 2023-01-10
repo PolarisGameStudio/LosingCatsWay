@@ -267,9 +267,7 @@ public class CatSkin : MvcBehaviour
     public void CloseSickEye()
     {
         Skeleton catSkeleton = GetCatSkeleton();
-
         catSkeleton.SetAttachment(sick_Expression_Eye, null);
-        catSkeleton.SetAttachment(sick_Expression_Flush, null);
     }
 
     private void SetSickSlotNull(bool isAdult)

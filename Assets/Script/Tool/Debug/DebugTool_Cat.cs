@@ -9,8 +9,7 @@ using Firebase.Auth;
 
 public class DebugTool_Cat
 {
-    /// No save
-    public CloudCatData GetCreateCat(string owner, bool isAdult)
+    public async Task<CloudCatData> GetCreateCat(string owner, bool isAdult)
     {
         CloudCatData cloudCatData = new CloudCatData();
 
@@ -85,6 +84,10 @@ public class DebugTool_Cat
         cloudCatData.CatDiaryData = catDiaryData;
         cloudCatData.CatServerData = catServerData;
 
+        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+        DocumentReference docRef = db.Collection("Cats").Document(catData.CatId);
+        await docRef.SetAsync(cloudCatData);
+        
         return cloudCatData;
     }
     

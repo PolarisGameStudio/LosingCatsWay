@@ -20,13 +20,13 @@ public class Controller_Entrance : ControllerBehavior
         {
             App.model.entrance.OpenType = 0; // 刷新Value
             App.model.entrance.Cats = App.system.cat.GetCats();
-            return;
+            // return;
         }
 
-        if (App.model.entrance.OpenType == 1) //有死掉的貓
-        {
-            App.model.entrance.DeadCat = App.system.cat.MyDeadCats()[0];
-        }
+        // if (App.model.entrance.OpenType == 1) //有死掉的貓
+        // {
+        //     App.model.entrance.DeadCat = App.system.cat.MyDeadCats()[0];
+        // }
     }
 
     public void Close()
@@ -42,12 +42,12 @@ public class Controller_Entrance : ControllerBehavior
         App.model.entrance.SelectedDiaryIndex = 0;
         
         // 這裡只要這次死的貓 不要之前的
-        var deadCats = App.system.cat.MyDeadCats();
-        List<CloudLosingCatData> tmpDatas = new List<CloudLosingCatData>();
-        for (int i = 0; i < deadCats.Count; i++)
-            tmpDatas.Add(CatExtension.CreateCloudLosingCatData(deadCats[i].cloudCatData));
-        
-        App.model.entrance.LosingCatDatas = tmpDatas;
+        // var deadCats = App.system.cat.MyDeadCats();
+        // List<CloudLosingCatData> tmpDatas = new List<CloudLosingCatData>();
+        // for (int i = 0; i < deadCats.Count; i++)
+        //     tmpDatas.Add(CatExtension.CreateCloudLosingCatData(deadCats[i].cloudCatData));
+        //
+        // App.model.entrance.LosingCatDatas = tmpDatas;
         
         leftObject.SetActive(App.model.entrance.LosingCatDatas.Count > 1);
         rightObject.SetActive(App.model.entrance.LosingCatDatas.Count > 1);

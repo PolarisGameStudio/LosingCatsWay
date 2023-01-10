@@ -31,11 +31,7 @@ public class FindCatSystem : MvcBehaviour
         if (App.system.tutorial.isTutorial)
         {
             DebugTool_Cat debugToolCat = new DebugTool_Cat();
-            cloudCatData = debugToolCat.GetCreateCat($"Location{mapIndex}", true);
-            
-            FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-            DocumentReference docRef = db.Collection("Cats").Document(cloudCatData.CatData.CatId);
-            await docRef.SetAsync(cloudCatData);
+            cloudCatData = await debugToolCat.GetCreateCat($"Location{mapIndex}", true);
         }
         else
         {

@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class MyTimeSystem : MvcBehaviour
 {
-    [ReadOnly] 
-    public DateTime FirstLoginDateTime; //Account created date
+    public DateTime AccountCreateDateTime; //Account created date
     public DateTime PerDayLoginDateTime;
     public DateTime LastLoginDateTime;
 
@@ -21,20 +20,16 @@ public class MyTimeSystem : MvcBehaviour
     public void Init()
     {
         bool login = IsTodayLogin();
-        
         if (login)
         {
             print("Already login.");
-
             OnAlreadyLogin?.Invoke();
             OnAlreadyLogin = null;
         }
         else
         {
             print("First login.");
-            
-            PerDayLoginDateTime = Timestamp.GetCurrentTimestamp().ToDateTime();
-
+            PerDayLoginDateTime = MyTimeNow;
             OnFirstLogin?.Invoke();
             OnFirstLogin = null;
         }
@@ -42,10 +37,17 @@ public class MyTimeSystem : MvcBehaviour
 
     public bool IsTodayLogin()
     {
-        DateTime nowTime = Timestamp.GetCurrentTimestamp().ToDateTime();
-        
-        if ((nowTime - PerDayLoginDateTime).Days >= 1)
+        DateTime nowTime = MyTimeNow;
+
+        if (nowTime.Year != PerDayLoginDateTime.Year)
             return false;
+        if (nowTime.Month != PerDayLoginDateTime.Month)
+            return false;
+        if (nowTime.Day != PerDayLoginDateTime.Day)
+            return false;
+        
+        // if ((nowTime - PerDayLoginDateTime).Days >= 1)
+        //     return false;
 
         return true;
     }
@@ -69,7 +71,7 @@ public class MyTimeSystem : MvcBehaviour
     
     public void SetDateTime()
     {
-        LastLoginDateTime = Timestamp.GetCurrentTimestamp().ToDateTime();
+        LastLoginDateTime = MyTimeNow;
     }
 
     public DateTime MyTimeNow => Timestamp.GetCurrentTimestamp().ToDateTime().ToLocalTime();

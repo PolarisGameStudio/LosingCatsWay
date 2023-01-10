@@ -39,10 +39,12 @@ public class View_ClinicResult : ViewBehaviour
 
     private Queue<string> resultIds = new Queue<string>();
     private Cat cat;
+    private string _sickId;
 
     public override void Open()
     {
         base.Open();
+        catSkin.SetActive(true);
 
         if (cat.cloudCatData.CatHealthData.SickId is "SK001" or "SK002")
             return;
@@ -68,44 +70,18 @@ public class View_ClinicResult : ViewBehaviour
     private void OnMetCountChange(object value)
     {
         int count = (int)value;
-        metCountText.text = count.ToString();
+        ChangeMetCount(count);
     }
 
     private void OnSickIdChange(object value)
     {
         string sickId = value.ToString();
-        
-        sickNameText.text = App.factory.stringFactory.GetSickName(sickId);
-        sickInfoText.text = App.factory.stringFactory.GetSickInfo(sickId);
-        sickInfoImage.sprite = App.factory.sickFactory.GetSickSprite(sickId);
+        _sickId = sickId;
 
-        for (int i = 0; i < sickLevels.Length; i++)
-        {
-            int sickLevel = App.factory.sickFactory.GetSickLevel(sickId);
-            if (i == sickLevel)
-                sickLevels[i].SetActive(true);
-            else
-                sickLevels[i].SetActive(false);
-        }
-
-        if (sickId is "SK001" or "SK002")
-        {
-            metCountObject.SetActive(false);
-            cantMetObject.SetActive(true);
-                
-            signObject.SetActive(false);
-            deadSignObject.SetActive(true);
-        }
-        else
-        {  
-            metCountObject.SetActive(true);
-                
-            signObject.SetActive(true);
-            deadSignObject.SetActive(false);
-        }
+        if (string.IsNullOrEmpty(sickId))
+            return;
         
-        catSkin.SetActive(true);
-        catSkin.ChangeSkin(cat.cloudCatData);
+        ChangeSickContent(sickId);
     }
 
     private void OnSelectedCatChange(object value)
@@ -159,7 +135,7 @@ public class View_ClinicResult : ViewBehaviour
     {
         if (resultIds.Count > 0)
         {
-            if (string.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId))
+            if (string.IsNullOrEmpty(_sickId))
             {
                 resultIds = new Queue<string>(resultIds.Where(x => x != "CP001")); //客製化病狀單
                 contentGroup.DOFade(0, 0.25f).From(1);
@@ -188,8 +164,12 @@ public class View_ClinicResult : ViewBehaviour
         
         string id = resultIds.Dequeue();
 
-        if (id == "CP001") 
+        if (id == "CP001")
+        {
+            ChangeSickContent(_sickId);
+            ChangeMetCount(cat.cloudCatData.CatHealthData.MetDoctorCount);
             return;
+        }
 
         sickNameText.text = App.factory.stringFactory.GetPaymentName(id);
         sickInfoText.text = App.factory.stringFactory.GetPaymentInfo(id);
@@ -198,5 +178,42 @@ public class View_ClinicResult : ViewBehaviour
         
         for (int i = 0; i < sickLevels.Length; i++)
             sickLevels[i].SetActive(i == 3);
+    }
+
+    private void ChangeSickContent(string sickId)
+    {
+        sickNameText.text = App.factory.stringFactory.GetSickName(sickId);
+        sickInfoText.text = App.factory.stringFactory.GetSickInfo(sickId);
+        sickInfoImage.sprite = App.factory.sickFactory.GetSickSprite(sickId);
+
+        for (int i = 0; i < sickLevels.Length; i++)
+        {
+            int sickLevel = App.factory.sickFactory.GetSickLevel(sickId);
+            if (i == sickLevel)
+                sickLevels[i].SetActive(true);
+            else
+                sickLevels[i].SetActive(false);
+        }
+
+        if (sickId is "SK001" or "SK002")
+        {
+            metCountObject.SetActive(false);
+            cantMetObject.SetActive(true);
+            signObject.SetActive(false);
+            deadSignObject.SetActive(true);
+        }
+        else
+        {  
+            metCountObject.SetActive(true);
+            signObject.SetActive(true);
+            deadSignObject.SetActive(false);
+        }
+        
+        catSkin.ChangeSkin(cat.cloudCatData);
+    }
+
+    private void ChangeMetCount(int count)
+    {
+        metCountText.text = count.ToString();
     }
 }
