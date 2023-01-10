@@ -18,7 +18,7 @@ public class Controller_Cloister : ControllerBehavior
                 var tmp = losingCats[i];
                 losingCats.RemoveAt(i);
                 
-                if (tmp.LosingCatStatus != "First") //不是第一隻才刪掉
+                if (!tmp.LosingCatStatus.Contains("First")) //不是第一隻才刪掉
                     App.system.cloudSave.DeleteLosingCatData(tmp);
             }
         }
@@ -103,7 +103,7 @@ public class Controller_Cloister : ControllerBehavior
     public void UseFlower()
     {
         var data = App.model.cloister.SelectedLosingCatData;
-        if (data.LosingCatStatus == "Flower")
+        if (data.LosingCatStatus.Contains("Flower"))
         {
             App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
             return;
@@ -119,7 +119,7 @@ public class Controller_Cloister : ControllerBehavior
         App.system.confirm.Active(ConfirmTable.RefreshConfirm, () =>
         {
             item.Count -= 1;
-            data.LosingCatStatus = "Flower";
+            data.LosingCatStatus.Add("Flower");
             App.system.cloudSave.UpdateLosingCatDiaryData(data);
             
             //ValueChange

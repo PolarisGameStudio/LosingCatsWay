@@ -455,7 +455,9 @@ public class CloudSaveSystem : MvcBehaviour
         losingCatData.CatDiaryData = cloudCatData.CatDiaryData;
         
         var losingCats = await App.system.cloudSave.LoadCloudLosingCatDatas(App.system.player.PlayerId);
-        losingCatData.LosingCatStatus = losingCats.Count <= 0 ? string.Empty : "First";
+        losingCatData.LosingCatStatus = new List<string>();
+        if (losingCats.Count <= 0)
+            losingCatData.LosingCatStatus.Add("First");
         
         losingCatData.ExpiredTimestamp = Timestamp.FromDateTime(App.system.myTime.MyTimeNow.AddDays(7));
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;

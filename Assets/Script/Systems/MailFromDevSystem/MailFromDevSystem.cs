@@ -25,7 +25,7 @@ public class MailFromDevSystem : MvcBehaviour
         firstLosingCat = null;
         for (int i = 0; i < losingCats.Count; i++)
         {
-            if (losingCats[i].LosingCatStatus == "First")
+            if (losingCats[i].LosingCatStatus.Contains("First"))
             {
                 firstLosingCat = losingCats[i];
                 break;
