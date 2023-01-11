@@ -28,7 +28,7 @@ public class CatchCatMap : MvcBehaviour
 
     [Title("UI")] 
     [SerializeField] private Image hpBar;
-    [SerializeField] private TextMeshProUGUI runChanceText;
+    //[SerializeField] private TextMeshProUGUI runChanceText;
     [SerializeField] private TextMeshProUGUI turnText;
     [SerializeField] private Button[] chooseTypeButtons; //選擇種類按鈕*4
     [SerializeField] private Button catchButton; //捕捉按鈕
@@ -37,16 +37,16 @@ public class CatchCatMap : MvcBehaviour
     [SerializeField] private GameObject[] chooseTypeMasks;
     [SerializeField] private GameObject blockRaycastObject;
     
-    [TabGroup("Top")] [SerializeField] private RectTransform turnRect;
-    [TabGroup("Top")] [SerializeField] private RectTransform chanceRect;
-    [TabGroup("Top")] [SerializeField] private RectTransform chanceIconRect;
+    [TabGroup("Top")] [SerializeField] private RectTransform topRect;
+    //[TabGroup("Top")] [SerializeField] private RectTransform chanceRect;
+    //[TabGroup("Top")] [SerializeField] private RectTransform chanceIconRect;
     [TabGroup("Top")] [SerializeField] private Image turnDarkMask;
-    [TabGroup("Top")] [SerializeField] private Image chanceDarkMask;
+    //[TabGroup("Top")] [SerializeField] private Image chanceDarkMask;
     [TabGroup("Top")] [SerializeField] private CanvasGroup topFullMask;
     [TabGroup("Top")] [SerializeField] private GameObject topBlur;
-    [TabGroup("Top")] [SerializeField] private RectTransform topGroupRect;
+    //[TabGroup("Top")] [SerializeField] private RectTransform topGroupRect;
     [TabGroup("Top")] [SerializeField] private RectTransform turnTextRect;
-    [TabGroup("Top")] [SerializeField] private RectTransform chanceTextRect;
+    //[TabGroup("Top")] [SerializeField] private RectTransform chanceTextRect;
 
     [TabGroup("TopLeft")] [SerializeField] private RectTransform exitButtonRect;
     [TabGroup("TopLeft")] [SerializeField] private RectTransform aboutButtonRect;
@@ -62,7 +62,7 @@ public class CatchCatMap : MvcBehaviour
     [TabGroup("Item")] [SerializeField]
     private Image itemImage;
 
-    [TabGroup("Bot")] [SerializeField] private Image botDarkMask;
+    [TabGroup("Bot")] [SerializeField] private CanvasGroup botDarkMask;
     [TabGroup("Bot")] [SerializeField] private GameObject lastTurnCatchButton;
 
     [Title("Particles")] [SerializeField] private UIParticle loveParticle;
@@ -77,7 +77,7 @@ public class CatchCatMap : MvcBehaviour
     private float hp; //生命值
     private CloudCatData cloudCatData;
     private List<Item_CatchCat> selectedItems = new List<Item_CatchCat>();
-    private float cardOriginY = -65f;
+    private float cardOriginY = 0f;
     private int selectedType;
     private float runChance;
     
@@ -220,7 +220,7 @@ public class CatchCatMap : MvcBehaviour
         turn = 0;
         runChance = 0;
         turnText.text = "0/7";
-        runChanceText.text = "0%";
+        //runChanceText.text = "0%";
 
         lastTurnCatchButton.transform.DOKill();
         lastTurnCatchButton.SetActive(false);
@@ -285,7 +285,7 @@ public class CatchCatMap : MvcBehaviour
             cardPersonalitys[i].DoPopCard();
         }
 
-        DoTopGroupTween(() =>
+        DoTopTween(() =>
         {
             if (turn == 7) //Last
             {
@@ -319,7 +319,7 @@ public class CatchCatMap : MvcBehaviour
         if (tmp >= 6)
             tmp = 6;
         float chance = Mathf.Clamp(runChance, 0, 1);
-        runChanceText.text = $"{chance * 100:0}%";
+        // runChanceText.text = $"{chance * 100:0}%";
     }
 
     // 允許玩家行動
@@ -801,30 +801,37 @@ public class CatchCatMap : MvcBehaviour
             topFullMask.DOFade(0, 0.25f).From(1).SetEase(Ease.OutExpo).OnComplete(() => topBlur.SetActive(false));
     }
 
-    private void DoTopGroupTween(TweenCallback OnComplete = null)
+    [Button]
+    private void DoTopTween(TweenCallback OnComplete = null)
     {
         float startY = -80;
         float endY = -250;
-        topGroupRect.anchoredPosition = new Vector2(0, startY);
+        topRect.anchoredPosition = new Vector2(0, startY);
         Sequence seq = DOTween.Sequence();
 
         seq
+            //模糊畫面
             .AppendCallback(() => DoTopBlurTween(true))
+            //靈動島亮起
             .AppendCallback(DoTopLight)
-            .Append(topGroupRect.DOAnchorPosY(endY, 0.3f).SetEase(Ease.InOutCubic))
-            .Join(topGroupRect.DOScale(new Vector2(0.98f, 0.98f), 0.1f).From(Vector2.one).SetEase(Ease.InOutSine))
-            .Join(topGroupRect.DOScale(new Vector2(1.3f, 1.3f), 0.2f).SetEase(Ease.InOutSine).SetDelay(0.1f))
-            .AppendInterval(0.4f)
-            .Append(turnTextRect.DOScale(new Vector2(1.3f, 1.3f), 0.1f).From(Vector2.one).SetLoops(2, LoopType.Yoyo)
+            //靈動島往下
+            .Append(topRect.DOAnchorPosY(endY, 0.3f).SetEase(Ease.InOutCubic))
+            //往下過程內縮
+            .Join(topRect.DOScale(new Vector2(0.95f, 0.95f), 0.1f).From(Vector2.one).SetEase(Ease.Linear))
+            //往下抵達張開
+            .Join(topRect.DOScale(new Vector2(1.5f, 1.5f), 0.2f).SetEase(Ease.Linear).SetDelay(0.1f))
+            .AppendInterval(0.35f)
+            //回合字跳動
+            .Append(turnTextRect.DOScale(new Vector2(1.5f, 1.5f), 0.1f).From(Vector2.one).SetLoops(2, LoopType.Yoyo)
                 .OnComplete(RefreshTurn))
             .AppendInterval(0.25f)
-            .Append(chanceTextRect.DOScale(new Vector2(1.3f, 1.3f), 0.1f).From(Vector2.one)
-                .SetLoops(2, LoopType.Yoyo).OnComplete(RefreshChance))
-            .AppendInterval(0.4f)
-            .Append(topGroupRect.DOAnchorPosY(startY, 0.3f).SetEase(Ease.InOutCubic))
-            .Join(topGroupRect.DOScale(Vector2.one, 0.2f).SetEase(Ease.InOutCubic))
-            .Join(topGroupRect.DOScale(new Vector2(1.03f, 1.03f), 0.2f).From(Vector2.one).SetEase(Ease.InOutCubic)
-                .SetLoops(2, LoopType.Yoyo).SetDelay(0.3f))
+            //靈動島往上回原點
+            .Append(topRect.DOAnchorPosY(startY, 0.3f).SetEase(Ease.InOutCubic))
+            //往上過程恢復原比例
+            .Join(topRect.DOScale(Vector2.one, 0.15f).SetEase(Ease.InOutCubic))
+            //抵達時比例彈動
+            .Join(topRect.DOScale(new Vector2(1.03f, 1.03f), 0.2f).From(Vector2.one).SetEase(Ease.InOutCubic)
+                .SetLoops(2, LoopType.Yoyo).SetDelay(0.2f))
             .OnComplete(() =>
             {
                 DoTopBlurTween(false);
@@ -845,7 +852,7 @@ public class CatchCatMap : MvcBehaviour
     private void DoTopDark()
     {
         turnDarkMask.DOFade(0.5f, 0.25f);
-        chanceDarkMask.DOFade(0.5f, 0.25f);
+        //chanceDarkMask.DOFade(0.5f, 0.25f);
     }
 
     private void DoTopRightDark()
@@ -872,7 +879,7 @@ public class CatchCatMap : MvcBehaviour
     private void DoTopLight()
     {
         turnDarkMask.DOFade(0, 0.25f);
-        chanceDarkMask.DOFade(0, 0.25f);
+        //chanceDarkMask.DOFade(0, 0.25f);
     }
 
     private void DoTopRightLight()
