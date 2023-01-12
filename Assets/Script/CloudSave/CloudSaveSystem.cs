@@ -492,6 +492,17 @@ public class CloudSaveSystem : MvcBehaviour
         };
         await docRef.UpdateAsync(updates);
     }
+    
+    public void UpdateLosingCatStatusData(CloudLosingCatData cloudLosingCatData)
+    {
+        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+        DocumentReference docRef = db.Collection("LosingCats").Document(cloudLosingCatData.CatData.CatId);
+        Dictionary<string, object> updates = new Dictionary<string, object>
+        {
+            { "LosingCatStatus", cloudLosingCatData.LosingCatStatus }
+        };
+        docRef.UpdateAsync(updates);
+    }
 
     public async void DeleteLosingCatData(CloudLosingCatData cloudLosingCatData)
     {

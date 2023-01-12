@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Doozy.Runtime.UIManager.Containers;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Card_BagChooseCat : MvcBehaviour
 {
+    public Button button;
     [SerializeField] private CatSkin catSkin;
     [SerializeField] private TextMeshProUGUI nameText;
-    
+
     [Title("Selected")]
     [SerializeField] private GameObject selectedObject;
     [SerializeField] private TextMeshProUGUI selectedName;
@@ -44,11 +47,5 @@ public class Card_BagChooseCat : MvcBehaviour
             frameRect.DOScale(Vector2.one, 0.25f).From(new Vector2(1.1f, 1.1f));
         else
             frameRect.DOKill();
-    }
-
-    public void Select()
-    {
-        int index = transform.GetSiblingIndex();
-        //todo
     }
 }

@@ -2,9 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Controller_Bag : ControllerBehavior
 {
+    public View_BagChooseCat viewBagChooseCat;
+    private UnityAction<string> _chooseCatAction;
+    
     public void Open()
     {
         App.view.bag.Open();
@@ -18,16 +22,6 @@ public class Controller_Bag : ControllerBehavior
         App.controller.lobby.Open();
         App.view.bag.Close();
         ChooseType(-1);
-    }
-
-    public void OpenChooseCat()
-    {
-        App.view.bag.OpenChooseCat();
-    }
-
-    public void CloseChooseCat()
-    {
-        App.view.bag.CloseChooseCat();
     }
 
     public void ChooseType(int type)
@@ -100,7 +94,8 @@ public class Controller_Bag : ControllerBehavior
     public void UseItem()
     {
         App.system.soundEffect.Play("Button");
-        
+        _chooseCatAction = null;
+
         var item = App.model.bag.SelectedItem;
     
         if (item.id == "ITL00021")
@@ -198,11 +193,33 @@ public class Controller_Bag : ControllerBehavior
             
             App.system.reward.Open(rewards.ToArray());
             App.model.bag.SelectedItems = App.model.bag.SelectedItems;
-            
             return;
         }
+        
+        if (item.id == "ISL00004")
+        {
+            viewBagChooseCat.Open(BagChooseCatType.LosingCat);
+            
+            _chooseCatAction = (catId) =>
+            {
+                CloudLosingCatData cloudLosingCatData =
+                    App.model.cloister.LosingCatDatas.Find(x => x.CatData.CatId == catId);
+                print(cloudLosingCatData.LosingCatStatus.Count);
+                cloudLosingCatData.LosingCatStatus.Add("AngelCat");
+                App.system.cloudSave.UpdateLosingCatStatusData(cloudLosingCatData);
+                print(cloudLosingCatData.LosingCatStatus.Count);
+                item.Count--;
+                ChooseType(0);
+                ChooseType(6);
+                
+                App.system.cat.CheckAngelCat();
+            };
+        }
     }
-    
-    //todo chooseCat
-    //todo chooseCat + useItem
+
+    public void ChooseCatOk(string catId)
+    {
+        _chooseCatAction?.Invoke(catId);
+        _chooseCatAction = null;
+    }
 }

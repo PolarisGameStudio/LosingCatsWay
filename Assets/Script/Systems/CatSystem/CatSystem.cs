@@ -13,23 +13,26 @@ public class CatSystem : MvcBehaviour
 {
     [SerializeField] private Cat catObject;
     [SerializeField] private Cat kittyCatObject;
+    [SerializeField] private AngelCat angelCatObject;
 
     [PropertyRange(0, 1)] [SerializeField] private float littleGameChance;
 
     private List<Cat> myCats = new List<Cat>();
+
     // private List<Cat> deadCats = new List<Cat>();
     private List<CloudLosingCatData> _losingCatDatas = new List<CloudLosingCatData>();
+    private AngelCat _angelCat;
 
     public CallbackValue OnCatsChange;
     public Callback OnCatDead;
-    
+
     public void Init()
     {
         InvokeRepeating(nameof(CheckCatStatus), 0, 180);
 
         App.system.myTime.OnFirstLogin += DailyCheckCatStatus;
         App.system.myTime.OnFirstLogin += LoginCheckCatStatus;
-        
+
         App.system.myTime.OnAlreadyLogin += LoginCheckCatStatus;
     }
 
@@ -115,14 +118,14 @@ public class CatSystem : MvcBehaviour
 
         App.system.player.CatDeadCount += 1;
         // deadCats.Insert(0, cat);
-        
+
         var losingCatData = await App.system.cloudSave.CreateCloudLosingCatData(cat.cloudCatData);
         _losingCatDatas.Add(losingCatData);
-        
+
         App.system.cloudSave.DeleteCloudCatData(cat.cloudCatData);
-        
+
         //TODO ValueChange
-        
+
         OnCatDead?.Invoke();
     }
 
@@ -131,7 +134,6 @@ public class CatSystem : MvcBehaviour
     // {
     //     return deadCats;
     // }
-
     public void RefreshCatSkin()
     {
         for (int i = 0; i < myCats.Count; i++)
@@ -193,6 +195,30 @@ public class CatSystem : MvcBehaviour
     public void ClosePolyNav2D()
     {
         // transform.GetComponent<PolyNavMap>().enabled = false;
+    }
+
+    #endregion
+
+    #region AngelCat
+
+    public void CheckAngelCat()
+    {
+        List<CloudLosingCatData> losingCatDatas = App.model.cloister.LosingCatDatas;
+        CloudLosingCatData angelCat = losingCatDatas.Find(x => x.LosingCatStatus.Contains("AngelCat"));
+        
+        if (angelCat == null)
+            return;
+
+        if (_angelCat != null)
+            return;
+        
+        AngelCat cat = Instantiate(angelCatObject, transform);
+        cat.SetCloudCatData(angelCat);
+
+        Vector3 randomPostition = App.system.room.GetRandomRoomPosition();
+        cat.transform.position = randomPostition;
+
+        _angelCat = cat;
     }
 
     #endregion

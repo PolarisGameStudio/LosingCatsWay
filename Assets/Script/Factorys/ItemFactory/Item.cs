@@ -137,6 +137,10 @@ public class Item : ScriptableObject
                     fromValue = app.system.inventory.SkinData[id];
                     app.system.inventory.SkinData[id] = value;
                     break;
+                case ItemType.Special:
+                    fromValue = app.system.inventory.ToolData[id];
+                    app.system.inventory.ToolData[id] = value;
+                    break;
                 case ItemType.Icon:
                     fromValue = app.system.inventory.PlayerIconData[id];
                     app.system.inventory.PlayerIconData[id] = value;
