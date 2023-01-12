@@ -82,6 +82,8 @@ public class MyApplication : MonoBehaviour
         
         await system.mail.Init();
         
+        system.cat.CheckAngelCat();
+        
         DOVirtual.DelayedCall(0.35f, controller.lobby.Open);
     }
 

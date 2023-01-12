@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class AngelCat : MvcBehaviour
 {
+    public CatSkin catSkin;
     public bool isFriendMode = false;
     private PolyNavAgent polyNavAgent;
 
@@ -14,8 +15,13 @@ public class AngelCat : MvcBehaviour
     void Start()
     {
         polyNavAgent = GetComponent<PolyNavAgent>();
-        SetAngelRing();
     }
+    
+    public void SetCloudCatData(CloudLosingCatData cloudLosingCatData)
+    {
+        catSkin.ChangeSkin(cloudLosingCatData);
+        SetAngelRing();
+    } 
 
     public void MoveToRandomRoom()
     {

@@ -144,7 +144,12 @@ public class CatSkin : MvcBehaviour
         
             var catData = cloudCatData.CatData;
             var catSkinData = cloudCatData.CatSkinData;
-            Skeleton catSkeleton = skeletonGraphic.Skeleton;
+            Skeleton catSkeleton = null;
+
+            if (isGUI)
+                catSkeleton = skeletonGraphic.Skeleton;
+            else
+                catSkeleton = skeletonMecanim.Skeleton;
             
             var variety = catData.Variety.Replace('_', '-');
 
@@ -382,6 +387,9 @@ public class CatSkin : MvcBehaviour
 
     private void SetSkeletonDataAsset(bool isKitty)
     {
+        if (!isGUI)
+            return;
+        
         if (!isKitty)
         {
             skeletonGraphic.initialSkinName = "Normal_Cat/Benz";
