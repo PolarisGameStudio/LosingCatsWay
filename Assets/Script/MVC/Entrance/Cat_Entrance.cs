@@ -92,8 +92,8 @@ public class Cat_Entrance : MvcBehaviour
         
         bubbleObject.transform.DOScale(Vector2.zero, 0.25f).SetEase(Ease.OutExpo);
 
-        int index = transform.GetSiblingIndex() + 1;
-        App.system.soundEffect.Play($"DO_RE_MI_{index}");
+        int index = transform.GetSiblingIndex();
+        App.controller.entrance.pitchShift.Play(index);
         
         skeletonGraphic = catSkin.skeletonGraphic;
         skeletonGraphic.AnimationState.ClearTracks();

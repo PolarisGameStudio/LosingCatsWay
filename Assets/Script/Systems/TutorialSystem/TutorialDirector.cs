@@ -65,4 +65,15 @@ public class TutorialDirector : MvcBehaviour
                 actors.Add(actor);
         }
     }
+
+    [Button]
+    private void ReindexAllChildActors()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            TutorialActor actor = transform.GetChild(i).GetComponent<TutorialActor>();
+            if (actor != null)
+                actor.name = $"Actor ({i})";
+        }
+    }
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class Controller_Entrance : ControllerBehavior
 {
     [SerializeField] private GameObject leftObject, rightObject;
+    public PitchShift pitchShift;
 
     public void Init()
     {

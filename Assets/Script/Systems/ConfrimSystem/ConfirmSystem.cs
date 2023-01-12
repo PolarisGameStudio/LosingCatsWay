@@ -19,10 +19,12 @@ public class ConfirmSystem : MvcBehaviour
     private UnityAction _cancelEvent;
 
     private int siblingIndex = -1;
+    private bool isOnlyConfirm = false;
 
     public ConfirmSystem OnlyConfirm()
     {
         cancelButton.SetActive(false);
+        isOnlyConfirm = true;
         return this;
     }
 
@@ -113,6 +115,7 @@ public class ConfirmSystem : MvcBehaviour
         _cancelEvent = null;
 
         cancelButton.SetActive(true);
+        isOnlyConfirm = false;
         ResetSibling();
     }
 
@@ -128,5 +131,18 @@ public class ConfirmSystem : MvcBehaviour
             return;
         transform.SetSiblingIndex(siblingIndex);
         siblingIndex = -1;
+    }
+
+    public void Click()
+    {
+        if (view.isShowing)
+            return;
+        if (view.isHiding)
+            return;
+        
+        if (isOnlyConfirm)
+            Ok();
+        else
+            Cancel();
     }
 }

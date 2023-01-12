@@ -26,11 +26,6 @@ public class TutorialActor : SerializedMonoBehaviour
 
     [Title("Bgm")] [SerializeField] private string bgmString;
 
-    // private void Reset()
-    // {
-    //     order = transform.GetSiblingIndex();
-    // }
-
     public virtual void Enter()
     {
         App.system.tutorial.SetCameraDrag(cameraDrag);

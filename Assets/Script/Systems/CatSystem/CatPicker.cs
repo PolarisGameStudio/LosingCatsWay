@@ -36,11 +36,12 @@ public class CatPicker : MvcBehaviour
         App.controller.lobby.Close();
         App.view.followCat.Close();
         
-        App.system.soundEffect.Play("Button");
-
         //1.Stop AI
         agent.Stop();
+        
         SetStartPosition();
+        PlaySound();
+        
         isPicking = true;
 
         //2.Stop animator
@@ -85,6 +86,13 @@ public class CatPicker : MvcBehaviour
             cat.transform.position = startPosition;
             cat.Reset();
         }
+    }
+
+    private void PlaySound()
+    {
+        if (isPicking)
+            return;
+        App.system.soundEffect.Play("Button");
     }
 
     #endregion

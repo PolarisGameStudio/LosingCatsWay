@@ -11,6 +11,7 @@ public class ScreenshotSystem : MvcBehaviour
     private bool isShot;
     
     public Callback OnScreenshotComplete;
+    public Callback OnScreenshotCancel;
 
     public void Open()
     {
@@ -20,6 +21,7 @@ public class ScreenshotSystem : MvcBehaviour
     public void Close()
     {
         view.InstantHide();
+        OnScreenshotCancel?.Invoke();
     }
 
     public void TakeScreenshot()

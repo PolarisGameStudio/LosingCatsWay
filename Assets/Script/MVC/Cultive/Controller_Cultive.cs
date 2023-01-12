@@ -273,7 +273,7 @@ public class Controller_Cultive : ControllerBehavior
         App.system.cloudSave.UpdateCloudCatSurviveData(cat.cloudCatData);
         App.system.cloudSave.UpdateCloudCatDiaryData(cat.cloudCatData);
 
-        SelectType(App.model.cultive.SelectedType);
+        // SelectType(App.model.cultive.SelectedType);
 
         if (satietyValue > 0)
             satietyEffect.Play();
@@ -384,6 +384,7 @@ public class Controller_Cultive : ControllerBehavior
                 App.model.cultive.SelectedCat = App.model.cultive.SelectedCat;
                 isCanDrag = true;
                 OpenClickCat();
+                SelectType(App.model.cultive.SelectedType);
             });
         }
     }
@@ -408,12 +409,14 @@ public class Controller_Cultive : ControllerBehavior
         //開始計算
         InvokeRepeating(nameof(CountDownTimer), 0.1f, 0.1f);
 
-        if (!App.system.tutorial.isTutorial) item.Count--;
+        if (!App.system.tutorial.isTutorial)
+            item.Count--;
 
         var items = App.model.cultive.SelectedItems;
 
         for (int i = 0; i < items.Count; i++)
-            if (items[i].Count <= 0) items.RemoveAt(i);
+            if (items[i].Count <= 0)
+                items.RemoveAt(i);
 
         App.model.cultive.SelectedItems = items;
 
@@ -434,7 +437,11 @@ public class Controller_Cultive : ControllerBehavior
         string animName = isAdult ? "Rearing_Cat/Rearing_Smile_IDLE" : "Rearing_Cat/Rearing_Smile_Sit";
         
         var t = catSkeleton.AnimationState.SetAnimation(0, animName, false);
-        DOVirtual.DelayedCall(t.Animation.Duration, () => App.model.cultive.SelectedCat = App.model.cultive.SelectedCat);
+        DOVirtual.DelayedCall(t.Animation.Duration, () =>
+        {
+            App.model.cultive.SelectedCat = App.model.cultive.SelectedCat;
+            SelectType(App.model.cultive.SelectedType);
+        });
         
         OnChangeLitter?.Invoke();
     }
@@ -670,6 +677,7 @@ public class Controller_Cultive : ControllerBehavior
         App.system.soundEffect.Play("Button");
         
         App.system.screenshot.OnScreenshotComplete += CloseScreenshot;
+        App.system.screenshot.OnScreenshotCancel += CloseScreenshot;
         App.view.cultive.TweenOut();
 
         DOVirtual.DelayedCall(1f, App.system.screenshot.Open);
@@ -681,6 +689,7 @@ public class Controller_Cultive : ControllerBehavior
         
         App.view.cultive.TweenIn();
         App.system.screenshot.OnScreenshotComplete -= CloseScreenshot;
+        App.system.screenshot.OnScreenshotCancel -= CloseScreenshot;
     }
 
     #endregion

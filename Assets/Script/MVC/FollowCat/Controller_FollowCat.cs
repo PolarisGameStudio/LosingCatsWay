@@ -5,6 +5,7 @@ using DG.Tweening;
 using Lean.Touch;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Controller_FollowCat : ControllerBehavior
 {
@@ -53,6 +54,9 @@ public class Controller_FollowCat : ControllerBehavior
 
         StartFollow(cat);
 
+        int rand = Random.Range(1, 6);
+        App.system.soundEffect.Play($"CatMeow_{rand}");
+
         App.model.followCat.SelectedCat = cat;
 
         App.controller.lobby.Close();
@@ -80,7 +84,7 @@ public class Controller_FollowCat : ControllerBehavior
         leanPinchCamera.enabled = false;
 
         float zoom = mainCamera.orthographicSize;
-        nextZoom = (CatExtension.GetCatAgeLevel(cat.cloudCatData.CatData.SurviveDays) == 0)
+        nextZoom = CatExtension.GetCatAgeLevel(cat.cloudCatData.CatData.SurviveDays) == 0
             ? kittyZoom
             : normalZoom;
         DOTween.To(() => zoom, x => zoom = x, nextZoom, 0.5f).OnUpdate(() => { mainCamera.orthographicSize = zoom; });
@@ -99,35 +103,6 @@ public class Controller_FollowCat : ControllerBehavior
 
     public void StartTrait()
     {
-        // var trait = followCat.cloudCatData.CatData.Trait;
-        //
-        // char traitType = 'C';
-        // int traitIndex;
-        //
-        // int traitTypeIndex = 0;
-        //
-        // if (trait.Contains('R'))
-        // {
-        //     traitType = 'R';
-        //     traitTypeIndex = 1;
-        // }
-        //
-        // if (trait.Contains('S'))
-        // {
-        //     traitType = 'S';
-        //     traitTypeIndex = 2;
-        // }
-        //
-        // traitIndex = Convert.ToInt32(trait.Split(traitType)[1]);
-        //
-        // followCat.StopMove();
-        //
-        // var animator = followCat.GetComponent<Animator>();
-        // animator.SetInteger(CatAnimTable.TraitType.ToString(), traitTypeIndex);
-        // animator.SetInteger(CatAnimTable.TraitIndex.ToString(), traitIndex);
-        //
-        // animator.Play(CatAnimTable.ToTrait.ToString());
-
         followCat.StopMove();
 
         var skinId = followCat.cloudCatData.CatSkinData.UseSkinId;
@@ -176,6 +151,7 @@ public class Controller_FollowCat : ControllerBehavior
     public void OpenScreenshot()
     {
         App.system.screenshot.OnScreenshotComplete += CloseScreenshot;
+        App.system.screenshot.OnScreenshotCancel += CloseScreenshot;
         Close();
         App.system.screenshot.Open();
     }
@@ -184,6 +160,7 @@ public class Controller_FollowCat : ControllerBehavior
     {
         Open();
         App.system.screenshot.OnScreenshotComplete -= CloseScreenshot;
+        App.system.screenshot.OnScreenshotCancel -= CloseScreenshot;
     }
 
     #endregion
