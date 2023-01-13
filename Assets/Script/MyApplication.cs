@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
@@ -93,7 +94,13 @@ public class MyApplication : MonoBehaviour
         var playerData = cloudSaveData.PlayerData;
 
         if (playerData.PlayerStatus != null)
-            player.playerStatus = playerData.PlayerStatus;
+            // 避免舊的Dict覆蓋掉擁有新資料的Dict
+            for (int i = 0; i < playerData.PlayerStatus.Count; i++)
+            {
+                string key = playerData.PlayerStatus.ElementAt(i).Key;
+                if (player.playerStatus.ContainsKey(key))
+                    player.playerStatus[key] = playerData.PlayerStatus[key];
+            }
         
         player.PlayerName = playerData.PlayerName;
         player.PlayerId = playerData.PlayerId;
