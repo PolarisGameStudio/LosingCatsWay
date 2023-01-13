@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
@@ -44,6 +45,12 @@ public class Card_MonthSign : MvcBehaviour
     {
         doubleBg.SetActive(value);
         countText.color = value ? doubleTextColor : normalTextColor;
+
+        if (value)
+        {
+            int vipCount = int.Parse(countText.text) * 2;
+            countText.text = vipCount.ToString("00");
+        }
     }
 
     public bool IsSign

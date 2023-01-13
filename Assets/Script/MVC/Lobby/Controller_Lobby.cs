@@ -114,4 +114,14 @@ public class Controller_Lobby : ControllerBehavior
     {
         App.system.post.Open();
     }
+
+    public void OpenSign()
+    {
+        App.controller.monthSign.Open();
+    }
+
+    public void OpenSideMenu()
+    {
+        App.system.sideMenu.Open();
+    }
 }

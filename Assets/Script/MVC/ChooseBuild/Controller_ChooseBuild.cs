@@ -9,6 +9,7 @@ public class Controller_ChooseBuild : ControllerBehavior
 {
     public Transform buildTmp;
     public Transform buildTmpCircle;
+    public Transform nonViewMap;
 
     public SpriteRenderer buildTmpMask;
 
@@ -151,8 +152,9 @@ public class Controller_ChooseBuild : ControllerBehavior
         if (App.model.build.IsMoving)
         {
             buildTmp.transform.position = App.model.chooseBuild.MoveBuildTmp.transform.position;
-            App.model.chooseBuild.MoveBuildTmp.transform.position = new Vector3(0, 0);
+            // App.model.chooseBuild.MoveBuildTmp.transform.position = new Vector3(0, 0);
             App.model.chooseBuild.MoveBuildTmp.GetComponent<Room>().OpenAllWall();
+            App.model.chooseBuild.MoveBuildTmp.transform.parent = nonViewMap;
             return;
         }
 

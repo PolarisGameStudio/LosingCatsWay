@@ -29,12 +29,16 @@ public class View_MonthSign : ViewBehaviour
     {
         base.Init();
         
-        RefreshDateObject();
-        
         App.model.monthSign.OnSignIndexsChange += OnSignIndexsChange;
         App.model.monthSign.OnMonthChange += OnMonthChange;
         App.model.monthSign.OnResignCountChange += OnResignCountChange;
         App.model.monthSign.OnMonthRewardsChange += OnMonthRewardsChange;
+    }
+
+    public override void Open()
+    {
+        base.Open();
+        RefreshDateObject();
     }
 
     private void OnMonthRewardsChange(object value)
@@ -57,7 +61,7 @@ public class View_MonthSign : ViewBehaviour
         monthNameText.text = monthName.Substring(0, 3).ToUpper();
     }
 
-    public void OnSignIndexsChange(object value)
+    private void OnSignIndexsChange(object value)
     {
         List<int> signIndexs = (List<int>)value;
 
@@ -110,12 +114,9 @@ public class View_MonthSign : ViewBehaviour
 
         int continueDays = 0;
 
-        for (int i = day - 1; i > 0; i--)
-        {
-            int sign = signIndexs[i];
-            if (sign == 1) continueDays++;
-            else break;
-        }
+        for (int i = 0; i < signIndexs.Count; i++)
+            if (signIndexs[i] == 1)
+                continueDays++;
 
         continueDayText.text = continueDays.ToString("00");
 
@@ -143,9 +144,13 @@ public class View_MonthSign : ViewBehaviour
         int dayInMonth = DateTime.DaysInMonth(nowDate.Year, nowDate.Month);
 
         for (int i = 0; i < dateObjects.Length; i++)
+        {
             dateObjects[i].SetActive(i < dayInMonth);
-        
-        //TODO 沒月卡return
+            dateObjects[i].SetDouble(false);
+        }
+
+        if (App.system.player.VipStatus == 0)
+            return;
 
         List<int> vipDays = new List<int> { 4, 7, 11, 14, 18, 21, 25, 28 };
         for (int i = 0; i < dateObjects.Length; i++)

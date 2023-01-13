@@ -30,6 +30,10 @@ public class DialogueSystem : MvcBehaviour
     public UIView dialogueView;
     public UIView chooseView;
 
+    [Title("Choose")] 
+    [SerializeField] private Button button_0;
+    [SerializeField] private Button button_1;
+
     private string[] answers;
     private List<string> sentences;
     private int checkpoint;
@@ -79,7 +83,7 @@ public class DialogueSystem : MvcBehaviour
 
             checkpoint++;
 
-            chooseView.Show();
+            OpenChoose();
             isComplete = true; //對話結束
             return;
         }
@@ -141,9 +145,20 @@ public class DialogueSystem : MvcBehaviour
         OnDialogueEnd?.Invoke();
     }
 
+    private void OpenChoose()
+    {
+        button_0.interactable = true;
+        button_1.interactable = true;
+        chooseView.Show();
+    }
+
     public void Choose(int index)
     {
+        button_0.interactable = false;
+        button_1.interactable = false;
+        
         App.system.soundEffect.Play("Button");
+        
         sentences.Add("0:" + answers[index]);
         chooseView.Hide();
 

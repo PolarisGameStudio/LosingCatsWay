@@ -20,8 +20,6 @@ public class Cat_Entrance : MvcBehaviour
     [SerializeField] private GameObject clickButton;
     [SerializeField] private bool hasBubble;
 
-    [SerializeField, HideIf("@hasBubble == true")] private UIParticle deadEffect;
-
     [Title("Sprites")]
     [SerializeField, HideIf("@hasBubble == false")] private Sprite angrySprite;
     [SerializeField, HideIf("@hasBubble == false")] private Sprite waterSprite;
@@ -75,8 +73,6 @@ public class Cat_Entrance : MvcBehaviour
             return;
         }
         statusImage.sprite = angrySprite;
-
-        // deadEffect.gameObject.SetActive(false);
     }
 
     public void SetActive(bool active)
@@ -123,25 +119,19 @@ public class Cat_Entrance : MvcBehaviour
         bubbleObject.SetActive(false);
         clickButton.SetActive(false);
         
-        // deadEffect.gameObject.SetActive(true);
-        // deadEffect.Play();
-        
         //先抓動畫
         Spine.Animation anim = catSkin.skeletonGraphic.SkeletonData.FindAnimation("Situation_Cat/Die");
         //播放動畫
-        TrackEntry trackEntry = catSkin.skeletonGraphic.AnimationState.SetAnimation(0, anim, false);
-        trackEntry.Complete += ShowDiaryButton;
+        catSkin.skeletonGraphic.AnimationState.SetAnimation(0, anim, false);
+        DOVirtual.DelayedCall(4.3f, ShowDiaryButton);
+        DOVirtual.DelayedCall(10f, App.controller.entrance.CloseDeadEffect);
     }
 
     //啓動日記
-    private void ShowDiaryButton(TrackEntry trackEntry)
+    private void ShowDiaryButton()
     {
-        trackEntry.Complete -= ShowDiaryButton;
-
-        DOTween.To(() => catSkin.skeletonGraphic.color, x => catSkin.skeletonGraphic.color = x,
-            new Color32(255, 255, 255, 0), 0.5f);
-        
-        catRect.DOScale(Vector2.zero, 0.45f).From(startScale).SetEase(Ease.InBack);
+        // catRect.DOScale(Vector2.zero, 0.45f).From(startScale).SetEase(Ease.InBack);
+        catRect.gameObject.SetActive(false);
         diaryButtonRect.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.45f);
     }
 

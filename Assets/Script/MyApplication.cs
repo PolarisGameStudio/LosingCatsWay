@@ -58,8 +58,6 @@ public class MyApplication : MonoBehaviour
         controller.entrance.Init();
         
         #endregion
-         
-        system.mailFromDev.Init();
         
         system.bgm.Init();
         system.soundEffect.Init();
@@ -94,6 +92,9 @@ public class MyApplication : MonoBehaviour
         var player = system.player;
         var playerData = cloudSaveData.PlayerData;
 
+        if (playerData.PlayerStatus != null)
+            player.playerStatus = playerData.PlayerStatus;
+        
         player.PlayerName = playerData.PlayerName;
         player.PlayerId = playerData.PlayerId;
         player.Level = playerData.Level;

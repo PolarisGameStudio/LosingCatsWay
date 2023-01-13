@@ -45,6 +45,8 @@ public class CloudSaveSystem : MvcBehaviour
         // CloudSave_PlayerData
         CloudSave_PlayerData playerData = new CloudSave_PlayerData();
 
+        playerData.PlayerStatus = App.system.player.playerStatus;
+        
         playerData.PlayerName = App.system.player.PlayerName;
         playerData.PlayerId = App.system.player.PlayerId;
         playerData.Level = App.system.player.Level;
@@ -148,6 +150,8 @@ public class CloudSaveSystem : MvcBehaviour
         // CloudSave_PlayerData
         CloudSave_PlayerData playerData = new CloudSave_PlayerData();
 
+        playerData.PlayerStatus = App.system.player.playerStatus;
+
         playerData.PlayerName = "-";
         playerData.PlayerId = CloudSaveExtension.CurrentUserId;
         playerData.Level = 1;
@@ -229,6 +233,8 @@ public class CloudSaveSystem : MvcBehaviour
     public async void UpdateCloudPlayerData()
     {
         CloudSave_PlayerData playerData = new CloudSave_PlayerData();
+
+        playerData.PlayerStatus = App.system.player.playerStatus;
 
         playerData.PlayerName = App.system.player.PlayerName;
         playerData.PlayerId = App.system.player.PlayerId;

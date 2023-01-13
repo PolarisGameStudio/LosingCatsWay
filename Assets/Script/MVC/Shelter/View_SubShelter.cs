@@ -26,7 +26,7 @@ public class View_SubShelter : ViewBehaviour
     [SerializeField] private Image catSexImage;
     [SerializeField] private GameObject ligationImage;
     [SerializeField] private TextMeshProUGUI catVarietyText;
-    [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private GameObject[] healthTexts;
     [SerializeField] private TextMeshProUGUI catAgeText;
     [SerializeField] private TextMeshProUGUI catAgeLevelText;
     [SerializeField] private TextMeshProUGUI catSizeText;
@@ -68,8 +68,18 @@ public class View_SubShelter : ViewBehaviour
         catSexImage.sprite = App.factory.catFactory.GetCatSexSpriteEW(cloudCatData.CatData.Sex);
         ligationImage.SetActive(cloudCatData.CatHealthData.IsLigation);
 
-        healthText.text =
-            (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId)) ? App.factory.stringFactory.GetHealthString() : App.factory.stringFactory.GetSickString();
+        for (int i = 0; i < healthTexts.Length; i++)
+            healthTexts[i].SetActive(false);
+
+        int healthStatus;
+        if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
+            healthStatus = 0;
+        else if (cloudCatData.CatHealthData.SickId is "SK001" or "SK002")
+            healthStatus = 2;
+        else
+            healthStatus = 1;
+        
+        healthTexts[healthStatus].SetActive(true);
 
         catSkin.ChangeSkin(cloudCatData);
 

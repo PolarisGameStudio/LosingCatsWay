@@ -14,29 +14,11 @@ public class MailFromDevSystem : MvcBehaviour
     [SerializeField] private TextMeshProUGUI contentText;
 
     private CloudLosingCatData firstLosingCat;
-    
-    public async void Init()
-    {
-        var losingCats = await App.system.cloudSave.LoadCloudLosingCatDatas(App.system.player.PlayerId);
-        
-        if (losingCats.Count <= 0)
-            return;
-        
-        firstLosingCat = null;
-        for (int i = 0; i < losingCats.Count; i++)
-        {
-            if (losingCats[i].LosingCatStatus.Contains("First"))
-            {
-                firstLosingCat = losingCats[i];
-                break;
-            }
-        }
-        
-        SetMailContent();
-    }
-    
+    private bool isGetFirstDeadCat = false;
+
     public void Open()
     {
+        GetFirstDeadCat();
         _uiView.Show();
     }
 
@@ -58,5 +40,30 @@ public class MailFromDevSystem : MvcBehaviour
     public void OpenUrl(string url)
     {
         Application.OpenURL(url);
+    }
+
+    private async void GetFirstDeadCat()
+    {
+        if (isGetFirstDeadCat)
+            return;
+        
+        var losingCats = await App.system.cloudSave.LoadCloudLosingCatDatas(App.system.player.PlayerId);
+        
+        if (losingCats.Count <= 0)
+            return;
+        
+        firstLosingCat = null;
+        for (int i = 0; i < losingCats.Count; i++)
+        {
+            if (losingCats[i].LosingCatStatus.Contains("First"))
+            {
+                firstLosingCat = losingCats[i];
+                break;
+            }
+        }
+        
+        SetMailContent();
+
+        isGetFirstDeadCat = true;
     }
 }

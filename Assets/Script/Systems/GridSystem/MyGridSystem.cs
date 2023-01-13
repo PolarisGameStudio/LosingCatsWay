@@ -281,6 +281,7 @@ public class MyGridSystem : MvcBehaviour
         Room room = tmp.GetComponent<Room>();
         room.x = x;
         room.y = y;
+        tmp.name = room.roomData.id;
 
         //todo 優化 要拆耦合
         App.system.room.Add(room);

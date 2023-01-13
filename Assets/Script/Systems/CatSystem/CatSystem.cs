@@ -15,11 +15,8 @@ public class CatSystem : MvcBehaviour
     [SerializeField] private Cat kittyCatObject;
     [SerializeField] private AngelCat angelCatObject;
 
-    [PropertyRange(0, 1)] [SerializeField] private float littleGameChance;
-
     private List<Cat> myCats = new List<Cat>();
 
-    // private List<Cat> deadCats = new List<Cat>();
     private List<CloudLosingCatData> _losingCatDatas = new List<CloudLosingCatData>();
     private AngelCat _angelCat;
 

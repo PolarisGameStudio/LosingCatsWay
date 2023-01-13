@@ -721,6 +721,8 @@ public class Controller_Cultive : ControllerBehavior
             return;
         if (isDragging)
             return;
+        if (!string.IsNullOrEmpty(App.model.cultive.SelectedCat.cloudCatData.CatHealthData.SickId))
+            return;
         
         App.system.soundEffect.Play("Button");
         App.view.cultive.cultiveInfo.Open();
@@ -883,9 +885,10 @@ public class Controller_Cultive : ControllerBehavior
     //TODO Debug
     public void DebugSick()
     {
-        App.model.cultive.SelectedCat.cloudCatData.CatHealthData.SickId = "SK001";
+        App.model.cultive.SelectedCat.cloudCatData.CatHealthData.SickId = "SK008";
         App.model.cultive.SelectedCat.cloudCatData.CatHealthData.MetDoctorCount =
             App.factory.sickFactory.GetMetCount(App.model.cultive.SelectedCat.cloudCatData.CatHealthData.SickId);
+        App.model.cultive.SelectedCat.ChangeSkin();
         App.view.cultive.catSkin.ChangeSkin(App.model.cultive.SelectedCat.cloudCatData);
         App.system.cloudSave.UpdateCloudCatHealthData(App.model.cultive.SelectedCat.cloudCatData);
     }

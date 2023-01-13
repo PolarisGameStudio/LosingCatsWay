@@ -126,5 +126,12 @@ public class SideMenuSystem : MvcBehaviour
         App.system.shortcut.ToLobby();
     }
 
+    public void OpenMall()
+    {
+        Close();
+        App.controller.mall.Open();
+        DOVirtual.DelayedCall(0.25f, () => App.controller.mall.SelectPage(0));
+    }
+
     #endregion
 }

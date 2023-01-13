@@ -34,6 +34,8 @@ public class View_Entrance : ViewBehaviour
 
     [Title("ChooseDiary")] [SerializeField]
     private View_EntranceDiary chooseDiary;
+
+    [Title("Animator")] [SerializeField] private GameObject deadAniamtionObject;
     
     public override void Init()
     {
@@ -84,10 +86,8 @@ public class View_Entrance : ViewBehaviour
         Cat cat = (Cat)value;
         deadCat.SetCatData(cat.cloudCatData);
         deadCat.SetActive(true);
-        deadCat.StartDead();
+        // deadCat.StartDead();
         
-        print(cat.cloudCatData.CatHealthData.SickId);
-
         if (cat.cloudCatData.CatHealthData.SickId.IsNullOrEmpty())
         {
             bg.sprite = naturalDeadSprite;
@@ -147,7 +147,21 @@ public class View_Entrance : ViewBehaviour
         }
     }
 
-    #region Method
+    public void PlayCatDead()
+    {
+        deadCat.StartDead();
+        OpenDeadEffect();
+    }
+
+    private void OpenDeadEffect()
+    {
+        deadAniamtionObject.SetActive(true);
+    }
+
+    public void CloseDeadEffect()
+    {
+        deadAniamtionObject.SetActive(false);
+    }
 
     private void HideAllCats()
     {
@@ -163,8 +177,6 @@ public class View_Entrance : ViewBehaviour
 
         deadCat.SetActive(false);
     }
-
-    #endregion
 
     public void OpenChooseDiary()
     {

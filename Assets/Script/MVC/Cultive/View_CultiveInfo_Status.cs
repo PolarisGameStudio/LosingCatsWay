@@ -27,7 +27,7 @@ public class View_CultiveInfo_Status : ViewBehaviour
     private TextMeshProUGUI catSizeText;
     
     [Title("Health")]
-    [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private GameObject[] healthTexts;
     
     [Title("Status")]
     [SerializeField] private TextMeshProUGUI satietyValueText;
@@ -88,8 +88,18 @@ public class View_CultiveInfo_Status : ViewBehaviour
         favorabilityValueText.text = Convert.ToInt32(cat.cloudCatData.CatSurviveData.Favourbility) + "/100%";
         moistureValueText.text = Convert.ToInt32(cat.cloudCatData.CatSurviveData.Moisture) + "/100%";
 
-        healthText.text =
-            (String.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId)) ? App.factory.stringFactory.GetHealthString() : App.factory.stringFactory.GetSickString();
+        for (int i = 0; i < healthTexts.Length; i++)
+            healthTexts[i].SetActive(false);
+
+        int healthStatus;
+        if (string.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId))
+            healthStatus = 0;
+        else if (cat.cloudCatData.CatHealthData.SickId is "SK001" or "SK002")
+            healthStatus = 2;
+        else
+            healthStatus = 1;
+        
+        healthTexts[healthStatus].SetActive(true);
 
         catSexText.text = (cat.cloudCatData.CatData.Sex == 0) ? App.factory.stringFactory.GetBoyString() : App.factory.stringFactory.GetGirlString();
 

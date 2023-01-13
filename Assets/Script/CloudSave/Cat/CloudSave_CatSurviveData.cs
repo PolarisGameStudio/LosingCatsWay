@@ -23,4 +23,19 @@ public class CloudSave_CatSurviveData
 
     public int LikeSnackIndex;
     public int LikeSoupIndex;
+
+    public void ChangeRealSatiety(float value)
+    {
+        RealSatiety = Mathf.Clamp(RealSatiety + value, 0, 100);
+    }
+    
+    public void ChangeRealMoisture(float value)
+    {
+        RealMoisture = Mathf.Clamp(RealMoisture + value, 0, 100);
+    }
+    
+    public void ChangeRealFavourbility(float value)
+    {
+        RealFavourbility = Mathf.Clamp(RealFavourbility + value, 0, 100);
+    }
 }

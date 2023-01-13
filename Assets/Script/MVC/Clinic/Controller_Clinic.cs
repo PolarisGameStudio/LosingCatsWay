@@ -341,6 +341,10 @@ public class Controller_Clinic : ControllerBehavior
         {
             cloudCatData.CatHealthData.SickId = string.Empty;
             cloudCatData.CatHealthData.IsMetDoctor = false;
+            
+            cloudCatData.CatSurviveData.ChangeRealSatiety(50);
+            cloudCatData.CatSurviveData.ChangeRealMoisture(50);
+            cloudCatData.CatSurviveData.ChangeRealFavourbility(50);
         }
         
         App.system.cloudSave.UpdateCloudCatHealthData(cloudCatData);
@@ -349,7 +353,7 @@ public class Controller_Clinic : ControllerBehavior
 
     #endregion
 
-    public void DebugSkip()
+    public void SkipAnimation()
     {
         for (int i = 0; i < skippingGraphics.Length; i++)
         {
@@ -357,5 +361,10 @@ public class Controller_Clinic : ControllerBehavior
             var track = skippingGraphics[i].AnimationState.GetCurrent(0);
             track.TrackTime = track.Animation.Duration;
         }
+    }
+
+    public void SkipInvoice()
+    {
+        App.view.clinic.invoice.Skip();
     }
 }

@@ -485,8 +485,7 @@ public class Cat : MvcBehaviour
         // 深 水份數值
         int ageLevel = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays);
         var realValue = CatExtension.GetCatRealValue(ageLevel, cloudCatData.CatSurviveData.Moisture);
-        cloudCatData.CatSurviveData.RealMoisture =
-            Mathf.Clamp(cloudCatData.CatSurviveData.RealMoisture + realValue, 0, 100);
+        cloudCatData.CatSurviveData.ChangeRealMoisture(realValue);
     }
 
     private void SetSatiety()
@@ -498,8 +497,7 @@ public class Cat : MvcBehaviour
         // 深 飽足數值
         int ageLevel = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays);
         var realValue = CatExtension.GetCatRealValue(ageLevel, cloudCatData.CatSurviveData.Satiety);
-        cloudCatData.CatSurviveData.RealSatiety =
-            Mathf.Clamp(cloudCatData.CatSurviveData.RealSatiety + realValue, 0, 100);
+        cloudCatData.CatSurviveData.ChangeRealSatiety(realValue);
     }
 
     private void SetFavorability()
@@ -517,8 +515,7 @@ public class Cat : MvcBehaviour
         // 深 好感數值
         int ageLevel = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays);
         var realValue = CatExtension.GetCatRealValue(ageLevel, cloudCatData.CatSurviveData.Favourbility);
-        cloudCatData.CatSurviveData.RealFavourbility =
-            Mathf.Clamp(cloudCatData.CatSurviveData.RealFavourbility + realValue, 0, 100);
+        cloudCatData.CatSurviveData.ChangeRealFavourbility(realValue);
     }
 
     #endregion
@@ -564,11 +561,11 @@ public class Cat : MvcBehaviour
 
         //表定順序
         if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
-            App.factory.sickFactory.GetCatSick(cloudCatData);
+            cloudCatData.CatHealthData.SickId = App.factory.sickFactory.GetCatSick(cloudCatData);
         if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
-            App.factory.sickFactory.GetVaccineSicks(cloudCatData);
+            cloudCatData.CatHealthData.SickId = App.factory.sickFactory.GetVaccineSicks(cloudCatData);
         if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
-            App.factory.sickFactory.GetLigationSicks(cloudCatData);
+            cloudCatData.CatHealthData.SickId = App.factory.sickFactory.GetLigationSicks(cloudCatData);
         //得病換皮
         if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
             ChangeSkin();
@@ -607,6 +604,7 @@ public class Cat : MvcBehaviour
     {
         if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
             return;
+        
         cloudCatData.CatHealthData.SickId = App.factory.sickFactory.GetCatSick(cloudCatData);
         
         if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))

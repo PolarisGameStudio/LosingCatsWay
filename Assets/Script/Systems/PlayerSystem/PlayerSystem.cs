@@ -2,23 +2,27 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Firebase.Firestore;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Sirenix.OdinInspector;
 
-public class PlayerSystem : MvcBehaviour
+public class PlayerSystem : SerializedMonoBehaviour
 {
+    private MyApplication App => FindObjectOfType<MyApplication>();
+    
     #region InspectorVariable
 
     public PlayerDataSetting playerDataSetting;
+    public Dictionary<string, string> playerStatus;
 
     #endregion
 
     #region Callback
 
-    public delegate void ValueChange(object value);
-    public delegate void ValueChangeFromTo(object from, object to);
+    [HideInInspector] public delegate void ValueChange(object value);
+    [HideInInspector] public delegate void ValueChangeFromTo(object from, object to);
 
     public ValueChange OnPlayerIdChange;
     public ValueChange OnPlayerNameChange;
@@ -213,6 +217,20 @@ public class PlayerSystem : MvcBehaviour
         {
             catDeadCount = value;
             OnCatDeadCountChange?.Invoke(value);
+        }
+    }
+
+    public int VipStatus
+    {
+        get
+        {
+            string valueString = playerStatus["VipStatus"];
+            return int.Parse(valueString);
+        }
+        set
+        {
+            string valueString = value.ToString();
+            playerStatus["VipStatus"] = valueString;
         }
     }
 

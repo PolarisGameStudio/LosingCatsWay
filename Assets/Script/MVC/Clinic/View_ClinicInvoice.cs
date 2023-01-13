@@ -73,22 +73,29 @@ public class View_ClinicInvoice : ViewBehaviour
         invoiceRect.DOAnchorPosY(invoice_StartY, 0);
 
         for (int i = 0; i < invoiceButtons.Length; i++)
-        {
             invoiceButtons[i].SetActive(false);
-        }
 
-        DOVirtual.DelayedCall(2f, () =>
-        {
-            invoiceRect.DOAnchorPosY(invoice_EndY, 4f).OnComplete(() =>
-            {
-                scrollRect.enabled = true;
-                for (int i = 0; i < invoiceButtons.Length; i++)
-                {
-                    invoiceButtons[i].SetActive(true);
-                }
-            });
-        });
-
+        Invoke(nameof(InvoiceAnimation), 2f);
         base.Open();
+    }
+
+    private void InvoiceAnimation()
+    {
+        invoiceRect.DOAnchorPosY(invoice_EndY, 4f).OnComplete(() =>
+        {
+            scrollRect.enabled = true;
+            for (int i = 0; i < invoiceButtons.Length; i++)
+                invoiceButtons[i].SetActive(true);
+        });
+    }
+
+    public void Skip()
+    {
+        CancelInvoke(nameof(InvoiceAnimation));
+        invoiceRect.DOKill();
+        invoiceRect.DOAnchorPosY(invoice_EndY, 0);
+        scrollRect.enabled = true;
+        for (int i = 0; i < invoiceButtons.Length; i++)
+            invoiceButtons[i].SetActive(true);
     }
 }

@@ -9,23 +9,26 @@ using UnityEngine.UI;
 public class TutorialActor_ImageWindow : TutorialActor
 {
     [Title("ImageWindow")] [SerializeField]
-    private Image image;
+    private CanvasGroup canvasGroup;
+    [SerializeField] private Button button;
 
     [SerializeField] private float fadeDuration;
 
     private void Start()
     {
-        image.DOFade(0, 0);
+        canvasGroup.DOFade(0, 0);
     }
 
     public override void Enter()
     {
         base.Enter();
-        image.DOFade(1, fadeDuration);
+        canvasGroup.DOFade(1, fadeDuration);
+        button.interactable = true;
     }
 
     public override void Exit()
     {
-        image.DOFade(0, fadeDuration).From(1).OnComplete(base.Exit);
+        button.interactable = false;
+        canvasGroup.DOFade(0, fadeDuration).From(1).OnComplete(base.Exit);
     }
 }

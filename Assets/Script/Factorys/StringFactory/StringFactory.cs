@@ -61,9 +61,7 @@ public class StringFactory : SerializedMonoBehaviour
     [Title("Gender")] [SerializeField] private Dictionary<string, string> boyString = new Dictionary<string, string>();
     [SerializeField] private Dictionary<string, string> girlString = new Dictionary<string, string>();
 
-    [Title("Health")] [SerializeField]
-    private Dictionary<string, string> healthString = new Dictionary<string, string>();
-    [SerializeField] private Dictionary<string, string> sickString = new Dictionary<string, string>();
+    [Title("Health")]
     [SerializeField] private Dictionary<string, StringData> sickName;
     [SerializeField] private Dictionary<string, StringData> sickInfo;
 
@@ -394,16 +392,6 @@ public class StringFactory : SerializedMonoBehaviour
     public string GetGirlString()
     {
         return girlString[CountryId];
-    }
-
-    public string GetHealthString()
-    {
-        return healthString[CountryId];
-    }
-
-    public string GetSickString()
-    {
-        return sickString[CountryId];
     }
 
     public string GetAgeLevelString(int surviveDays)
