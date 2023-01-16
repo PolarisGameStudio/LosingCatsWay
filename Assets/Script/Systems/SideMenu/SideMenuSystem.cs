@@ -65,7 +65,7 @@ public class SideMenuSystem : MvcBehaviour
     public void OpenArchivement()
     {
         Close();
-        App.controller.pedia.OpenArchive();
+        App.controller.pedia.SelectTab(0);
     }
 
     public void OpenFirend()
@@ -117,7 +117,7 @@ public class SideMenuSystem : MvcBehaviour
     public void OpenPedia()
     {
         Close();
-        App.controller.pedia.OpenPedia();
+        App.controller.pedia.SelectTab(2);
     }
 
     public void OpenLobby()

@@ -6,6 +6,8 @@ public class Model_Pedia : ModelBehavior
 {
     #region Variable
 
+    private int tabIndex = -1;
+    
     //Pedia
     private int selectedPediaType = -1;
     private int pediaPageIndex = -1;
@@ -20,6 +22,16 @@ public class Model_Pedia : ModelBehavior
     #endregion
 
     #region Properties
+
+    public int TabIndex
+    {
+        get => tabIndex;
+        set
+        {
+            tabIndex = value;
+            OnTabIndexChange?.Invoke(value);
+        }
+    }
 
     //Pedia
     public int SelectedPediaType
@@ -97,6 +109,8 @@ public class Model_Pedia : ModelBehavior
 
     #region ValueChange
 
+    public ValueChange OnTabIndexChange;
+    
     //Pedia
     public ValueChange OnSelectedPediaTypeChange;
     public ValueChange OnPediaPageIndexChange;

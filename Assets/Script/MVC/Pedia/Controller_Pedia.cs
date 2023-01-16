@@ -16,6 +16,18 @@ public class Controller_Pedia : ControllerBehavior
         ArchiveInit();
     }
 
+    public void SelectTab(int index)
+    {
+        App.model.pedia.TabIndex = index;
+        
+        if (index == 0)
+            OpenArchive();
+        else if (index == 1)
+            OpenPediaCats();
+        else
+            OpenPedia();
+    }
+
     public void PediaToLeft()
     {
         if (!IsPediaCanToLeft())
@@ -46,11 +58,13 @@ public class Controller_Pedia : ControllerBehavior
     
     #region Pedia
     
-    public void OpenPedia()
+    private void OpenPedia()
     {
         isPedia = true;
         
         CloseArchive();
+        ClosePediaCats();
+        
         App.view.pedia.Open();
         App.view.pedia.subPedia.Open();
         CloseChoosePedia();
@@ -186,13 +200,15 @@ public class Controller_Pedia : ControllerBehavior
 
     #region Archive
 
-    public void OpenArchive()
+    private void OpenArchive()
     {
         isPedia = false;
 
         App.model.pedia.ArchiveQuests = App.model.pedia.ArchiveQuests;
         
         ClosePedia();
+        ClosePediaCats();
+        
         App.view.pedia.Open();
         App.view.pedia.archive.Open();
 
@@ -279,6 +295,25 @@ public class Controller_Pedia : ControllerBehavior
         }
 
         return result;
+    }
+
+    #endregion
+
+    #region PediaCats
+
+    private void OpenPediaCats()
+    {
+        isPedia = false;
+        
+        ClosePedia();
+        CloseArchive();
+        
+        App.view.pedia.pediaCats.Open();
+    }
+
+    private void ClosePediaCats()
+    {
+        App.view.pedia.pediaCats.Close();
     }
 
     #endregion

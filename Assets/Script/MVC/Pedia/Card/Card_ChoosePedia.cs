@@ -31,13 +31,11 @@ public class Card_ChoosePedia : MvcBehaviour
         
         //Color
         if (id.Contains("WCI"))
-            ChangeColor(1);
-        else if (id.Contains("WCH"))
-            ChangeColor(2);
-        else if (id.Contains("WSK"))
-            ChangeColor(3);
-        else
             ChangeColor(0);
+        else if (id.Contains("WCH"))
+            ChangeColor(1);
+        else if (id.Contains("WSK"))
+            ChangeColor(2);
         
         icon.sprite = sprite;
         titleText.text = title;

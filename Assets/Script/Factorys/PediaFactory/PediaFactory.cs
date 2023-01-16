@@ -18,10 +18,8 @@ public class PediaFactory : SerializedMonoBehaviour
     public List<string> GetPediaIds(int type)
     {
         if (type == 0)
-            return catPediaIds;
-        if (type == 1)
             return itemPediaIds;
-        if (type == 2)
+        if (type == 1)
             return hobbyPediaIds;
         return sickPediaIds;
     }
