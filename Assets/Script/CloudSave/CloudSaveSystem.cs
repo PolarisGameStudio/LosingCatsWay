@@ -96,6 +96,7 @@ public class CloudSaveSystem : MvcBehaviour
         itemData.ToolData = App.system.inventory.ToolData;
         itemData.LitterData = App.system.inventory.LitterData;
         itemData.SkinData = App.system.inventory.SkinData;
+        itemData.KnowledgeCardDatas = App.system.inventory.KnowledgeCardDatas;
         itemData.ItemsCanBuyAtStore = App.system.inventory.itemsCanBuyAtStore;
         itemData.PlayerIconData = App.system.inventory.PlayerIconData;
         itemData.PlayerAvatarData = App.system.inventory.PlayerAvatarData;
@@ -196,6 +197,7 @@ public class CloudSaveSystem : MvcBehaviour
         itemData.ToolData = App.system.inventory.ToolData;
         itemData.LitterData = App.system.inventory.LitterData;
         itemData.SkinData = App.system.inventory.SkinData;
+        itemData.KnowledgeCardDatas = App.system.inventory.KnowledgeCardDatas;
         itemData.ItemsCanBuyAtStore = App.system.inventory.itemsCanBuyAtStore;
         itemData.PlayerIconData = App.system.inventory.PlayerIconData;
         itemData.PlayerAvatarData = App.system.inventory.PlayerAvatarData;

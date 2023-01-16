@@ -13,8 +13,10 @@ public class InventorySystem : SerializedMonoBehaviour
     public Dictionary<string, int> ToolData;
     public Dictionary<string, int> LitterData;
     public Dictionary<string, int> SkinData;
+    public Dictionary<string, int> KnowledgeCardDatas;
     public Dictionary<string, bool> itemsCanBuyAtStore = new Dictionary<string, bool>();
 
-    [Title("Player")] public Dictionary<string, int> PlayerIconData;
+    [Title("Player")] 
+    public Dictionary<string, int> PlayerIconData;
     public Dictionary<string, int> PlayerAvatarData;
 }

@@ -34,7 +34,8 @@ public class MyApplication : MonoBehaviour
         else
             cloudSaveData = await system.cloudSave.CreateCloudSaveData();
 
-        await SetData(cloudSaveData);
+        LobbySetDataHelper lobbySetDataHelper = new LobbySetDataHelper(this);
+        await lobbySetDataHelper.SetData(cloudSaveData);
 
         int backStatus = system.myTime.BackLobbyStatus();
 
@@ -86,112 +87,7 @@ public class MyApplication : MonoBehaviour
         
         DOVirtual.DelayedCall(0.35f, controller.lobby.Open);
     }
-
-    private async Task SetData(CloudSaveData cloudSaveData)
-    {
-        // Player
-        var player = system.player;
-        var playerData = cloudSaveData.PlayerData;
-
-        if (playerData.PlayerStatus != null)
-            // 避免舊的Dict覆蓋掉擁有新資料的Dict
-            for (int i = 0; i < playerData.PlayerStatus.Count; i++)
-            {
-                string key = playerData.PlayerStatus.ElementAt(i).Key;
-                if (player.playerStatus.ContainsKey(key))
-                    player.playerStatus[key] = playerData.PlayerStatus[key];
-            }
-        
-        player.PlayerName = playerData.PlayerName;
-        player.PlayerId = playerData.PlayerId;
-        player.Level = playerData.Level;
-        player.Exp = playerData.Exp;
-        player.Coin = playerData.Coin;
-        player.Diamond = playerData.Diamond;
-        player.CatMemory = playerData.CatMemory;
-        player.DiamondCatSlot = playerData.DiamondCatSlot;
-        player.GridSizeLevel = playerData.GridSizeLevel;
-        player.PlayerGender = playerData.PlayerGender;
-        player.UsingIcon = playerData.UsingIcon;
-        player.UsingAvatar = playerData.UsingAvatar;
-        player.CatDeadCount = playerData.CatDeadCount;
-
-        system.tutorial.directorIndex = playerData.TutorialIndex;
-        system.grid.Init(); // 生成格子
-
-        // FriendData
-        model.friend.Friends = await system.cloudSave.LoadFriends();
-        model.friend.myInvites = cloudSaveData.FriendData.FriendInvites;
-
-        // Time
-        var myTime = system.myTime;
-        var timeData = cloudSaveData.TimeData;
-        
-        myTime.AccountCreateDateTime = timeData.FirstLoginDateTime.ToDateTime().ToLocalTime();
-        myTime.PerDayLoginDateTime = timeData.PerDayLoginDateTime.ToDateTime().ToLocalTime();
-        myTime.LastLoginDateTime = timeData.LastLoginDateTime.ToDateTime().ToLocalTime();
-
-        // SignData
-        var monthSign = model.monthSign;
-        var signData = cloudSaveData.SignData;
-
-        monthSign.SignIndexs = signData.MonthSigns;
-        monthSign.ResignCount = signData.MonthResignCount;
-        monthSign.LastMonthSignDate = signData.LastMonthSignDate.ToDateTime().ToLocalTime();
-
-        // ItemData
-        var inventory = system.inventory;
-        var itemData = cloudSaveData.ItemData;
-
-        inventory.RoomData = itemData.RoomData;
-        inventory.FoodData = itemData.FoodData;
-        inventory.ToolData = itemData.ToolData;
-        inventory.LitterData = itemData.LitterData;
-        inventory.SkinData = itemData.SkinData;
-        inventory.itemsCanBuyAtStore = itemData.ItemsCanBuyAtStore;
-        inventory.PlayerIconData = itemData.PlayerIconData;
-        inventory.PlayerAvatarData = itemData.PlayerAvatarData;
-
-        // MissionDatas
-        var quest = system.quest;
-        var missionData = cloudSaveData.MissionData;
-
-        quest.QuestProgressData = missionData.QuestProgressData;
-        quest.QuestReceivedStatusData = missionData.QuestReceivedStatusData;
-        model.dailyQuest.Quests = new List<Quest>();
-        for (int i = 0; i < missionData.MyQuests.Count; i++)
-        {
-            Quest q = factory.questFactory.GetQuestById(missionData.MyQuests[i]);
-            model.dailyQuest.Quests.Add(q);
-        }
-        
-        // MailReceivedDatas
-        system.mail.mailReceivedDatas = cloudSaveData.MailReceivedDatas;
-        
-        // ExistRoomDatas
-        var build = controller.build;
-        var existRoomDatas = cloudSaveData.ExistRoomDatas;
-
-        for (int i = 0; i < existRoomDatas.Count; i++)
-        {
-            var roomData = existRoomDatas[i];
-            // if (roomData.Id == factory.roomFactory.originRoomId) continue; //迴避中心房
-            build.FirestoreBuild(roomData.Id, roomData.X, roomData.Y);
-        }
-
-        if (system.room.MyRooms.Count > 0)
-            system.map.GenerateMap();
-        
-        // Purchase
-        model.mall.PurchaseRecords = cloudSaveData.PurchaseRecords;
-
-        // Cats
-        var myCats = await system.cloudSave.LoadCloudCatDatas();
-        
-        for (int i = 0; i < myCats.Count; i++)
-            system.cat.CreateCatObject(myCats[i]);
-    }
-
+    
     #region ApplicationProcess
 
     private void OnApplicationFocus(bool focus)
