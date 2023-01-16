@@ -28,32 +28,23 @@ public class CatchCatMap : MvcBehaviour
 
     [Title("UI")] 
     [SerializeField] private Image hpBar;
-    //[SerializeField] private TextMeshProUGUI runChanceText;
     [SerializeField] private TextMeshProUGUI turnText;
     [SerializeField] private Button[] chooseTypeButtons; //選擇種類按鈕*4
     [SerializeField] private Button catchButton; //捕捉按鈕
-    [SerializeField] private Card_CatchPersonality[] cardPersonalitys; //個性卡*3
     [SerializeField] private Card_CatchItem[] cardItems; //道具卡*5
     [SerializeField] private GameObject[] chooseTypeMasks;
     [SerializeField] private GameObject blockRaycastObject;
     
     [TabGroup("Top")] [SerializeField] private RectTransform topRect;
-    //[TabGroup("Top")] [SerializeField] private RectTransform chanceRect;
-    //[TabGroup("Top")] [SerializeField] private RectTransform chanceIconRect;
     [TabGroup("Top")] [SerializeField] private Image turnDarkMask;
-    //[TabGroup("Top")] [SerializeField] private Image chanceDarkMask;
     [TabGroup("Top")] [SerializeField] private CanvasGroup topFullMask;
     [TabGroup("Top")] [SerializeField] private GameObject topBlur;
-    //[TabGroup("Top")] [SerializeField] private RectTransform topGroupRect;
     [TabGroup("Top")] [SerializeField] private RectTransform turnTextRect;
-    //[TabGroup("Top")] [SerializeField] private RectTransform chanceTextRect;
 
     [TabGroup("TopLeft")] [SerializeField] private RectTransform exitButtonRect;
     [TabGroup("TopLeft")] [SerializeField] private RectTransform aboutButtonRect;
     [TabGroup("TopLeft")] [SerializeField] private Image exitDarkMask;
     [TabGroup("TopLeft")] [SerializeField] private Image aboutDarkMask;
-
-    [TabGroup("TopRight")] [SerializeField] private RectTransform ropeRect;
 
     [TabGroup("Center")] [SerializeField] private RectTransform hpBarRect;
     [TabGroup("Center")] [SerializeField] private RectTransform barHeartRect;
@@ -72,6 +63,10 @@ public class CatchCatMap : MvcBehaviour
 
     [Title("Animator")] [SerializeField] private Animator catchFlowerAnimator;
 
+    [Title("Module")]
+    [SerializeField] private CatchCatBubble bubble;
+    [SerializeField] private CatchCatHealthBar healthBar;
+
     private int turn;
     private float[] runChances = { 0f, 0f, 0.03f, 0.05f, 0.1f, 0.2f, 1f };
     private float hp; //生命值
@@ -79,7 +74,6 @@ public class CatchCatMap : MvcBehaviour
     private List<Item_CatchCat> selectedItems = new List<Item_CatchCat>();
     private float cardOriginY = 0f;
     private int selectedType;
-    private float runChance;
     
     private List<Item> usedItems = new List<Item>();
     private int exp;
@@ -96,6 +90,9 @@ public class CatchCatMap : MvcBehaviour
         
         this.cloudCatData = cloudCatData;
         catSkin.ChangeSkin(cloudCatData);
+        
+        bubble.Init();
+        healthBar.Init();
 
         if (!App.system.tutorial.isTutorial)
             ShowHowToPlay();
@@ -122,12 +119,6 @@ public class CatchCatMap : MvcBehaviour
         App.system.tnr.OnDoRelease -= CloseToLobby;
         App.system.tnr.OnDoShelter -= CloseToLobby;
 
-        for (int i = 0; i < cardPersonalitys.Length; i++)
-        {
-            cardPersonalitys[i].isCanFlip = false;
-            cardPersonalitys[i].DoPopCard();
-        }
-
         App.system.transition.Active(0.5f, () =>
         {
             Close();
@@ -137,12 +128,6 @@ public class CatchCatMap : MvcBehaviour
 
     public void CloseToMap()
     {
-        for (int i = 0; i < cardPersonalitys.Length; i++)
-        {
-            cardPersonalitys[i].isCanFlip = false;
-            cardPersonalitys[i].DoPopCard();
-        }
-
         App.system.transition.Active(0.5f, () =>
         {
             Close();
@@ -218,33 +203,26 @@ public class CatchCatMap : MvcBehaviour
         coin = 0;
         
         turn = 0;
-        runChance = 0;
         turnText.text = "0/7";
-        //runChanceText.text = "0%";
 
         lastTurnCatchButton.transform.DOKill();
         lastTurnCatchButton.SetActive(false);
         catchButtonParticle.Stop();
         
         hp = 100f;
-        hpBar.DOFillAmount(hp / 100, 0.35f).From(0).SetEase(Ease.OutExpo);
+        healthBar.ChangeBarValue(hp / 100f);
+        // hpBar.DOFillAmount(hp / 100, 0.35f).From(0).SetEase(Ease.OutExpo);
 
-        for (int i = 0; i < cardPersonalitys.Length; i++)
-        {
-            cardPersonalitys[i].isCanFlip = false;
-            cardPersonalitys[i].DoPopCard();
-            cardPersonalitys[i].SetActive(false);
-        }
-        
         catSkin.SetActive(true);
         
         CloseAction();
         DoResetTween();
         
         DoTopLeftTween();
-        DOVirtual.DelayedCall(0.0625f, DoTopRightTween);
         DoPawTween();
         DoCenterTween();
+        
+        healthBar.Open();
 
         for (int i = 0; i < cardItems.Length; i++)
         {
@@ -267,33 +245,51 @@ public class CatchCatMap : MvcBehaviour
         if (turn >= 7) return;
 
         catSkin.SetActive(true);
+
+        var personalitys = cloudCatData.CatData.PersonalityTypes;
+        var levels = cloudCatData.CatData.PersonalityLevels;
+        int tmpTurn = turn; // 動畫過程turn會+1
         
-        if (turn < cardPersonalitys.Length)
+        if (tmpTurn < personalitys.Count)
         {
-            if (turn < cloudCatData.CatData.PersonalityTypes.Count)
+            bubble.OnCloseHint = () =>  healthBar.OpenPersonality(personalitys[tmpTurn], levels[tmpTurn]);
+            healthBar.OnOpenPersonalityComplete = () =>
             {
-                cardPersonalitys[turn].isCanFlip = true;
-                cardPersonalitys[turn].SetActive(true);
-                int personality = cloudCatData.CatData.PersonalityTypes[turn];
-                int level = cloudCatData.CatData.PersonalityLevels[turn];
-                cardPersonalitys[turn].SetData(personality, level);
-            }
-        }
+                if (turn == 7) //Last
+                {
+                    CloseAction();
 
-        for (int i = 0; i < cardPersonalitys.Length; i++)
-        {
-            cardPersonalitys[i].DoPopCard();
-        }
+                    lastTurnCatchButton.SetActive(true);
+                    catchButtonParticle.Play();
 
+                    Vector2 endSize = new Vector2(1.1f, 1.1f);
+                    lastTurnCatchButton.transform.DOScale(endSize, 0.1f).From(Vector2.one).SetEase(Ease.OutExpo)
+                        .SetLoops(-1).SetDelay(0.5f);
+                    lastTurnCatchButton.transform.DOScale(Vector2.one, 0.5f).SetEase(Ease.InOutSine).SetDelay(0.6f)
+                        .SetLoops(-1);
+                }
+                else
+                    OpenAction();
+            };
+        
+            DoTopTween(() =>
+            {
+                bubble.OpenHint(personalitys[tmpTurn], levels[tmpTurn]);
+                DOVirtual.DelayedCall(2f, bubble.CloseHint);
+            });
+
+            return;
+        }
+        
         DoTopTween(() =>
         {
             if (turn == 7) //Last
             {
                 CloseAction();
-                
+
                 lastTurnCatchButton.SetActive(true);
                 catchButtonParticle.Play();
-                
+
                 Vector2 endSize = new Vector2(1.1f, 1.1f);
                 lastTurnCatchButton.transform.DOScale(endSize, 0.1f).From(Vector2.one).SetEase(Ease.OutExpo)
                     .SetLoops(-1).SetDelay(0.5f);
@@ -311,17 +307,6 @@ public class CatchCatMap : MvcBehaviour
         turnText.text = $"{turn}/7";
     }
 
-    private void RefreshChance()
-    {
-        int tmp = turn - 1;
-        if (tmp <= 0)
-            tmp = 0;
-        if (tmp >= 6)
-            tmp = 6;
-        float chance = Mathf.Clamp(runChance, 0, 1);
-        // runChanceText.text = $"{chance * 100:0}%";
-    }
-
     // 允許玩家行動
     private void OpenAction()
     {
@@ -336,7 +321,6 @@ public class CatchCatMap : MvcBehaviour
         
         DoTopLeftLight();
         DoTopLight();
-        DoTopRightLight();
         DoBotLight();
     }
 
@@ -354,7 +338,6 @@ public class CatchCatMap : MvcBehaviour
         
         DoTopLeftDark();
         DoTopDark();
-        DoTopRightDark();
         DoBotDark();
     }
 
@@ -387,6 +370,7 @@ public class CatchCatMap : MvcBehaviour
         
         var item = selectedItems[index];
         int tmpCount = GetTmpItemCount(item);
+        int tmpTurn = turn - 1;
         
         if (item.level != 0 && tmpCount <= 0) //物品不是最低等級（無限使用） //物品數量0
             return;
@@ -446,37 +430,36 @@ public class CatchCatMap : MvcBehaviour
                     switch (availableLevel[i])
                     {
                         case 0:
-                            value *= 0f;
+                            value *= -0.5f;
+                            
+                            if (index == 4) //廣告道具 + 負面個性
+                                value *= 0.2f;
+                            
                             hateParticle.Play();
                             SpineCatAngry();
-                            runChance = 0.05f;
                             break;
-
                         case 1:
-                            value *= 0.3f;
+                            value *= -0.25f;
+                            
+                            if (index == 4) //廣告道具 + 負面個性
+                                value *= 0.2f;
+
                             hateParticle.Play();
                             SpineCatAngry();
-                            runChance = 0.03f;
                             break;
-
                         case 2:
                             value *= 1.5f;
                             loveParticle.Play();
                             SpineCatHappy();
-                            runChance = -0.03f;
                             break;
-
                         case 3:
                             value *= 2f;
                             bigLoveParticle.Play();
                             SpineCatHappy();
-                            runChance = -0.05f;
                             break;
-
                         default:
                             loveParticle.Play();
                             SpineCatHappy();
-                            runChance = 0f;
                             break;
                     }
 
@@ -487,16 +470,18 @@ public class CatchCatMap : MvcBehaviour
             {
                 loveParticle.Play();
                 SpineCatHappy();
-                runChance = 0f;
             }
-            
+
+            var itemOffset = new List<float> { 1f, 1.04f, 1.1f, 1.18f, 1.28f, 1.4f, 1.4f };
+            value *= itemOffset[tmpTurn];
+
             //扣除生命值
             hp = Mathf.Clamp(hp - value, 0f, 100f);
-            hpBar.DOFillAmount(hp / 100, 0.35f).SetEase(Ease.OutExpo);
+            healthBar.ChangeBarValue(hp / 100);
         });
 
         DoCardTween(index);
-        DOVirtual.DelayedCall(0.6f, () => RefreshItemCount());
+        DOVirtual.DelayedCall(0.6f, RefreshItemCount);
     }
 
     public void Catch()
@@ -531,8 +516,7 @@ public class CatchCatMap : MvcBehaviour
         if (index < 0)
             index = 0;
         
-        //float chance = runChance + runChances[index];
-        float chance = runChance;
+        float chance = runChances[index];
         chance = Mathf.Clamp(chance, 0f, 100f);
         
         if (Random.value < chance)
@@ -655,6 +639,21 @@ public class CatchCatMap : MvcBehaviour
         cloudCatData.CatSurviveData.IsUseToFind = value;
         App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
     }
+
+    private void BubbleTalk()
+    {
+        bubble.OnCloseTalk = () =>
+        {
+            //檢查貓是否逃跑，若否開始下回合
+            if (CheckIsCatRun())
+                RunAway();
+            else
+                NextTurn();
+        };
+        
+        bubble.OpenTalk();
+        DOVirtual.DelayedCall(2f, bubble.CloseTalk);
+    }
     
     #endregion
 
@@ -737,41 +736,18 @@ public class CatchCatMap : MvcBehaviour
         aboutButtonRect.DOAnchorPos(aboutOrigin, 0.15f).From(aboutOffset).SetEase(Ease.OutBack).SetDelay(0.0625f);
     }
 
-    private void DoTopRightTween()
-    {
-        Vector2 ropeOrigin = ropeRect.anchoredPosition;
-        Vector2 ropeOffset = new Vector2(ropeOrigin.x, ropeOrigin.y + ropeRect.sizeDelta.y * 2);
-        ropeRect
-            .DOAnchorPos(ropeOrigin, 0.15f).From(ropeOffset).SetEase(Ease.OutBack)
-            .OnStart((() =>
-            {
-                for (int i = 0; i < cardPersonalitys.Length; i++)
-                {
-                    cardPersonalitys[i].transform.localScale = Vector2.zero;
-                }
-            }));
-
-        DOVirtual.DelayedCall(0.15f, () =>
-        {
-            for (int i = 0; i < cardPersonalitys.Length; i++)
-            {
-                cardPersonalitys[i].transform.DOScale(Vector2.one, 0.15f).SetEase(Ease.OutBack).SetDelay(0.1f * i);
-            }
-        });
-    }
-
     private void DoCenterTween()
     {
         catSkin.skeletonGraphic.DOColor(Color.white, 0.7f).From(Color.black).SetEase(Ease.InSine);
-        hpBarRect.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack);
+        // hpBarRect.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack);
 
-        Vector2 barHeartOrigin = new Vector2(barHeartRect.anchoredPosition.x, 0);
-        Vector2 barHeartOffset = new Vector2(barHeartOrigin.x, hpBarRect.sizeDelta.y + 2);
-        barHeartRect.DOAnchorPos(barHeartOffset, 0.2f).From(barHeartOrigin).SetEase(Ease.OutBack).SetDelay(0.0625f + 0.25f);
-        
-        Vector2 barTitleOrigin = new Vector2(barTitleRect.anchoredPosition.x, 0);
-        Vector2 barTitleOffset = new Vector2(barTitleOrigin.x, hpBarRect.sizeDelta.y + 2);
-        barTitleRect.DOAnchorPos(barTitleOffset, 0.2f).From(barTitleOrigin).SetEase(Ease.OutBack).SetDelay(0.0625f * 2 + 0.25f);
+        // Vector2 barHeartOrigin = new Vector2(barHeartRect.anchoredPosition.x, 0);
+        // Vector2 barHeartOffset = new Vector2(barHeartOrigin.x, hpBarRect.sizeDelta.y + 2);
+        // barHeartRect.DOAnchorPos(barHeartOffset, 0.2f).From(barHeartOrigin).SetEase(Ease.OutBack).SetDelay(0.0625f + 0.25f);
+        //
+        // Vector2 barTitleOrigin = new Vector2(barTitleRect.anchoredPosition.x, 0);
+        // Vector2 barTitleOffset = new Vector2(barTitleOrigin.x, hpBarRect.sizeDelta.y + 2);
+        // barTitleRect.DOAnchorPos(barTitleOffset, 0.2f).From(barTitleOrigin).SetEase(Ease.OutBack).SetDelay(0.0625f * 2 + 0.25f);
     }
 
     private void DoItemTween(TweenCallback centerAction = null)
@@ -852,13 +828,6 @@ public class CatchCatMap : MvcBehaviour
     private void DoTopDark()
     {
         turnDarkMask.DOFade(0.5f, 0.25f);
-        //chanceDarkMask.DOFade(0.5f, 0.25f);
-    }
-
-    private void DoTopRightDark()
-    {
-        for (int i = 0; i < cardPersonalitys.Length; i++)
-            cardPersonalitys[i].DoDark();
     }
 
     private void DoBotDark()
@@ -879,13 +848,6 @@ public class CatchCatMap : MvcBehaviour
     private void DoTopLight()
     {
         turnDarkMask.DOFade(0, 0.25f);
-        //chanceDarkMask.DOFade(0, 0.25f);
-    }
-
-    private void DoTopRightLight()
-    {
-        for (int i = 0; i < cardPersonalitys.Length; i++)
-            cardPersonalitys[i].DoLight();
     }
 
     private void DoBotLight()
@@ -922,12 +884,8 @@ public class CatchCatMap : MvcBehaviour
         
         trackEntry.Complete -= WaitSpineIdle;
         catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "AI_Main/IDLE_Ordinary01", true);
-        
-        //檢查貓是否逃跑，若否開始下回合
-        if (CheckIsCatRun())
-            RunAway();
-        else
-            NextTurn();
+
+        BubbleTalk();
     }
 
     private void SpineCatCatchFail()
@@ -954,11 +912,7 @@ public class CatchCatMap : MvcBehaviour
         if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) != 0)
             catSkin.ChangeSkin(cloudCatData);
         
-        //檢查貓是否逃跑，若否開始下回合
-        if (CheckIsCatRun())
-            RunAway();
-        else
-            NextTurn();
+        BubbleTalk();
     }
 
     private void WaitSpineCatCatchWin(TrackEntry trackEntry)

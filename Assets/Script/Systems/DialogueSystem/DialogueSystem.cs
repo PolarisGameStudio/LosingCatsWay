@@ -105,14 +105,15 @@ public class DialogueSystem : MvcBehaviour
             if (String.IsNullOrEmpty(App.system.player.PlayerName))
                 mainNameText.text = "???";
 
-            //npcImage.DOFade(0.25f, 0.25f);
             Color32 color = new Color32(113, 113, 113, 255);
             npcImage.DOColor(color, 0.25f);
         }
         else
         {
             npcNameText.text = App.factory.stringFactory.GetCharacterName(characterIndex);
-            //npcImage.DOFade(1f, 0.25f);
+            
+            npcImage.gameObject.SetActive(characterIndex == "1"); //不是Yumi就關
+            
             npcImage.DOColor(Color.white, 0.25f);
             float y = npcImage.rectTransform.anchoredPosition.y;
             npcImage.rectTransform.DOAnchorPosY(y + 50f, .15f).SetLoops(2, LoopType.Yoyo);
@@ -121,7 +122,6 @@ public class DialogueSystem : MvcBehaviour
         npcNameObject.SetActive(!isMainCharacter);
         mainNameObject.SetActive(isMainCharacter);
 
-        //npcNameText.text = characterName;
         dialogueText.text = content;
 
         dialogueView.Show();
