@@ -10,7 +10,20 @@ public class SoundEffectSystem : SerializedMonoBehaviour
     [SerializeField] private Dictionary<string, AudioClip> audioDatas = new Dictionary<string, AudioClip>();
     [SerializeField] private AudioSource audioSource;
 
-    private MyApplication App => FindObjectOfType<MyApplication>();
+    private MyApplication app;
+
+    protected MyApplication App
+    {
+        get
+        {
+            if (app == null)
+            {
+                app = FindObjectOfType<MyApplication>();
+            }
+
+            return app;
+        }
+    }
 
     public void Init()
     {

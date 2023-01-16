@@ -9,10 +9,20 @@ using System;
 public class Quest : SerializedScriptableObject
 {
     #region MVC
+    
+    private MyApplication app;
 
     protected MyApplication App
     {
-        get => FindObjectOfType<MyApplication>();
+        get
+        {
+            if (app == null)
+            {
+                app = FindObjectOfType<MyApplication>();
+            }
+
+            return app;
+        }
     }
 
     #endregion

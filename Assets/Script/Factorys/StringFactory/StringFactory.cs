@@ -79,15 +79,15 @@ public class StringFactory : SerializedMonoBehaviour
 
     #region Properties
 
+    private MyApplication app = null;
+    
     private MyApplication App
     {
         get
         {
-            MyApplication app = FindObjectOfType<MyApplication>();
-
             if (app == null)
                 app = FindObjectOfType<MyApplication>();
-
+            
             return app;
         }
     }

@@ -9,7 +9,20 @@ using UnityEngine.Serialization;
 
 public class TutorialActor : SerializedMonoBehaviour
 {
-    protected MyApplication App => FindObjectOfType<MyApplication>();
+    private MyApplication app;
+
+    protected MyApplication App
+    {
+        get
+        {
+            if (app == null)
+            {
+                app = FindObjectOfType<MyApplication>();
+            }
+
+            return app;
+        }
+    }
 
     // public int order;
     [SerializeField] private UIView uiView;

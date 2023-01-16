@@ -10,7 +10,20 @@ using Sirenix.OdinInspector;
 
 public class PlayerSystem : SerializedMonoBehaviour
 {
-    private MyApplication App => FindObjectOfType<MyApplication>();
+    private MyApplication app;
+
+    protected MyApplication App
+    {
+        get
+        {
+            if (app == null)
+            {
+                app = FindObjectOfType<MyApplication>();
+            }
+
+            return app;
+        }
+    }
     
     #region InspectorVariable
 
