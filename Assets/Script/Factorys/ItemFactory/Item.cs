@@ -6,6 +6,18 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = "Item_", menuName = "Factory/Create Item")]
 public class Item : ScriptableObject
 {
+    private MyApplication myApp = null;
+    private MyApplication app
+    {
+        get
+        {
+            if (myApp == null)
+                myApp = FindObjectOfType<MyApplication>();
+            
+            return myApp;
+        }
+    }
+    
     public string id;
     [Space(10)] [EnumPaging] public ItemType itemType;
     [EnumPaging] public ItemBoughtType itemBoughtType;
@@ -73,8 +85,6 @@ public class Item : ScriptableObject
     {
         get
         {
-            MyApplication app = FindObjectOfType<MyApplication>();
-
             int value = 0;
 
             switch (itemType)
@@ -112,7 +122,6 @@ public class Item : ScriptableObject
         }
         set
         {
-            MyApplication app = FindObjectOfType<MyApplication>();
             int fromValue = 0;
 
             switch (itemType)
@@ -161,7 +170,6 @@ public class Item : ScriptableObject
     {
         get
         {
-            MyApplication app = FindObjectOfType<MyApplication>();
             return app.factory.stringFactory.GetItemName(id);
         }
     }
@@ -170,7 +178,6 @@ public class Item : ScriptableObject
     {
         get
         {
-            MyApplication app = FindObjectOfType<MyApplication>();
             return app.factory.stringFactory.GetItemDescription(id);
         }
     }
@@ -197,7 +204,6 @@ public class Item : ScriptableObject
     {
         get
         {
-            MyApplication app = FindObjectOfType<MyApplication>();
             if (app.system.inventory.itemsCanBuyAtStore.ContainsKey(id))
                 return app.system.inventory.itemsCanBuyAtStore[id];
             else
@@ -205,7 +211,6 @@ public class Item : ScriptableObject
         }
         set
         {
-            MyApplication app = FindObjectOfType<MyApplication>();
             if (app.system.inventory.itemsCanBuyAtStore.ContainsKey(id))
                 app.system.inventory.itemsCanBuyAtStore[id] = value;
         }

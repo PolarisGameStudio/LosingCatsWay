@@ -16,10 +16,20 @@ public class BgmSystem : SerializedMonoBehaviour
     float localVolume;
 
     #region MVC
+    
+    private MyApplication app;
 
-    public MyApplication App
+    protected MyApplication App
     {
-        get => FindObjectOfType<MyApplication>();
+        get
+        {
+            if (app == null)
+            {
+                app = FindObjectOfType<MyApplication>();
+            }
+
+            return app;
+        }
     }
 
     #endregion

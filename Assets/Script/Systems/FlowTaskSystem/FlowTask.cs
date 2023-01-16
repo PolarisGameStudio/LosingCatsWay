@@ -9,11 +9,18 @@ public class FlowTask : SerializedMonoBehaviour
 {
     #region MVC
 
+    private MyApplication app;
+
     protected MyApplication App
     {
         get
         {
-            return FindObjectOfType<MyApplication>();
+            if (app == null)
+            {
+                app = FindObjectOfType<MyApplication>();
+            }
+
+            return app;
         }
     }
 

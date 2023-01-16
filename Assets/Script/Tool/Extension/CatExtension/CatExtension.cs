@@ -9,16 +9,21 @@ public static class CatExtension
 {
     #region MVC
 
+    private static MyApplication app;
+
     static MyApplication App
     {
         get
         {
-            MyApplication app = GameObject.FindObjectOfType<MyApplication>();
-            if (app == null) GameObject.FindObjectOfType<MyApplication>();
+            if (app == null)
+            {
+                app = GameObject.FindObjectOfType<MyApplication>();
+            }
+
             return app;
         }
     }
-
+    
     #endregion
 
     #region Get

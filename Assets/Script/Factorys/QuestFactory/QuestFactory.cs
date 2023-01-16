@@ -10,10 +10,20 @@ using Sirenix.OdinInspector;
 public class QuestFactory : SerializedMonoBehaviour
 {
     #region MVC
+    
+    private MyApplication app;
 
     protected MyApplication App
     {
-        get => FindObjectOfType<MyApplication>();
+        get
+        {
+            if (app == null)
+            {
+                app = FindObjectOfType<MyApplication>();
+            }
+
+            return app;
+        }
     }
 
     #endregion
