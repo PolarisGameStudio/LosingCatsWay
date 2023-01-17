@@ -88,14 +88,15 @@ public class DialogueSystem : MvcBehaviour
             return;
         }
 
-        if (sentence.Split(':').Length >= 3) //表情
+        if (sentence.Split(':').Length >= 3)
         {
-            string faceString = sentence.Split(':')[2];
-            if (faceString.Contains("F"))
+            string specialString = sentence.Split(':')[2];
+            if (specialString.Contains("F")) //表情
             {
-                int faceIndex = int.Parse(faceString.Replace("F", ""));
+                int faceIndex = int.Parse(specialString.Replace("F", ""));
                 npcImage.sprite = npcFaces[faceIndex];
             }
+            npcImage.gameObject.SetActive(specialString != "NPC-1"); //關掉NPC
         }
 
         if (isMainCharacter)
@@ -111,8 +112,6 @@ public class DialogueSystem : MvcBehaviour
         else
         {
             npcNameText.text = App.factory.stringFactory.GetCharacterName(characterIndex);
-            
-            npcImage.gameObject.SetActive(characterIndex == "1"); //不是Yumi就關
             
             npcImage.DOColor(Color.white, 0.25f);
             float y = npcImage.rectTransform.anchoredPosition.y;

@@ -204,7 +204,6 @@ public class Controller_Information : ControllerBehavior
     public void ConfirmChooseSkin()
     {
         App.system.soundEffect.Play("Button");
-        VibrateExtension.Vibrate(VibrateType.Nope);
         
         int index = App.model.information.SelectedSkinIndex;
         var cat = App.model.information.SelectedCat;

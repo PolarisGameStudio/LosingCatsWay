@@ -19,9 +19,9 @@ public class TutorialActor_Selection_AdoptKitty : TutorialActor_Selection
         strength = new Vector2(20f, 0f);
         base.Enter();
         
-        imageRect.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack);
-        rejectRect.DOScale(Vector2.one, 0.2f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.2f);
-        acceptRect.DOScale(Vector2.one, 0.2f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.4f);
+        imageRect.DOScale(Vector2.one, 0.3f).From(Vector2.zero).SetEase(Ease.OutBack);
+        rejectRect.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.25f);
+        acceptRect.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.5f);
     }
 
     public override void Accept()
@@ -34,8 +34,12 @@ public class TutorialActor_Selection_AdoptKitty : TutorialActor_Selection
     {
         base.Reject();
         if (!isShake)
+        {
+            App.system.soundEffect.Play("Cat_Fail");
+            VibrateExtension.Vibrate(VibrateType.Nope);
             rejectRect.DOShakeAnchorPos(0.175f, strength, 10, 0)
                 .OnStart(() => isShake = true)
                 .OnComplete(() => isShake = false);
+        }
     }
 }

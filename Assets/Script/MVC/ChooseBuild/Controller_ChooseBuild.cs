@@ -46,7 +46,6 @@ public class Controller_ChooseBuild : ControllerBehavior
     public void Select(int index)
     {
         App.system.soundEffect.Play("Button");
-        VibrateExtension.Vibrate(VibrateType.Nope);
         
         App.view.build.Open();
         App.view.chooseBuild.Close();

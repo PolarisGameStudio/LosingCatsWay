@@ -835,7 +835,6 @@ public class Controller_Cultive : ControllerBehavior
     public void ConfirmChooseSkin()
     {
         App.system.soundEffect.Play("Button");
-        VibrateExtension.Vibrate(VibrateType.Nope);
         
         int index = App.model.cultive.SelectedSkinIndex;
         var cat = App.model.cultive.SelectedCat;

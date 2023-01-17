@@ -16,15 +16,11 @@ public class TutorialActor : SerializedMonoBehaviour
         get
         {
             if (app == null)
-            {
                 app = FindObjectOfType<MyApplication>();
-            }
-
             return app;
         }
     }
 
-    // public int order;
     [SerializeField] private UIView uiView;
     [SerializeField] private float exitDelay;
     [SerializeField] private bool instantHide;
@@ -37,7 +33,9 @@ public class TutorialActor : SerializedMonoBehaviour
     [SerializeField] private bool cameraDrag;
     [SerializeField] private bool cameraPinch;
 
-    [Title("Bgm")] [SerializeField] private string bgmString;
+    [Title("Sound")]
+    [SerializeField] private string bgmString;
+    [SerializeField] private string soundString;
 
     public virtual void Enter()
     {
@@ -52,6 +50,9 @@ public class TutorialActor : SerializedMonoBehaviour
         
         if (!string.IsNullOrEmpty(bgmString))
             App.system.bgm.Play(bgmString);
+        
+        if (!string.IsNullOrEmpty(soundString))
+            App.system.soundEffect.Play(soundString);
     }
 
     public virtual void Exit()
