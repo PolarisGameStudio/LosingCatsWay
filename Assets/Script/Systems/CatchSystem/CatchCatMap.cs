@@ -91,7 +91,7 @@ public class CatchCatMap : MvcBehaviour
         this.cloudCatData = cloudCatData;
         catSkin.ChangeSkin(cloudCatData);
         
-        bubble.Init();
+        bubble.Init(cloudCatData.CatData.PersonalityTypes, cloudCatData.CatData.PersonalityLevels);
         healthBar.Init();
 
         if (!App.system.tutorial.isTutorial)
@@ -211,7 +211,6 @@ public class CatchCatMap : MvcBehaviour
         
         hp = 100f;
         healthBar.ChangeBarValue(hp / 100f);
-        // hpBar.DOFillAmount(hp / 100, 0.35f).From(0).SetEase(Ease.OutExpo);
 
         catSkin.SetActive(true);
         
@@ -238,6 +237,7 @@ public class CatchCatMap : MvcBehaviour
         DoCardsTween();
         
         DOVirtual.DelayedCall(2f, NextTurn);
+        DOVirtual.DelayedCall(3.75f, bubble.Open);
     }
 
     private void NextTurn()
@@ -246,41 +246,6 @@ public class CatchCatMap : MvcBehaviour
 
         catSkin.SetActive(true);
 
-        var personalitys = cloudCatData.CatData.PersonalityTypes;
-        var levels = cloudCatData.CatData.PersonalityLevels;
-        int tmpTurn = turn; // 動畫過程turn會+1
-        
-        if (tmpTurn < personalitys.Count)
-        {
-            bubble.OnCloseHint = () =>  healthBar.OpenPersonality(personalitys[tmpTurn], levels[tmpTurn]);
-            healthBar.OnOpenPersonalityComplete = () =>
-            {
-                if (turn == 7) //Last
-                {
-                    CloseAction();
-
-                    lastTurnCatchButton.SetActive(true);
-                    catchButtonParticle.Play();
-
-                    Vector2 endSize = new Vector2(1.1f, 1.1f);
-                    lastTurnCatchButton.transform.DOScale(endSize, 0.1f).From(Vector2.one).SetEase(Ease.OutExpo)
-                        .SetLoops(-1).SetDelay(0.5f);
-                    lastTurnCatchButton.transform.DOScale(Vector2.one, 0.5f).SetEase(Ease.InOutSine).SetDelay(0.6f)
-                        .SetLoops(-1);
-                }
-                else
-                    OpenAction();
-            };
-        
-            DoTopTween(() =>
-            {
-                bubble.OpenHint(personalitys[tmpTurn], levels[tmpTurn]);
-                DOVirtual.DelayedCall(2f, bubble.CloseHint);
-            });
-
-            return;
-        }
-        
         DoTopTween(() =>
         {
             if (turn == 7) //Last
@@ -403,31 +368,31 @@ public class CatchCatMap : MvcBehaviour
                 break;
         }
 
-        var personality = cloudCatData.CatData.PersonalityTypes;
-        var level = cloudCatData.CatData.PersonalityLevels;
-        var availablePersonality = new List<int>(); //當前回合可以對比的個性
-        var availableLevel = new List<int>();
+        var personalitys = cloudCatData.CatData.PersonalityTypes;
+        var levels = cloudCatData.CatData.PersonalityLevels;
+        // var availablePersonality = new List<int>(); //當前回合可以對比的個性
+        // var availableLevel = new List<int>();
 
         //取得當前回合可用的個性
-        for (int i = 0; i < personality.Count; i++)
-        {
-            if (i >= turn) continue;
-            availablePersonality.Add(personality[i]);
-            availableLevel.Add(level[i]);
-        }
+        // for (int i = 0; i < personalitys.Count; i++)
+        // {
+        //     if (i >= turn) continue;
+        //     availablePersonality.Add(personalitys[i]);
+        //     availableLevel.Add(levels[i]);
+        // }
         
         itemImage.sprite = item.icon;
         DoItemTween(() =>
         {
-            if (availablePersonality.Contains(item.personality)) //該回合有匹配的個性
+            if (personalitys.Contains(item.personality)) //該回合有匹配的個性
             {
-                for (int i = 0; i < availablePersonality.Count; i++)
+                for (int i = 0; i < personalitys.Count; i++)
                 {
-                    if (availablePersonality[i] != item.personality)
+                    if (personalitys[i] != item.personality)
                         continue;
 
                     //看等級給值
-                    switch (availableLevel[i])
+                    switch (levels[i])
                     {
                         case 0:
                             value *= -0.5f;
@@ -640,21 +605,6 @@ public class CatchCatMap : MvcBehaviour
         App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
     }
 
-    private void BubbleTalk()
-    {
-        bubble.OnCloseTalk = () =>
-        {
-            //檢查貓是否逃跑，若否開始下回合
-            if (CheckIsCatRun())
-                RunAway();
-            else
-                NextTurn();
-        };
-        
-        bubble.OpenTalk();
-        DOVirtual.DelayedCall(2f, bubble.CloseTalk);
-    }
-    
     #endregion
 
     #region Tween
@@ -739,15 +689,6 @@ public class CatchCatMap : MvcBehaviour
     private void DoCenterTween()
     {
         catSkin.skeletonGraphic.DOColor(Color.white, 0.7f).From(Color.black).SetEase(Ease.InSine);
-        // hpBarRect.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack);
-
-        // Vector2 barHeartOrigin = new Vector2(barHeartRect.anchoredPosition.x, 0);
-        // Vector2 barHeartOffset = new Vector2(barHeartOrigin.x, hpBarRect.sizeDelta.y + 2);
-        // barHeartRect.DOAnchorPos(barHeartOffset, 0.2f).From(barHeartOrigin).SetEase(Ease.OutBack).SetDelay(0.0625f + 0.25f);
-        //
-        // Vector2 barTitleOrigin = new Vector2(barTitleRect.anchoredPosition.x, 0);
-        // Vector2 barTitleOffset = new Vector2(barTitleOrigin.x, hpBarRect.sizeDelta.y + 2);
-        // barTitleRect.DOAnchorPos(barTitleOffset, 0.2f).From(barTitleOrigin).SetEase(Ease.OutBack).SetDelay(0.0625f * 2 + 0.25f);
     }
 
     private void DoItemTween(TweenCallback centerAction = null)
@@ -885,7 +826,11 @@ public class CatchCatMap : MvcBehaviour
         trackEntry.Complete -= WaitSpineIdle;
         catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "AI_Main/IDLE_Ordinary01", true);
 
-        BubbleTalk();
+        //檢查貓是否逃跑，若否開始下回合
+        if (CheckIsCatRun())
+            RunAway();
+        else
+            NextTurn();
     }
 
     private void SpineCatCatchFail()
@@ -912,7 +857,11 @@ public class CatchCatMap : MvcBehaviour
         if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) != 0)
             catSkin.ChangeSkin(cloudCatData);
         
-        BubbleTalk();
+        //檢查貓是否逃跑，若否開始下回合
+        if (CheckIsCatRun())
+            RunAway();
+        else
+            NextTurn();
     }
 
     private void WaitSpineCatCatchWin(TrackEntry trackEntry)

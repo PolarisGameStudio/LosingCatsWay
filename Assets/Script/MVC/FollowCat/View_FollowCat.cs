@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Doozy.Runtime.UIManager.Components;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -12,29 +13,29 @@ public class View_FollowCat : ViewBehaviour
     //StatusUI
     public TextMeshProUGUI catNameText;
     public TextMeshProUGUI catAgeText;
-    public Image catSexImage;
     public TextMeshProUGUI varietyText;
-    [SerializeField] private TmpRevolving tmpRevolving;
-
-    public Image satietyValueImage;
-    public Image favorabilityValueImage;
-    public Image moistureValueImage;
-
+    public Image catSexImage;
     public Image moodImage;
 
+    [Title("Fill")]
+    [SerializeField] private Image satietyFill;
+    [SerializeField] private Image moistureFill;
+    [SerializeField] private Image favourabilityFill;
+
+
+    [Title("Trait")]
     [SerializeField] private UIButton traitButton;
+    [SerializeField] private GameObject traitMask;
 
     public override void Open()
     {
         base.Open();
         catSkin.SetActive(true);
-        tmpRevolving.StartRevolving();
     }
 
     public override void Close()
     {
         catSkin.SetActive(false);
-        tmpRevolving.StopRevolving();
         base.Close();
     }
 
@@ -54,9 +55,9 @@ public class View_FollowCat : ViewBehaviour
         catAgeText.text = cloudCatData.CatData.CatAge.ToString();
         catSexImage.sprite = App.factory.catFactory.GetCatSexSpriteWhite(cloudCatData.CatData.Sex);
 
-        satietyValueImage.fillAmount = cloudCatData.CatSurviveData.Satiety / 100;
-        favorabilityValueImage.fillAmount = cloudCatData.CatSurviveData.Favourbility / 100;
-        moistureValueImage.fillAmount = cloudCatData.CatSurviveData.Moisture / 100;
+        satietyFill.fillAmount = cloudCatData.CatSurviveData.Satiety / 100;
+        favourabilityFill.fillAmount = cloudCatData.CatSurviveData.Favourbility / 100;
+        moistureFill.fillAmount = cloudCatData.CatSurviveData.Moisture / 100;
 
         int mood = CatExtension.GetCatMood(cloudCatData);
         moodImage.sprite = App.factory.catFactory.GetMoodSprite(mood);
@@ -67,5 +68,6 @@ public class View_FollowCat : ViewBehaviour
         catSkin.ChangeSkin(cloudCatData);
         
         traitButton.interactable = cloudCatData.CatSkinData.UseSkinId is "Robot" or "Flyfish" or "Magic_Hat";
+        traitMask.SetActive(!traitButton.interactable);
     }
 }

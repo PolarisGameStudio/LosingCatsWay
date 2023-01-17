@@ -9,6 +9,7 @@ using UnityEngine;
 public class Controller_MonthSign : ControllerBehavior
 {
     public Transform FrontTransform; // 圖層解決
+    public Transform BackTransform;
 
     public async void Init()
     {
@@ -48,6 +49,8 @@ public class Controller_MonthSign : ControllerBehavior
             App.model.monthSign.SignIndexs = signs;
             App.model.monthSign.Month = App.system.myTime.MyTimeNow.Month;
         }
+
+        App.model.monthSign.TodayIndex = today.Day - 1;
     }
 
     /// 按鈕簽到
@@ -124,6 +127,11 @@ public class Controller_MonthSign : ControllerBehavior
         }
 
         return tmp;
+    }
+
+    public void SortDateObjects()
+    {
+        App.view.monthSign.SortDateObjects();
     }
 }
 

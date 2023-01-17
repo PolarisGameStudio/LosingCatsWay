@@ -75,6 +75,8 @@ public class StringFactory : SerializedMonoBehaviour
     [Title("Clinic")] [SerializeField] private Dictionary<string, StringData> paymentName;
     [SerializeField] private Dictionary<string, StringData> paymentInfo;
 
+    [Title("CatchCat")] [SerializeField] private Dictionary<string, StringData> CatchCatHints;
+
     private string countryId = "tw";
 
     #region Properties
@@ -447,6 +449,14 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = paymentInfo[CountryId].Contents.ContainsKey(id)
             ? paymentInfo[CountryId].Contents[id]
+            : "要叫阿邦上";
+        return result;
+    }
+
+    public string GetCatchCatHint(string id)
+    {
+        string result = CatchCatHints[CountryId].Contents.ContainsKey(id)
+            ? CatchCatHints[CountryId].Contents[id]
             : "要叫阿邦上";
         return result;
     }

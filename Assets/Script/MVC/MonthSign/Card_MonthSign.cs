@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -17,11 +15,18 @@ public class Card_MonthSign : MvcBehaviour
     [SerializeField] private Image icon;
     [SerializeField] private Transform getIconTransform;
     [SerializeField] private GameObject doubleBg;
+    [SerializeField] private GameObject todayBorder;
+    [SerializeField] private GameObject todayNormalBg;
+    [SerializeField] private GameObject todayDoubleBg;
+
+    [Title("Get")] [SerializeField] private Image getImage;
+    [SerializeField] private Sprite normalGet;
+    [SerializeField] private Sprite doubleGet;
 
     [Title("Color")] [SerializeField] private Color32 normalTextColor;
     [SerializeField] private Color32 doubleTextColor;
 
-    bool isSign;
+    private bool isSign;
 
     public void SetDate(int date)
     {
@@ -46,11 +51,27 @@ public class Card_MonthSign : MvcBehaviour
         doubleBg.SetActive(value);
         countText.color = value ? doubleTextColor : normalTextColor;
 
+        getImage.sprite = normalGet;
         if (value)
         {
+            getImage.sprite = doubleGet;
             int vipCount = int.Parse(countText.text) * 2;
             countText.text = vipCount.ToString("00");
         }
+    }
+
+    public void SetToday(bool value)
+    {
+        todayBorder.SetActive(value);
+        todayNormalBg.SetActive(value);
+        todayDoubleBg.SetActive(value);
+
+        if (value)
+            transform.SetParent(App.controller.monthSign.FrontTransform);
+        else
+            transform.SetParent(App.controller.monthSign.BackTransform);
+        
+        App.controller.monthSign.SortDateObjects();
     }
 
     public bool IsSign
@@ -69,7 +90,6 @@ public class Card_MonthSign : MvcBehaviour
     {
         Transform fromParent = transform.parent;
         Transform toParent = App.controller.monthSign.FrontTransform;
-        int siblingIndex = transform.GetSiblingIndex();
 
         transform.SetParent(toParent);
         getIconTransform.DOScale(new Vector2(2, 2), 0.15f).From(new Vector2(1.5f, 1.5f)).SetEase(Ease.OutExpo);
@@ -78,7 +98,7 @@ public class Card_MonthSign : MvcBehaviour
             .OnComplete(() =>
             {
                 transform.SetParent(fromParent);
-                transform.SetSiblingIndex(siblingIndex);
+                App.controller.monthSign.SortDateObjects();
             });
     }
 }

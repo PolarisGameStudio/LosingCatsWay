@@ -10,6 +10,7 @@ public class Model_MonthSign : ModelBehavior
     private DateTime lastMonthSignDate;
     private int resignCount;
     private List<Reward> monthRewards;
+    private int todayIndex = -1;
 
     public List<int> SignIndexs
     {
@@ -57,8 +58,19 @@ public class Model_MonthSign : ModelBehavior
         }
     }
 
+    public int TodayIndex
+    {
+        get => todayIndex;
+        set
+        {
+            todayIndex = value;
+            OnTodayIndexChange?.Invoke(value);
+        }
+    }
+
     public ValueChange OnSignIndexsChange;
     public ValueChange OnMonthChange;
     public ValueChange OnResignCountChange;
     public ValueChange OnMonthRewardsChange;
+    public ValueChange OnTodayIndexChange;
 }

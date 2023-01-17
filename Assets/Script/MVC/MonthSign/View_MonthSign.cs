@@ -25,6 +25,12 @@ public class View_MonthSign : ViewBehaviour
     [Title("Color")] [SerializeField] private Color32 canSignColor;
     [SerializeField] private Color32 noSignColor;
 
+    public override void Open()
+    {
+        base.Open();
+        RefreshDateObject();
+    }
+
     public override void Init()
     {
         base.Init();
@@ -33,12 +39,14 @@ public class View_MonthSign : ViewBehaviour
         App.model.monthSign.OnMonthChange += OnMonthChange;
         App.model.monthSign.OnResignCountChange += OnResignCountChange;
         App.model.monthSign.OnMonthRewardsChange += OnMonthRewardsChange;
+        App.model.monthSign.OnTodayIndexChange += OnTodayIndexChange;
     }
 
-    public override void Open()
+    private void OnTodayIndexChange(object value)
     {
-        base.Open();
-        RefreshDateObject();
+        int index = (int)value;
+        for (int i = 0; i < dateObjects.Length; i++)
+            dateObjects[i].SetToday(i == index);
     }
 
     private void OnMonthRewardsChange(object value)
@@ -155,5 +163,11 @@ public class View_MonthSign : ViewBehaviour
         List<int> vipDays = new List<int> { 4, 7, 11, 14, 18, 21, 25, 28 };
         for (int i = 0; i < dateObjects.Length; i++)
             dateObjects[i].SetDouble(vipDays.Contains(i + 1));
+    }
+
+    public void SortDateObjects()
+    {
+        for (int i = 0; i < dateObjects.Length; i++)
+            dateObjects[i].transform.SetSiblingIndex(i);
     }
 }

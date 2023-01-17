@@ -21,65 +21,124 @@ public class CatchCatBubble : MvcBehaviour
 
     [Title("UI")] [SerializeField] private Image iconImage;
     [SerializeField] private Image loveImage;
-    [SerializeField] private TextMeshProUGUI talkText;
     [SerializeField] private TextMeshProUGUI hintText;
+    [SerializeField] private CanvasGroup textCanvasGroup;
 
-    public Callback OnCloseTalk;
-    public Callback OnCloseHint;
+    private int hintIndex;
+    private bool isTrigger;
+    private bool isTweening;
+    
+    private List<int> _personalitys;
+    private List<int> _levels;
 
-    public void Init()
+    private Tween delayCall;
+
+    public void Init(List<int> personalitys, List<int> levels)
     {
-        talkBubble.transform.localScale = Vector2.zero;
-        hintBubble.transform.localScale = Vector2.zero;
+        hintIndex = -1;
+        isTrigger = false;
+        isTweening = false;
+
+        _personalitys = personalitys;
+        _levels = levels;
+
+        talkBubble.transform.DOKill();
+        hintBubble.transform.DOKill();
+        for (int i = 0; i < smallBubbles.Length; i++)
+            smallBubbles[i].transform.DOKill();
+        delayCall?.Kill();
+
+        talkBubble.transform.localScale = new Vector2(0, 1);
+        hintBubble.transform.localScale = new Vector2(0, 1);
         for (int i = 0; i < smallBubbles.Length; i++)
             smallBubbles[i].transform.localScale = Vector2.zero;
+
+        iconImage.DOFade(0, 0);
+        loveImage.DOFade(0, 0);
+        textCanvasGroup.DOFade(0, 0);
     }
 
-    public void OpenTalk() // 心裡話
+    public void Open()
     {
-        //Dotween
-        for (int i = 0; i < smallBubbles.Length; i++)
-            smallBubbles[i].transform.DOScale(Vector2.one, 0.15f).SetDelay(i * 0.1f);
-        talkBubble.transform.DOScale(Vector2.one, 0.25f).SetEase(Ease.OutBack).SetDelay(0.3f);
-
-        //TODO 內心話
+        OpenTalk();
     }
 
-    public void CloseTalk()
+    public void Active()
     {
-        talkBubble.transform.DOScale(Vector2.zero, 0.25f).SetEase(Ease.InBack);
-        for (int i = smallBubbles.Length - 1; i >= 0; i--)
-            smallBubbles[i].transform.DOScale(Vector2.zero, 0.15f).SetDelay(i * 0.125f);
-
-        DOVirtual.DelayedCall(0.3f, () =>
-        {
-            OnCloseTalk?.Invoke();
-            OnCloseTalk = null;
-        });
-    }
-
-    public void OpenHint(int personality, int level)
-    {
-        //Dotween
-        for (int i = 0; i < smallBubbles.Length; i++)
-            smallBubbles[i].transform.DOScale(Vector2.one, 0.15f).SetDelay(i * 0.1f);
-        hintBubble.transform.DOScale(Vector2.one, 0.25f).SetEase(Ease.OutBack).SetDelay(0.3f);
+        if (isTweening) // 動畫播一半的防呆
+            return;
         
-        iconImage.sprite = personalitySprites[personality];
-        loveImage.sprite = level > 1 ? loveSprite : hateSprite;
-        //TODO HintText
+        hintIndex++;
+        if (hintIndex >= _personalitys.Count)
+            hintIndex = 0;
+        
+        if (!isTrigger)
+            CloseTalk();
+        else
+            CloseHint();
+
+        isTrigger = true;
+        
+        delayCall = DOVirtual.DelayedCall(0.23f, () =>
+        {
+            int personality = _personalitys[hintIndex];
+            iconImage.sprite = personalitySprites[personality];
+
+            int level = _levels[hintIndex];
+            loveImage.sprite = level > 1 ? loveSprite : hateSprite;
+
+            string id = $"{personality}{level}";
+            hintText.text = App.factory.stringFactory.GetCatchCatHint(id);
+            
+            OpenHint();
+        });
     }
 
-    public void CloseHint()
+    private void OpenTalk()
     {
-        hintBubble.transform.DOScale(Vector2.zero, 0.25f).SetEase(Ease.InBack);
-        for (int i = smallBubbles.Length - 1; i >= 0; i--)
-            smallBubbles[i].transform.DOScale(Vector2.zero, 0.15f).SetDelay(i * 0.125f);
+        isTweening = true;
+        
+        for (int i = 0; i < smallBubbles.Length; i++)
+            smallBubbles[i].transform.DOScale(Vector2.one, 0.15f).SetDelay(i * 0.1f);
+        
+        talkBubble.transform.DOScaleX(1, 0.18f).SetEase(Ease.OutBack)
+            .SetDelay(0.3f)
+            .OnComplete(() => isTweening = false);
+    }
 
-        DOVirtual.DelayedCall(0.3f, () =>
-        {
-            OnCloseHint?.Invoke();
-            OnCloseHint = null;
-        });
+    private void CloseTalk()
+    {
+        isTweening = true;
+        
+        talkBubble.transform.DOScaleX(0, 0.12f).SetEase(Ease.Linear)
+            .OnComplete(() => isTweening = false);
+    }
+
+    private void OpenHint()
+    {
+        isTweening = true;
+        
+        hintBubble.transform.DOScaleX(1, 0.18f).SetEase(Ease.OutBack)
+            .OnStart(() =>
+            {
+                textCanvasGroup.DOFade(1, 0.18f);
+                iconImage.DOFade(1, 0.18f);
+                loveImage.DOFade(1, 0.18f);
+            })
+            .OnComplete(() => isTweening = false);
+    }
+
+    private void CloseHint()
+    {
+        isTweening = true;
+        
+        hintBubble.transform.DOScaleX(0, 0.12f).SetEase(Ease.Linear)
+            .OnStart(() =>
+            {
+                textCanvasGroup.DOFade(0, 0.06f);
+                iconImage.DOFade(0, 0.06f);
+                loveImage.DOFade(0, 0.06f);
+            })
+            .OnComplete(() => isTweening = false);
     }
 }
