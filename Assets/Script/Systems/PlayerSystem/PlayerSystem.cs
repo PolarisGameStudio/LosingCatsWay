@@ -48,7 +48,7 @@ public class PlayerSystem : SerializedMonoBehaviour
 
     public ValueChange OnCatMemoryChange;
     
-    public ValueChange OnCatSlotChange;
+    public ValueChange OnDiamondCatSlotChange;
     public ValueChange OnPlayerGenderChange;
     public ValueChange OnFriendIdsChange;
     public ValueChange OnReceiveFriendInvitesChange;
@@ -176,8 +176,11 @@ public class PlayerSystem : SerializedMonoBehaviour
     public int DiamondCatSlot
     {
         get => diamondCatSlot;
-        set => diamondCatSlot = value;
-        //Todo ValueChange
+        set
+        {
+            diamondCatSlot = value;
+            OnDiamondCatSlotChange(value);
+        }
     }
 
     public int GridSizeLevel

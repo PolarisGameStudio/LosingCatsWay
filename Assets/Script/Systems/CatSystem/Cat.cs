@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using DG.Tweening;
 using Doozy.Runtime.Common.Extensions;
 using Firebase.Firestore;
@@ -29,6 +27,7 @@ public class Cat : MvcBehaviour
     [HideInInspector] public int littleGameIndex;
     [HideInInspector] public BigGameBehaviour bigGameBehaviour;
     [HideInInspector] public string catNotifyId; //每次刷遊戲覆蓋
+    [HideInInspector] public bool isPauseGame;
 
     public CatRewardCanvas CatRewardCanvas;
 
@@ -42,7 +41,6 @@ public class Cat : MvcBehaviour
 
     private int CancelGameTimer = 0;
     private int DrawGameTimer = 0;
-    private bool hasGame = false;
 
     #endregion
 
@@ -61,10 +59,9 @@ public class Cat : MvcBehaviour
         if (catHeartEffect.isPlaying) catHeartEffect.Stop();
 
         //隨機開始時間
-        hasGame = false;
         int randTimer = Random.Range(10, 15);
         DrawGameTimer = randTimer;
-        ToggleDrawGamePause(false);
+        InvokeRepeating(nameof(CountTimerDrawGame), 1, 1);
     }
 
     #region Init
@@ -274,25 +271,14 @@ public class Cat : MvcBehaviour
     private void StartCountDrawGame()
     {
         DrawGameTimer = 0;
-        ToggleDrawGamePause(false);
-    }
-
-    public void ToggleDrawGamePause(bool pause)
-    {
-        if (hasGame) return;
-
-        if (pause)
-        {
-            CancelInvoke(nameof(CountTimerDrawGame));
-        }
-        else
-        {
-            InvokeRepeating(nameof(CountTimerDrawGame), 1, 1);
-        }
+        InvokeRepeating(nameof(CountTimerDrawGame), 1, 1);
     }
 
     private void CountTimerDrawGame()
     {
+        if (isPauseGame)
+            return;
+        
         if (DrawGameTimer < 30)
         {
             DrawGameTimer++;
@@ -310,31 +296,13 @@ public class Cat : MvcBehaviour
         {
             if (Random.value > 0.7f)
             {
-                hasGame = true;
                 OpenBigGame();
                 StartCountCancelGame();
                 return;
             }
         }
 
-        hasGame = true;
         App.system.littleGame.SetLittleGame(this);
-        OpenLittleGame();
-        StartCountCancelGame();
-    }
-
-    [Button]
-    private void DrawBigGame()
-    {
-        hasGame = true;
-        OpenBigGame();
-        StartCountCancelGame();
-    }
-
-    [Button]
-    private void DrawLittleGame()
-    {
-        hasGame = true;
         OpenLittleGame();
         StartCountCancelGame();
     }
@@ -347,26 +315,14 @@ public class Cat : MvcBehaviour
     private void StartCountCancelGame()
     {
         CancelGameTimer = 0;
-        ToggleCancelGamePause(false);
-    }
-
-    /// 暫停或取消暫停關遊戲倒計時
-    public void ToggleCancelGamePause(bool pause)
-    {
-        if (!hasGame) return;
-
-        if (pause)
-        {
-            CancelInvoke(nameof(CountTimerCancelGame));
-        }
-        else
-        {
-            InvokeRepeating(nameof(CountTimerCancelGame), 1, 1);
-        }
+        InvokeRepeating(nameof(CountTimerCancelGame), 1, 1);
     }
 
     private void CountTimerCancelGame()
     {
+        if (isPauseGame)
+            return;
+        
         if (CancelGameTimer < 60)
         {
             CancelGameTimer++;
@@ -381,7 +337,6 @@ public class Cat : MvcBehaviour
     public void CancelGame()
     {
         CancelInvoke(nameof(CountTimerCancelGame));
-        hasGame = false;
         CloseBigGame();
         CloseLittleGame();
         StartCountDrawGame();
@@ -445,6 +400,9 @@ public class Cat : MvcBehaviour
         if (App.model.build.IsCanMoveOrRemove)
             return;
 
+        if (isPauseGame)
+            return;
+
         CancelGame();
 
         App.system.littleGame.Active(this);
@@ -461,8 +419,10 @@ public class Cat : MvcBehaviour
         if (App.model.build.IsCanMoveOrRemove)
             return;
 
+        if (isPauseGame)
+            return;
+
         CancelGame();
-        CloseBigGame();
 
         App.controller.followCat.CloseByOpenLobby();
         App.controller.lobby.Open();
@@ -603,12 +563,18 @@ public class Cat : MvcBehaviour
     private void CheckSick()
     {
         if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
+        {
+            isPauseGame = true;
             return;
+        }
         
         cloudCatData.CatHealthData.SickId = App.factory.sickFactory.GetCatSick(cloudCatData);
         
         if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
         {
+            CancelGame();
+            isPauseGame = true;
+            
             cloudCatData.CatHealthData.MetDoctorCount =
                 App.factory.sickFactory.GetMetCount(cloudCatData.CatHealthData.SickId);
             App.system.cloudSave.UpdateCloudCatHealthData(cloudCatData);
@@ -634,9 +600,6 @@ public class Cat : MvcBehaviour
 
     public void Death()
     {
-        ToggleCancelGamePause(true);
-        ToggleDrawGamePause(true);
-
         App.model.entrance.OpenType = 1;
         App.system.catNotify.Remove(this);
 

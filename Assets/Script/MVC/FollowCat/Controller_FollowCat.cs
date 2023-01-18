@@ -104,6 +104,7 @@ public class Controller_FollowCat : ControllerBehavior
     public void StartTrait()
     {
         followCat.StopMove();
+        App.system.cat.PauseCatsGame(true);
 
         var skinId = followCat.cloudCatData.CatSkinData.UseSkinId;
         int traitIndex = 0;
@@ -131,7 +132,11 @@ public class Controller_FollowCat : ControllerBehavior
         
         animator.Play(CatAnimTable.ToTrait.ToString());
         CloseSensor();
-        DOVirtual.DelayedCall(duration, OpenSensor);
+        DOVirtual.DelayedCall(duration, () =>
+        {
+            OpenSensor();
+            App.system.cat.PauseCatsGame(false);
+        });
     }
 
     public void OpenCultive()

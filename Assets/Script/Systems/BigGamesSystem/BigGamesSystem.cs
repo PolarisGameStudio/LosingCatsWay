@@ -123,13 +123,13 @@ public class BigGamesSystem : MvcBehaviour
 
     public void Open()
     {
-        App.system.cat.ToggleCatsGameTimer(true);
+        App.system.cat.PauseCatsGame(true);
         view.InstantShow();
     }
 
     public void Close()
     {
-        App.system.cat.ToggleCatsGameTimer(false);
+        App.system.cat.PauseCatsGame(false);
         App.system.room.OpenRooms();
         view.InstantHide();
         OnClose?.Invoke();

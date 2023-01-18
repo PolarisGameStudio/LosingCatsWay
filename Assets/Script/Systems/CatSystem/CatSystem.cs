@@ -141,21 +141,12 @@ public class CatSystem : MvcBehaviour
 
     #region Game
 
-    /// 暫停所有貓的關遊戲倒計時
-    public void ToggleCatsGameTimer(bool pause)
+    /// 暫停所有貓遊戲
+    public void PauseCatsGame(bool pause)
     {
         for (int i = 0; i < myCats.Count; i++)
         {
-            myCats[i].ToggleDrawGamePause(pause);
-            myCats[i].ToggleCancelGamePause(pause);
-        }
-    }
-
-    public void ClaseCatsGame()
-    {
-        for (int i = 0; i < myCats.Count; i++)
-        {
-            myCats[i].CancelGame();
+            myCats[i].isPauseGame = pause;
         }
     }
 

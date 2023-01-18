@@ -342,6 +342,8 @@ public class Controller_Clinic : ControllerBehavior
             cloudCatData.CatSurviveData.ChangeRealSatiety(50);
             cloudCatData.CatSurviveData.ChangeRealMoisture(50);
             cloudCatData.CatSurviveData.ChangeRealFavourbility(50);
+
+            App.model.clinic.SelectedCat.isPauseGame = false;
         }
         
         App.system.cloudSave.UpdateCloudCatHealthData(cloudCatData);

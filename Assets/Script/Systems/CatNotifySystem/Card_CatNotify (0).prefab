@@ -428,7 +428,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 26104538082725997}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 26104538082725999}
+        m_TargetAssemblyTypeName: Card_CatNotify, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &26104538082725999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,7 +626,7 @@ PrefabInstance:
     - target: {fileID: 1754689740357421273, guid: cfc09e7df4eee304cad133309b58d7d8,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1790363015218698693, guid: cfc09e7df4eee304cad133309b58d7d8,
         type: 3}

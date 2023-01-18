@@ -31,7 +31,7 @@ public class LittleGameSystem : MvcBehaviour
         if (App.model.build.IsCanMoveOrRemove)
             return;
 
-        App.system.cat.ToggleCatsGameTimer(true);
+        App.system.cat.PauseCatsGame(true);
         selectedCat = cat;
 
         view.Show();
@@ -65,7 +65,7 @@ public class LittleGameSystem : MvcBehaviour
 
         view.Hide();
         OnClose?.Invoke();
-        App.system.cat.ToggleCatsGameTimer(false);
+        App.system.cat.PauseCatsGame(false);
     }
 
     public void SetTutorialUI()

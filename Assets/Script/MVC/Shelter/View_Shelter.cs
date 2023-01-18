@@ -16,6 +16,7 @@ public class View_Shelter : ViewBehaviour
     [Title("Cages")]
     public Object_Cage[] cages;
     [SerializeField] private GameObject blankCages;
+    [SerializeField] private GameObject noCatsObject;
 
     [Title("UI")]
     public Scrollbar shelterScrollBar;
@@ -129,7 +130,8 @@ public class View_Shelter : ViewBehaviour
             }
         }
         
-        blankCages.SetActive((cats.Count % 2) == 1);
+        blankCages.SetActive(cats.Count % 2 == 1);
+        noCatsObject.SetActive(cats.Count == 0);
     }
 
     private void OnCoinChange(object value)

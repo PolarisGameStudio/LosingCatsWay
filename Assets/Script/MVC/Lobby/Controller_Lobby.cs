@@ -43,7 +43,7 @@ public class Controller_Lobby : ControllerBehavior
 
     public void OpenMap()
     {
-        App.system.cat.ToggleCatsGameTimer(true);
+        App.system.cat.PauseCatsGame(true);
 
         App.system.bgm.FadeOut();
         App.system.transition.Active(0, () =>

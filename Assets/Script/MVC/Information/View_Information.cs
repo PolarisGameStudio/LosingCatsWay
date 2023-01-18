@@ -48,9 +48,24 @@ public class View_Information : ViewBehaviour
         App.system.player.OnPlayerNameChange += OnPlayerNameChange;
         App.system.player.OnCoinChange += OnCoinChange;
         App.system.player.OnDiamondChange += OnDiamondChange;
-        App.system.player.OnCatSlotChange += OnCatSlotChange;
+        App.system.player.OnDiamondCatSlotChange += OnDiamondCatSlotChange;
         App.system.player.OnUsingIconChange += OnUsingIconChange;
         App.system.player.OnUsingAvatarChange += OnUsingAvatarChange;
+    }
+
+    public override void Open()
+    {
+        base.Open();
+        slotText.text = App.system.player.CatSlot.ToString();
+    }
+
+    public override void Close()
+    {
+        base.Close();
+        for (int i = 0; i < catInformations.Length; i++)
+        {
+            catInformations[i].gameObject.SetActive(false);
+        }
     }
 
     private void OnUsingAvatarChange(object value)
@@ -74,43 +89,11 @@ public class View_Information : ViewBehaviour
         playerIcon.sprite = App.factory.itemFactory.GetItem(id).icon;
     }
 
-    public override void Close()
-    {
-        base.Close();
-        for (int i = 0; i < catInformations.Length; i++)
-        {
-            catInformations[i].gameObject.SetActive(false);
-        }
-    }
-
-    private void OnCatSlotChange(object value)
+    private void OnDiamondCatSlotChange(object value)
     {
         int slot = (int)value;
-        var cats = App.system.cat.GetCats();
-        
-        slotText.text = slot.ToString();
-
-        for (int i = 0; i < catInformations.Length; i++)
-        {
-            if (i >= slot)
-            {
-                catInformations[i].SetActive(false);
-                continue;
-            }
-
-            if (i >= cats.Count)
-            {
-                catInformations[i].SetCat(null);
-                catInformations[i].SetActive(true);
-                continue;
-            }
-            
-            catInformations[i].SetCat(cats[i].cloudCatData);
-            catInformations[i].SetActive(true);
-        }
-        
-        int slotByLevel = App.system.player.playerDataSetting.GetCatSlotByLevel(App.system.player.Level);
-        diamondUnlockBlock.SetActive(slot - slotByLevel < 12);
+        diamondUnlockBlock.SetActive(slot < 12);
+        slotText.text = App.system.player.CatSlot.ToString();
     }
 
     private void OnMyCatsChange(object value)
@@ -136,8 +119,6 @@ public class View_Information : ViewBehaviour
             catInformations[i].SetCat(cats[i].cloudCatData);
             catInformations[i].SetActive(true);
         }
-
-        diamondUnlockBlock.SetActive(App.system.player.DiamondCatSlot < 12);
     }
 
     private void OnPlayerIdChange(object playerId)
@@ -156,6 +137,7 @@ public class View_Information : ViewBehaviour
         playerLevelText.text = level.ToString("00");
         
         levelUnlockBlock.SetActive(level < 85);
+        slotText.text = App.system.player.CatSlot.ToString();
 
         if (level < 2)
         {

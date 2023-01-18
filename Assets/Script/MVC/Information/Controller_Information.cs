@@ -96,7 +96,7 @@ public class Controller_Information : ControllerBehavior
 
     public void OpenMap() // 獲得新貓咪的卡片可點擊
     {
-        App.system.cat.ToggleCatsGameTimer(true);
+        App.system.cat.PauseCatsGame(true);
 
         App.system.bgm.FadeOut();
         App.system.transition.Active(0, () =>

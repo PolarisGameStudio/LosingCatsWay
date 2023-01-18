@@ -11,8 +11,7 @@ public class TutorialActor_CatNotify_BigGame : TutorialActor_Unmask
     public override void Enter()
     {
         var cat = App.system.cat.GetCats()[0];
-        cat.ToggleCancelGamePause(true);
-        cat.ToggleDrawGamePause(true);
+        cat.isPauseGame = true;
         cat.OpenBigGame();
         base.Enter();
     }

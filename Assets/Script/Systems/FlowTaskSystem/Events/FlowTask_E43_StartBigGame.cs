@@ -18,7 +18,7 @@ public class FlowTask_E43_StartBigGame : FlowTask
         
         App.system.bigGames.OnClose += Exit;
         App.system.bigGames.OpenRandomGame();
-        App.system.cat.ClaseCatsGame();
+        // App.system.cat.CloseCatsGame();
 
         //var cat = App.system.cat.GetCats()[0];
         //App.system.lobbyNotify.ClearNotify(cat.catData.CatId);

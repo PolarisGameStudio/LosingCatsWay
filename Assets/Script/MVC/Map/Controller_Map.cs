@@ -82,7 +82,7 @@ public class Controller_Map : ControllerBehavior
 
     public void Close()
     {
-        App.system.cat.ToggleCatsGameTimer(false);
+        App.system.cat.PauseCatsGame(false);
         App.system.bgm.FadeOut();
         App.system.room.OpenRooms();
         App.system.transition.Active(0, () =>
