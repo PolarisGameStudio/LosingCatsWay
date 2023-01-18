@@ -83,13 +83,12 @@ public class Controller_Information : ControllerBehavior
     {
         App.system.confirm.ActiveByInsert(ConfirmTable.BuyConfirm, "", App.factory.stringFactory.GetUnlock("ULK001"),() =>
         {
-            if (App.system.player.Diamond < 2000)
+            if (!App.system.player.ReduceDiamond(2000))
             {
                 DOVirtual.DelayedCall(0.1f, () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.NotEnoughDiamond));
                 return;
             }
-
-            App.system.player.Diamond -= 2000;
+            
             App.system.player.DiamondCatSlot += 1;
             DOVirtual.DelayedCall(0.1f, () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix));
         });

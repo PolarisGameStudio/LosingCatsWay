@@ -137,7 +137,7 @@ public class Controller_FollowCat : ControllerBehavior
     public void OpenCultive()
     {
         App.system.bgm.FadeOut();
-        App.system.transition.Active(0, () =>
+        App.system.transition.Active(0.25f, () =>
         {
             App.model.cultive.SelectedCat = App.model.followCat.SelectedCat;
             App.model.cultive.OpenFromIndex = 1;

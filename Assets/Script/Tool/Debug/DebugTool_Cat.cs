@@ -48,6 +48,9 @@ public class DebugTool_Cat
         catSurviveData.RealMoisture = 100;
         catSurviveData.RealFavourbility = 100;
         catSurviveData.IsUseToFind = false;
+        catSurviveData.CleanLitterTimestamp = new Timestamp();
+        catSurviveData.UsingLitter = -1;
+        catSurviveData.CleanLitterCount = 0;
         catSurviveData.LikeFoodIndex = Random.Range(0, 3);
         catSurviveData.HateFoodIndex = Random.Range(0, 3);
         catSurviveData.LikeLitterIndex = Random.Range(0, 3);
@@ -130,6 +133,9 @@ public class DebugTool_Cat
         catSurviveData.RealMoisture = 100;
         catSurviveData.RealFavourbility = 100;
         catSurviveData.IsUseToFind = false;
+        catSurviveData.CleanLitterTimestamp = new Timestamp();
+        catSurviveData.UsingLitter = -1;
+        catSurviveData.CleanLitterCount = 0;
         catSurviveData.LikeFoodIndex = Random.Range(0, 3);
         catSurviveData.HateFoodIndex = Random.Range(0, 3);
         catSurviveData.LikeLitterIndex = Random.Range(0, 3);

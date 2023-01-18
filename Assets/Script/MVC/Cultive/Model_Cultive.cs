@@ -59,11 +59,7 @@ public class Model_Cultive : ModelBehavior
     public int UsingLitterIndex
     {
         get => usingLitterIndex;
-        set
-        {
-            usingLitterIndex = value;
-            OnUsingLitterIndexChange(value);
-        }
+        set => usingLitterIndex = value;
     }
 
     public DateTime NextCleanDateTime
@@ -125,7 +121,6 @@ public class Model_Cultive : ModelBehavior
     public ValueChange OnSelectedCatChange;
     public ValueChange OnSelectedTypeChange;
     public ValueChange OnSelectedItemsChange;
-    public ValueChange OnUsingLitterIndexChange;
     public ValueChange OnNextCleanDateTimeChange;
     public ValueChange OnCleanLitterCountChange;
     public ValueChange OnSelectedTabChange;

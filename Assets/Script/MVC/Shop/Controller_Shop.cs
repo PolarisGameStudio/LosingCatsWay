@@ -118,22 +118,12 @@ public class Controller_Shop : ControllerBehavior
         {
             if (item.itemBoughtType == ItemBoughtType.Coin)
             {
-                if (App.system.player.Coin < App.model.shop.TotalAmount)
+                if (!App.system.player.ReduceMoney(App.model.shop.TotalAmount))
                     DOVirtual.DelayedCall(0.1f,
                         () => App.system.confirm.Active(ConfirmTable.NoMoney, OpenTopUp));
                 else
                 {
-                    App.system.player.Coin -= App.model.shop.TotalAmount;
-
-                    if (item.itemType == ItemType.Room)
-                    {
-                        App.system.inventory.RoomData[item.id] += App.model.shop.BuyCount;
-                    }
-                    else
-                    {
-                        item.Count += App.model.shop.BuyCount;
-                    }
-
+                    item.Count += App.model.shop.BuyCount;
                     App.system.cloudSave.UpdateCloudPlayerData();
                     App.system.cloudSave.UpdateCloudItemData();
                     ClosePayment();
@@ -148,21 +138,11 @@ public class Controller_Shop : ControllerBehavior
 
             if (item.itemBoughtType == ItemBoughtType.Diamond)
             {
-                if (App.system.player.Diamond < App.model.shop.TotalAmount)
+                if (!App.system.player.ReduceDiamond(App.model.shop.TotalAmount))
                     DOVirtual.DelayedCall(0.1f, () => App.system.confirm.Active(ConfirmTable.NoDiamond, OpenTopUp));
                 else
                 {
-                    App.system.player.Diamond -= App.model.shop.TotalAmount;
-
-                    if (item.itemType == ItemType.Room)
-                    {
-                        App.system.inventory.RoomData[item.id] += App.model.shop.BuyCount;
-                    }
-                    else
-                    {
-                        item.Count += App.model.shop.BuyCount;
-                    }
-
+                    item.Count += App.model.shop.BuyCount;
                     App.system.cloudSave.UpdateCloudPlayerData();
                     App.system.cloudSave.UpdateCloudItemData();
                     ClosePayment();

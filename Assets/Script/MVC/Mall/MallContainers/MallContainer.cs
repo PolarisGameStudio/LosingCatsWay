@@ -136,10 +136,10 @@ public class MallContainer : ViewBehaviour
             }
 
             int price = itemMall.price;
-            int myCount = App.system.player.Coin;
+            int myCount = App.system.player.Coin; // todo ReduceMoney(PlayerSystem)
             ConfirmTable confirmTable = ConfirmTable.NoMoney;
 
-            if (itemMall.itemBoughtType == ItemBoughtType.Diamond)
+            if (itemMall.itemBoughtType == ItemBoughtType.Diamond) // todo ReduceDiamond(PlayerSystem)
             {
                 myCount = App.system.player.Diamond;
                 confirmTable = ConfirmTable.NoDiamond;

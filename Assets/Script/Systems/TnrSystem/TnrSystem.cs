@@ -181,14 +181,13 @@ public class TnrSystem : MvcBehaviour
         //Close();
         App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
-            if (App.system.player.Coin < 200)
+            if (!App.system.player.ReduceMoney(200))
             {
                 DOVirtual.DelayedCall(0.1f,
                     () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.NoMoney));
                 return;
             }
 
-            App.system.player.Coin -= 200;
             TweenOut();
             
             cloudCatData.CatHealthData.IsLigation = true;

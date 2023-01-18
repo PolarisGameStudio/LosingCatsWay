@@ -23,7 +23,7 @@ public class Controller_Feed : ControllerBehavior
     {
         App.system.soundEffect.Play("Button");
         App.system.bgm.FadeOut();
-        App.system.transition.Active(0.5f, () =>
+        App.system.transition.Active(0.25f, () =>
         {
             var cat = App.model.feed.Cats[index];
             App.model.cultive.SelectedCat = cat;

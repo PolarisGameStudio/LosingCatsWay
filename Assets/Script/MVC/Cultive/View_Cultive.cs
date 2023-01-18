@@ -63,31 +63,20 @@ public class View_Cultive : ViewBehaviour
     [Title("UI")] [SerializeField] private UIButton openChooseSkinButton;
     [SerializeField] private GameObject openChooseSkinMask;
 
-    Vector2 topOrigin;
-    Vector2 topOffset;
-    Vector2 rightOrigin;
-    Vector2 rightOffset;
-    List<Vector2> leftBotOrigins;
+    private Vector2 topOrigin;
+    private Vector2 topOffset;
+    private Vector2 rightOrigin;
+    private Vector2 rightOffset;
+    private List<Vector2> leftBotOrigins;
 
-    Sequence openSequence;
-    Sequence closeSequence;
+    private Sequence openSequence;
+    private Sequence closeSequence;
+
+    private int _count;
 
     #endregion
 
     #region Override
-
-    public override void Init()
-    {
-        base.Init();
-        canvas = GetComponent<Canvas>();
-
-        App.model.cultive.OnSelectedCatChange += OnSelectedCatChange;
-        App.model.cultive.OnSelectedTypeChange += OnSelectedTypeChange;
-        App.model.cultive.OnSelectedItemsChange += OnSelectedItemsChange;
-        App.model.cultive.OnUsingLitterIndexChange += OnUsingLitterIndexChange;
-        App.model.cultive.OnNextCleanDateTimeChange += OnNextCleanDateTimeChange;
-        App.model.cultive.OnCleanLitterCountChange += OnCleanLitterCountChange;
-    }
 
     public override void Open()
     {
@@ -104,6 +93,18 @@ public class View_Cultive : ViewBehaviour
     {
         base.Close();
         catSkin.SetActive(false);
+    }
+
+    public override void Init()
+    {
+        base.Init();
+        canvas = GetComponent<Canvas>();
+
+        App.model.cultive.OnSelectedCatChange += OnSelectedCatChange;
+        App.model.cultive.OnSelectedTypeChange += OnSelectedTypeChange;
+        App.model.cultive.OnSelectedItemsChange += OnSelectedItemsChange;
+        App.model.cultive.OnNextCleanDateTimeChange += OnNextCleanDateTimeChange;
+        App.model.cultive.OnCleanLitterCountChange += OnCleanLitterCountChange;
     }
 
     #endregion
@@ -208,69 +209,47 @@ public class View_Cultive : ViewBehaviour
         #endregion
     }
 
-    private void OnUsingLitterIndexChange(object value)
-    {
-        int index = Convert.ToInt32(value);
-
-        if (index < 0)
-        {
-            timerObject.SetActive(false);
-            cleanLitterButton.gameObject.SetActive(false);
-            litterImage.sprite = emptyLitterSprite;
-            noLitterObject.transform.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack);
-            return;
-        }
-
-        noLitterObject.transform.DOScale(Vector2.zero, 0.25f).From(Vector2.one);
-
-        litterImage.sprite = fullLitterSprite;
-    }
-
     private void OnNextCleanDateTimeChange(object value)
     {
         DateTime nextDate = (DateTime)value;
         TimeSpan ts = nextDate - App.system.myTime.MyTimeNow;
-
+        
         //時候未到
         if (nextDate > App.system.myTime.MyTimeNow)
         {
             cleanLitterButton.gameObject.SetActive(false);
-
+            noLitterObject.SetActive(false);
+            timerObject.SetActive(true);
+            
             string str = $"{ts.Hours:00}:{ts.Minutes:00}:{ts.Seconds:00}";
             timerText.text = str;
-
-            if (timerObject.activeSelf) return;
-
-            timerObject.SetActive(true);
-            timerObject.transform.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack);
-        }
-        else if (nextDate.Year == 1970) // 空值
-        {
-            timerObject.SetActive(false);
-            cleanLitterButton.gameObject.SetActive(false);
+            litterImage.sprite = fullLitterSprite;
         }
         else
         {
             timerObject.SetActive(false);
-
-            if (cleanLitterButton.gameObject.activeSelf) return;
-            cleanLitterButton.gameObject.SetActive(true);
-            cleanLitterButton.transform.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack);
+            
+            if (_count > 0)
+            {
+                cleanLitterButton.gameObject.SetActive(true);
+                noLitterObject.SetActive(false);
+                litterImage.sprite = fullLitterSprite;
+            }
+            else
+            {
+                cleanLitterButton.gameObject.SetActive(false);
+                noLitterObject.SetActive(true);
+                litterImage.sprite = emptyLitterSprite;
+            }
         }
+            
     }
 
     private void OnCleanLitterCountChange(object value)
     {
         int index = Convert.ToInt32(value);
-
-        if (index > 0)
-            cleanCountText.text = index.ToString();
-        else
-        {
-            cleanLitterButton.gameObject.SetActive(false);
-            litterImage.sprite = emptyLitterSprite;
-            noLitterObject.transform.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack);
-        }
+        _count = index;
+        cleanCountText.text = index.ToString();
     }
 
     #endregion
@@ -323,6 +302,13 @@ public class View_Cultive : ViewBehaviour
                         .SetDelay(0.25f + i * 0.0625f);
                 }
             });
+
+        if (noLitterObject.activeSelf)
+            noLitterObject.transform.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.25f);
+        if (cleanLitterButton.gameObject.activeSelf)
+            cleanLitterButton.transform.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.25f);
+        if (timerObject.activeSelf)
+            timerObject.transform.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.25f);
     }
 
     [Button]

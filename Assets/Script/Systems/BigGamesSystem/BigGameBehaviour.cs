@@ -87,6 +87,6 @@ public class BigGameBehaviour : MvcBehaviour
     private void GameEndAction()
     {
         App.system.player.AddExp(exp);
-        App.system.player.Coin += coins;
+        App.system.player.AddMoney(coins);
     }
 }

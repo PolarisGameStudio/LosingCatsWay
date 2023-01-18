@@ -37,8 +37,8 @@ public class Controller_Cultive : ControllerBehavior
     [SerializeField] private UIButton screenshotButton;
     [SerializeField] private Button[] tabButtons;
 
-    private bool isOpen;
     private bool isRecordSkin;
+    private bool isOpen;
 
     [Title("Sensor")]
     [ReadOnly] public bool isCanDrag = true;
@@ -65,13 +65,13 @@ public class Controller_Cultive : ControllerBehavior
         for (int i = 0; i < tabButtons.Length; i++)
             tabButtons[i].interactable = !App.system.tutorial.isTutorial;
         
-        isOpen = true;
-        
         App.system.bgm.FadeIn().Play("Cultive");
         App.view.cultive.Open();
+
+        isOpen = true;
         
         CloseDropSensor();
-        LocalLoadCultiveLitter();
+        LoadCleanLitterData();
         
         DOVirtual.DelayedCall(0.3f, () => SelectType(1));
     }
@@ -83,10 +83,11 @@ public class Controller_Cultive : ControllerBehavior
         if (isDragging) 
             return;
         
-        App.system.soundEffect.Play("Button");
-
-        LocalSaveCultiveLitter();
+        CancelInvoke(nameof(CountDownTimer));
+        SaveCleanLitterData();
         isOpen = false;
+        
+        App.system.soundEffect.Play("Button");
 
         int index = App.model.cultive.OpenFromIndex; //0:Feed 1:Follow
 
@@ -396,7 +397,8 @@ public class Controller_Cultive : ControllerBehavior
             if (App.model.cultive.NextCleanDateTime > App.system.myTime.MyTimeNow) //時間還沒到
                 return;
 
-        if (App.model.cultive.CleanLitterCount > 0) return;
+        if (App.model.cultive.CleanLitterCount > 0)
+            return;
 
         var item = App.model.cultive.DragItem;
 
@@ -407,8 +409,10 @@ public class Controller_Cultive : ControllerBehavior
         //重新給時間
         ResetTimer();
         //開始計算
-        InvokeRepeating(nameof(CountDownTimer), 0.1f, 0.1f);
+        InvokeRepeating(nameof(CountDownTimer), 1f, 1f);
 
+        SaveCleanLitterData();
+        
         if (!App.system.tutorial.isTutorial)
             item.Count--;
 
@@ -454,10 +458,12 @@ public class Controller_Cultive : ControllerBehavior
         
         App.model.cultive.CleanLitterCount--;
 
+        App.model.cultive.NextCleanDateTime = App.model.cultive.NextCleanDateTime;
+
         if (Random.value < 0.05f)
         {
             //Diamond
-            App.system.player.Diamond += 5;
+            App.system.player.AddDiamond(5);
             diamondPop.transform.SetAsLastSibling();
             diamondPop.Pop(5);
             return;
@@ -466,7 +472,7 @@ public class Controller_Cultive : ControllerBehavior
         if (Random.value < 0.65f)
         {
             //Coin
-            App.system.player.Coin += 100;
+            App.system.player.AddMoney(100);
             moneyPop.transform.SetAsLastSibling();
             moneyPop.Pop(100);
             return;
@@ -551,7 +557,7 @@ public class Controller_Cultive : ControllerBehavior
 
     private void ResetTimer()
     {
-        App.model.cultive.NextCleanDateTime = App.system.myTime.MyTimeNow.AddHours(6).AddMinutes(0).AddSeconds(0);
+        App.model.cultive.NextCleanDateTime = App.system.myTime.MyTimeNow.AddHours(0).AddMinutes(1).AddSeconds(0);
 
         int usingIndex = App.model.cultive.UsingLitterIndex;
         int likeIndex = App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.LikeLitterIndex;
@@ -583,55 +589,29 @@ public class Controller_Cultive : ControllerBehavior
 
     #endregion
 
-    #region LocalSave //todo 加進CloudSave比較安全
+    #region CleanTime
 
-    public void LocalSaveCultiveLitter()
+    private void LoadCleanLitterData()
     {
-        if (!isOpen) return;
-
-        CancelInvoke(nameof(CountDownTimer));
-
-        if (App.model.cultive.UsingLitterIndex == -1) return;
-
-        //Key
-        Cat cat = App.model.cultive.SelectedCat;
-        string key = "Cultive_" + cat.cloudCatData.CatData.CatId;
-
-        //Value
-        int litterIndex = App.model.cultive.UsingLitterIndex;
-        var ticks = App.model.cultive.NextCleanDateTime.Ticks;
-        int cleanCount = App.model.cultive.CleanLitterCount;
-
-        string value = $"{litterIndex}:{ticks}:{cleanCount}";
-        PlayerPrefs.SetString(key, value);
+        CloudSave_CatSurviveData catSurviveData = App.model.cultive.SelectedCat.cloudCatData.CatSurviveData;
+        App.model.cultive.CleanLitterCount = catSurviveData.CleanLitterCount;
+        App.model.cultive.NextCleanDateTime = catSurviveData.CleanLitterTimestamp.ToDateTime().ToLocalTime();
+        App.model.cultive.UsingLitterIndex = catSurviveData.UsingLitter;
+        
+        if (App.model.cultive.NextCleanDateTime > App.system.myTime.MyTimeNow)
+            InvokeRepeating(nameof(CountDownTimer), 1f, 1f);
     }
 
-    private void LocalLoadCultiveLitter()
+    public void SaveCleanLitterData()
     {
-        Cat cat = App.model.cultive.SelectedCat;
-        string key = "Cultive_" + cat.cloudCatData.CatData.CatId;
-
-        if (!PlayerPrefs.HasKey(key))
-        {
-            App.model.cultive.UsingLitterIndex = -1;
-            App.model.cultive.CleanLitterCount = 0;
-            App.model.cultive.NextCleanDateTime = new Timestamp().ToDateTime().ToLocalTime();
+        if (!isOpen)
             return;
-        }
-
-        string value = PlayerPrefs.GetString(key);
-        var strings = value.Split(':');
-        int litterIndex = Int32.Parse(strings[0]);
-        var ticks = Convert.ToInt64(strings[1]);
-        var date = new DateTime().AddTicks(ticks);
-        int cleanCount = Int32.Parse(strings[2]);
-
-        App.model.cultive.UsingLitterIndex = litterIndex;
-        App.model.cultive.NextCleanDateTime = date;
-        App.model.cultive.CleanLitterCount = cleanCount;
-
-        if (date > App.system.myTime.MyTimeNow)
-            InvokeRepeating(nameof(CountDownTimer), 0.1f, 0.1f);
+        CloudSave_CatSurviveData catSurviveData = App.model.cultive.SelectedCat.cloudCatData.CatSurviveData;
+        catSurviveData.CleanLitterTimestamp = Timestamp.FromDateTime(App.model.cultive.NextCleanDateTime);
+        catSurviveData.UsingLitter = App.model.cultive.UsingLitterIndex;
+        catSurviveData.CleanLitterCount = App.model.cultive.CleanLitterCount;
+        App.model.cultive.SelectedCat.cloudCatData.CatSurviveData = catSurviveData;
+        App.system.cloudSave.UpdateCloudCatSurviveData(App.model.cultive.SelectedCat.cloudCatData);
     }
 
     #endregion

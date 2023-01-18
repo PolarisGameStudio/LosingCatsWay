@@ -13,6 +13,10 @@ public class CloudSave_CatSurviveData
     [FirestoreProperty] public float RealFavourbility { get; set; }
     [FirestoreProperty] public bool IsUseToFind { get; set; } //找貓使用中，其他人不可用
 
+    [FirestoreProperty] public Timestamp CleanLitterTimestamp { get; set; }
+    [FirestoreProperty] public int UsingLitter { get; set; }
+    [FirestoreProperty] public int CleanLitterCount { get; set; }
+    
     [FirestoreProperty] public int LikeFoodIndex { get; set; }
     [FirestoreProperty] public int HateFoodIndex { get; set; }
 

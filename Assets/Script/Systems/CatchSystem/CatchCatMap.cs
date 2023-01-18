@@ -77,7 +77,7 @@ public class CatchCatMap : MvcBehaviour
     
     private List<Item> usedItems = new List<Item>();
     private int exp;
-    private int coin;
+    private int money;
 
     #endregion
 
@@ -156,7 +156,7 @@ public class CatchCatMap : MvcBehaviour
     private void GameEndAction()
     {
         App.system.player.AddExp(exp);
-        App.system.player.Coin += coin;
+        App.system.player.AddMoney(money);
 
         for (int i = 0; i < usedItems.Count; i++)
             usedItems[i].Count--;
@@ -200,7 +200,7 @@ public class CatchCatMap : MvcBehaviour
     {
         usedItems.Clear();
         exp = 0;
-        coin = 0;
+        money = 0;
         
         turn = 0;
         turnText.text = "0/7";
@@ -526,8 +526,8 @@ public class CatchCatMap : MvcBehaviour
             OnGameEnd?.Invoke();
             OnGotcha?.Invoke();
             exp = App.system.player.playerDataSetting.CatchCatExp;
-            coin = App.system.player.playerDataSetting.CatchCatCoin;
-            App.system.settle.Active(exp, coin, 100, () =>
+            money = App.system.player.playerDataSetting.CatchCatCoin;
+            App.system.settle.Active(exp, money, 100, () =>
             {
                 App.system.tnr.OnDoAdopt += CloseToLobby;
                 App.system.tnr.OnDoRelease += CloseToLobby;
@@ -562,10 +562,10 @@ public class CatchCatMap : MvcBehaviour
                 if (hp <= 51)
                 {
                     exp = App.system.player.playerDataSetting.CatchCatExp;
-                    coin = App.system.player.playerDataSetting.CatchCatCoin;
+                    money = App.system.player.playerDataSetting.CatchCatCoin;
                 }
 
-                App.system.settle.Active(exp, coin, 0, () =>
+                App.system.settle.Active(exp, money, 0, () =>
                 {
                     OnGameEnd?.Invoke();
                     CloseToMap();
@@ -584,10 +584,10 @@ public class CatchCatMap : MvcBehaviour
                 if (hp <= 51)
                 {
                     exp = App.system.player.playerDataSetting.CatchCatExp;
-                    coin = App.system.player.playerDataSetting.CatchCatCoin;
+                    money = App.system.player.playerDataSetting.CatchCatCoin;
                 }
 
-                App.system.settle.Active(exp, coin, 0, () =>
+                App.system.settle.Active(exp, money, 0, () =>
                 {
                     OnGameEnd?.Invoke();
                     CloseToMap();

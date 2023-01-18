@@ -46,7 +46,7 @@ public class CatRewardCanvas : MvcBehaviour
     public void PopReward(int exp, int coin)
     {
         App.system.player.AddExp(exp);
-        App.system.player.Coin += coin;
+        App.system.player.AddMoney(coin);
         
         rewardIcon.sprite = expSprite;
         rewardText.text = $"+{exp}";

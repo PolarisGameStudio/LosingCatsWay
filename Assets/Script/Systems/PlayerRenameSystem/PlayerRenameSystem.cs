@@ -54,7 +54,7 @@ public class PlayerRenameSystem : MvcBehaviour
     {
         if (!IsFreeRename)
         {
-            if (App.system.player.Diamond < 2000)
+            if (!App.system.player.ReduceDiamond(2000))
             {
                 App.system.confirm.OnlyConfirm().Active(ConfirmTable.NotEnoughDiamond);
                 return;
@@ -74,10 +74,10 @@ public class PlayerRenameSystem : MvcBehaviour
         }
 
         Close();
+        
         App.system.confirm.Active(ConfirmTable.RenameConfirm, () => 
         {
             App.system.player.PlayerName = inputField.text;
-            if (!IsFreeRename) App.system.player.Diamond -= 2000;
             OnRenameComplete?.Invoke();
         }, uIView.Show);
     }

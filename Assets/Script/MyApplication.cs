@@ -43,6 +43,7 @@ public class MyApplication : MonoBehaviour
             PlayerPrefs.DeleteKey("FriendRoomId");
         
         // 初始化系統
+        system.player.Init(); // ValueChange
         controller.build.Init(); // 中心房要排序在myRooms的第0個
         system.cat.Init();
         controller.pedia.Init();
@@ -115,7 +116,7 @@ public class MyApplication : MonoBehaviour
     private void SaveData()
     {
         controller.settings.SaveSettings();
-        controller.cultive.LocalSaveCultiveLitter();
+        controller.cultive.SaveCleanLitterData();
 
         system.myTime.SetDateTime();
         system.cloudSave.SaveCloudSaveData();

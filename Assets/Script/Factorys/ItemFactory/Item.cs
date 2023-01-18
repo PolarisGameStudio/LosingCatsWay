@@ -173,39 +173,18 @@ public class Item : ScriptableObject
         }
     }
 
-    public string Name
-    {
-        get
-        {
-            return app.factory.stringFactory.GetItemName(id);
-        }
-    }
+    public string Name => app.factory.stringFactory.GetItemName(id);
 
-    public string Description
-    {
-        get
-        {
-            return app.factory.stringFactory.GetItemDescription(id);
-        }
-    }
+    public string Description => app.factory.stringFactory.GetItemDescription(id);
 
     // 吃的
-    public bool ForSatiety
-    {
-        get => (likeSatiety > 0);
-    }
+    public bool ForSatiety => likeSatiety > 0;
 
     // 喝的
-    public bool ForMoisture
-    {
-        get => (likeMoisture > 0);
-    }
+    public bool ForMoisture => likeMoisture > 0;
 
     // 心情的
-    public bool ForFun
-    {
-        get => (likeFun > 0);
-    }
+    public bool ForFun => likeFun > 0;
 
     public bool CanBuyAtStore
     {
@@ -213,8 +192,7 @@ public class Item : ScriptableObject
         {
             if (app.system.inventory.itemsCanBuyAtStore.ContainsKey(id))
                 return app.system.inventory.itemsCanBuyAtStore[id];
-            else
-                return false;
+            return false;
         }
         set
         {

@@ -55,9 +55,9 @@ public class LobbySetDataHelper
         player.PlayerId = playerData.PlayerId;
         player.Level = playerData.Level;
         player.Exp = playerData.Exp;
-        player.Coin = playerData.Coin;
-        player.Diamond = playerData.Diamond;
-        player.CatMemory = playerData.CatMemory;
+        // player.Coin = playerData.Coin;
+        // player.Diamond = playerData.Diamond;
+        // player.CatMemory = playerData.CatMemory;
         player.DiamondCatSlot = playerData.DiamondCatSlot;
         player.GridSizeLevel = playerData.GridSizeLevel;
         player.PlayerGender = playerData.PlayerGender;

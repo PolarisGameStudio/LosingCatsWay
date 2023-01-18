@@ -82,28 +82,20 @@ public class RewardSystem : MvcBehaviour
     private void SetData(Reward reward)
     {
         var item = reward.item;
-        
-        switch (reward.item.itemType)
+
+        if (item.id == "Money")
         {
-            case ItemType.Feed:
-                App.system.inventory.FoodData[item.id] += reward.count;
-                break;
-            case ItemType.Tool:
-                App.system.inventory.ToolData[item.id] += reward.count;
-                break;
-            case ItemType.Litter:
-                App.system.inventory.LitterData[item.id] += reward.count;
-                break;
-            case ItemType.Room:
-                App.system.inventory.RoomData[item.id] += reward.count;
-                break;
-            case ItemType.Coin:
-                App.system.player.Coin += reward.count;
-                break;
-            case ItemType.Diamond:
-                App.system.player.Diamond += reward.count;
-                break;
+            App.system.player.AddMoney(reward.count);
+            return;
         }
+        
+        if (item.id == "Diamond")
+        {
+            App.system.player.AddDiamond(reward.count);
+            return;
+        }
+
+        item.Count += reward.count;
     }
 
     private void WaitAnimationEnd()

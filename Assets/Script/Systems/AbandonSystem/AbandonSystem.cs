@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Doozy.Runtime.UIManager.Containers;
+using Firebase.Firestore;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -144,6 +145,11 @@ public class AbandonSystem : MvcBehaviour
 
             selectedCat.cloudCatData.CatData.Owner = AbandonLocation;
             App.system.cloudSave.UpdateCloudCatData(selectedCat.cloudCatData);
+            
+            selectedCat.cloudCatData.CatSurviveData.CleanLitterTimestamp = new Timestamp();
+            selectedCat.cloudCatData.CatSurviveData.CleanLitterCount = 0;
+            selectedCat.cloudCatData.CatSurviveData.UsingLitter = -1;
+            App.system.cloudSave.UpdateCloudCatSurviveData(selectedCat.cloudCatData);
 
             item.Count -= 1;
             

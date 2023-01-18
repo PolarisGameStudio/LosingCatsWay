@@ -220,18 +220,15 @@ public class Controller_Clinic : ControllerBehavior
         var payment = App.model.clinic.Payment;
         int totalCost = 0;
         for (int i = 0; i < payment.Count; i++)
-        {
             totalCost += payment.ElementAt(i).Value;
-        }
 
         if (!App.system.tutorial.isTutorial)
         {
-            if (App.system.player.Coin < totalCost)
+            if (!App.system.player.ReduceMoney(totalCost))
             {
                 App.system.confirm.OnlyConfirm().Active(ConfirmTable.NotEnoughCoin);
                 return;
             }
-            App.system.player.Coin -= totalCost;
         }
 
         CloseInvoice();

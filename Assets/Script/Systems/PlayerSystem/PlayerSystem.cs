@@ -1,11 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
-using Firebase.Firestore;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using Sirenix.OdinInspector;
 
 public class PlayerSystem : SerializedMonoBehaviour
@@ -51,8 +47,6 @@ public class PlayerSystem : SerializedMonoBehaviour
     public ValueChange OnReduceDiamondChange;
 
     public ValueChange OnCatMemoryChange;
-    public ValueChange OnAddCatMemoryChange;
-    public ValueChange OnReduceCatMemoryChange;
     
     public ValueChange OnCatSlotChange;
     public ValueChange OnPlayerGenderChange;
@@ -74,10 +68,6 @@ public class PlayerSystem : SerializedMonoBehaviour
     private int level;
     private int exp;
     
-    private int diamond;
-    private int coin;
-    private int catMemory;
-    
     private int diamondCatSlot;
     private int gridSizeLevel;
     
@@ -90,6 +80,13 @@ public class PlayerSystem : SerializedMonoBehaviour
 
     #endregion
 
+    public void Init()
+    {
+        Coin = Coin;
+        Diamond = Diamond;
+        CatMemory = CatMemory;
+    }
+    
     #region Properties
 
     public string PlayerId
@@ -139,30 +136,30 @@ public class PlayerSystem : SerializedMonoBehaviour
 
     public int Coin
     {
-        get => coin;
+        get => App.system.inventory.CommonData["Money"];
         set
         {
-            coin = value;
+            App.system.inventory.CommonData["Money"] = value;
             OnCoinChange?.Invoke(value);
         }
     }
 
     public int Diamond
     {
-        get => diamond;
+        get => App.system.inventory.CommonData["Diamond"];
         set
         {
-            diamond = value;
+            App.system.inventory.CommonData["Diamond"] = value;
             OnDiamondChange?.Invoke(value);
         }
     }
 
     public int CatMemory
     {
-        get => catMemory;
+        get => App.system.inventory.CommonData["CatMemory"];
         set
         {
-            catMemory = value;
+            App.system.inventory.CommonData["CatMemory"] = value;
             OnCatMemoryChange?.Invoke(value);
         }
     }
@@ -306,49 +303,33 @@ public class PlayerSystem : SerializedMonoBehaviour
 
     public void AddMoney(int value)
     {
-        coin += value;
+        Coin += value;
         OnAddCoinChange?.Invoke(value);
     }
     
     public bool ReduceMoney(int value)
     {
-        if (coin - value < 0)
+        if (Coin - value < 0)
             return false;
         
-        coin -= value;
+        Coin -= value;
         OnReduceCoinChange?.Invoke(value);
         return true;
     }
 
     public void AddDiamond(int value)
     {
-        diamond += value;
+        Diamond += value;
         OnAddDiamondChange?.Invoke(value);
     }
 
     public bool ReduceDiamond(int value)
     {
-        if (diamond - value < 0)
+        if (Diamond - value < 0)
             return false;
 
-        diamond -= value;
+        Diamond -= value;
         OnReduceDiamondChange?.Invoke(value);
-        return true;
-    }
-
-    public void AddCatMemory(int value)
-    {
-        catMemory += value;
-        OnAddCatMemoryChange?.Invoke(value);
-    }
-
-    public bool ReduceCatMemory(int value)
-    {
-        if (catMemory - value < 0)
-            return false;
-
-        catMemory -= value;
-        OnReduceCatMemoryChange?.Invoke(value);
         return true;
     }
 
