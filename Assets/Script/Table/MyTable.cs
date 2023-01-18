@@ -87,6 +87,7 @@ public enum ItemType
     Play = 11,
     Unlock = 12,
     Avatar = 13,
+    Common = 14
 }
 
 public enum ItemBoughtType

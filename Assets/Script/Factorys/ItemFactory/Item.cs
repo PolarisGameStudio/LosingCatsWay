@@ -116,6 +116,9 @@ public class Item : ScriptableObject
                 case ItemType.Avatar:
                     value = app.system.inventory.PlayerAvatarData[id];
                     break;
+                case ItemType.Common:
+                    value = app.system.inventory.CommonData[id];
+                    break;
             }
 
             return value;
@@ -157,6 +160,10 @@ public class Item : ScriptableObject
                 case ItemType.Avatar:
                     fromValue = app.system.inventory.PlayerAvatarData[id];
                     app.system.inventory.PlayerAvatarData[id] = value;
+                    break;
+                case ItemType.Common:
+                    fromValue = app.system.inventory.CommonData[id];
+                    app.system.inventory.CommonData[id] = value;
                     break;
             }
 

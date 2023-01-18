@@ -19,6 +19,11 @@ public class Model_Pedia : ModelBehavior
     private List<Quest> archiveQuests;
     private int archivePageIndex = -1;
 
+    //Cats
+    // private int selectedPediaType = -1;
+    // private List<string> usingPediaIds;
+    // private string selectedPediaId;
+    
     #endregion
 
     #region Properties
@@ -121,6 +126,9 @@ public class Model_Pedia : ModelBehavior
     public ValueChange OnSelectedArchiveTypeChange;
     public ValueChange OnArchiveQuestsChange;
     public ValueChange OnArchivePageIndexChange;
+    
+    //Cats
+    
 
     #endregion
 }
