@@ -21,7 +21,7 @@ public class Card_ChoosePedia : MvcBehaviour
     {
         Sprite sprite = App.factory.pediaFactory.GetPediaSprite(id);
         string title = App.factory.stringFactory.GetPediaTitle(id);
-        bool unlock = App.factory.pediaFactory.GetPediaUnlock(id);
+        bool unlock = App.system.inventory.KnowledgeCardDatas[id] > 0;
         
         //Paw
         if (id.Contains("WCI") || id.Contains("WCH") || id.Contains("WSK"))
@@ -53,5 +53,11 @@ public class Card_ChoosePedia : MvcBehaviour
     {
         int index = transform.GetSiblingIndex();
         App.controller.pedia.ChoosePedia(index);
+    }
+
+    public void Unlock()
+    {
+        int index = transform.GetSiblingIndex();
+        App.controller.pedia.UnlockPedia(index);
     }
 }

@@ -34,7 +34,7 @@ public class LobbySetDataHelper
         SetExistRoomData(cloudSaveData);
         SetPurchaseData(cloudSaveData);
 
-        await SetCatData(cloudSaveData);
+        await SetCatData();
     }
 
     private void SetPlayerData(CloudSaveData cloudSaveData)
@@ -50,7 +50,7 @@ public class LobbySetDataHelper
                 if (player.playerStatus.ContainsKey(key))
                     player.playerStatus[key] = playerData.PlayerStatus[key];
             }
-        
+
         player.PlayerName = playerData.PlayerName;
         player.PlayerId = playerData.PlayerId;
         player.Level = playerData.Level;
@@ -64,23 +64,26 @@ public class LobbySetDataHelper
         player.UsingIcon = playerData.UsingIcon;
         player.UsingAvatar = playerData.UsingAvatar;
         player.CatDeadCount = playerData.CatDeadCount;
-        
+
         system.tutorial.directorIndex = playerData.TutorialIndex;
     }
+
     private async Task SetFriendData(CloudSaveData cloudSaveData)
     {
         model.friend.Friends = await system.cloudSave.LoadFriends();
         model.friend.myInvites = cloudSaveData.FriendData.FriendInvites;
     }
+
     private void SetTimeData(CloudSaveData cloudSaveData)
     {
         var myTime = system.myTime;
         var timeData = cloudSaveData.TimeData;
-        
+
         myTime.AccountCreateDateTime = timeData.FirstLoginDateTime.ToDateTime().ToLocalTime();
         myTime.PerDayLoginDateTime = timeData.PerDayLoginDateTime.ToDateTime().ToLocalTime();
         myTime.LastLoginDateTime = timeData.LastLoginDateTime.ToDateTime().ToLocalTime();
     }
+
     private void SetSignData(CloudSaveData cloudSaveData)
     {
         var monthSign = model.monthSign;
@@ -90,39 +93,27 @@ public class LobbySetDataHelper
         monthSign.ResignCount = signData.MonthResignCount;
         monthSign.LastMonthSignDate = signData.LastMonthSignDate.ToDateTime().ToLocalTime();
     }
+
     private void SetItemData(CloudSaveData cloudSaveData)
     {
         // ItemData
         var inventory = system.inventory;
         var itemData = cloudSaveData.ItemData;
 
-        if (itemData.RoomData != null)
-            inventory.RoomData = itemData.RoomData;
-        
-        if (itemData.FoodData != null)
-            inventory.FoodData = itemData.FoodData;
-        
-        if (itemData.ToolData != null)
-            inventory.ToolData = itemData.ToolData;
-        
-        if (itemData.LitterData != null)
-            inventory.LitterData = itemData.LitterData;
-        
-        if (itemData.SkinData != null)
-            inventory.SkinData = itemData.SkinData;
-        
-        if (itemData.KnowledgeCardDatas != null)
-            inventory.KnowledgeCardDatas = itemData.KnowledgeCardDatas;
-        
-        if (itemData.ItemsCanBuyAtStore != null)
-            inventory.itemsCanBuyAtStore = itemData.ItemsCanBuyAtStore;
+        DictSetValueHelper dictSetValueHelper = new DictSetValueHelper();
 
-        if (itemData.PlayerIconData != null)
-            inventory.PlayerIconData = itemData.PlayerIconData;
-        
-        if (itemData.PlayerAvatarData != null)
-            inventory.PlayerAvatarData = itemData.PlayerAvatarData;
+        dictSetValueHelper.SetDict(itemData.CommonData, inventory.CommonData);
+        dictSetValueHelper.SetDict(itemData.RoomData, inventory.RoomData);
+        dictSetValueHelper.SetDict(itemData.FoodData, inventory.FoodData);
+        dictSetValueHelper.SetDict(itemData.ToolData, inventory.ToolData);
+        dictSetValueHelper.SetDict(itemData.LitterData, inventory.LitterData);
+        dictSetValueHelper.SetDict(itemData.SkinData, inventory.SkinData);
+        dictSetValueHelper.SetDict(itemData.KnowledgeCardDatas, inventory.KnowledgeCardDatas);
+        dictSetValueHelper.SetDict(itemData.ItemsCanBuyAtStore, inventory.itemsCanBuyAtStore);
+        dictSetValueHelper.SetDict(itemData.PlayerIconData, inventory.PlayerIconData);
+        dictSetValueHelper.SetDict(itemData.PlayerAvatarData, inventory.PlayerAvatarData);
     }
+
     private void SetMissionData(CloudSaveData cloudSaveData)
     {
         var quest = system.quest;
@@ -137,10 +128,12 @@ public class LobbySetDataHelper
             model.dailyQuest.Quests.Add(q);
         }
     }
+
     private void SetMailReceivedData(CloudSaveData cloudSaveData)
     {
         system.mail.mailReceivedDatas = cloudSaveData.MailReceivedDatas;
     }
+
     private void SetExistRoomData(CloudSaveData cloudSaveData)
     {
         var build = controller.build;
@@ -156,16 +149,16 @@ public class LobbySetDataHelper
         if (system.room.MyRooms.Count > 0)
             system.map.GenerateMap();
     }
+
     private void SetPurchaseData(CloudSaveData cloudSaveData)
     {
         model.mall.PurchaseRecords = cloudSaveData.PurchaseRecords;
     }
-    
-    private async Task SetCatData(CloudSaveData cloudSaveData)
+
+    private async Task SetCatData()
     {
         var myCats = await system.cloudSave.LoadCloudCatDatas();
         for (int i = 0; i < myCats.Count; i++)
             system.cat.CreateCatObject(myCats[i]);
     }
-
 }

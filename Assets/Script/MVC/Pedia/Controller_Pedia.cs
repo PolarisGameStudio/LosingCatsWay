@@ -9,8 +9,6 @@ public class Controller_Pedia : ControllerBehavior
     [SerializeField] private Button pediaLeftArrow;
     [SerializeField] private Button pediaRightArrow;
     
-    private bool isPedia;
-    
     public void Init()
     {
         ArchiveInit();
@@ -30,38 +28,40 @@ public class Controller_Pedia : ControllerBehavior
 
     public void PediaToLeft()
     {
-        if (!IsPediaCanToLeft())
-            return;
-        
-        if (isPedia)
+        switch (App.model.pedia.TabIndex)
         {
-            App.model.pedia.PediaPageIndex -= 1;
-            RefreshPediaItems();
+            case 0:
+                App.model.pedia.ArchivePageIndex--;
+                break;
+            case 1:
+                break;
+            case 2:
+                App.model.pedia.PediaPageIndex -= 1;
+                RefreshPediaItems();
+                break;
         }
-        else
-            App.model.pedia.ArchivePageIndex--;
     }
 
     public void PediaToRight()
     {
-        if (!IsPediaCanToRight())
-            return;
-        
-        if (isPedia)
+        switch (App.model.pedia.TabIndex)
         {
-            App.model.pedia.PediaPageIndex += 1;
-            RefreshPediaItems();
+            case 0:
+                App.model.pedia.ArchivePageIndex++;
+                break;
+            case 1:
+                break;
+            case 2:
+                App.model.pedia.PediaPageIndex += 1;
+                RefreshPediaItems();
+                break;
         }
-        else
-            App.model.pedia.ArchivePageIndex++;
     }
     
     #region Pedia
     
     private void OpenPedia()
     {
-        isPedia = true;
-        
         CloseArchive();
         ClosePediaCats();
         
@@ -118,6 +118,25 @@ public class Controller_Pedia : ControllerBehavior
         OpenReadPedia();
     }
 
+    public void UnlockPedia(int index)
+    {
+        Item klc0001 = App.factory.itemFactory.GetItem("KLC0001");
+
+        if (klc0001.Count < 10)
+        {
+            App.system.confirm.Active(ConfirmTable.Fix);
+            return;
+        }
+        
+        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        {
+            string pediaId = App.model.pedia.UsingPediaIds[index];
+            App.system.inventory.KnowledgeCardDatas[pediaId]++;
+            klc0001.Count -= 10;
+            RefreshPediaItems();
+        });
+    }
+
     public void OpenReadPedia()
     {
         pediaLeftArrow.gameObject.SetActive(false);
@@ -163,47 +182,13 @@ public class Controller_Pedia : ControllerBehavior
 
         App.model.pedia.UsingPediaIds = result;
     }
-
-    private bool IsPediaCanToLeft()
-    {
-        int type = App.model.pedia.SelectedPediaType;
-        int index = App.model.pedia.PediaPageIndex;
-        List<string> tmp = App.factory.pediaFactory.GetPediaIds(type);
-        
-        if (index < 0)
-            index = 0;
-
-        int end = Mathf.CeilToInt(tmp.Count / 8f);
-        if (index > end)
-            index = end;
-
-        return index > 0;
-    }
-    
-    private bool IsPediaCanToRight()
-    {
-        int type = App.model.pedia.SelectedPediaType;
-        int index = App.model.pedia.PediaPageIndex;
-        List<string> tmp = App.factory.pediaFactory.GetPediaIds(type);
-        
-        if (index < 0)
-            index = 0;
-
-        int end = Mathf.CeilToInt(tmp.Count / 8f);
-        if (index > end)
-            index = end;
-
-        return index < end - 1;
-    }
     
     #endregion
 
     #region Archive
 
     private void OpenArchive()
-    {
-        isPedia = false;
-
+    { 
         App.model.pedia.ArchiveQuests = App.model.pedia.ArchiveQuests;
         
         ClosePedia();
@@ -303,8 +288,6 @@ public class Controller_Pedia : ControllerBehavior
 
     private void OpenPediaCats()
     {
-        isPedia = false;
-        
         ClosePedia();
         CloseArchive();
         

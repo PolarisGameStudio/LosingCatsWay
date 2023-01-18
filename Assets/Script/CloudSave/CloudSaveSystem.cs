@@ -91,6 +91,7 @@ public class CloudSaveSystem : MvcBehaviour
 
         // CloudSave_ItemData
         CloudSave_ItemData itemData = new CloudSave_ItemData();
+        itemData.CommonData = App.system.inventory.CommonData;
         itemData.RoomData = App.system.inventory.RoomData;
         itemData.FoodData = App.system.inventory.FoodData;
         itemData.ToolData = App.system.inventory.ToolData;
@@ -192,6 +193,7 @@ public class CloudSaveSystem : MvcBehaviour
 
         // CloudSave_ItemData
         CloudSave_ItemData itemData = new CloudSave_ItemData();
+        itemData.CommonData = App.system.inventory.CommonData;
         itemData.RoomData = App.system.inventory.RoomData;
         itemData.FoodData = App.system.inventory.FoodData;
         itemData.ToolData = App.system.inventory.ToolData;
