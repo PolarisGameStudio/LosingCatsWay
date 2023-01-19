@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -34,6 +36,8 @@ public class Controller_Pedia : ControllerBehavior
                 App.model.pedia.ArchivePageIndex--;
                 break;
             case 1:
+                App.model.pedia.CatPageIndex--;
+                RefreshCatItems();
                 break;
             case 2:
                 App.model.pedia.PediaPageIndex -= 1;
@@ -50,6 +54,8 @@ public class Controller_Pedia : ControllerBehavior
                 App.model.pedia.ArchivePageIndex++;
                 break;
             case 1:
+                App.model.pedia.CatPageIndex++;
+                RefreshCatItems();
                 break;
             case 2:
                 App.model.pedia.PediaPageIndex += 1;
@@ -286,12 +292,21 @@ public class Controller_Pedia : ControllerBehavior
 
     #region PediaCats
 
+    public void ChooseCat(int index)
+    {
+        App.model.pedia.SelectedCatId = App.model.pedia.UsingCatIds[index];
+        App.view.pedia.pediaCats.OpenReadCat();
+    }
+
     private void OpenPediaCats()
     {
         ClosePedia();
         CloseArchive();
         
+        App.model.pedia.CatPageIndex = 0;
+
         App.view.pedia.pediaCats.Open();
+        RefreshCatItems();
     }
 
     private void ClosePediaCats()
@@ -299,5 +314,41 @@ public class Controller_Pedia : ControllerBehavior
         App.view.pedia.pediaCats.Close();
     }
 
+    private void RefreshCatItems()
+    {
+        List<string> mixedCatType = Enum.GetNames(typeof(MixedCatType)).ToList();
+        List<string> purebredCatType = Enum.GetNames(typeof(PurebredCatType)).ToList();
+
+        int index = App.model.pedia.CatPageIndex;
+
+        List<string> catTypes = new List<string>();
+        catTypes.AddRange(mixedCatType);
+        catTypes.AddRange(purebredCatType);
+        
+        if (index < 0)
+            index = 0;
+
+        int end = Mathf.CeilToInt(catTypes.Count / 8f);
+        if (index > end)
+            index = end;
+
+        pediaLeftArrow.gameObject.SetActive(true);
+        pediaRightArrow.gameObject.SetActive(true);
+        
+        pediaLeftArrow.interactable = index > 0;
+        pediaRightArrow.interactable = index < end - 1;
+        
+        List<string> result = new List<string>();
+        for (int i = index * 8; i < index * 8 + 8; i++)
+        {
+            if (i >= catTypes.Count)
+                break;
+            
+            result.Add(catTypes[i]);
+        }
+
+        App.model.pedia.UsingCatIds = result;
+    }
+    
     #endregion
 }

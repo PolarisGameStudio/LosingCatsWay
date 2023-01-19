@@ -8,7 +8,8 @@ using UnityEngine.UI;
 
 public class View_SubPedia : ViewBehaviour
 {
-    [Title("UIView")] public View_ChoosePedia choosePedia;
+    [Title("UIView")] 
+    public View_ChoosePedia choosePedia;
     public View_ReadPedia readPedia;
     
     [Title("UI")]
