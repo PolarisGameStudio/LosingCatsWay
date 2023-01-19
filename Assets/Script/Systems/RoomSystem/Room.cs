@@ -38,22 +38,23 @@ public class Room : MvcBehaviour
     
     [ShowIf("@hasSpcialSpine")]
     public MeshRenderer[] specialSpineMeshObjects;
+    
     #region GetSet
 
-    public string Name
-    {
-        get { return App.factory.stringFactory.GetRoomName(roomData.id); }
-    }
+    public string Name => App.factory.stringFactory.GetRoomName(roomData.id);
 
     public int Count
     {
-        get { return App.system.inventory.RoomData[roomData.id]; }
-        set { App.system.inventory.RoomData[roomData.id] = value; }
+        get => App.system.inventory.RoomData[roomData.id];
+        set => App.system.inventory.RoomData[roomData.id] = value;
     }
 
-    public Sprite Image
+    public Sprite Image => App.factory.roomFactory.roomImages[roomData.id];
+
+    public bool IsUnlock
     {
-        get { return App.factory.roomFactory.roomImages[roomData.id]; }
+        get => App.system.inventory.itemsCanBuyAtStore[roomData.id]; //todo 優化
+        set => App.system.inventory.itemsCanBuyAtStore[roomData.id] = value;
     }
 
     public int Height
@@ -298,4 +299,11 @@ public class Room : MvcBehaviour
     }
 
     #endregion
+
+    [Button]
+    private void Test()
+    {
+        IsUnlock = true;
+        Count++;
+    }
 }

@@ -25,11 +25,24 @@ public class View_ChooseBuild : ViewBehaviour
     //Left
     [Title("Left")] [SerializeField] private RectTransform[] leftFronts;
     [SerializeField] private RectTransform[] leftBacks;
+
+    [Title("Scroll")] [SerializeField] private Scrollbar scrollbar;
     
     public override void Open()
     {
         UIView.InstantShow();
         bg.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutExpo);
+    }
+
+    public override void Close()
+    {
+        base.Close();
+        for (int i = 0; i < content.childCount; i++)
+        {
+            GameObject childObj = content.GetChild(i).gameObject;
+            DOTween.Kill(childObj.transform, true);
+            Destroy(childObj);
+        }
     }
 
     public override void Init()
@@ -49,7 +62,7 @@ public class View_ChooseBuild : ViewBehaviour
         for (int i = 0; i < content.childCount; i++)
         {
             GameObject childObj = content.GetChild(i).gameObject;
-            childObj.transform.DOKill();
+            DOTween.Kill(childObj.transform, true);
             Destroy(childObj);
         }
 
@@ -57,7 +70,8 @@ public class View_ChooseBuild : ViewBehaviour
         for (int i = 0; i < selectedRooms.Count; i++)
         {
             var buffer = Instantiate(chooseRoomItem, content);
-            buffer.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutBack).SetDelay(i * 0.09375f);
+            if (i < 8)
+                buffer.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutBack).SetDelay(i * 0.09375f);
             buffer.SetData(selectedRooms[i]);
         }
     }
@@ -66,6 +80,8 @@ public class View_ChooseBuild : ViewBehaviour
     {
         int index = (int) value;
 
+        scrollbar.value = 1;
+        
         for (int i = 0; i < leftFronts.Length; i++)
         {
             if (i == index)
@@ -87,6 +103,8 @@ public class View_ChooseBuild : ViewBehaviour
     public void OnRoomSortTypeChange(object value)
     {
         int index = (int) value;
+
+        scrollbar.value = 1;
 
         topSelectBlock.DOAnchorPos(topRects[index].anchoredPosition, 0.25f).SetEase(Ease.OutExpo);
         topSelectIcon.sprite = topIcons[index].sprite;

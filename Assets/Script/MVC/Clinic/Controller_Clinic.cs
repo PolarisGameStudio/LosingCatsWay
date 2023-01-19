@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using Firebase.Firestore;
 using Spine.Unity;
 using UnityEngine;
@@ -26,7 +27,8 @@ public class Controller_Clinic : ControllerBehavior
         App.system.bgm.FadeIn().Play("Hospital");
         npcObject.SetActive(true);
         App.view.clinic.Open();
-        OpenChooseFunction();
+
+        DOVirtual.DelayedCall(0.3f, OpenChooseFunction);
 
         closeButton.interactable = !App.system.tutorial.isTutorial;
         cancelPayButton.interactable = !App.system.tutorial.isTutorial;
@@ -62,12 +64,12 @@ public class Controller_Clinic : ControllerBehavior
         App.model.clinic.ViewIndex = 0;
         npcObject.SetActive(true);
         maskObject.SetActive(false);
-        App.view.clinic.chooseFunction.Show();
+        App.view.clinic.chooseFunction.Open();
     }
 
     private void CloseChooseFuntion()
     {
-        App.view.clinic.chooseFunction.InstantHide();
+        App.view.clinic.chooseFunction.Close();
     }
 
     public void ChooseFunction(int index)
@@ -86,6 +88,7 @@ public class Controller_Clinic : ControllerBehavior
         App.model.clinic.ViewIndex = 1;
         App.view.clinic.chooseCat.Open();
 
+        DOTween.Kill(chooseCatButton.transform);
         chooseCatButton.SetActive(false);
 
         var cats = new List<Cat>(App.system.cat.GetCats());
@@ -101,7 +104,11 @@ public class Controller_Clinic : ControllerBehavior
     public void ChooseCat(int index)
     {
         App.model.clinic.CatIndex = index;
-        chooseCatButton.SetActive(true);
+        // chooseCatButton.SetActive(true);
+        if (chooseCatButton.activeSelf)
+            return;
+        chooseCatButton.transform.DOScale(Vector2.one, 0.2f).From(Vector2.zero)
+            .OnStart(() => chooseCatButton.SetActive(true));
     }
 
     public void SelectCat()
@@ -287,7 +294,7 @@ public class Controller_Clinic : ControllerBehavior
             cat.cloudCatData.CatHealthData.IsLigation = true;
         }
 
-        App.system.cloudSave.UpdateCloudPlayerData();
+        App.system.cloudSave.UpdateCloudItemData(); //Common:Money
         App.system.cloudSave.UpdateCloudCatData(cat.cloudCatData);
         App.system.cloudSave.UpdateCloudCatHealthData(cat.cloudCatData);
 
@@ -347,6 +354,7 @@ public class Controller_Clinic : ControllerBehavior
         }
         
         App.system.cloudSave.UpdateCloudCatHealthData(cloudCatData);
+        App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
         App.model.clinic.SelectedCat.ChangeSkin();
     }
 

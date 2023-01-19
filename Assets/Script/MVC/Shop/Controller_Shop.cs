@@ -124,7 +124,6 @@ public class Controller_Shop : ControllerBehavior
                 else
                 {
                     item.Count += App.model.shop.BuyCount;
-                    App.system.cloudSave.UpdateCloudPlayerData();
                     App.system.cloudSave.UpdateCloudItemData();
                     ClosePayment();
                     DOVirtual.DelayedCall(0.1f, () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.IsAddToBag));
@@ -143,7 +142,6 @@ public class Controller_Shop : ControllerBehavior
                 else
                 {
                     item.Count += App.model.shop.BuyCount;
-                    App.system.cloudSave.UpdateCloudPlayerData();
                     App.system.cloudSave.UpdateCloudItemData();
                     ClosePayment();
                     DOVirtual.DelayedCall(0.1f, () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.IsAddToBag));

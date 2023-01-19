@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Card_Archive : Card_Quest
 {
@@ -14,6 +13,7 @@ public class Card_Archive : Card_Quest
     [SerializeField] private TextMeshProUGUI descriptText;
     [SerializeField] private GameObject receiveMask;
     [SerializeField] private TextMeshProUGUI rewardCountText;
+    [SerializeField] private GameObject redDot;
 
     public override void SetData(Quest quest)
     {
@@ -34,6 +34,8 @@ public class Card_Archive : Card_Quest
         for (int i = 0; i < receiveStatus; i++)
             reachObjects[i].SetActive(true);
 
+        redDot.SetActive(false);
+
         for (int i = 0; i < 3; i++)
         {
             string tmpId = strings[0] + "_" + (i + 1);
@@ -41,6 +43,7 @@ public class Card_Archive : Card_Quest
             if (isReach && receiveStatus == i)
             {
                 reachObjects[i].SetActive(true);
+                redDot.SetActive(true);
                 break;
             }
         }
@@ -51,7 +54,6 @@ public class Card_Archive : Card_Quest
         if (isLastReceived)
         {
             receiveMask.SetActive(true);
-            // reachObjects[2].SetActive(true);
             progressText.text = $"{lastQuest.TargetCount}/{lastQuest.TargetCount}";
         }
     }

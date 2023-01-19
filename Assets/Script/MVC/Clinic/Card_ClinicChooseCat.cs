@@ -2,6 +2,7 @@ using System;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -139,6 +140,11 @@ public class Card_ClinicChooseCat : MvcBehaviour
     {
         border.SetActive(value);
         selectedObject.SetActive(value);
+
+        if (value)
+            border.transform.DOScale(Vector2.one, 0.2f).From(new Vector2(1.1f, 1.1f));
+        else
+            DOTween.Kill(border.transform, true);
     }
 
     public void SetActive(bool active)

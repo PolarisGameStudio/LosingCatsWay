@@ -18,20 +18,11 @@ public class Controller_ChooseBuild : ControllerBehavior
 
     public void Open()
     {
-        // SelectRoomBoughtType(0);
         SelectRoomSortType(0);
         SelectRoomType(0);
         RefreshSelectedRooms();
         
         App.view.chooseBuild.Open();
-        
-        // DOVirtual.DelayedCall(0.25f, () =>
-        // {
-        //     // SelectRoomBoughtType(0);
-        //     SelectRoomSortType(0);
-        //     SelectRoomType(0);
-        //     RefreshSelectedRooms();
-        // });
     }
 
     public void Close()
@@ -85,15 +76,6 @@ public class Controller_ChooseBuild : ControllerBehavior
     }
 
     #region Building
-
-    // public void SelectRoomBoughtType(int index)
-    // {
-    //     if (App.model.chooseBuild.RoomBoughtType == index)
-    //         return;
-    //
-    //     App.model.chooseBuild.RoomBoughtType = index;
-    //     RefreshSelectedRooms();
-    // }
 
     public void SelectRoomSortType(int type)
     {

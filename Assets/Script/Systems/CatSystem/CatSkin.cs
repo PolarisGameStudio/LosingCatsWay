@@ -202,7 +202,7 @@ public class CatSkin : MvcBehaviour
         SetSkinAttachment(catSkeleton, catSkinData);
 
         SetSickSlotNull(true);
-        if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId) && !cloudCatData.CatHealthData.IsBug)
+        if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId) || cloudCatData.CatHealthData.IsBug)
             SetCatSick(cloudCatData, catSkeleton);
         
         SetCatBodyScale(cloudCatData);
@@ -284,6 +284,8 @@ public class CatSkin : MvcBehaviour
         
         Skeleton catSkeleton = GetCatSkeleton();
         
+        catSkeleton.SetAttachment(sick_Expression_Flush, null);
+        
         catSkeleton.SetAttachment(thermometer, null);
         catSkeleton.SetAttachment(ice_Bag, null);
         
@@ -351,7 +353,7 @@ public class CatSkin : MvcBehaviour
             catSkeleton = skeletonMecanim.Skeleton;
         
         var catSickId = cloudCatData.CatHealthData.SickId;
-        if (!String.IsNullOrEmpty(catSickId) || cloudCatData.CatHealthData.IsBug)
+        if (!string.IsNullOrEmpty(catSickId) || cloudCatData.CatHealthData.IsBug)
         {
             CloseEye();
             

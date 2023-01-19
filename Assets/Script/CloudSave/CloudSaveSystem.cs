@@ -267,11 +267,13 @@ public class CloudSaveSystem : MvcBehaviour
     public async void UpdateCloudItemData()
     {
         CloudSave_ItemData itemData = new CloudSave_ItemData();
+        itemData.CommonData = App.system.inventory.CommonData;
         itemData.RoomData = App.system.inventory.RoomData;
         itemData.FoodData = App.system.inventory.FoodData;
         itemData.ToolData = App.system.inventory.ToolData;
         itemData.LitterData = App.system.inventory.LitterData;
         itemData.SkinData = App.system.inventory.SkinData;
+        itemData.KnowledgeCardDatas = App.system.inventory.KnowledgeCardDatas;
         itemData.ItemsCanBuyAtStore = App.system.inventory.itemsCanBuyAtStore;
 
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;

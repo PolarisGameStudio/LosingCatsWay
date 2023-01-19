@@ -9,7 +9,7 @@ using UnityEngine;
 public class View_Clinic : ViewBehaviour
 {
     [Title("UIViews")]
-    public UIView chooseFunction;
+    public View_ClinicChooseFunction chooseFunction;
     public View_ClinicChooseCat chooseCat;
     public View_ClinicCheck checkCat;
     public View_ClinicInvoice invoice;

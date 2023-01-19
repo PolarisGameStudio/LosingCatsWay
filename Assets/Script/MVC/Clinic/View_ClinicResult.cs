@@ -37,14 +37,28 @@ public class View_ClinicResult : ViewBehaviour
     [Title("CantHeal")] [SerializeField] private GameObject signObject;
     [SerializeField] private GameObject deadSignObject;
 
+    [Title("Tween")] [SerializeField] private RectTransform topLeftRect;
+    [SerializeField] private RectTransform nameRect;
+    [SerializeField] private RectTransform infoRect;
+    [SerializeField] private RectTransform botRect;
+    [SerializeField] private RectTransform okRect;
+    [SerializeField] private RectTransform panelRect;
+    
     private Queue<string> resultIds = new Queue<string>();
     private Cat cat;
     private string _sickId;
+    
+    private Vector2 topLeftOrigin = Vector2.zero;
+    private Vector2 topLeftOffset = Vector2.zero;
+    private Vector2 botOrigin = Vector2.zero;
+    private Vector2 botOffset = Vector2.zero;
+
 
     public override void Open()
     {
         base.Open();
         catSkin.SetActive(true);
+        panelRect.localScale = Vector2.zero;
 
         if (cat.cloudCatData.CatHealthData.SickId is "SK001" or "SK002")
             return;
@@ -162,6 +176,7 @@ public class View_ClinicResult : ViewBehaviour
         if (resultIds.Count <= 0)
             return;
         
+        TweenIn();
         string id = resultIds.Dequeue();
 
         if (id == "CP001")
@@ -215,5 +230,29 @@ public class View_ClinicResult : ViewBehaviour
     private void ChangeMetCount(int count)
     {
         metCountText.text = count.ToString();
+    }
+
+    private void TweenIn()
+    {
+        panelRect.DOScale(Vector2.one, 0.25f).From(Vector2.zero);
+        
+        topLeftOrigin = topLeftRect.anchoredPosition;
+        topLeftOffset.x = topLeftOrigin.x - topLeftRect.sizeDelta.x;
+        topLeftOffset.y = topLeftOrigin.y;
+        topLeftRect.DOAnchorPos(topLeftOrigin, 0.25f).From(topLeftOffset).SetDelay(0.25f);
+
+        nameRect.DOScale(Vector2.one, 0.2f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.25f);
+        moodImage.transform.DOScale(Vector2.one, 0.2f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.25f);
+        infoRect.DOScale(Vector2.one, 0.2f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.3f);
+
+        botOrigin = botRect.anchoredPosition;
+        botOffset.x = botOrigin.x;
+        botOffset.y = botOrigin.y - botRect.sizeDelta.y;
+        botRect.DOAnchorPos(botOrigin, 0.25f).From(botOffset).SetEase(Ease.OutExpo).SetDelay(0.35f);
+
+        signObject.transform.DOScale(Vector2.one, 0.2f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.25f);
+        deadSignObject.transform.DOScale(Vector2.one, 0.2f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.25f);
+        
+        okRect.DOScale(Vector2.one, 0.2f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.4f);
     }
 }

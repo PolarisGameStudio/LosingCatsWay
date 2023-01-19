@@ -49,9 +49,7 @@ public class View_Lobby : ViewBehaviour
 
         Vector2 buildButtonPos = buildButton.anchoredPosition + new Vector2(30, 30);
         for (int i = 0; i < downButtons.Length; i++)
-        {
             downButtons[i].DOAnchorPos(downButtonsOrigins[i], 0.25f).From(buildButtonPos).SetEase(Ease.OutBack).SetDelay(0.25f + i * 0.0625f);
-        }
 
         // Left
         for (int i = 0; i < leftButtons.Length; i++)

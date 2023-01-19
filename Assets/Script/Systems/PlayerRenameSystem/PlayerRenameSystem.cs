@@ -52,11 +52,13 @@ public class PlayerRenameSystem : MvcBehaviour
 
     public void Rename()
     {
+        Item renameItem = App.factory.itemFactory.GetItem("ISL00003");
+        
         if (!IsFreeRename)
         {
-            if (!App.system.player.ReduceDiamond(2000))
+            if (renameItem.Count <= 0)
             {
-                App.system.confirm.OnlyConfirm().Active(ConfirmTable.NotEnoughDiamond);
+                App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
                 return;
             }
         }
@@ -78,7 +80,11 @@ public class PlayerRenameSystem : MvcBehaviour
         App.system.confirm.Active(ConfirmTable.RenameConfirm, () => 
         {
             App.system.player.PlayerName = inputField.text;
+            renameItem.Count -= 1;
             OnRenameComplete?.Invoke();
+            
+            App.system.cloudSave.UpdateCloudItemData(); //RenameItem
+            App.system.cloudSave.UpdateCloudPlayerData(); //Name
         }, uIView.Show);
     }
 }

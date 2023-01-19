@@ -1,23 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
-using Doozy.Runtime.UIManager.Components;
-using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Controller_Map : ControllerBehavior
 {
-    [SerializeField] private UIButton lobbyMapButton;
-    [SerializeField] private GameObject lobbyMapMask;
-    
-    public Callback OnMapOpen;
-    
     public void Open()
     {
         App.system.bgm.FadeIn().Play("Map");
         App.view.map.Open();
-        OnMapOpen?.Invoke();
     }
 
     public void OpenShelter()
@@ -53,7 +44,7 @@ public class Controller_Map : ControllerBehavior
     public void OpenHospital()
     {
         App.system.bgm.FadeOut();
-        App.system.transition.Active(0.5f, () =>
+        App.system.transition.Active(0.15f, () =>
         {
             App.view.map.Close();
             App.controller.clinic.Open();

@@ -19,17 +19,20 @@ public class FindCatSystem : MvcBehaviour
     [Title("NoFindCats")] [SerializeField] private int findCountLimit;
     [SerializeField, ReadOnly] private int alreadyFindCount;
 
-    private FindCatMap activeMap;
-    private int mapIndex;
+    [SerializeField, ReadOnly] private FindCatMap activeMap;
+    [SerializeField, ReadOnly] private int mapIndex;
     
     private async void ActiveMap()
     {
-        FindCatMaps[mapIndex].SetCloudCatData(null);
-
+        activeMap = FindCatMaps[mapIndex];
+        activeMap.SetCloudCatData(null);
         CloudCatData cloudCatData = null;
-
+        
+        App.system.waiting.Open();
+        
         if (App.system.tutorial.isTutorial)
         {
+            App.system.waiting.Close();
             DebugTool_Cat debugToolCat = new DebugTool_Cat();
             cloudCatData = await debugToolCat.GetCreateCat($"Location{mapIndex}", true);
         }
@@ -41,11 +44,14 @@ public class FindCatSystem : MvcBehaviour
             if (cloudCatData == null || cloudCatData.CatSurviveData.IsUseToFind)
             {
                 if (IsFindLimit())
+                {
+                    App.system.waiting.Close();
                     App.system.confirm.OnlyConfirm().Active(ConfirmTable.MapNoCats, () =>
                     {
                         App.system.findCat.ActiveGate(mapIndex);
                         DOVirtual.DelayedCall(1f, App.system.transition.OnlyClose);
                     });
+                }
                 else
                 {
                     alreadyFindCount++;
@@ -55,11 +61,11 @@ public class FindCatSystem : MvcBehaviour
             }
         }
         
+        App.system.waiting.Close();
         App.system.transition.OnlyClose();
-        FindCatMaps[mapIndex].SetCloudCatData(cloudCatData);
+        activeMap.SetCloudCatData(cloudCatData);
         PlayMapBgm();
-        FindCatMaps[mapIndex].Open();
-        activeMap = FindCatMaps[mapIndex];
+        activeMap.Open();
     }
 
     public void Pause()

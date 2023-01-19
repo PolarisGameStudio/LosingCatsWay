@@ -153,6 +153,7 @@ public class FindCatMap : MvcBehaviour
         {
             OnGameEnd?.Invoke();
             App.system.findCat.ActiveCurrentGate();
+            uiView.InstantHide();
         });
     }
 
