@@ -20,25 +20,24 @@ public class Card_CatNotify : MvcBehaviour
     [SerializeField] private Ease openEase;
     [SerializeField] private Ease closeEase;
 
-    public Callback OnClick;
-
     private Sequence popSeq;
 
-    [ReadOnly] public bool isOpen;
+    [ReadOnly] public Cat notifyCat;
     
-    [Button(30)]
-    public void Open(Cat cat)
+    public void SetData(Cat cat)
     {
-        gameObject.SetActive(true);
-        transform.SetAsLastSibling();
-
-        isOpen = true;
-
         CloudCatData cloudCatData = cat.cloudCatData;
         catSkin.ChangeSkin(cloudCatData);
         catSkin.SetActive(true);
+        notifyCat = cat;
 
         text.text = App.factory.stringFactory.GetCatNotify(cat.catNotifyId);
+    }
+    
+    public void Open()
+    {
+        gameObject.SetActive(true);
+        transform.SetAsLastSibling();
 
         popSeq.Kill();
         popSeq = DOTween.Sequence();
@@ -60,36 +59,14 @@ public class Card_CatNotify : MvcBehaviour
             });
     }
 
-    [Button(30)]
-    public void Close()
-    {
-        gameObject.SetActive(false);
-        isOpen = false;
-        // catSkin.SetActive(false);
-        //
-        // popSeq.Kill();
-        // popSeq = DOTween.Sequence();
-        //
-        // popSeq
-        //     .OnStart(() =>
-        //     {
-        //         redDot.SetActive(false);
-        //         bubbleRect.localScale = Vector3.one;
-        //         chatRect.localScale = Vector3.one;
-        //     })
-        //     .Append(bubbleRect.DOScale(Vector3.zero, popDuration).From(Vector3.one).SetEase(closeEase))
-        //     .OnComplete(() =>
-        //     {
-        //         gameObject.SetActive(false);
-        //         App.system.catNotify.PopUp();
-        //     });
-    }
-
     public void Click()
     {
-        OnClick?.Invoke();
-        OnClick = null;
-        Close();
         App.system.soundEffect.Play("Button");
+        notifyCat.FollowCat();
+    }
+
+    private void OnDestroy()
+    {
+        popSeq.Kill();
     }
 }

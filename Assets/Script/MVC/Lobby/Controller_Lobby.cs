@@ -12,7 +12,6 @@ public class Controller_Lobby : ControllerBehavior
         App.system.bgm.FadeIn().Play("Lobby");
         App.view.lobby.Open();
         App.system.room.OpenRooms();
-        App.system.catNotify.PopUp();
     }
 
     public void Close()

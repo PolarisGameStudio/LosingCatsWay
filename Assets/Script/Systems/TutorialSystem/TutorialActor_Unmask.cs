@@ -7,7 +7,7 @@ using UnityEngine;
 public class TutorialActor_Unmask : TutorialActor
 {
     [Title("Unmask")] [SerializeField] private Unmask unmask;
-    [SerializeField] private RectTransform targetRect;
+    public RectTransform targetRect;
 
     public override void Enter()
     {

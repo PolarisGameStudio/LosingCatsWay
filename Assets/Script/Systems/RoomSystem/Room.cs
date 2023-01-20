@@ -51,12 +51,6 @@ public class Room : MvcBehaviour
 
     public Sprite Image => App.factory.roomFactory.roomImages[roomData.id];
 
-    public bool IsUnlock
-    {
-        get => App.system.inventory.itemsCanBuyAtStore[roomData.id]; //todo 優化
-        set => App.system.inventory.itemsCanBuyAtStore[roomData.id] = value;
-    }
-
     public int Height
     {
         get
@@ -299,11 +293,4 @@ public class Room : MvcBehaviour
     }
 
     #endregion
-
-    [Button]
-    private void Test()
-    {
-        IsUnlock = true;
-        Count++;
-    }
 }

@@ -2,56 +2,74 @@ using Doozy.Runtime.UIManager.Containers;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CatNotifySystem : MvcBehaviour
 {
-    public Card_CatNotify[] card_CatNotifies;
-    [SerializeField, ReadOnly] private List<Cat> cats = new List<Cat>();
+    [SerializeField] private Transform content;
+    [SerializeField] private Card_CatNotify cardCatNotify;
+    private Queue<Cat> waitingCats = new Queue<Cat>();
+    private List<Card_CatNotify> displayedNotifies = new List<Card_CatNotify>();
 
-    [Button(30)]
     public void Add(Cat cat)
     {
-        cats.Add(cat);
-        PopUp();
+        waitingCats.Enqueue(cat);
+        RefreshNotify();
     }
 
-    [Button(30)]
     public void Remove(Cat cat)
     {
-        if (!cats.Contains(cat))
+        if (waitingCats.Contains(cat))
+        {
+            waitingCats = new Queue<Cat>(waitingCats.Where(x => x != cat));
             return;
-        cats.Remove(cat);
-        PopUp();
+        }
+
+        for (int i = 0; i < displayedNotifies.Count; i++)
+        {
+            if (displayedNotifies[i].notifyCat != cat)
+                continue;
+            Destroy(displayedNotifies[i].gameObject);
+            displayedNotifies.RemoveAt(i);
+        }
+        
+        RefreshNotify();
     }
 
-    [Button(30)]
-    public void PopUp()
+    private void RefreshNotify() // 刷新通知
     {
-        List<Cat> tmp = new List<Cat>();
-        if (cats.Count <= 3)
-            tmp = cats;
-        else
-            for (int i = 0; i < 3; i++)
-                tmp.Add(cats[i]);
+        if (content.childCount >= 3)
+            return;
 
-        for (int i = 0; i < 3; i++)
+        if (waitingCats.Count <= 0)
+            return;
+
+        int emptyCount = 3 - content.childCount; // 剩餘的通知數量
+
+        for (int i = 0; i < emptyCount; i++)
         {
-            if (tmp.Count <= 0)
+            if (i >= waitingCats.Count)
                 break;
-
-            var card = card_CatNotifies[i];
-            if (card.isOpen)
-                continue;
             
-            var cat = tmp[0];
-            
-            card.Open(cat);
-            cats.Remove(cat);
-            card.OnClick = () =>
-            {
-                cat.FollowCat();
-            };
+            var card = Instantiate(cardCatNotify, content);
+            var cat = waitingCats.Dequeue();
+            card.SetData(cat);
+            card.Open();
+            displayedNotifies.Add(card);
         }
+    }
+
+    public Card_CatNotify GetNotify(Cat cat)
+    {
+        for (int i = 0; i < displayedNotifies.Count; i++)
+        {
+            var tmp = displayedNotifies[i];
+            if (tmp.notifyCat != cat)
+                continue;
+            return tmp;
+        }
+
+        return null;
     }
 }
