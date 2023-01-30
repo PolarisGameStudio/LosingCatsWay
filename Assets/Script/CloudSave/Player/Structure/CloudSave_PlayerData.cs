@@ -20,7 +20,4 @@ public class CloudSave_PlayerData
     [FirestoreProperty] public string UsingAvatar { get; set; }
     [FirestoreProperty] public int TutorialIndex { get; set; }
     [FirestoreProperty] public int CatDeadCount { get; set; } //玩家死過幾隻貓
-    
-    //玩家數值表
-    [FirestoreProperty] public Dictionary<string, string> PlayerStatus { get; set; }
 }

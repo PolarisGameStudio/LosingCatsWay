@@ -40,221 +40,17 @@ public class CloudSaveSystem : MvcBehaviour
 
     public async void SaveCloudSaveData()
     {
-        CloudSaveData cloudSaveData = new CloudSaveData();
-
-        // CloudSave_PlayerData
-        CloudSave_PlayerData playerData = new CloudSave_PlayerData();
-
-        playerData.PlayerStatus = App.system.player.playerStatus;
-        
-        playerData.PlayerName = App.system.player.PlayerName;
-        playerData.PlayerId = App.system.player.PlayerId;
-        playerData.Level = App.system.player.Level;
-        playerData.Exp = App.system.player.Exp;
-        // playerData.Coin = App.system.player.Money;
-        // playerData.Diamond = App.system.player.Diamond;
-        // playerData.CatMemory = App.system.player.CatMemory;
-        playerData.DiamondCatSlot = App.system.player.DiamondCatSlot;
-        playerData.GridSizeLevel = App.system.player.GridSizeLevel;
-        playerData.PlayerGender = App.system.player.PlayerGender;
-        playerData.UsingIcon = App.system.player.UsingIcon;
-        playerData.UsingAvatar = App.system.player.UsingAvatar;
-        playerData.TutorialIndex = App.system.tutorial.directorIndex;
-        playerData.CatDeadCount = App.system.player.CatDeadCount;
-
-        // CloudSave_FriendData
-        CloudSave_FriendData friendData = new CloudSave_FriendData();
-
-        friendData.FriendIds = new List<string>();
-        friendData.FriendInvites = new List<string>();
-
-        var friends = App.model.friend.Friends;
-
-        for (int i = 0; i < friends.Count; i++)
-            friendData.FriendIds.Add(friends[i].PlayerId);
-
-        friendData.FriendInvites = App.model.friend.myInvites;
-
-        // CloudSave_TimeData
-        CloudSave_TimeData timeData = new CloudSave_TimeData();
-
-        timeData.FirstLoginDateTime = Timestamp.FromDateTime(App.system.myTime.AccountCreateDateTime);
-        timeData.PerDayLoginDateTime = Timestamp.FromDateTime(App.system.myTime.PerDayLoginDateTime);
-        timeData.LastLoginDateTime = Timestamp.FromDateTime(App.system.myTime.LastLoginDateTime);
-        
-        // CloudSave_SignData
-        CloudSave_SignData signData = new CloudSave_SignData();
-        
-        signData.MonthSigns = App.model.monthSign.SignIndexs;
-        signData.MonthResignCount = App.model.monthSign.ResignCount;
-        signData.LastMonthSignDate = Timestamp.FromDateTime(App.model.monthSign.LastMonthSignDate);
-
-        // CloudSave_ItemData
-        CloudSave_ItemData itemData = new CloudSave_ItemData();
-        itemData.CommonData = App.system.inventory.CommonData;
-        itemData.RoomData = App.system.inventory.RoomData;
-        itemData.FoodData = App.system.inventory.FoodData;
-        itemData.ToolData = App.system.inventory.ToolData;
-        itemData.LitterData = App.system.inventory.LitterData;
-        itemData.SkinData = App.system.inventory.SkinData;
-        itemData.KnowledgeCardDatas = App.system.inventory.KnowledgeCardDatas;
-        itemData.ItemsCanBuyAtStore = App.system.inventory.itemsCanBuyAtStore;
-        itemData.PlayerIconData = App.system.inventory.PlayerIconData;
-        itemData.PlayerAvatarData = App.system.inventory.PlayerAvatarData;
-
-        // MissionDatas
-        CloudSave_MissionData missionData = new CloudSave_MissionData();
-
-        missionData.QuestProgressData = App.system.quest.QuestProgressData;
-        missionData.QuestReceivedStatusData = App.system.quest.QuestReceivedStatusData;
-        missionData.MyQuests = new List<string>();
-        for (int i = 0; i < App.model.dailyQuest.Quests.Count; i++)
-        {
-            missionData.MyQuests.Add(App.model.dailyQuest.Quests[i].id);
-        }
-
-        cloudSaveData.PlayerData = playerData;
-        cloudSaveData.FriendData = friendData;
-        cloudSaveData.TimeData = timeData;
-        cloudSaveData.SignData = signData;
-        cloudSaveData.ItemData = itemData;
-        cloudSaveData.MissionData = missionData;
-
-        // ExistRoomDatas
-        var rooms = App.system.room.MyRooms;
-        cloudSaveData.ExistRoomDatas = new List<CloudSave_RoomData>();
-
-        for (int i = 0; i < rooms.Count; i++)
-        {
-            var room = rooms[i];
-            var result = new CloudSave_RoomData();
-            result.Id = room.roomData.id;
-            result.X = room.x;
-            result.Y = room.y;
-            cloudSaveData.ExistRoomDatas.Add(result);
-        }
-        
-        // Purchase
-        cloudSaveData.PurchaseRecords = App.model.mall.PurchaseRecords;
-
-        // MailReceivedDatas
-        cloudSaveData.MailReceivedDatas = new List<string>();
-        
-        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
-        await docRef.UpdateAsync(cloudSaveData.ToDict());
-    }
-
-    public async Task<CloudSaveData> CreateCloudSaveData()
-    {
-        CloudSaveData cloudSaveData = new CloudSaveData();
-
-        // CloudSave_PlayerData
-        CloudSave_PlayerData playerData = new CloudSave_PlayerData();
-
-        playerData.PlayerStatus = App.system.player.playerStatus;
-
-        playerData.PlayerName = "-";
-        playerData.PlayerId = CloudSaveExtension.CurrentUserId;
-        playerData.Level = 1;
-        playerData.Exp = 0;
-        // playerData.Coin = 1000;
-        // playerData.Diamond = 0;
-        // playerData.CatMemory = 0;
-        playerData.DiamondCatSlot = 0;
-        playerData.GridSizeLevel = 1;
-        playerData.PlayerGender = -1;
-        playerData.UsingIcon = string.Empty;
-        playerData.UsingAvatar = "PAT001";
-        playerData.TutorialIndex = App.system.tutorial.directorIndex;
-        playerData.CatDeadCount = 0;
-
-        // CloudSave_FriendData
-        CloudSave_FriendData friendData = new CloudSave_FriendData();
-
-        friendData.FriendIds = new List<string>();
-        friendData.FriendInvites = new List<string>();
-
-        // CloudSave_TimeData
-        CloudSave_TimeData timeData = new CloudSave_TimeData();
-
-        Timestamp nowTime = Timestamp.GetCurrentTimestamp();
-        
-        timeData.LastLoginDateTime = nowTime;
-        timeData.PerDayLoginDateTime = Timestamp.FromDateTime(DateTime.MinValue); // 第一次登入 要可以簽到
-        timeData.FirstLoginDateTime = nowTime;
-
-        // CloudSave_SignData
-        CloudSave_SignData signData = new CloudSave_SignData();
-
-        signData.MonthSigns = new List<int>(new int[31]);
-        signData.MonthResignCount = 0;
-        signData.LastMonthSignDate = Timestamp.FromDateTime(DateTime.MinValue) ;
-
-        // CloudSave_ItemData
-        CloudSave_ItemData itemData = new CloudSave_ItemData();
-        itemData.CommonData = App.system.inventory.CommonData;
-        itemData.RoomData = App.system.inventory.RoomData;
-        itemData.FoodData = App.system.inventory.FoodData;
-        itemData.ToolData = App.system.inventory.ToolData;
-        itemData.LitterData = App.system.inventory.LitterData;
-        itemData.SkinData = App.system.inventory.SkinData;
-        itemData.KnowledgeCardDatas = App.system.inventory.KnowledgeCardDatas;
-        itemData.ItemsCanBuyAtStore = App.system.inventory.itemsCanBuyAtStore;
-        itemData.PlayerIconData = App.system.inventory.PlayerIconData;
-        itemData.PlayerAvatarData = App.system.inventory.PlayerAvatarData;
-
-        // MissionDatas
-        CloudSave_MissionData missionData = new CloudSave_MissionData();
-
-        missionData.QuestProgressData = App.system.quest.QuestProgressData;
-        missionData.QuestReceivedStatusData = App.system.quest.QuestReceivedStatusData;
-        missionData.MyQuests = new List<string>();
-
-        // MailReceivedDatas
-        cloudSaveData.MailReceivedDatas = new List<string>();
-        
-        cloudSaveData.PlayerData = playerData;
-        cloudSaveData.FriendData = friendData;
-        cloudSaveData.TimeData = timeData;
-        cloudSaveData.SignData = signData;
-        cloudSaveData.ItemData = itemData;
-        cloudSaveData.MissionData = missionData;
-
-        // ExistRoomDatas
-        cloudSaveData.ExistRoomDatas = new List<CloudSave_RoomData>();
-
-        // Purchase
-        cloudSaveData.PurchaseRecords = new Dictionary<string, PurchaseRecord>();
+        Dictionary<string, object> saveData = new PlayerDataHelper(App).GetSaveData();
 
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
-        await docRef.SetAsync(cloudSaveData.ToDict());
-
-        return cloudSaveData;
+        await docRef.UpdateAsync(saveData);
     }
 
     public async void UpdateCloudPlayerData()
     {
-        CloudSave_PlayerData playerData = new CloudSave_PlayerData();
-
-        playerData.PlayerStatus = App.system.player.playerStatus;
-
-        playerData.PlayerName = App.system.player.PlayerName;
-        playerData.PlayerId = App.system.player.PlayerId;
-        playerData.Level = App.system.player.Level;
-        playerData.Exp = App.system.player.Exp;
-        // playerData.Coin = App.system.player.Money;
-        // playerData.Diamond = App.system.player.Diamond;
-        // playerData.CatMemory = App.system.player.CatMemory;
-        playerData.DiamondCatSlot = App.system.player.DiamondCatSlot;
-        playerData.GridSizeLevel = App.system.player.GridSizeLevel;
-        playerData.PlayerGender = App.system.player.PlayerGender;
-        playerData.UsingIcon = App.system.player.UsingIcon;
-        playerData.UsingAvatar = App.system.player.UsingAvatar;
-        playerData.TutorialIndex = App.system.tutorial.directorIndex;
-        playerData.CatDeadCount = App.system.player.CatDeadCount;
-
+        CloudSave_PlayerData playerData = new PlayerDataHelper(App).GetPlayerData();
+        
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
         Dictionary<string, object> updates = new Dictionary<string, object>
@@ -266,15 +62,7 @@ public class CloudSaveSystem : MvcBehaviour
 
     public async void UpdateCloudItemData()
     {
-        CloudSave_ItemData itemData = new CloudSave_ItemData();
-        itemData.CommonData = App.system.inventory.CommonData;
-        itemData.RoomData = App.system.inventory.RoomData;
-        itemData.FoodData = App.system.inventory.FoodData;
-        itemData.ToolData = App.system.inventory.ToolData;
-        itemData.LitterData = App.system.inventory.LitterData;
-        itemData.SkinData = App.system.inventory.SkinData;
-        itemData.KnowledgeCardDatas = App.system.inventory.KnowledgeCardDatas;
-        itemData.ItemsCanBuyAtStore = App.system.inventory.itemsCanBuyAtStore;
+        CloudSave_ItemData itemData = new PlayerDataHelper(App).GetItemData();
 
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
@@ -287,11 +75,8 @@ public class CloudSaveSystem : MvcBehaviour
 
     public async void UpdateCloudTimeData()
     {
-        CloudSave_TimeData timeData = new CloudSave_TimeData();
-        timeData.LastLoginDateTime = Timestamp.FromDateTime(App.system.myTime.LastLoginDateTime);
-        timeData.PerDayLoginDateTime = Timestamp.FromDateTime(App.system.myTime.PerDayLoginDateTime);
-        timeData.FirstLoginDateTime = Timestamp.FromDateTime(App.system.myTime.AccountCreateDateTime);
-
+        CloudSave_TimeData timeData = new PlayerDataHelper(App).GetTimeData();
+       
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
         Dictionary<string, object> updates = new Dictionary<string, object>
@@ -303,15 +88,8 @@ public class CloudSaveSystem : MvcBehaviour
 
     public async void UpdateCloudMissionData()
     {
-        CloudSave_MissionData missionData = new CloudSave_MissionData();
-        missionData.QuestProgressData = App.system.quest.QuestProgressData;
-        missionData.QuestReceivedStatusData = App.system.quest.QuestReceivedStatusData;
-        missionData.MyQuests = new List<string>();
-        for (int i = 0; i < App.model.dailyQuest.Quests.Count; i++)
-        {
-            missionData.MyQuests.Add(App.model.dailyQuest.Quests[i].id);
-        }
-        
+        CloudSave_MissionData missionData = new PlayerDataHelper(App).GetMissionData();
+
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
         Dictionary<string, object> updates = new Dictionary<string, object>
@@ -323,10 +101,7 @@ public class CloudSaveSystem : MvcBehaviour
     
     public async void UpdateCloudSignData()
     {
-        CloudSave_SignData signData = new CloudSave_SignData();
-        signData.MonthSigns = App.model.monthSign.SignIndexs;
-        signData.MonthResignCount = App.model.monthSign.ResignCount;
-        signData.LastMonthSignDate = Timestamp.FromDateTime(App.model.monthSign.LastMonthSignDate);
+        CloudSave_SignData signData = new PlayerDataHelper(App).GetSignData();
         
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
@@ -557,18 +332,7 @@ public class CloudSaveSystem : MvcBehaviour
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("Players").Document(myId);
 
-        CloudSave_FriendData friendData = new CloudSave_FriendData();
-
-        friendData.FriendIds = new List<string>();
-        friendData.FriendInvites = new List<string>();
-
-        var friends = App.model.friend.Friends;
-
-        for (int i = 0; i < friends.Count; i++)
-            friendData.FriendIds.Add(friends[i].PlayerId);
-
-        friendData.FriendInvites = App.model.friend.myInvites;
-
+        CloudSave_FriendData friendData = new PlayerDataHelper(App).GetFriendData();
         Dictionary<string, object> updates = new Dictionary<string, object>
         {
             { "FriendData", friendData }
