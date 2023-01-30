@@ -53,8 +53,9 @@ public class PlayerDataHelper
         player.UsingIcon = String.IsNullOrEmpty(playerData.UsingIcon) ? string.Empty : player.UsingIcon;
         player.UsingAvatar = String.IsNullOrEmpty(playerData.UsingAvatar) ? "PAT001" : playerData.UsingAvatar;
         player.CatDeadCount = playerData.CatDeadCount;
-
-        app.system.tutorial.directorIndex = playerData.TutorialIndex == 0 ? -1 : playerData.TutorialIndex;
+        
+        app.system.tutorial.startTutorialEnd = playerData.StartTutorialEnd;
+        app.system.tutorial.shelterTutorialEnd = playerData.ShelterTutorialEnd;
     }
 
     private async Task SetFriendData(CloudSaveData cloudSaveData)
@@ -126,8 +127,8 @@ public class PlayerDataHelper
         itemData.KnowledgeCardDatas = app.system.inventory.KnowledgeCardDatas;
         dictSetValueHelper.SetDict(itemData.KnowledgeCardDatas, inventory.KnowledgeCardDatas);
 
-        itemData.ItemsCanBuyAtStore = app.system.inventory.itemsCanBuyAtStore;
-        dictSetValueHelper.SetDict(itemData.ItemsCanBuyAtStore, inventory.itemsCanBuyAtStore);
+        itemData.UnlockStatus = app.system.inventory.UnlockStatus;
+        dictSetValueHelper.SetDict(itemData.UnlockStatus, inventory.UnlockStatus);
 
         itemData.PlayerIconData = app.system.inventory.PlayerIconData;
         dictSetValueHelper.SetDict(itemData.PlayerIconData, inventory.PlayerIconData);
@@ -244,8 +245,9 @@ public class PlayerDataHelper
         playerData.PlayerGender = app.system.player.PlayerGender;
         playerData.UsingIcon = app.system.player.UsingIcon;
         playerData.UsingAvatar = app.system.player.UsingAvatar;
-        playerData.TutorialIndex = app.system.tutorial.directorIndex;
         playerData.CatDeadCount = app.system.player.CatDeadCount;
+        playerData.StartTutorialEnd = app.system.tutorial.startTutorialEnd;
+        playerData.ShelterTutorialEnd = app.system.tutorial.shelterTutorialEnd;
 
         return playerData;
     }
@@ -295,7 +297,7 @@ public class PlayerDataHelper
         itemData.LitterData = app.system.inventory.LitterData;
         itemData.SkinData = app.system.inventory.SkinData;
         itemData.KnowledgeCardDatas = app.system.inventory.KnowledgeCardDatas;
-        itemData.ItemsCanBuyAtStore = app.system.inventory.itemsCanBuyAtStore;
+        itemData.UnlockStatus = app.system.inventory.UnlockStatus;
         itemData.PlayerIconData = app.system.inventory.PlayerIconData;
         itemData.PlayerAvatarData = app.system.inventory.PlayerAvatarData;
 
