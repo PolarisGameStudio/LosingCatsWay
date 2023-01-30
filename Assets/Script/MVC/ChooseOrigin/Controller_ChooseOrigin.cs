@@ -37,7 +37,7 @@ public class Controller_ChooseOrigin : ControllerBehavior
         Room selectedRoom = App.model.chooseOrigin.CenterRooms[index];
         Item roomItem = App.factory.itemFactory.GetItem(selectedRoom.roomData.id);
 
-        if (!roomItem.CanBuyAtStore)
+        if (roomItem.UnlockStatus != 1)
             return;
         
         ClearPreviewRoom();
@@ -88,7 +88,7 @@ public class Controller_ChooseOrigin : ControllerBehavior
         for (int i = 0; i < tmp.Count; i++)
         {
             Item item = App.factory.itemFactory.GetItem(tmp[i].roomData.id);
-            if (!item.CanBuyAtStore)
+            if (item.UnlockStatus != 1)
                 continue;
             result.Add(tmp[i]);
         }

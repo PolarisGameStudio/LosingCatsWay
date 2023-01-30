@@ -1,7 +1,6 @@
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "Item_", menuName = "Factory/Create Item")]
 public class Item : ScriptableObject
@@ -167,9 +166,10 @@ public class Item : ScriptableObject
                     break;
             }
 
-            if (fromValue > 0) return;
+            if (fromValue > 0) 
+                return;
             if (value > fromValue)
-                CanBuyAtStore = true;
+                UnlockStatus = 1;
         }
     }
 
@@ -186,19 +186,10 @@ public class Item : ScriptableObject
     // 心情的
     public bool ForFun => likeFun > 0;
 
-    public bool CanBuyAtStore
+    public int UnlockStatus
     {
-        get
-        {
-            if (app.system.inventory.itemsCanBuyAtStore.ContainsKey(id))
-                return app.system.inventory.itemsCanBuyAtStore[id];
-            return false;
-        }
-        set
-        {
-            if (app.system.inventory.itemsCanBuyAtStore.ContainsKey(id))
-                app.system.inventory.itemsCanBuyAtStore[id] = value;
-        }
+        get => app.system.inventory.UnlockStatus[id];
+        set => app.system.inventory.UnlockStatus[id] = value;
     }
 
     #endregion

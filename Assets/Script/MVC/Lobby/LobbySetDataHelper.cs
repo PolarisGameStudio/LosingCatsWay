@@ -109,7 +109,8 @@ public class LobbySetDataHelper
         dictSetValueHelper.SetDict(itemData.LitterData, inventory.LitterData);
         dictSetValueHelper.SetDict(itemData.SkinData, inventory.SkinData);
         dictSetValueHelper.SetDict(itemData.KnowledgeCardDatas, inventory.KnowledgeCardDatas);
-        dictSetValueHelper.SetDict(itemData.ItemsCanBuyAtStore, inventory.itemsCanBuyAtStore);
+        // dictSetValueHelper.SetDict(itemData.ItemsCanBuyAtStore, inventory.itemsCanBuyAtStore);
+        dictSetValueHelper.SetDict(itemData.UnlockStatus, inventory.UnlockStatus);
         dictSetValueHelper.SetDict(itemData.PlayerIconData, inventory.PlayerIconData);
         dictSetValueHelper.SetDict(itemData.PlayerAvatarData, inventory.PlayerAvatarData);
     }

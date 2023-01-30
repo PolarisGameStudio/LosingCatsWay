@@ -98,7 +98,8 @@ public class CloudSaveSystem : MvcBehaviour
         itemData.LitterData = App.system.inventory.LitterData;
         itemData.SkinData = App.system.inventory.SkinData;
         itemData.KnowledgeCardDatas = App.system.inventory.KnowledgeCardDatas;
-        itemData.ItemsCanBuyAtStore = App.system.inventory.itemsCanBuyAtStore;
+        // itemData.ItemsCanBuyAtStore = App.system.inventory.itemsCanBuyAtStore;
+        itemData.UnlockStatus = App.system.inventory.UnlockStatus;
         itemData.PlayerIconData = App.system.inventory.PlayerIconData;
         itemData.PlayerAvatarData = App.system.inventory.PlayerAvatarData;
 
@@ -200,7 +201,8 @@ public class CloudSaveSystem : MvcBehaviour
         itemData.LitterData = App.system.inventory.LitterData;
         itemData.SkinData = App.system.inventory.SkinData;
         itemData.KnowledgeCardDatas = App.system.inventory.KnowledgeCardDatas;
-        itemData.ItemsCanBuyAtStore = App.system.inventory.itemsCanBuyAtStore;
+        // itemData.ItemsCanBuyAtStore = App.system.inventory.itemsCanBuyAtStore;
+        itemData.UnlockStatus = App.system.inventory.UnlockStatus;
         itemData.PlayerIconData = App.system.inventory.PlayerIconData;
         itemData.PlayerAvatarData = App.system.inventory.PlayerAvatarData;
 
@@ -274,7 +276,10 @@ public class CloudSaveSystem : MvcBehaviour
         itemData.LitterData = App.system.inventory.LitterData;
         itemData.SkinData = App.system.inventory.SkinData;
         itemData.KnowledgeCardDatas = App.system.inventory.KnowledgeCardDatas;
-        itemData.ItemsCanBuyAtStore = App.system.inventory.itemsCanBuyAtStore;
+        // itemData.ItemsCanBuyAtStore = App.system.inventory.itemsCanBuyAtStore;
+        itemData.UnlockStatus = App.system.inventory.UnlockStatus;
+        itemData.PlayerIconData = App.system.inventory.PlayerIconData;
+        itemData.PlayerAvatarData = App.system.inventory.PlayerAvatarData;
 
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);

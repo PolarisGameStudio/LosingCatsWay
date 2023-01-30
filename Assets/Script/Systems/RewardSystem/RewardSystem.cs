@@ -47,6 +47,8 @@ public class RewardSystem : MvcBehaviour
         {
             if (rewards[i].item.itemType == ItemType.Unlock)
                 continue;
+            if (rewards[i].count <= 0) // todo 這是解鎖
+                continue;
 
             Card_RewardSystem tmp = Instantiate(itemObject, content);
             tmp.SetUI(rewards[i]);
@@ -94,8 +96,11 @@ public class RewardSystem : MvcBehaviour
             App.system.player.AddDiamond(reward.count);
             return;
         }
-
+        
         item.Count += reward.count;
+
+        if (reward.count <= 0)
+            item.UnlockStatus = 1;
     }
 
     private void WaitAnimationEnd()

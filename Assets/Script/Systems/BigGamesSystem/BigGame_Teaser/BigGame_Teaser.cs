@@ -94,10 +94,8 @@ public class BigGame_Teaser : BigGameBehaviour
         else
             stickSkeleton.AnimationState.SetAnimation(0, "StickHIT", false);
 
-        // catSkeleton.AnimationState.SetAnimation(0, "CatStartHIT", false);
-
         stickSkeleton.AnimationState.AddAnimation(0, "StickIDE", true, 0);
-        // catSkeleton.AnimationState.AddAnimation(0, "CatNotice", true, 0);
+        SetCatNoticeStick();
 
         float randomValue = Random.Range(minSwingValue, maxSwingValue);
         swingFill.fillAmount += randomValue;
@@ -106,7 +104,7 @@ public class BigGame_Teaser : BigGameBehaviour
             StartReturnBar();
     }
 
-    void StartSwingBar()
+    private void StartSwingBar()
     {
         turn++;
         RefreshTurnText();
@@ -130,8 +128,8 @@ public class BigGame_Teaser : BigGameBehaviour
         catSkeleton.AnimationState.SetAnimation(0, "CatNotice", true);
         stickSkeleton.AnimationState.SetAnimation(0, "StickIDE", true);
 
-        CancelInvoke("SwingTimeCount");
-        InvokeRepeating("SwingTimeCount", 0, 0.01f);
+        CancelInvoke(nameof(SwingTimeCount));
+        InvokeRepeating(nameof(SwingTimeCount), 0, 0.01f);
     }
 
     private void SwingTimeCount()
@@ -139,9 +137,9 @@ public class BigGame_Teaser : BigGameBehaviour
         swingFill.fillAmount -= 0.001f;
     }
 
-    void StartReturnBar()
+    private void StartReturnBar()
     {
-        CancelInvoke("SwingTimeCount");
+        CancelInvoke(nameof(SwingTimeCount));
         swingBar.SetActive(false);
 
         for (int i = 0; i < swingButtons.Length; i++)
@@ -177,7 +175,7 @@ public class BigGame_Teaser : BigGameBehaviour
             Miss();
     }
 
-    void Hit()
+    private void Hit()
     {
         CancelInvoke(nameof(CheckPointerReach));
 
@@ -202,7 +200,7 @@ public class BigGame_Teaser : BigGameBehaviour
         });
     }
 
-    void Miss()
+    private void Miss()
     {
         returnButton.interactable = false;
 
@@ -329,6 +327,17 @@ public class BigGame_Teaser : BigGameBehaviour
         pauseRect.DOAnchorPos(pauseOrigin, 0.15f).SetEase(Ease.OutBack);
         howRect.DOAnchorPos(howOrigin, 0.15f).SetEase(Ease.OutBack).SetDelay(0.0625f);
         turnRect.DOAnchorPos(turnOrigin, 0.25f).SetEase(Ease.OutBack).SetDelay(0.125f);
+    }
+
+    #endregion
+
+    #region Spine
+
+    private void SetCatNoticeStick()
+    {
+        catSkeleton.AnimationState.ClearTracks();
+        catSkeleton.AnimationState.SetAnimation(0, "CatStartHIT", false);
+        catSkeleton.AnimationState.AddAnimation(0, "CatNotice", true, 0);
     }
 
     #endregion

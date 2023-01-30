@@ -22,7 +22,7 @@ public class LittleGame_Scratching : LittleGame
     {
         fillCircle.fillAmount += fillSpeed;
         
-        App.system.soundEffect.Play("Button");
+        App.system.soundEffect.PlayUntilEnd("Button");
 
         if (fillCircle.fillAmount >= 1)
         {

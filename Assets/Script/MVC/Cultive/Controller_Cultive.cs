@@ -557,7 +557,7 @@ public class Controller_Cultive : ControllerBehavior
 
     private void ResetTimer()
     {
-        App.model.cultive.NextCleanDateTime = App.system.myTime.MyTimeNow.AddHours(0).AddMinutes(1).AddSeconds(0);
+        App.model.cultive.NextCleanDateTime = App.system.myTime.MyTimeNow.AddHours(6).AddMinutes(0).AddSeconds(0);
 
         int usingIndex = App.model.cultive.UsingLitterIndex;
         int likeIndex = App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.LikeLitterIndex;

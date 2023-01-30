@@ -56,7 +56,8 @@ public class Cat : MvcBehaviour
         if (isFriendMode)
             return;
 
-        if (catHeartEffect.isPlaying) catHeartEffect.Stop();
+        if (catHeartEffect.isPlaying)
+            catHeartEffect.Stop();
 
         //隨機開始時間
         int randTimer = Random.Range(10, 15);
@@ -384,7 +385,7 @@ public class Cat : MvcBehaviour
         App.system.catNotify.Add(this);
     }
 
-    public void CloseBigGame()
+    private void CloseBigGame()
     {
         bigGameBubble.DOScale(Vector3.zero, 0.5f);
         bigGameBubble.DOLocalMoveY(1, 0.5f).OnComplete(() => { bigGameBubble.gameObject.SetActive(false); });
@@ -399,7 +400,7 @@ public class Cat : MvcBehaviour
 
         if (App.model.build.IsCanMoveOrRemove)
             return;
-
+        
         if (isPauseGame)
             return;
 

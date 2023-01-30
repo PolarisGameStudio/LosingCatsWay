@@ -40,7 +40,7 @@ public class BgmSystem : SerializedMonoBehaviour
         // Play("Lobby");
     }
 
-    public void SetVolume(float volume)
+    private void SetVolume(float volume)
     {
         audioSource.volume = volume;
         localVolume = volume;
@@ -70,7 +70,8 @@ public class BgmSystem : SerializedMonoBehaviour
 
     public void PlayPrevious()
     {
-        if (previousClip == null) return;
+        if (previousClip == null)
+            return;
 
         audioSource.clip = previousClip;
         audioSource.time = previousTime;

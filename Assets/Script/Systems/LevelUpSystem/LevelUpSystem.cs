@@ -41,10 +41,16 @@ public class LevelUpSystem : MvcBehaviour
         List<string> unlockIds = new List<string>();
 
         for (int i = 0; i < rewards.Length; i++)
+        {
             if (rewards[i].item.itemType == ItemType.Unlock)
             {
                 unlockIds.Add(rewards[i].item.id);
             }
+            else if (rewards[i].count <= 0)
+            {
+                unlockIds.Add(rewards[i].item.id);
+            }
+        }
 
         if (unlockIds.Count == 0)
         {
@@ -57,7 +63,22 @@ public class LevelUpSystem : MvcBehaviour
                 if (i < unlockIds.Count)
                 {
                     unlocks[i].SetActive(true);
-                    unlockContents[i].text = App.factory.stringFactory.GetUnlock(unlockIds[i]);
+
+                    string key = unlockIds[i];
+                    string content = string.Empty;
+
+                    if (key.Contains("ULK"))
+                        content = App.factory.stringFactory.GetUnlock(key);
+                    else if (key.Contains("IRM"))
+                        content = App.factory.stringFactory.GetRoomName(key);
+                    else
+                        content = App.factory.stringFactory.GetItemName(key);
+                    
+                    // string content = key.Contains("ULK")
+                    //     ? App.factory.stringFactory.GetUnlock(key)
+                    //     : App.factory.stringFactory.GetItemName(key);
+                    
+                    unlockContents[i].text = content;
                     continue;
                 }
             

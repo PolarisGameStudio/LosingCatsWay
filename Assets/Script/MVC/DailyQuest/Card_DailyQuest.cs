@@ -36,14 +36,13 @@ public class Card_DailyQuest : Card_Quest
 
     public void GetReward(int index)
     {
-        App.controller.dailyQuest.OnGetReward += PlayGetTween;
-        App.controller.dailyQuest.OnGetAdsReward += PlayGetTween;
         App.controller.dailyQuest.SelectReward(index);
     }
 
-    private void PlayGetTween()
+    public void PlayGetTween()
     {
         mask.SetActive(true);
+        red.SetActive(false);
         getTween.delay = 0.2f;
         getTween.Play();
     }

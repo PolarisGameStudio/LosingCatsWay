@@ -27,7 +27,7 @@ public class LittleGame_SmellCat : LittleGame
     {
         cam.orthographicSize -= 0.001f * zoomSpeed;
         
-        App.system.soundEffect.Play("Button");
+        App.system.soundEffect.PlayUntilEnd("Button");
         
         //FillAmount
         float distance = originSize - zoomSize;

@@ -74,7 +74,7 @@ public class Controller_Shop : ControllerBehavior
         for (int i = items.Count - 1; i >= 0; i--)
             if (items[i].notShowAtStore)
                 items.RemoveAt(i);
-        items = items.OrderByDescending(i => i.CanBuyAtStore).ToList();
+        items = items.OrderByDescending(i => i.UnlockStatus == 1).ToList();
         
         App.model.shop.SelectedItems = items;
     }

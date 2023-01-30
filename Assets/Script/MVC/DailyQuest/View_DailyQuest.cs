@@ -58,6 +58,7 @@ public class View_DailyQuest : ViewBehaviour
     public void OnQuestsChange(object value)
     {
         var quests = (List<Quest>)value;
+        
         if (quests.Count <= 0)
             return;
 
@@ -71,7 +72,7 @@ public class View_DailyQuest : ViewBehaviour
             if (quest.IsReach && !quest.IsReceived)
             {
                 red.SetActive(true);
-                break;
+                continue;
             }
 
             if (quest.IsReceived)
@@ -86,13 +87,20 @@ public class View_DailyQuest : ViewBehaviour
             var quest = App.model.dailyQuest.Quests[i];
             card_DailyQuests[i].SetData(quest);
 
-            if (!quest.IsReach) continue;
-            if (quest.IsReceived) continue;
+            if (!quest.IsReach) 
+                continue;
+            
+            if (quest.IsReceived)
+            {
+                card_DailyQuests[i].PlayGetTween();
+                continue;
+            }
 
             count++;
         }
 
         // TODO 月卡
+        print(count <= 0);
         getAllMask.SetActive(count <= 0);
 
         totalCountText.text = $"{receiveCount}/{quests.Count}";

@@ -11,6 +11,7 @@ public class TutorialDirector : MvcBehaviour
     [HideIf("hasNextDirector")] public UnityEvent OnDirectorEnd;
     
     public bool hasNextDirector;
+    [ShowIf("hasNextDirector")] public TutorialDirector nextDirector;
     
     private int stepIndex;
 
@@ -37,7 +38,12 @@ public class TutorialDirector : MvcBehaviour
             App.system.tutorial.SetBlackBg(false);
 
             if (hasNextDirector)
+            {
+                if (nextDirector == null)
+                    return;
+                App.system.tutorial.nextDirector = nextDirector;
                 return;
+            }
             
             OnDirectorEnd?.Invoke();
             App.system.tutorial.isTutorial = false;

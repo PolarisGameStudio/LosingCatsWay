@@ -6,23 +6,21 @@ using Sirenix.OdinInspector;
 
 public class ItemFactory : SerializedMonoBehaviour
 {
-    [Searchable] [SerializeField] private List<Item> items;
+    [Searchable, SerializeField] private List<Item> items;
     public Dictionary<int, Reward[]> LevelRewards = new Dictionary<int, Reward[]>();
     public Dictionary<string, GameObject> avatarEffects;
 
     #region MVC
 
-    private MyApplication app;
+    private MyApplication app = null;
 
-    protected MyApplication App
+    protected MyApplication myApp
     {
         get
         {
             if (app == null)
-            {
                 app = FindObjectOfType<MyApplication>();
-            }
-
+            
             return app;
         }
     }
@@ -105,5 +103,17 @@ public class ItemFactory : SerializedMonoBehaviour
         }
 
         return result;
+    }
+
+    [Button]
+    public void DebugSyncUnlockStatus()
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            string key = items[i].id;
+            if (myApp.system.inventory.UnlockStatus.ContainsKey(key))
+                continue;
+            myApp.system.inventory.UnlockStatus.Add(key, 0);
+        }
     }
 }

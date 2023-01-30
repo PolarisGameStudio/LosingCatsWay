@@ -132,10 +132,10 @@ public class Controller_DailyQuest : ControllerBehavior
         int index = App.model.dailyQuest.GetRewardIndex;
         var quest = App.model.dailyQuest.Quests[index];
         
-        if (quest.IsReceived)
+        if (!quest.IsReach)
             return;
         
-        if (!quest.IsReach)
+        if (quest.IsReceived)
             return;
 
         App.model.dailyQuest.RewardExp += quest.exp;
@@ -143,6 +143,7 @@ public class Controller_DailyQuest : ControllerBehavior
         App.system.reward.Open(quest.Rewards);
 
         quest.IsReceived = true;
+        App.model.dailyQuest.Quests[index] = quest;
         
         App.model.dailyQuest.Quests = App.model.dailyQuest.Quests;
         
@@ -161,17 +162,18 @@ public class Controller_DailyQuest : ControllerBehavior
         int index = App.model.dailyQuest.GetRewardIndex;
         var quest = App.model.dailyQuest.Quests[index];
         
+        if (!quest.IsReach)
+            return;
+        
         if (quest.IsReceived)
             return;
         
-        if (!quest.IsReach)
-            return;
-
         App.model.dailyQuest.RewardExp += quest.exp;
         
         App.system.reward.Open(quest.Rewards);
 
         quest.IsReceived = true;
+        App.model.dailyQuest.Quests[index] = quest;
 
         App.model.dailyQuest.Quests = App.model.dailyQuest.Quests;
         
@@ -186,10 +188,10 @@ public class Controller_DailyQuest : ControllerBehavior
     {
         var quest = App.model.dailyQuest.TotalQuest;
         
-        if (quest.IsReceived)
-            return;
-        
         if (!quest.IsReach)
+            return;
+
+        if (quest.IsReceived)
             return;
 
         App.model.dailyQuest.RewardExp += quest.exp;
@@ -204,6 +206,8 @@ public class Controller_DailyQuest : ControllerBehavior
         OnClose += AddRewardByClose;
         App.controller.catGuide.OnClose += AddRewardByClose;
         
+        App.system.cloudSave.UpdateCloudMissionData();
+        
         totalGetTween.Play();
     }
 
@@ -216,9 +220,11 @@ public class Controller_DailyQuest : ControllerBehavior
         {
             var quest = App.model.dailyQuest.Quests[i];
 
-            if (quest.IsReceived) continue;
+            if (!quest.IsReach)
+                continue;
 
-            if (!quest.IsReach) continue;
+            if (quest.IsReceived)
+                continue;
 
             hasReward = true;
 
@@ -227,7 +233,8 @@ public class Controller_DailyQuest : ControllerBehavior
             tmp.AddRange(quest.Rewards);
 
             quest.IsReceived = true;
-
+            App.model.dailyQuest.Quests[i] = quest;
+            
             App.model.dailyQuest.Quests = App.model.dailyQuest.Quests;
         }
 

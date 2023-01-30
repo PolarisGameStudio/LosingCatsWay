@@ -70,8 +70,20 @@ public class Card_CatGuide : MvcBehaviour
             Reward reward = rewards[i];
             
             //Info text
-            infoIcons[i].sprite = (reward.item.itemType == ItemType.Unlock) ? iconSprites[0] : iconSprites[1];
-            infoTexts[i].text = (reward.item.itemType == ItemType.Unlock) ? App.factory.stringFactory.GetUnlock(reward.item.id) : reward.item.Name;
+            if (reward.item.itemType == ItemType.Unlock || reward.count <= 0) //Unlock
+            {
+                infoIcons[i].sprite = iconSprites[0];
+                string content = reward.item.itemType == ItemType.Unlock
+                    ? App.factory.stringFactory.GetUnlock(reward.item.id)
+                    : reward.item.Name;
+                infoTexts[i].text = content;
+            }
+            else
+            {
+                infoIcons[i].sprite = iconSprites[1];
+                infoTexts[i].text = reward.item.Name;
+            }
+
             infoObjects[i].SetActive(true);
         }
         
@@ -79,7 +91,7 @@ public class Card_CatGuide : MvcBehaviour
         Reward best = new Reward();
         for (int i = 0; i < rewards.Length; i++)
         {
-            if (rewards[i].item.id == "ULK001" || rewards[i].item.id == "ULK002") //Unlock
+            if (rewards[i].item.id is "ULK001" or "ULK002") //Unlock
             {
                 best = rewards[i];
                 break;
@@ -146,7 +158,7 @@ public class Card_CatGuide : MvcBehaviour
     {
         if (IsTopCard) return;
         getObject.SetActive(value);
-        topIcon.sprite = (value) ? topIconSprites[1] : topIconSprites[0];
+        topIcon.sprite = value ? topIconSprites[1] : topIconSprites[0];
     }
 
     public void DoFlip(float delay)

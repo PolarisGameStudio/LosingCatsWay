@@ -12,6 +12,7 @@ public class TutorialSystem : MvcBehaviour
     
     [Title("Directors")] public List<TutorialDirector> directors;
     [ReadOnly] public TutorialDirector currentDirector;
+    [ReadOnly] public TutorialDirector nextDirector;
     
     [Title("Setup")]
     [SerializeField] private LeanDragCamera dragCamera;
@@ -22,7 +23,9 @@ public class TutorialSystem : MvcBehaviour
     [Title("Value")]
     [ReadOnly] public int directorIndex = -1;
     [ReadOnly] public bool isTutorial;
-    public int startTutorialEndPoint; // 新手教學結束點 // Director (4) 就寫 4
+    // public int startTutorialEndPoint; // 新手教學結束點 // Director (4) 就寫 4
+    public bool startTutorialEnd;
+    public bool shelterTutorialEnd;
 
     [Title("Debug")] [SerializeField] private bool skipTutorial;
     
@@ -34,10 +37,15 @@ public class TutorialSystem : MvcBehaviour
         if (skipTutorial)
             return;
         
-        if (directorIndex < startTutorialEndPoint)
+        // if (directorIndex < startTutorialEndPoint)
+        if (!startTutorialEnd)
         {
-            directorIndex = -1;
-            App.system.openFlow.AddAction(NextDirector);
+            // directorIndex = -1;
+            App.system.openFlow.AddAction(() =>
+            {
+                nextDirector = directors[0];
+                NextDirector();
+            });
         }
     }
 
@@ -61,11 +69,36 @@ public class TutorialSystem : MvcBehaviour
         isTutorial = true;
     }
 
+    public void SetDirector(TutorialDirector director)
+    {
+        if (director == null)
+        {
+            Debug.LogWarning("Director not found.");
+            Close();
+            SetCameraDrag(true);
+            SetCameraPinch(true);
+            SetBlackBg(false);
+            return;
+        }
+        
+        Open();
+
+        if (currentDirector != null)
+            currentDirector.gameObject.SetActive(false);
+        
+        currentDirector = director;
+        currentDirector.gameObject.SetActive(true);
+        currentDirector.Init();
+        currentDirector.NextAction();
+        isTutorial = true;
+    }
+
     public void NextDirector()
     {
-        if (directorIndex >= 0)
-            directors[directorIndex].gameObject.SetActive(false);
-        SetDirector(directorIndex + 1);
+        // if (directorIndex >= 0)
+        //     directors[directorIndex].gameObject.SetActive(false);
+        // SetDirector(directorIndex + 1);
+        SetDirector(nextDirector);
     }
 
     public void Open()
@@ -125,5 +158,17 @@ public class TutorialSystem : MvcBehaviour
             if (director != null)
                 directors.Add(director);
         }
+    }
+
+    public void EndStartTutorial()
+    {
+        startTutorialEnd = true;
+        //todo save
+    }
+
+    public void EndShelterTutorial()
+    {
+        shelterTutorialEnd = true;
+        //todo save
     }
 }

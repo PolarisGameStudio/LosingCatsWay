@@ -20,7 +20,7 @@ public class LittleGame_TouchCat : LittleGame
     {
         fillCircle.fillAmount += fillSpeed;
         
-        App.system.soundEffect.Play("Button");
+        App.system.soundEffect.PlayUntilEnd("Button");
 
         if (fillCircle.fillAmount >= 1)
         {

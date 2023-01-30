@@ -30,7 +30,7 @@ public class SoundEffectSystem : SerializedMonoBehaviour
         App.model.settings.OnSeVolumeChange += OnSeVolumeChange;
     }
 
-    public void SetVolume(float volume)
+    private void SetVolume(float volume)
     {
         audioSource.volume = volume;
     }
@@ -48,6 +48,13 @@ public class SoundEffectSystem : SerializedMonoBehaviour
 
         audioSource.clip = audioDatas[audioName];
         audioSource.Play();
+    }
+
+    public void PlayUntilEnd(string audioName)
+    {
+        if (audioSource.isPlaying)
+            return;
+        Play(audioName);
     }
 
     private void OnSeVolumeChange(object value)
