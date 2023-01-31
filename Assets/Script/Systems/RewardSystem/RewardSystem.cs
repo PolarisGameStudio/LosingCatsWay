@@ -98,9 +98,6 @@ public class RewardSystem : MvcBehaviour
         }
         
         item.Count += reward.count;
-
-        if (reward.count <= 0)
-            item.UnlockStatus = 1;
     }
 
     private void WaitAnimationEnd()

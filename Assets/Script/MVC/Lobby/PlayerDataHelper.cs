@@ -53,8 +53,8 @@ public class PlayerDataHelper
         player.DiamondCatSlot = playerData.DiamondCatSlot;
         player.GridSizeLevel = playerData.GridSizeLevel == 0 ? 1 : playerData.GridSizeLevel;
         player.PlayerGender = playerData.StartTutorialEnd == false ? -1 : playerData.PlayerGender;
-        player.UsingIcon = String.IsNullOrEmpty(playerData.UsingIcon) ? string.Empty : player.UsingIcon;
-        player.UsingAvatar = String.IsNullOrEmpty(playerData.UsingAvatar) ? "PAT001" : playerData.UsingAvatar;
+        player.UsingIcon = string.IsNullOrEmpty(playerData.UsingIcon) ? string.Empty : playerData.UsingIcon;
+        player.UsingAvatar = string.IsNullOrEmpty(playerData.UsingAvatar) ? "PAT001" : playerData.UsingAvatar;
         player.CatDeadCount = playerData.CatDeadCount;
 
         app.system.tutorial.startTutorialEnd = playerData.StartTutorialEnd;
@@ -129,9 +129,6 @@ public class PlayerDataHelper
 
         itemData.KnowledgeCardDatas = app.system.inventory.KnowledgeCardDatas;
         dictSetValueHelper.SetDict(itemData.KnowledgeCardDatas, inventory.KnowledgeCardDatas);
-
-        itemData.UnlockStatus = app.system.inventory.UnlockStatus;
-        dictSetValueHelper.SetDict(itemData.UnlockStatus, inventory.UnlockStatus);
 
         itemData.PlayerIconData = app.system.inventory.PlayerIconData;
         dictSetValueHelper.SetDict(itemData.PlayerIconData, inventory.PlayerIconData);
@@ -324,7 +321,6 @@ public class PlayerDataHelper
         itemData.LitterData = app.system.inventory.LitterData;
         itemData.SkinData = app.system.inventory.SkinData;
         itemData.KnowledgeCardDatas = app.system.inventory.KnowledgeCardDatas;
-        itemData.UnlockStatus = app.system.inventory.UnlockStatus;
         itemData.PlayerIconData = app.system.inventory.PlayerIconData;
         itemData.PlayerAvatarData = app.system.inventory.PlayerAvatarData;
 

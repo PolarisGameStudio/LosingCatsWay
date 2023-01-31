@@ -105,15 +105,16 @@ public class ItemFactory : SerializedMonoBehaviour
         return result;
     }
 
-    [Button]
-    public void DebugSyncUnlockStatus()
+    public List<Item> GetUnlockItemsByLevel(int level) // 取等級解鎖的Items // todo LevelUpSystem, CatGuideCard的解鎖項
     {
+        List<Item> result = new List<Item>();
         for (int i = 0; i < items.Count; i++)
         {
-            string key = items[i].id;
-            if (myApp.system.inventory.UnlockStatus.ContainsKey(key))
+            if (items[i].unlockLevel != level)
                 continue;
-            myApp.system.inventory.UnlockStatus.Add(key, 0);
+            result.Add(items[i]);
         }
+
+        return result;
     }
 }

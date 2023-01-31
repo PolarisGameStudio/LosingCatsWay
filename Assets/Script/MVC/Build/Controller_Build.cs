@@ -247,18 +247,24 @@ public class Controller_Build : ControllerBehavior
         if (App.model.build.IsBuilding)
             return;
 
-        if (CheckIsCenter(room))
+        if (CheckIsCenter(room) && !App.model.build.IsOpenMoveBuild)
         {
+            App.view.build.CloseMoveBuild();
             App.view.build.Close();
             App.controller.chooseOrigin.Open();
             return;
         }
 
+        if (App.model.chooseOrigin.IsChooseOrigin)
+            return;
+        
         if (!App.system.room.CheckMovePossibility(room))
             return;
 
         if (jumpTween != null && jumpTween.IsPlaying())
             return;
+
+        App.model.build.IsOpenMoveBuild = true;
         
         var originY = room.transform.position.y;
         var offsetY = originY + 0.5f;
@@ -280,6 +286,7 @@ public class Controller_Build : ControllerBehavior
 
     public void CloseMoveBuild()
     {
+        App.model.build.IsOpenMoveBuild = false;
         App.model.build.SelectedRoom = null;
         App.view.build.CloseMoveBuild();
         App.view.build.Open();

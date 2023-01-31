@@ -22,13 +22,11 @@ public class MyTimeSystem : MvcBehaviour
         bool login = IsTodayLogin();
         if (login)
         {
-            print("Already login.");
             OnAlreadyLogin?.Invoke();
             OnAlreadyLogin = null;
         }
         else
         {
-            print("First login.");
             PerDayLoginDateTime = MyTimeNow;
             OnFirstLogin?.Invoke();
             OnFirstLogin = null;

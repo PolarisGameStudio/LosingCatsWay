@@ -241,23 +241,27 @@ public class Controller_Cultive : ControllerBehavior
         float lastMoisture = cat.cloudCatData.CatSurviveData.Moisture;
         float lastFavourbility = cat.cloudCatData.CatSurviveData.Favourbility;
 
-        cat.cloudCatData.CatSurviveData.Satiety =
-            Mathf.Clamp(cat.cloudCatData.CatSurviveData.Satiety + satietyValue, 0, 100);
-        cat.cloudCatData.CatSurviveData.Moisture =
-            Mathf.Clamp(cat.cloudCatData.CatSurviveData.Moisture + moistureValue, 0, 100);
-        cat.cloudCatData.CatSurviveData.Favourbility =
-            Mathf.Clamp(cat.cloudCatData.CatSurviveData.Favourbility + funValue, 0, 100);
+        // cat.cloudCatData.CatSurviveData.Satiety =
+        //     Mathf.Clamp(cat.cloudCatData.CatSurviveData.Satiety + satietyValue, 0, 100);
+        // cat.cloudCatData.CatSurviveData.Moisture =
+        //     Mathf.Clamp(cat.cloudCatData.CatSurviveData.Moisture + moistureValue, 0, 100);
+        // cat.cloudCatData.CatSurviveData.Favourbility =
+        //     Mathf.Clamp(cat.cloudCatData.CatSurviveData.Favourbility + funValue, 0, 100);
 
-        float newSatiety = cat.cloudCatData.CatSurviveData.Satiety;
-        float newMoisture = cat.cloudCatData.CatSurviveData.Moisture;
-        float newFavourbility = cat.cloudCatData.CatSurviveData.Favourbility;
+        // float newSatiety = cat.cloudCatData.CatSurviveData.Satiety;
+        // float newMoisture = cat.cloudCatData.CatSurviveData.Moisture;
+        // float newFavourbility = cat.cloudCatData.CatSurviveData.Favourbility;
+
+        float newSatiety = AddSatiety(satietyValue);
+        float newMoisture = AddMoisture(moistureValue);
+        float newFavourbility = AddFun(funValue);
 
         // OnAddFun?.Invoke(newFavourbility - lastFavourbility);
-        OnAddFun?.Invoke(funValue);
+        // OnAddFun?.Invoke(funValue);
         // OnAddSatiety?.Invoke(newSatiety - lastSatiety);
-        OnAddSatiety?.Invoke(satietyValue);
+        // OnAddSatiety?.Invoke(satietyValue);
         // OnAddMoisture?.Invoke(newMoisture - lastMoisture);
-        OnAddMoisture?.Invoke(moistureValue);
+        // OnAddMoisture?.Invoke(moistureValue);
         
         if (lastSatiety < 90f && newSatiety >= 90f)
             cat.cloudCatData.CatDiaryData.DiarySatietyScore++;
@@ -268,7 +272,8 @@ public class Controller_Cultive : ControllerBehavior
         if (lastFavourbility < 90f && newFavourbility >= 90f)
             cat.cloudCatData.CatDiaryData.DiaryFavourbilityScore++;
 
-        if (!App.system.tutorial.isTutorial) item.Count--;
+        if (!App.system.tutorial.isTutorial)
+            item.Count--;
 
         App.system.cloudSave.UpdateCloudItemData();
         App.system.cloudSave.UpdateCloudCatSurviveData(cat.cloudCatData);
@@ -341,21 +346,19 @@ public class Controller_Cultive : ControllerBehavior
 
         catSkeleton.AnimationState.Start -= SetPlayData;
 
-        var cat = App.model.cultive.SelectedCat;
-        float lastFavourbility = cat.cloudCatData.CatSurviveData.Favourbility;
+        float lastFavourbility = App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.Favourbility;
 
-        cat.cloudCatData.CatSurviveData.Favourbility =
-            Mathf.Clamp(cat.cloudCatData.CatSurviveData.Favourbility + 20, 0, 100);
-
-        float newFavourbility = cat.cloudCatData.CatSurviveData.Favourbility;
+        // cat.cloudCatData.CatSurviveData.Favourbility =
+        //     Mathf.Clamp(cat.cloudCatData.CatSurviveData.Favourbility + 20, 0, 100);
+        
+        // float newFavourbility = App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.Favourbility;
+        float newFavourbility = AddFun(20);
 
         if (lastFavourbility < 96f && newFavourbility >= 96f)
-        {
-            cat.cloudCatData.CatDiaryData.DiaryFavourbilityScore++;
-        }
+            App.model.cultive.SelectedCat.cloudCatData.CatDiaryData.DiaryFavourbilityScore++;
 
-        App.system.cloudSave.UpdateCloudCatDiaryData(cat.cloudCatData);
-        App.system.cloudSave.UpdateCloudCatSurviveData(cat.cloudCatData);
+        App.system.cloudSave.UpdateCloudCatDiaryData(App.model.cultive.SelectedCat.cloudCatData);
+        App.system.cloudSave.UpdateCloudCatSurviveData(App.model.cultive.SelectedCat.cloudCatData);
 
         funEffects.Play();
         funPop.Pop(20);
@@ -427,8 +430,9 @@ public class Controller_Cultive : ControllerBehavior
         //Save
         var cloudCatData = App.model.cultive.SelectedCat.cloudCatData;
         cloudCatData.CatDiaryData.DiaryLitterScore++;
-        cloudCatData.CatSurviveData.Favourbility =
-            Mathf.Clamp(cloudCatData.CatSurviveData.Favourbility + 40, 0, 100);
+        AddFun(40);
+        // cloudCatData.CatSurviveData.Favourbility =
+        //     Mathf.Clamp(cloudCatData.CatSurviveData.Favourbility + 40, 0, 100);
         
         App.system.cloudSave.UpdateCloudItemData();
         App.system.cloudSave.UpdateCloudCatDiaryData(cloudCatData);
@@ -857,6 +861,34 @@ public class Controller_Cultive : ControllerBehavior
     {
         trackEntry.Complete -= WaitSpineSetSkinHappy;
         App.view.cultive.cultiveInfo.catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "AI_Main/IDLE_Ordinary01", true);
+    }
+
+    #endregion
+
+    #region AddValue
+
+    private float AddSatiety(float value)
+    {
+        App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.Satiety =
+            Mathf.Clamp(App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.Satiety + value, 0, 100);
+        OnAddSatiety?.Invoke(value);
+        return App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.Satiety;
+    }
+    
+    private float AddMoisture(float value)
+    {
+        App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.Moisture =
+            Mathf.Clamp(App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.Moisture + value, 0, 100);
+        OnAddMoisture?.Invoke(value);
+        return App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.Moisture;
+    }
+    
+    private float AddFun(float value)
+    {
+        App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.Favourbility =
+            Mathf.Clamp(App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.Favourbility + value, 0, 100);
+        OnAddFun?.Invoke(value);
+        return App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.Favourbility;
     }
 
     #endregion

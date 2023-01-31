@@ -549,7 +549,7 @@ public class CatchCatMap : MvcBehaviour
             App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchCatGameEnd, () =>
             {
                 // CloseToMap();
-                App.system.tutorial.NextDirector();
+                App.system.tutorial.Next();
             });
             return;
         }

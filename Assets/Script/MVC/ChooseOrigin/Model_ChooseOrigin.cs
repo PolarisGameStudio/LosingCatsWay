@@ -8,6 +8,7 @@ public class Model_ChooseOrigin : ModelBehavior
     private int usingRoomIndex = 0;
     private int previewRoomIndex = -1;
     private Room previewRoom;
+    private bool isChooseOrigin;
 
     public List<Room> CenterRooms
     {
@@ -43,6 +44,12 @@ public class Model_ChooseOrigin : ModelBehavior
     {
         get => previewRoom;
         set => previewRoom = value;
+    }
+
+    public bool IsChooseOrigin
+    {
+        get => isChooseOrigin;
+        set => isChooseOrigin = value;
     }
 
     public ValueChange OnCenterRoomsChange;

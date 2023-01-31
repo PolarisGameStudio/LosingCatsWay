@@ -9,6 +9,7 @@ public class Model_Build : ModelBehavior
     private bool isBuilding;
     private bool canBuild;
     private bool isMoving;
+    private bool isOpenMoveBuild;
     private Room selectedRoom;
 
     public bool IsBuilding
@@ -45,6 +46,12 @@ public class Model_Build : ModelBehavior
     {
         get => selectedRoom;
         set => selectedRoom = value;
+    }
+
+    public bool IsOpenMoveBuild
+    {
+        get => isOpenMoveBuild;
+        set => isOpenMoveBuild = value;
     }
 
     public ValueChange IsBuildingChange;

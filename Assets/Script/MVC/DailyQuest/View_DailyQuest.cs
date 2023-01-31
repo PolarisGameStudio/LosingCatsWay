@@ -100,7 +100,6 @@ public class View_DailyQuest : ViewBehaviour
         }
 
         // TODO 月卡
-        print(count <= 0);
         getAllMask.SetActive(count <= 0);
 
         totalCountText.text = $"{receiveCount}/{quests.Count}";

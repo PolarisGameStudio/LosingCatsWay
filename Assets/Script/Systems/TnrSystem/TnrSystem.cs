@@ -122,6 +122,14 @@ public class TnrSystem : MvcBehaviour
 
                 cloudCatData.CatSurviveData.IsUseToFind = false;
                 App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
+                
+                cloudCatData.CatSurviveData.Satiety = Random.Range(50f, 69f);
+                cloudCatData.CatSurviveData.Moisture = Random.Range(50f, 69f);
+                cloudCatData.CatSurviveData.Favourbility = Random.Range(50f, 69f);
+                cloudCatData.CatSurviveData.RealSatiety = 100f;
+                cloudCatData.CatSurviveData.RealMoisture = 100f;
+                cloudCatData.CatSurviveData.RealFavourbility = 100f;
+                App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
 
                 cloudCatData.CatDiaryData.AdoptLocation = "OutSide";
                 App.system.cloudSave.UpdateCloudCatDiaryData(cloudCatData);

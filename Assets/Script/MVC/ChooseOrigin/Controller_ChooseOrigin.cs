@@ -10,7 +10,8 @@ public class Controller_ChooseOrigin : ControllerBehavior
     public void Open()
     {
         RefreshCenterRooms();
-        
+
+        App.model.chooseOrigin.IsChooseOrigin = true;
         App.view.chooseOrigin.Open();
 
         DOVirtual.DelayedCall(0.25f, () =>
@@ -25,6 +26,7 @@ public class Controller_ChooseOrigin : ControllerBehavior
         App.view.chooseOrigin.Close();
         App.controller.build.Open();
 
+        App.model.chooseOrigin.IsChooseOrigin = false;
         App.system.room.MyRooms[0].gameObject.SetActive(true);
         
         if (App.model.chooseOrigin.PreviewRoom == null)
@@ -37,7 +39,7 @@ public class Controller_ChooseOrigin : ControllerBehavior
         Room selectedRoom = App.model.chooseOrigin.CenterRooms[index];
         Item roomItem = App.factory.itemFactory.GetItem(selectedRoom.roomData.id);
 
-        if (roomItem.UnlockStatus != 1)
+        if (!roomItem.Unlock)
             return;
         
         ClearPreviewRoom();
@@ -88,7 +90,7 @@ public class Controller_ChooseOrigin : ControllerBehavior
         for (int i = 0; i < tmp.Count; i++)
         {
             Item item = App.factory.itemFactory.GetItem(tmp[i].roomData.id);
-            if (item.UnlockStatus != 1)
+            if (!item.Unlock)
                 continue;
             result.Add(tmp[i]);
         }

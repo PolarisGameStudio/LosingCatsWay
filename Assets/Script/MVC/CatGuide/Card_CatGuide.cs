@@ -122,6 +122,45 @@ public class Card_CatGuide : MvcBehaviour
             bgImage.sprite = bgSprites[0];
     }
 
+    public void SetLevelRewards(Reward[] rewards) //todo 上面兩張單獨做
+    {
+        if (rewards == null) // 還沒有這個等級的獎勵
+        {
+            for (int i = 0; i < infoObjects.Length; i++)
+                infoObjects[i].SetActive(false);
+            
+            infoObjects[0].SetActive(true);
+
+            infoIcons[0].sprite = iconSprites[1];
+            infoTexts[0].text = "敬請期待";
+            
+            previewObject.SetActive(false);
+            
+            return;
+        }
+
+        Dictionary<string, int> items = new Dictionary<string, int>();
+
+        // 得到的東西
+        for (int i = 0; i < rewards.Length; i++)
+        {
+            items.Add(rewards[i].item.id, rewards[i].count);
+        }
+        
+        // 解鎖的東西
+        List<Item> unlockItems = App.factory.itemFactory.GetUnlockItemsByLevel(App.system.player.Level);
+        for (int i = 0; i < unlockItems.Count; i++)
+        {
+            items.Add(unlockItems[i].id, 0);
+        }
+        
+        // 顯示在UI
+        // for (int i = 0; i < infoObjects.Length; i++)
+        // {
+        //     
+        // }
+    }
+    
     public void SetLevel(int level)
     {
         if (!IsTopCard)

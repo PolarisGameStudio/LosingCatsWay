@@ -135,6 +135,6 @@ public class BigGamesSystem : MvcBehaviour
         OnClose?.Invoke();
         
         if (App.system.tutorial.isTutorial)
-            App.system.tutorial.NextDirector();
+            App.system.tutorial.Next();
     }
 }

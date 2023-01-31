@@ -46,7 +46,6 @@ public class OpenFlowSystem : MvcBehaviour
         {
             isEnd = true;
             isActive = false;
-            print("End of actions.");
             return;
         }
 

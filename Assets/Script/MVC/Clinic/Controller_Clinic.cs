@@ -36,32 +36,25 @@ public class Controller_Clinic : ControllerBehavior
 
     public void Close()
     {
-        int index = App.model.clinic.ViewIndex;
-
-        if (index == 0)
+        App.system.bgm.FadeOut();
+        App.system.transition.Active(0, () =>
         {
-            App.system.bgm.FadeOut();
-            App.system.transition.Active(0, () =>
-            {
-                App.view.clinic.Close();
-                npcObject.SetActive(false);
-                App.controller.map.Open();
-            });
-            return;
-        }
-
-        if (index == 1)
-        {
-            CloseChooseCat();
-            OpenChooseFunction();
-        }
+            App.view.clinic.Close();
+            npcObject.SetActive(false);
+            App.controller.map.Open();
+        });
     }
 
+    public void BackToFunction()
+    {
+        CloseChooseCat();
+        OpenChooseFunction();
+    }
+    
     #region ChooseFunction
 
     public void OpenChooseFunction()
     {
-        App.model.clinic.ViewIndex = 0;
         npcObject.SetActive(true);
         maskObject.SetActive(false);
         App.view.clinic.chooseFunction.Open();
@@ -85,7 +78,6 @@ public class Controller_Clinic : ControllerBehavior
 
     private void OpenChooseCat()
     {
-        App.model.clinic.ViewIndex = 1;
         App.view.clinic.chooseCat.Open();
 
         DOTween.Kill(chooseCatButton.transform);
@@ -331,7 +323,7 @@ public class Controller_Clinic : ControllerBehavior
         
         OnFunctionComplete?.Invoke();
         if (App.system.tutorial.isTutorial)
-            App.system.tutorial.NextDirector();
+            App.system.tutorial.Next();
     }
 
     private void ClearCatSick()

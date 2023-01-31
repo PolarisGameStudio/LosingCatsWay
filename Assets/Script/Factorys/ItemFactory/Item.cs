@@ -77,6 +77,11 @@ public class Item : ScriptableObject
 
     [ShowIf("@itemType == ItemType.CatSkin")]
     public int skinLevel;
+
+    public int unlockLevel;
+
+    [ShowIf("@itemBoughtType == ItemBoughtType.Cash")]
+    public string purchaseKey;
     
     #region Properties
 
@@ -124,52 +129,36 @@ public class Item : ScriptableObject
         }
         set
         {
-            int fromValue = 0;
-
             switch (itemType)
             {
                 case ItemType.Feed:
-                    fromValue = app.system.inventory.FoodData[id];
                     app.system.inventory.FoodData[id] = value;
                     break;
                 case ItemType.Tool:
-                    fromValue = app.system.inventory.ToolData[id];
                     app.system.inventory.ToolData[id] = value;
                     break;
                 case ItemType.Litter:
-                    fromValue = app.system.inventory.LitterData[id];
                     app.system.inventory.LitterData[id] = value;
                     break;
                 case ItemType.Room:
-                    fromValue = app.system.inventory.RoomData[id];
                     app.system.inventory.RoomData[id] = value;
                     break;
                 case ItemType.CatSkin:
-                    fromValue = app.system.inventory.SkinData[id];
                     app.system.inventory.SkinData[id] = value;
                     break;
                 case ItemType.Special:
-                    fromValue = app.system.inventory.ToolData[id];
                     app.system.inventory.ToolData[id] = value;
                     break;
                 case ItemType.Icon:
-                    fromValue = app.system.inventory.PlayerIconData[id];
                     app.system.inventory.PlayerIconData[id] = value;
                     break;
                 case ItemType.Avatar:
-                    fromValue = app.system.inventory.PlayerAvatarData[id];
                     app.system.inventory.PlayerAvatarData[id] = value;
                     break;
                 case ItemType.Common:
-                    fromValue = app.system.inventory.CommonData[id];
                     app.system.inventory.CommonData[id] = value;
                     break;
             }
-
-            if (fromValue > 0) 
-                return;
-            if (value > fromValue)
-                UnlockStatus = 1;
         }
     }
 
@@ -186,10 +175,27 @@ public class Item : ScriptableObject
     // 心情的
     public bool ForFun => likeFun > 0;
 
-    public int UnlockStatus
+    // public int UnlockStatus
+    // {
+    //     get => app.system.inventory.UnlockStatus[id];
+    //     set => app.system.inventory.UnlockStatus[id] = value;
+    // }
+
+    public bool Unlock
     {
-        get => app.system.inventory.UnlockStatus[id];
-        set => app.system.inventory.UnlockStatus[id] = value;
+        get
+        {
+            if (itemBoughtType == ItemBoughtType.Cash)
+            {
+                if (app.model.mall.PurchaseRecords.ContainsKey(purchaseKey))
+                    return true;
+                return false;
+            }
+
+            if (unlockLevel > 0 && app.system.player.Level >= unlockLevel)
+                return true;
+            return false;
+        }
     }
 
     #endregion

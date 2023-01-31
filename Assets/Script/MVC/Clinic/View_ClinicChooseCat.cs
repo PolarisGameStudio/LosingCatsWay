@@ -2,11 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class View_ClinicChooseCat : ViewBehaviour
 {
     [SerializeField] private Card_ClinicChooseCat[] cards;
+
+    [Title("DoTween")]
+    [SerializeField] private RectTransform panelTransform;
+    
+    public override void Open()
+    {
+        base.Open();
+        panelTransform.DOScale(Vector2.one, 0.4f).From(Vector2.zero).SetEase(Ease.OutExpo);
+    }
 
     public override void Close()
     {

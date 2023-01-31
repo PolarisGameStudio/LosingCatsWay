@@ -7,6 +7,7 @@ using Firebase.Firestore;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class Controller_Shelter : ControllerBehavior
 {
@@ -214,11 +215,20 @@ public class Controller_Shelter : ControllerBehavior
             var cloudCatData = App.model.shelter.SelectedAdoptCloudCatData;
 
             Cat cat = App.system.cat.CreateCatObject(cloudCatData);
+            
             cat.GetLikeSnack();
             cat.GetLikeSoup();
 
             cloudCatData.CatData.Owner = App.system.player.PlayerId;
             App.system.cloudSave.UpdateCloudCatData(cloudCatData);
+
+            cloudCatData.CatSurviveData.Satiety = Random.Range(50f, 69f);
+            cloudCatData.CatSurviveData.Moisture = Random.Range(50f, 69f);
+            cloudCatData.CatSurviveData.Favourbility = Random.Range(50f, 69f);
+            cloudCatData.CatSurviveData.RealSatiety = 100f;
+            cloudCatData.CatSurviveData.RealMoisture = 100f;
+            cloudCatData.CatSurviveData.RealFavourbility = 100f;
+            App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
 
             cloudCatData.CatDiaryData.AdoptLocation = "Shelter";
             cloudCatData.CatDiaryData.AdoptTimestamp = Timestamp.GetCurrentTimestamp();

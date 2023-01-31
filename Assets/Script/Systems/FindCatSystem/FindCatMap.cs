@@ -171,7 +171,7 @@ public class FindCatMap : MvcBehaviour
                 cloudCatData = null;
 
                 if (App.system.tutorial.isTutorial)
-                    App.system.tutorial.NextDirector();
+                    App.system.tutorial.Next();
             });
         });
     }

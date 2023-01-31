@@ -31,8 +31,8 @@ public class Card_ShopItem : MvcBehaviour
                 break;
         }
 
-        button.interactable = item.UnlockStatus == 1;
-        lockMask.SetActive(item.UnlockStatus != 1);
+        button.interactable = item.Unlock;
+        lockMask.SetActive(!item.Unlock);
     }
 
     public void Select()

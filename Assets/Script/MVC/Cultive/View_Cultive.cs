@@ -63,6 +63,11 @@ public class View_Cultive : ViewBehaviour
     [Title("UI")] [SerializeField] private UIButton openChooseSkinButton;
     [SerializeField] private GameObject openChooseSkinMask;
 
+    [Title("Debug")]
+    [SerializeField] private TextMeshProUGUI realSatietyText;
+    [SerializeField] private TextMeshProUGUI realMoistureText;
+    [SerializeField] private TextMeshProUGUI realFunText;
+
     private Vector2 topOrigin;
     private Vector2 topOffset;
     private Vector2 rightOrigin;
@@ -136,6 +141,10 @@ public class View_Cultive : ViewBehaviour
         satietyText.text = $"{cat.cloudCatData.CatSurviveData.Satiety:0} / 100";
         moistureText.text = $"{cat.cloudCatData.CatSurviveData.Moisture:0} / 100";
         funText.text = $"{cat.cloudCatData.CatSurviveData.Favourbility:0} / 100";
+
+        realSatietyText.text = cat.cloudCatData.CatSurviveData.RealSatiety.ToString("0.00");
+        realMoistureText.text = cat.cloudCatData.CatSurviveData.RealMoisture.ToString("0.00");
+        realFunText.text = cat.cloudCatData.CatSurviveData.RealFavourbility.ToString("0.00");
 
         openChooseSkinButton.interactable = false;
         openChooseSkinMask.SetActive(true);

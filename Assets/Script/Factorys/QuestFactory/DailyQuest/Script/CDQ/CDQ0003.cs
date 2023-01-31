@@ -12,7 +12,7 @@ public class CDQ0003 : DailyQuest
 
     private void BindWithValue(object value)
     {
-        int addValue = (int)value;
+        int addValue = Mathf.RoundToInt((float)value);
 
         Progress += addValue;
 

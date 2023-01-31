@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Model_Clinic : ModelBehavior
 {
-    private int viewIndex = 0;
     private int functionIndex;
     private List<Cat> myCats = new List<Cat>();
     private int catIndex;
@@ -12,13 +11,6 @@ public class Model_Clinic : ModelBehavior
     private Dictionary<string, int> payment = new Dictionary<string, int>();
     private string sickId;
     private int metCount;
-
-    /// 返回鍵回去哪個介面
-    public int ViewIndex
-    {
-        get => viewIndex;
-        set => viewIndex = value;
-    }
 
     public int FunctionIndex
     {
