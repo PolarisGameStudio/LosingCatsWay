@@ -34,6 +34,7 @@ public class PlayerDataHelper
         SetMailReceivedData(cloudSaveData);
         SetExistRoomData(cloudSaveData);
         SetPurchaseData(cloudSaveData);
+        SetGreenHouseDatas(cloudSaveData);
 
         await SetCatData();
     }
@@ -42,18 +43,20 @@ public class PlayerDataHelper
     {
         var player = app.system.player;
         var playerData = cloudSaveData.PlayerData;
-        
+
         player.PlayerName = String.IsNullOrEmpty(playerData.PlayerName) ? "-" : playerData.PlayerName;
-        player.PlayerId = String.IsNullOrEmpty(playerData.PlayerName) ? CloudSaveExtension.CurrentUserId : playerData.PlayerId;
+        player.PlayerId = String.IsNullOrEmpty(playerData.PlayerName)
+            ? CloudSaveExtension.CurrentUserId
+            : playerData.PlayerId;
         player.Level = playerData.Level == 0 ? 1 : playerData.Level;
         player.Exp = playerData.Exp;
         player.DiamondCatSlot = playerData.DiamondCatSlot;
         player.GridSizeLevel = playerData.GridSizeLevel == 0 ? 1 : playerData.GridSizeLevel;
-        player.PlayerGender = playerData.PlayerGender == 0 ? -1 : playerData.PlayerGender;
+        player.PlayerGender = playerData.StartTutorialEnd == false ? -1 : playerData.PlayerGender;
         player.UsingIcon = String.IsNullOrEmpty(playerData.UsingIcon) ? string.Empty : player.UsingIcon;
         player.UsingAvatar = String.IsNullOrEmpty(playerData.UsingAvatar) ? "PAT001" : playerData.UsingAvatar;
         player.CatDeadCount = playerData.CatDeadCount;
-        
+
         app.system.tutorial.startTutorialEnd = playerData.StartTutorialEnd;
         app.system.tutorial.shelterTutorialEnd = playerData.ShelterTutorialEnd;
     }
@@ -62,7 +65,7 @@ public class PlayerDataHelper
     {
         if (cloudSaveData.FriendData.FriendIds == null)
             cloudSaveData.FriendData.FriendIds = new List<string>();
-        
+
         if (cloudSaveData.FriendData.FriendInvites == null)
             cloudSaveData.FriendData.FriendInvites = new List<string>();
 
@@ -79,10 +82,10 @@ public class PlayerDataHelper
 
         if (timeData.FirstLoginDateTime == new Timestamp())
             timeData.FirstLoginDateTime = nowTime;
-        
+
         if (timeData.LastLoginDateTime == new Timestamp())
             timeData.LastLoginDateTime = nowTime;
-        
+
         myTime.AccountCreateDateTime = timeData.FirstLoginDateTime.ToDateTime().ToLocalTime();
         myTime.PerDayLoginDateTime = timeData.PerDayLoginDateTime.ToDateTime().ToLocalTime();
         myTime.LastLoginDateTime = timeData.LastLoginDateTime.ToDateTime().ToLocalTime();
@@ -92,7 +95,7 @@ public class PlayerDataHelper
     {
         var monthSign = app.model.monthSign;
         var signData = cloudSaveData.SignData;
-        
+
         monthSign.SignIndexs = signData.MonthSigns == null ? new List<int>(new int[31]) : signData.MonthSigns;
         monthSign.ResignCount = signData.MonthResignCount;
         monthSign.LastMonthSignDate = signData.LastMonthSignDate.ToDateTime().ToLocalTime();
@@ -142,12 +145,16 @@ public class PlayerDataHelper
         var quest = app.system.quest;
         var missionData = cloudSaveData.MissionData;
 
-        quest.QuestProgressData = missionData.QuestProgressData == null ? app.system.quest.QuestProgressData : missionData.QuestProgressData;
-        quest.QuestReceivedStatusData = missionData.QuestReceivedStatusData == null ? app.system.quest.QuestReceivedStatusData : missionData.QuestReceivedStatusData;
+        quest.QuestProgressData = missionData.QuestProgressData == null
+            ? app.system.quest.QuestProgressData
+            : missionData.QuestProgressData;
+        quest.QuestReceivedStatusData = missionData.QuestReceivedStatusData == null
+            ? app.system.quest.QuestReceivedStatusData
+            : missionData.QuestReceivedStatusData;
 
         if (missionData.MyQuests == null)
             missionData.MyQuests = new List<string>();
-        
+
         app.model.dailyQuest.Quests = new List<Quest>();
         for (int i = 0; i < missionData.MyQuests.Count; i++)
         {
@@ -158,13 +165,17 @@ public class PlayerDataHelper
 
     private void SetMailReceivedData(CloudSaveData cloudSaveData)
     {
-        app.system.mail.mailReceivedDatas = cloudSaveData.MailReceivedDatas == null ? new List<string>() : cloudSaveData.MailReceivedDatas;
+        app.system.mail.mailReceivedDatas = cloudSaveData.MailReceivedDatas == null
+            ? new List<string>()
+            : cloudSaveData.MailReceivedDatas;
     }
 
     private void SetExistRoomData(CloudSaveData cloudSaveData)
     {
         var build = app.controller.build;
-        var existRoomDatas = cloudSaveData.ExistRoomDatas == null ? new List<CloudSave_RoomData>() : cloudSaveData.ExistRoomDatas;
+        var existRoomDatas = cloudSaveData.ExistRoomDatas == null
+            ? new List<CloudSave_RoomData>()
+            : cloudSaveData.ExistRoomDatas;
 
         for (int i = 0; i < existRoomDatas.Count; i++)
         {
@@ -178,7 +189,16 @@ public class PlayerDataHelper
 
     private void SetPurchaseData(CloudSaveData cloudSaveData)
     {
-        app.model.mall.PurchaseRecords = cloudSaveData.PurchaseRecords == null ? new Dictionary<string, PurchaseRecord>() : cloudSaveData.PurchaseRecords;
+        app.model.mall.PurchaseRecords = cloudSaveData.PurchaseRecords == null
+            ? new Dictionary<string, PurchaseRecord>()
+            : cloudSaveData.PurchaseRecords;
+    }
+
+    private void SetGreenHouseDatas(CloudSaveData cloudSaveData)
+    {
+        app.model.greenHouse.GreenHouseDatas = cloudSaveData.GreenHouseDatas == null
+            ? new List<GreenHouseData>()
+            : cloudSaveData.GreenHouseDatas;
     }
 
     private async Task SetCatData()
@@ -216,6 +236,8 @@ public class PlayerDataHelper
         // MailReceivedDatas
         cloudSaveData.MailReceivedDatas = new List<string>();
 
+        cloudSaveData.GreenHouseDatas = app.model.greenHouse.GreenHouseDatas;
+
         Dictionary<string, object> result = new Dictionary<string, object>
         {
             { "PlayerData", cloudSaveData.PlayerData },
@@ -226,7 +248,8 @@ public class PlayerDataHelper
             { "MissionData", cloudSaveData.MissionData },
             { "ExistRoomDatas", cloudSaveData.ExistRoomDatas },
             { "PurchaseRecords", cloudSaveData.PurchaseRecords },
-            { "MailReceivedDatas", cloudSaveData.MailReceivedDatas }
+            { "MailReceivedDatas", cloudSaveData.MailReceivedDatas },
+            { "GreenHouseDatas", cloudSaveData.GreenHouseDatas }
         };
 
         return result;
@@ -251,10 +274,11 @@ public class PlayerDataHelper
 
         return playerData;
     }
+
     public CloudSave_FriendData GetFriendData()
     {
         CloudSave_FriendData friendData = new CloudSave_FriendData();
-        
+
         friendData.FriendIds = new List<string>();
         friendData.FriendInvites = new List<string>();
 
@@ -267,6 +291,7 @@ public class PlayerDataHelper
 
         return friendData;
     }
+
     public CloudSave_TimeData GetTimeData()
     {
         CloudSave_TimeData timeData = new CloudSave_TimeData();
@@ -277,6 +302,7 @@ public class PlayerDataHelper
 
         return timeData;
     }
+
     public CloudSave_SignData GetSignData()
     {
         CloudSave_SignData signData = new CloudSave_SignData();
@@ -287,6 +313,7 @@ public class PlayerDataHelper
 
         return signData;
     }
+
     public CloudSave_ItemData GetItemData()
     {
         CloudSave_ItemData itemData = new CloudSave_ItemData();
@@ -303,6 +330,7 @@ public class PlayerDataHelper
 
         return itemData;
     }
+
     public CloudSave_MissionData GetMissionData()
     {
         CloudSave_MissionData missionData = new CloudSave_MissionData();
@@ -317,6 +345,7 @@ public class PlayerDataHelper
 
         return missionData;
     }
+
     public List<CloudSave_RoomData> GetExistRoomDatas()
     {
         var result = new List<CloudSave_RoomData>();

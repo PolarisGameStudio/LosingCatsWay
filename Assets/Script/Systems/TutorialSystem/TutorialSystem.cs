@@ -35,8 +35,12 @@ public class TutorialSystem : MvcBehaviour
             directors[i].gameObject.SetActive(false);
 
         if (skipTutorial)
+        {
+            startTutorialEnd = true;
+            shelterTutorialEnd = true;
             return;
-        
+        }
+
         // if (directorIndex < startTutorialEndPoint)
         if (!startTutorialEnd)
         {

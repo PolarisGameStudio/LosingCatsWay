@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Doozy.Runtime.UIManager.Containers;
 using I2.Parallax;
 using UnityEngine;
 
 public class Controller_GreenHouse : ControllerBehavior
 {
     [SerializeField] private I2Parallax_Layer[] parallaxLayers;
-    
+    [SerializeField] private UIView chooseFlower;
+
     #region Basic
 
     public void Open()
@@ -15,6 +17,7 @@ public class Controller_GreenHouse : ControllerBehavior
         UnlockGyro();
         
         App.view.greenHouse.Open();
+        chooseFlower.InstantHide();
     }
 
     public void Close()
@@ -53,6 +56,20 @@ public class Controller_GreenHouse : ControllerBehavior
 
     #endregion
 
+    #region ChooseFlower
+
+    public void ChooseFlower(int index)
+    {
+        chooseFlower.Show();
+    }
+
+    public void CloseChooseFlower()
+    {
+        chooseFlower.Hide();
+    }
+
+    #endregion
+    
     public void OpenSideMenu()
     {
         App.system.sideMenu.OnOpen = LockGyro;

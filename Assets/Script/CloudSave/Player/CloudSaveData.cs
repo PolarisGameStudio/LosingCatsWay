@@ -28,4 +28,5 @@ public class CloudSaveData
     [FirestoreProperty] public List<CloudSave_RoomData> ExistRoomDatas { get; set; }
     [FirestoreProperty] public Dictionary<string, PurchaseRecord> PurchaseRecords { get; set; }
     
+    [FirestoreProperty] public List<GreenHouseData> GreenHouseDatas { get; set; }
 }
