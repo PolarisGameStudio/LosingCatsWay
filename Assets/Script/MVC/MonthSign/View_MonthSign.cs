@@ -76,15 +76,21 @@ public class View_MonthSign : ViewBehaviour
         if (signIndexs.Count <= 0)
             return;
 
-        #region CreateCalender/Sign
+        if (signIndexs.Count < 31)
+        {
+            //todo 要調配
+            return;
+        }
 
+        #region CreateCalender/Sign
+        
         for (int i = 0; i < dateObjects.Length; i++)
         {
             int index = i;
 
             dateObjects[index].SetActive(true);
             dateObjects[index].SetDate(index + 1);
-                
+            
             if (signIndexs[index] == 1)
                 dateObjects[index].IsSign = true;
             else

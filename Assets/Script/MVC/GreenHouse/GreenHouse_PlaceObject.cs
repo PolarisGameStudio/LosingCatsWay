@@ -23,6 +23,11 @@ public class GreenHouse_PlaceObject : MvcBehaviour
         flowerObject.ChangeSkin(cloudLosingCatData);
     }
 
+    public void ActiveByChooseCat(CloudLosingCatData cloudLosingCatData)
+    {
+        flowerObject.ChangeSkin(cloudLosingCatData);
+    }
+
     public void Close()
     {
         flowerObject.gameObject.SetActive(false);
