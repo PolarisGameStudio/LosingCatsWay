@@ -63,7 +63,7 @@ public class Controller_GreenHouse : ControllerBehavior
 
     #region ChooseFlower
 
-    public void ChooseFlower(int index)
+    public void OpenChooseFlower(int index)
     {
         chooseFlower.Show();
 
@@ -83,6 +83,9 @@ public class Controller_GreenHouse : ControllerBehavior
                     cloudLosingCatDatas.Remove(cloudLosingCatData);
             }
         }
+
+        print(cloudLosingCatDatas.Count);
+        print(greenHouseDatas.Count);
 
         App.model.greenHouse.ChooseFlowers = cloudLosingCatDatas;
     }

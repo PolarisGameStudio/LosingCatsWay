@@ -196,18 +196,33 @@ public class Controller_Bag : ControllerBehavior
             return;
         }
         
-        if (item.id == "ISL00004")
+        if (item.id == "ISL00001")
         {
-            viewBagChooseCat.Open(BagChooseCatType.LosingCat);
+            viewBagChooseCat.Open(BagChooseCatType.LosingCat, BagChooseCatExceptType.Flower);
             
             _chooseCatAction = (catId) =>
             {
                 CloudLosingCatData cloudLosingCatData =
                     App.model.cloister.LosingCatDatas.Find(x => x.CatData.CatId == catId);
-                print(cloudLosingCatData.LosingCatStatus.Count);
+                cloudLosingCatData.LosingCatStatus.Add("Flower");
+                App.system.cloudSave.UpdateLosingCatStatusData(cloudLosingCatData);
+                item.Count--;
+                ChooseType(0);
+                ChooseType(6);
+                
+            };
+        }
+        
+        if (item.id == "ISL00004")
+        {
+            viewBagChooseCat.Open(BagChooseCatType.LosingCat, BagChooseCatExceptType.AngelCat);
+            
+            _chooseCatAction = (catId) =>
+            {
+                CloudLosingCatData cloudLosingCatData =
+                    App.model.cloister.LosingCatDatas.Find(x => x.CatData.CatId == catId);
                 cloudLosingCatData.LosingCatStatus.Add("AngelCat");
                 App.system.cloudSave.UpdateLosingCatStatusData(cloudLosingCatData);
-                print(cloudLosingCatData.LosingCatStatus.Count);
                 item.Count--;
                 ChooseType(0);
                 ChooseType(6);

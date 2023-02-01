@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class DictSetValueHelper
 {
@@ -16,7 +17,7 @@ public class DictSetValueHelper
                 to[key] = from[key];
         }
     }
-    
+
     public void SetDict(Dictionary<string, bool> from, Dictionary<string, bool> to)
     {
         if (from == null)

@@ -108,33 +108,51 @@ public class PlayerDataHelper
         var itemData = cloudSaveData.ItemData;
 
         DictSetValueHelper dictSetValueHelper = new DictSetValueHelper();
+        
+        if (itemData.CommonData == null)
+            itemData.CommonData = app.system.inventory.CommonData;
+        else
+            dictSetValueHelper.SetDict(itemData.CommonData, inventory.CommonData);
 
-        itemData.CommonData = app.system.inventory.CommonData;
-        dictSetValueHelper.SetDict(itemData.CommonData, inventory.CommonData);
+        if (itemData.RoomData == null)
+            itemData.RoomData = app.system.inventory.RoomData;
+        else
+            dictSetValueHelper.SetDict(itemData.RoomData, inventory.RoomData);
 
-        itemData.RoomData = app.system.inventory.RoomData;
-        dictSetValueHelper.SetDict(itemData.RoomData, inventory.RoomData);
+        if (itemData.FoodData == null)
+            itemData.FoodData = app.system.inventory.FoodData;
+        else
+            dictSetValueHelper.SetDict(itemData.FoodData, inventory.FoodData);
 
-        itemData.FoodData = app.system.inventory.FoodData;
-        dictSetValueHelper.SetDict(itemData.FoodData, inventory.FoodData);
+        if (itemData.ToolData == null)
+            itemData.ToolData = app.system.inventory.ToolData;
+        else
+            dictSetValueHelper.SetDict(itemData.ToolData, inventory.ToolData);
 
-        itemData.ToolData = app.system.inventory.ToolData;
-        dictSetValueHelper.SetDict(itemData.ToolData, inventory.ToolData);
+        if (itemData.LitterData == null)
+            itemData.LitterData = app.system.inventory.LitterData;
+        else
+            dictSetValueHelper.SetDict(itemData.LitterData, inventory.LitterData);
 
-        itemData.LitterData = app.system.inventory.LitterData;
-        dictSetValueHelper.SetDict(itemData.LitterData, inventory.LitterData);
+        if (itemData.SkinData == null)
+            itemData.SkinData = app.system.inventory.SkinData;
+        else
+            dictSetValueHelper.SetDict(itemData.SkinData, inventory.SkinData);
 
-        itemData.SkinData = app.system.inventory.SkinData;
-        dictSetValueHelper.SetDict(itemData.SkinData, inventory.SkinData);
+        if (itemData.KnowledgeCardDatas == null)
+            itemData.KnowledgeCardDatas = app.system.inventory.KnowledgeCardDatas;
+        else
+            dictSetValueHelper.SetDict(itemData.KnowledgeCardDatas, inventory.KnowledgeCardDatas);
 
-        itemData.KnowledgeCardDatas = app.system.inventory.KnowledgeCardDatas;
-        dictSetValueHelper.SetDict(itemData.KnowledgeCardDatas, inventory.KnowledgeCardDatas);
+        if (itemData.PlayerIconData == null)
+            itemData.PlayerIconData = app.system.inventory.PlayerIconData;
+        else
+            dictSetValueHelper.SetDict(itemData.PlayerIconData, inventory.PlayerIconData);
 
-        itemData.PlayerIconData = app.system.inventory.PlayerIconData;
-        dictSetValueHelper.SetDict(itemData.PlayerIconData, inventory.PlayerIconData);
-
-        itemData.PlayerAvatarData = app.system.inventory.PlayerAvatarData;
-        dictSetValueHelper.SetDict(itemData.PlayerAvatarData, inventory.PlayerAvatarData);
+        if (itemData.PlayerAvatarData == null)
+            itemData.PlayerAvatarData = app.system.inventory.PlayerAvatarData;
+        else
+            dictSetValueHelper.SetDict(itemData.PlayerAvatarData, inventory.PlayerAvatarData);
     }
 
     private void SetMissionData(CloudSaveData cloudSaveData)
