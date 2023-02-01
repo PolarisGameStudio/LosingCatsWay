@@ -61,15 +61,19 @@ public class View_CatGuide : ViewBehaviour
         else
             rewards = App.factory.itemFactory.GetRewardsByLevel(App.system.player.Level);
 
-        for (int i = 0; i < cards.Length; i++)
-        {
-            int tmpLevel = start + i;
-            cards[i].SetLevel(tmpLevel);
-        }
+        // for (int i = 0; i < cards.Length; i++)
+        // {
+        //     int tmpLevel = start + i;
+        //     cards[i].SetLevel(tmpLevel);
+        // }
         
         for (int i = 0; i < cards.Length; i++)
         {
-            cards[i].SetData(rewards[i]);
+            // 設定等級
+            int tmpLevel = start + i;
+            // cards[i].SetLevel(tmpLevel);
+            
+            cards[i].SetLevelRewards(rewards[i], tmpLevel);
             if (level >= 40)
             {
                 cards[i].SetSelect(false);
@@ -84,8 +88,8 @@ public class View_CatGuide : ViewBehaviour
         
         //Find current level
         int index = level % 10;
-        int now = (index == 0) ? 9 : index - 1;
-        int next = (now == 9) ? 0 : now + 1;
+        int now = index == 0 ? 9 : index - 1;
+        int next = now == 9 ? 0 : now + 1;
 
         if (now != 9)
         {
@@ -94,27 +98,31 @@ public class View_CatGuide : ViewBehaviour
             {
                 cards[i].IsGet(true);
             }
-            nowLevelCard.SetLevel(level);
-            nowLevelCard.SetData(rewards[now]);
+            // nowLevelCard.SetLevel(level);
+            // nowLevelCard.SetData(rewards[now]);
+            nowLevelCard.SetLevelRewards(rewards[now], level);
         }
         else
         {
             var lastRewards = App.factory.itemFactory.GetRewardsByLevel(App.system.player.Level - 1);
-            nowLevelCard.SetLevel(level);
-            nowLevelCard.SetData(lastRewards.Last());
+            // nowLevelCard.SetLevel(level);
+            // nowLevelCard.SetData(lastRewards.Last());
+            nowLevelCard.SetLevelRewards(lastRewards.Last(), level);
         }
 
         if (level >= 40)
         {
             cards[next].SetSelect(false);
-            nextLevelCard.SetLevel(level + 1);
-            nextLevelCard.SetData(null);
+            // nextLevelCard.SetLevel(level + 1);
+            // nextLevelCard.SetData(null);
+            nextLevelCard.SetLevelRewards(null, level);
         }
         else
         {
             cards[next].SetSelect(true);
-            nextLevelCard.SetLevel(level + 1);
-            nextLevelCard.SetData(rewards[next]);
+            // nextLevelCard.SetLevel(level + 1);
+            // nextLevelCard.SetData(rewards[next]);
+            nextLevelCard.SetLevelRewards(rewards[next], level);
         }
     }
 }

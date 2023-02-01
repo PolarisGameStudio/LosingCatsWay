@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine.UI;
@@ -122,10 +123,21 @@ public class Card_CatGuide : MvcBehaviour
             bgImage.sprite = bgSprites[0];
     }
 
-    public void SetLevelRewards(Reward[] rewards) //todo 上面兩張單獨做
+    public void SetLevelRewards(Reward[] rewards, int level) //todo 上面兩張單獨做
     {
+        if (!IsTopCard)
+            levelText.text = $"LV.{level:00}";
+        else
+        {
+            levelText.text = level.ToString("00");
+            maskLevelText.text = level.ToString("00");
+        }
+        
         if (rewards == null) // 還沒有這個等級的獎勵
         {
+            if (!IsTopCard)
+                return;
+            
             for (int i = 0; i < infoObjects.Length; i++)
                 infoObjects[i].SetActive(false);
             
@@ -139,38 +151,121 @@ public class Card_CatGuide : MvcBehaviour
             return;
         }
 
-        Dictionary<string, int> items = new Dictionary<string, int>();
+        //TopIcon
+        if (!IsTopCard)
+            topIcon.sprite = topIconSprites[0];
+            
+        //Bg
+        if (!IsTopCard)
+            bgImage.sprite = bgSprites[0];
+
+        Queue<GameObject> objects = new Queue<GameObject>(infoObjects);
+        Queue<Image> icons = new Queue<Image>(infoIcons);
+        Queue<TextMeshProUGUI> texts = new Queue<TextMeshProUGUI>(infoTexts);
 
         // 得到的東西
         for (int i = 0; i < rewards.Length; i++)
         {
-            items.Add(rewards[i].item.id, rewards[i].count);
+            if (objects.Count <= 0)
+                break;
+            var tmpObj = objects.Dequeue();
+            tmpObj.SetActive(true);
+            
+            if (icons.Count <= 0)
+                break;
+            var tmpIcon = icons.Dequeue();
+            tmpIcon.sprite = iconSprites[1];
+            
+            if (texts.Count <= 0)
+                break;
+            var tmpText = texts.Dequeue();
+            tmpText.text = rewards[i].item.Name;
         }
         
         // 解鎖的東西
-        List<Item> unlockItems = App.factory.itemFactory.GetUnlockItemsByLevel(App.system.player.Level);
+        List<Item> unlockItems = App.factory.itemFactory.GetUnlockItemsByLevel(level);
         for (int i = 0; i < unlockItems.Count; i++)
         {
-            items.Add(unlockItems[i].id, 0);
+            if (objects.Count <= 0)
+                break;
+            var tmpObj = objects.Dequeue();
+            tmpObj.SetActive(true);
+            
+            if (icons.Count <= 0)
+                break;
+            var tmpIcon = icons.Dequeue();
+            tmpIcon.sprite = iconSprites[0];
+            
+            if (texts.Count <= 0)
+                break;
+            var tmpText = texts.Dequeue();
+            tmpText.text = unlockItems[i].Name;
         }
         
-        // 顯示在UI
-        // for (int i = 0; i < infoObjects.Length; i++)
-        // {
-        //     
-        // }
-    }
-    
-    public void SetLevel(int level)
-    {
-        if (!IsTopCard)
-            levelText.text = $"LV.{level:00}";
+        // 多出來的文字要關掉
+        if (objects.Count > 0)
+        {
+            for (int i = 0; i < objects.Count; i++)
+            {
+                var tmpObj = objects.Dequeue();
+                tmpObj.SetActive(false);
+            }
+        }
+        
+        // 最好的獎勵
+        Item bestItem = null;
+        int bestCount = 0;
+
+        if (unlockItems.Count >= 0)
+        {
+            for (int i = 0; i < unlockItems.Count; i++)
+            {
+                if (unlockItems[i].id.Contains("ULK") || unlockItems[i].id.Contains("IRM"))
+                {
+                    bestItem = unlockItems[i];
+                    break;
+                }
+
+                bestItem = unlockItems[i];
+                break;
+            }
+        }
         else
         {
-            levelText.text = level.ToString("00");
-            maskLevelText.text = level.ToString("00");
+            for (int i = 0; i < rewards.Length; i++)
+            {
+                if (rewards[i].item.id.Contains("IRM"))
+                {
+                    bestItem = rewards[i].item;
+                    bestCount = rewards[i].count;
+                    break;
+                }
+                
+                bestItem = rewards[i].item;
+                bestCount = rewards[i].count;
+                break;
+            }
         }
+
+        if (bestItem == null)
+            return;
+        
+        previewObject.SetActive(true);
+        previewIcon.sprite = bestItem.icon;
+        countText.text = bestCount.ToString("00");
+        //todo bestCount = 0 不顯示
     }
+    
+    // public void SetLevel(int level)
+    // {
+    //     if (!IsTopCard)
+    //         levelText.text = $"LV.{level:00}";
+    //     else
+    //     {
+    //         levelText.text = level.ToString("00");
+    //         maskLevelText.text = level.ToString("00");
+    //     }
+    // }
 
     public void SetSelect(bool value)
     {
