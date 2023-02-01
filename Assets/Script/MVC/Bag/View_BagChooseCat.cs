@@ -13,13 +13,14 @@ public class View_BagChooseCat : MvcBehaviour
     private List<string> _catIds;
     private int _selectIndex;
 
-    public void Open(BagChooseCatType bagChooseCatType)
+    public void Open(BagChooseCatType bagChooseCatType, BagChooseCatExceptType bagChooseCatExceptType = BagChooseCatExceptType.None)
     {
         RefreshUI(bagChooseCatType);
-        view.Show();
-
+        
         if (_cards.Count == 0)
             return;
+        
+        view.Show();
         
         _selectIndex = -1;
         Select(0);
@@ -45,7 +46,7 @@ public class View_BagChooseCat : MvcBehaviour
         Close();
     }
 
-    private void RefreshUI(BagChooseCatType bagChooseCatType)
+    private void RefreshUI(BagChooseCatType bagChooseCatType, BagChooseCatExceptType bagChooseCatExceptType = BagChooseCatExceptType.None)
     {
         _cards = new List<Card_BagChooseCat>();
         _catIds = new List<string>();
@@ -77,6 +78,25 @@ public class View_BagChooseCat : MvcBehaviour
         {
             List<CloudLosingCatData> cats = App.model.cloister.LosingCatDatas;
 
+            if (bagChooseCatExceptType != BagChooseCatExceptType.None)
+            {
+                string key = "Flower";
+
+                switch (bagChooseCatExceptType)
+                {
+                    case BagChooseCatExceptType.AngelCat:
+                        key = "AngelCat";
+                        break;
+                }
+                
+                for (int i = 0; i < cats.Count; i++)
+                {
+                    var cat = cats[i];
+                    if (cat.LosingCatStatus.Contains(key))
+                        cats.Remove(cat);
+                }
+            }
+
             for (int i = 0; i < cats.Count; i++)
             {
                 Card_BagChooseCat cardBagChooseCat = Instantiate(card, content);
@@ -99,4 +119,11 @@ public enum BagChooseCatType
 {
     Cat,
     LosingCat
+}
+
+public enum BagChooseCatExceptType
+{
+    None,
+    Flower,
+    AngelCat
 }

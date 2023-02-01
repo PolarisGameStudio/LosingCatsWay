@@ -31,8 +31,8 @@ public class View_GreenHouse : ViewBehaviour
 
         for (int i = 0; i < chooseFlowers.Count; i++)
         {
-            GreenHouse_PlaceObject tmp = Instantiate(chooseFlowerObject);
-            tmp.Active(chooseFlowers[i]);
+            GreenHouse_PlaceObject tmp = Instantiate(chooseFlowerObject, chooseFlowerContent);
+            tmp.ActiveByChooseCat(chooseFlowers[i], i);
         }
     }
 }

@@ -9,10 +9,17 @@ public class GreenHouse_PlaceObject : MvcBehaviour
     public CatFlower flowerObject;
     public GameObject nameObject;
     public TextMeshProUGUI nameText;
+
+    private int _chooseFlowerIndex;
     
     public void Click(int index)
     {
-        App.controller.greenHouse.ChooseFlower(index);
+        App.controller.greenHouse.OpenChooseFlower(index);
+    }
+
+    public void ChooseFlower()
+    {
+        
     }
 
     public void Active(CloudLosingCatData cloudLosingCatData)
@@ -23,9 +30,10 @@ public class GreenHouse_PlaceObject : MvcBehaviour
         flowerObject.ChangeSkin(cloudLosingCatData);
     }
 
-    public void ActiveByChooseCat(CloudLosingCatData cloudLosingCatData)
+    public void ActiveByChooseCat(CloudLosingCatData cloudLosingCatData, int index)
     {
         flowerObject.ChangeSkin(cloudLosingCatData);
+        _chooseFlowerIndex = index;
     }
 
     public void Close()
