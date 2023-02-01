@@ -74,6 +74,12 @@ public class Controller_Bag : ControllerBehavior
 
     public void ChooseItem(int index)
     {
+        if (App.model.bag.SelectedItems.Count <= 0)
+        {
+            App.model.bag.SelectedItem = null;
+            return;
+        }
+        
         App.system.soundEffect.Play("Button");
         
         if (index == -1)

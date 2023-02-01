@@ -102,6 +102,7 @@ public class View_Bag : ViewBehaviour
             itemCount.text = "";
             itemDescription.text = "";
             itemImage.enabled = false;
+            useButton.SetActive(false);
             return;
         }
 
