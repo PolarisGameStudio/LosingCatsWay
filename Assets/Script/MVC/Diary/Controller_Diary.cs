@@ -18,6 +18,11 @@ public class Controller_Diary : ControllerBehavior
         App.view.diary.Close();
         App.controller.cloister.Open();
     }
+    
+    public void CloseDiaryOnlyDiary()
+    {
+        App.controller.diary.Close();
+    }
 
     private void ToPage(int index)
     {

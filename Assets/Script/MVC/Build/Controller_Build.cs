@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class Controller_Build : ControllerBehavior
 {
     public GameObject buildEffect;
-    public BuildTmpSensor buildTmpSensor;
+    private BuildTmpSensor buildTmpSensor;
 
     [Title("MoveBuild")] [SerializeField] private GameObject cantMoveDialog;
     [SerializeField] private GameObject removeMask;
@@ -31,6 +31,8 @@ public class Controller_Build : ControllerBehavior
             BuildOrigin();
             App.system.map.GenerateMap();
         }
+
+        buildTmpSensor = App.system.grid.buildTmp.GetComponent<BuildTmpSensor>();
         buildTmpSensor.buildTmpPositionChange += BuildTmpPositionChange;
     }
 
@@ -86,7 +88,7 @@ public class Controller_Build : ControllerBehavior
         MyGridSystem myGridSystem = App.system.grid;
         RoomSizeType sizeType = App.model.build.SelectedRoom.roomData.roomSizeType;
 
-        var position = App.view.build.buildTmp.transform.position;
+        var position = App.system.grid.buildTmp.transform.position;
         int[] gridIndex = myGridSystem.GetGridIndexByPosision(position.x, position.y);
 
         int roomWidth = MyTable.GetRoomWidth(sizeType);
@@ -238,6 +240,11 @@ public class Controller_Build : ControllerBehavior
     #endregion
 
     #region MoveBuild
+
+    public void Move()
+    {
+        App.controller.chooseBuild.Move();
+    }
 
     public void OpenMoveBuild(Room room)
     {

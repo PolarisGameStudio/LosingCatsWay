@@ -10,9 +10,7 @@ public class View_Build : ViewBehaviour
 {
     public GameObject buildType;
     public GameObject buildingType;
-
-    public GameObject buildTmp;
-    public SpriteRenderer buildTmpMask;
+    
     public Color[] buildTmpColorStatus;
 
     public Button okButton;
@@ -35,6 +33,7 @@ public class View_Build : ViewBehaviour
     public override void Init()
     {
         base.Init();
+
         App.model.build.IsBuildingChange += OnIsBuildingChange;
         App.model.build.CanBuildChange += OnCanBuildChange;
         App.model.build.IsMovingChange += OnIsMovingChange;
@@ -46,7 +45,7 @@ public class View_Build : ViewBehaviour
 
         buildType.SetActive(!isBuilding);
         buildingType.SetActive(isBuilding);
-        buildTmp.SetActive(isBuilding);
+        App.system.grid.buildTmp.SetActive(isBuilding);
     }
 
     public void OnCanBuildChange(object value)
@@ -57,11 +56,11 @@ public class View_Build : ViewBehaviour
 
         if (flag)
         {
-            buildTmpMask.color = buildTmpColorStatus[0];
+            App.system.grid.buildTmpMask.color = buildTmpColorStatus[0];
         }
         else
         {
-            buildTmpMask.color = buildTmpColorStatus[1];
+            App.system.grid.buildTmpMask.color = buildTmpColorStatus[1];
         }
     }
 

@@ -36,6 +36,12 @@ public class View_Lobby : ViewBehaviour
     [SerializeField] private GameObject nextRewardChat;
     [SerializeField] private TextMeshProUGUI nextQuestText;
     [SerializeField] private GameObject nextQuestChat;
+    
+    [Title("DailyQuest")]
+    public GameObject lobbyDailyQuestRed;
+
+    [Title("CardCatNotifies")] 
+    public Transform cardCatNotifyContent;
 
     public override void Open()
     {
@@ -82,7 +88,7 @@ public class View_Lobby : ViewBehaviour
         
         App.model.dailyQuest.OnQuestsChange += OnQuestsChange;
         App.model.catGuide.OnCurrentLevelBestRewardChange += OnCurrentLevelBestRewardChange;
-
+        
         #region TweenConfig
 
         downButtonsOrigins = new List<Vector2>();

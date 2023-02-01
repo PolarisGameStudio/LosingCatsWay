@@ -54,11 +54,6 @@ public class Controller_Cloister : ControllerBehavior
         App.controller.diary.Open();
     }
 
-    public void CloseDiary()
-    {
-        App.controller.diary.Close();
-    }
-
     #endregion
 
     #region Cloister

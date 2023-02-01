@@ -123,4 +123,14 @@ public class Controller_Lobby : ControllerBehavior
     {
         App.system.sideMenu.Open();
     }
+
+    public void OpenArchive()
+    {
+        App.controller.pedia.SelectTab(0);
+    }
+
+    public void OpenEvent()
+    {
+        App.controller.events.Open();
+    }
 }

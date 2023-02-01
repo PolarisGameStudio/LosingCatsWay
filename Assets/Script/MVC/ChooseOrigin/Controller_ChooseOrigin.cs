@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class Controller_ChooseOrigin : ControllerBehavior
 {
-    [SerializeField] private Transform viewMap;
-
     public void Open()
     {
         RefreshCenterRooms();
@@ -44,7 +42,7 @@ public class Controller_ChooseOrigin : ControllerBehavior
         
         ClearPreviewRoom();
         
-        var tmp = Instantiate(selectedRoom, viewMap);
+        var tmp = Instantiate(selectedRoom, App.system.grid.viewMap);
         tmp.transform.position = App.system.room.MyRooms[0].transform.position;
         
         App.model.chooseOrigin.PreviewRoom = tmp;

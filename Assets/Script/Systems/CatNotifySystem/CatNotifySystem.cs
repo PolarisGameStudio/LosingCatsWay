@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class CatNotifySystem : MvcBehaviour
 {
-    [SerializeField] private Transform content;
     [SerializeField] private Card_CatNotify cardCatNotify;
     private Queue<Cat> waitingCats = new Queue<Cat>();
     private List<Card_CatNotify> displayedNotifies = new List<Card_CatNotify>();
@@ -39,20 +38,20 @@ public class CatNotifySystem : MvcBehaviour
 
     private void RefreshNotify() // 刷新通知
     {
-        if (content.childCount >= 3)
+        if (App.view.lobby.cardCatNotifyContent.childCount >= 3)
             return;
 
         if (waitingCats.Count <= 0)
             return;
 
-        int emptyCount = 3 - content.childCount; // 剩餘的通知數量
+        int emptyCount = 3 - App.view.lobby.cardCatNotifyContent.childCount; // 剩餘的通知數量
 
         for (int i = 0; i < emptyCount; i++)
         {
             if (i >= waitingCats.Count)
                 break;
             
-            var card = Instantiate(cardCatNotify, content);
+            var card = Instantiate(cardCatNotify, App.view.lobby.cardCatNotifyContent);
             var cat = waitingCats.Dequeue();
             card.SetData(cat);
             card.Open();

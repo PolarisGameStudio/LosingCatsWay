@@ -9,9 +9,9 @@ using Random = UnityEngine.Random;
 
 public class Controller_FollowCat : ControllerBehavior
 {
-    public Camera mainCamera;
-    public LeanDragCamera leanDragCamera;
-    public LeanPinchCamera leanPinchCamera;
+    private Camera _mainCamera;
+    private LeanDragCamera _leanDragCamera;
+    private LeanPinchCamera _leanPinchCamera;
 
     [ReadOnly] public bool isFollowing;
     
@@ -20,6 +20,13 @@ public class Controller_FollowCat : ControllerBehavior
     private float normalZoom = 3.5f;
     private float kittyZoom = 2f;
     private float nextZoom;
+
+    private void Start()
+    {
+        _mainCamera = Camera.main;
+        _leanDragCamera = FindObjectOfType<LeanDragCamera>();
+        _leanPinchCamera = FindObjectOfType<LeanPinchCamera>();
+    }
 
     private void Update()
     {
@@ -30,7 +37,7 @@ public class Controller_FollowCat : ControllerBehavior
         tmp.y += 0.5f;
         tmp.z = -10;
 
-        mainCamera.transform.position = tmp;
+        _mainCamera.transform.position = tmp;
     }
 
     public void Open()
@@ -80,23 +87,23 @@ public class Controller_FollowCat : ControllerBehavior
     {
         followCat = cat;
 
-        leanDragCamera.enabled = false;
-        leanPinchCamera.enabled = false;
+        _leanDragCamera.enabled = false;
+        _leanPinchCamera.enabled = false;
 
-        float zoom = mainCamera.orthographicSize;
+        float zoom = _mainCamera.orthographicSize;
         nextZoom = CatExtension.GetCatAgeLevel(cat.cloudCatData.CatData.SurviveDays) == 0
             ? kittyZoom
             : normalZoom;
-        DOTween.To(() => zoom, x => zoom = x, nextZoom, 0.5f).OnUpdate(() => { mainCamera.orthographicSize = zoom; });
+        DOTween.To(() => zoom, x => zoom = x, nextZoom, 0.5f).OnUpdate(() => { _mainCamera.orthographicSize = zoom; });
 
         isFollowing = true;
     }
 
     private void CloseFollow()
     {
-        leanPinchCamera.Zoom = nextZoom;
-        leanDragCamera.enabled = true;
-        leanPinchCamera.enabled = true;
+        _leanPinchCamera.Zoom = nextZoom;
+        _leanDragCamera.enabled = true;
+        _leanPinchCamera.enabled = true;
 
         isFollowing = false;
     }

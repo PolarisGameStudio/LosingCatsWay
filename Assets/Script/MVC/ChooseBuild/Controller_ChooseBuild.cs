@@ -7,14 +7,27 @@ using UnityEngine;
 
 public class Controller_ChooseBuild : ControllerBehavior
 {
-    public Transform buildTmp;
-    public Transform buildTmpCircle;
-    public Transform nonViewMap;
+    private Transform _buildTmp;
+    private Transform _buildTmpCircle;
+    private Transform _nonViewMap;
 
-    public SpriteRenderer buildTmpMask;
+    private SpriteRenderer _buildTmpMask;
 
-    public LeanPlane leanPlane;
-    public Camera mainCamera;
+    private LeanPlane _leanPlane;
+    private Camera _mainCamera;
+
+    private void Start()
+    {
+        var grid = App.system.grid;
+        
+        _buildTmp = grid.buildTmp.transform;
+        _buildTmpCircle = grid.buildTmpCircle.transform;
+        _nonViewMap = grid.nonViewMap;
+        _buildTmpMask = grid.buildTmpMask;
+
+        _leanPlane = App.leanPlane;
+        _mainCamera = Camera.main;
+    }
 
     public void Open()
     {
@@ -132,20 +145,20 @@ public class Controller_ChooseBuild : ControllerBehavior
     {
         if (App.model.build.IsMoving)
         {
-            buildTmp.transform.position = App.model.chooseBuild.MoveBuildTmp.transform.position;
+            _buildTmp.transform.position = App.model.chooseBuild.MoveBuildTmp.transform.position;
             // App.model.chooseBuild.MoveBuildTmp.transform.position = new Vector3(0, 0);
             App.model.chooseBuild.MoveBuildTmp.GetComponent<Room>().OpenAllWall();
-            App.model.chooseBuild.MoveBuildTmp.transform.parent = nonViewMap;
+            App.model.chooseBuild.MoveBuildTmp.transform.parent = _nonViewMap;
             return;
         }
 
         float gridSize = App.system.grid.cellSize;
-        Vector3 centerPosition = mainCamera.transform.position;
+        Vector3 centerPosition = _mainCamera.transform.position;
 
         int x = (int) (centerPosition.x / gridSize);
         int y = (int) (centerPosition.y / gridSize);
 
-        buildTmp.transform.position = new Vector3(x * gridSize, y * gridSize, 0);
+        _buildTmp.transform.position = new Vector3(x * gridSize, y * gridSize, 0);
     }
 
     private void SetBuildTmpContent()
@@ -153,10 +166,10 @@ public class Controller_ChooseBuild : ControllerBehavior
         RoomSizeType type = App.model.build.SelectedRoom.roomData.roomSizeType;
         Sprite spriteTmp = App.factory.roomFactory.GetBuildRoomBg(type);
 
-        buildTmpMask.sprite = spriteTmp;
+        _buildTmpMask.sprite = spriteTmp;
 
         // 導入預覽圖
-        GameObject moveBuildTmpModel = Instantiate(App.model.build.SelectedRoom.gameObject, buildTmp);
+        GameObject moveBuildTmpModel = Instantiate(App.model.build.SelectedRoom.gameObject, _buildTmp);
         moveBuildTmpModel.transform.localPosition = Vector3.zero;
 
         moveBuildTmpModel.GetComponent<Room>().enabled = false;
@@ -168,7 +181,7 @@ public class Controller_ChooseBuild : ControllerBehavior
     private void SetBuildTmpSize()
     {
         RoomSizeType sizeType = App.model.build.SelectedRoom.roomData.roomSizeType;
-        BoxCollider2D boxCollider2D = buildTmp.GetComponent<BoxCollider2D>();
+        BoxCollider2D boxCollider2D = _buildTmp.GetComponent<BoxCollider2D>();
 
         float gridSize = App.system.grid.cellSize;
         float gridOffset = gridSize * 0.5f;
@@ -210,8 +223,8 @@ public class Controller_ChooseBuild : ControllerBehavior
                 break;
         }
 
-        buildTmpCircle.localScale = new Vector3(size, size, 1);
-        buildTmpCircle.localPosition = new Vector3(postion, postion, 1);
+        _buildTmpCircle.localScale = new Vector3(size, size, 1);
+        _buildTmpCircle.localPosition = new Vector3(postion, postion, 1);
     }
 
     private void SetBuildTmpLimit()
@@ -234,8 +247,8 @@ public class Controller_ChooseBuild : ControllerBehavior
                 break;
         }
 
-        leanPlane.MaxX = gridSize * width;
-        leanPlane.MaxY = gridSize * height;
+        _leanPlane.MaxX = gridSize * width;
+        _leanPlane.MaxY = gridSize * height;
     }
 
     #endregion

@@ -7,6 +7,7 @@ using Lean.Common;
 using Lean.Touch;
 using UnityEngine;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 
 public class MyGridSystem : MvcBehaviour
 {
@@ -23,14 +24,19 @@ public class MyGridSystem : MvcBehaviour
 
     //討論結束再public
     public int maxHomeLight;
+    
+    [Title("Build")]
+    public GameObject buildTmp;
+    public GameObject buildTmpCircle;
+    public SpriteRenderer buildTmpMask;
 
-    [SerializeField] private LeanPlane leanPlane;
+    public Transform nonViewMap;
 
     private MyGrid[,] viewGridArray;
     private SpriteRenderer[,] buildGridArray;
 
     private List<GameObject> objectPool_Floor = new List<GameObject>();
-
+    
     public void Init()
     {
         width = GetGridSize();
@@ -39,6 +45,7 @@ public class MyGridSystem : MvcBehaviour
         CreateFloor();
         SetCameraToOrigin();
         CreateOutSide();
+        
     }
 
     #region Floor
@@ -51,8 +58,8 @@ public class MyGridSystem : MvcBehaviour
         viewGridArray = new MyGrid[width, height];
         buildGridArray = new SpriteRenderer[width, height];
 
-        leanPlane.MaxX = cellSize * (width + 2);
-        leanPlane.MaxY = cellSize * (height + 2);
+        App.globalLeanPlane.MaxX = cellSize * (width + 2);
+        App.globalLeanPlane.MaxY = cellSize * (height + 2);
 
         for (int i = 0; i < width; i++)
         {

@@ -4,6 +4,7 @@ using System.Linq;
 using DG.Tweening;
 using Firebase.Auth;
 using Firebase.Firestore;
+using Lean.Common;
 using UnityEngine;
 
 public class MyApplication : MonoBehaviour
@@ -14,6 +15,9 @@ public class MyApplication : MonoBehaviour
     public FactoryContainer factory;
     public SystemContainer system;
 
+    public LeanPlane leanPlane;
+    public LeanPlane globalLeanPlane;
+    
     private bool canSave;
 
     private async void Start()

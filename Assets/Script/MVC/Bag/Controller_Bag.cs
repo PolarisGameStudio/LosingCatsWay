@@ -222,4 +222,5 @@ public class Controller_Bag : ControllerBehavior
         _chooseCatAction?.Invoke(catId);
         _chooseCatAction = null;
     }
+    
 }

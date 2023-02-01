@@ -71,6 +71,11 @@ public class Controller_Map : ControllerBehavior
         });
     }
 
+    public void OpenWorldData()
+    {
+        App.controller.worldData.Open();
+    }
+
     public void Close()
     {
         App.system.cat.PauseCatsGame(false);

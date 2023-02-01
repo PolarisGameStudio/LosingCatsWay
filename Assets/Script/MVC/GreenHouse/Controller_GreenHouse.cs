@@ -32,6 +32,11 @@ public class Controller_GreenHouse : ControllerBehavior
         });
     }
 
+    public void OpenCloister()
+    {
+        App.controller.cloister.Open();
+    }
+
     #endregion
 
     #region Gyro
