@@ -5,6 +5,7 @@ using UnityEngine;
 public class Model_GreenHouse : ModelBehavior
 {
     private List<GreenHouseData> greenHouseDatas;
+    private List<CloudLosingCatData> chooseFlowers;
 
     public List<GreenHouseData> GreenHouseDatas
     {
@@ -15,6 +16,17 @@ public class Model_GreenHouse : ModelBehavior
             OnGreenHouseDatasChange.Invoke(value);
         }
     }
-    
+
+    public List<CloudLosingCatData> ChooseFlowers
+    {
+        get => chooseFlowers;
+        set
+        {
+            chooseFlowers = value;
+            OnChooseFlowersChange.Invoke(value);
+        }
+    }
+
     public ValueChange OnGreenHouseDatasChange;
+    public ValueChange OnChooseFlowersChange;
 }

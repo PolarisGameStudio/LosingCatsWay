@@ -61,6 +61,25 @@ public class Controller_GreenHouse : ControllerBehavior
     public void ChooseFlower(int index)
     {
         chooseFlower.Show();
+
+        List<CloudLosingCatData> cloudLosingCatDatas =
+            App.model.cloister.LosingCatDatas.FindAll(x => x.LosingCatStatus.Contains("Flower"));
+
+        List<GreenHouseData> greenHouseDatas = App.model.greenHouse.GreenHouseDatas;
+        for (int i = 0; i < greenHouseDatas.Count; i++)
+        {
+            string id = greenHouseDatas[i].FlowerID;
+
+            for (int j = 0; j < cloudLosingCatDatas.Count; j++)
+            {
+                var cloudLosingCatData = cloudLosingCatDatas[i];
+
+                if (cloudLosingCatData.CatData.CatId.Equals(id))
+                    cloudLosingCatDatas.Remove(cloudLosingCatData);
+            }
+        }
+
+        App.model.greenHouse.ChooseFlowers = cloudLosingCatDatas;
     }
 
     public void CloseChooseFlower()
