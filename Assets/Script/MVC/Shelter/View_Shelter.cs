@@ -35,6 +35,7 @@ public class View_Shelter : ViewBehaviour
     [SerializeField] private GameObject adsTitle;
     [SerializeField] private GameObject noCountTitle;
     [SerializeField] private GameObject cooldownObject;
+    [SerializeField] private TextMeshProUGUI cooldownText;
     [SerializeField] private GameObject refreshObject;
 
     public override void Open()
@@ -65,6 +66,11 @@ public class View_Shelter : ViewBehaviour
     private void OnCooldownChange(object value)
     {
         DateTime cooldown = (DateTime)value;
+        
+        int minute = (cooldown - App.system.myTime.MyTimeNow).Minutes;
+        int second = (cooldown - App.system.myTime.MyTimeNow).Seconds;
+        cooldownText.text = $"{minute:00}:{second:00}";
+        
         if (cooldown > App.system.myTime.MyTimeNow)
         {
             cooldownObject.SetActive(true);

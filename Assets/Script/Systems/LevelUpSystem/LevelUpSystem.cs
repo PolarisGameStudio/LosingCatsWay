@@ -35,24 +35,12 @@ public class LevelUpSystem : MvcBehaviour
         levelUpText.text = (level + 1).ToString();
         levelDownText.text = level.ToString();
 
-        var rewards = App.factory.itemFactory.LevelRewards[level + 1]; // todo 上限的抓不到
-        App.system.reward.SetDatas(rewards);
+        var unlockItems = App.factory.itemFactory.GetUnlockItemsByLevel(level + 1);
+        var levelRewards = App.factory.itemFactory.GetRewardsByLevel(level + 1);
         
-        List<string> unlockIds = new List<string>();
+        App.system.reward.SetDatas(levelRewards);
 
-        for (int i = 0; i < rewards.Length; i++)
-        {
-            if (rewards[i].item.itemType == ItemType.Unlock)
-            {
-                unlockIds.Add(rewards[i].item.id);
-            }
-            else if (rewards[i].count <= 0)
-            {
-                unlockIds.Add(rewards[i].item.id);
-            }
-        }
-
-        if (unlockIds.Count == 0)
+        if (unlockItems.Count <= 0)
         {
             animator.Play("SwitchText(NoUnlock)", 0, 0);
         }
@@ -60,28 +48,15 @@ public class LevelUpSystem : MvcBehaviour
         {
             for (int i = 0; i < 4; i++)
             {
-                if (i < unlockIds.Count)
+                if (i < unlockItems.Count)
                 {
                     unlocks[i].SetActive(true);
-
-                    string key = unlockIds[i];
-                    string content = string.Empty;
-
-                    if (key.Contains("ULK"))
-                        content = App.factory.stringFactory.GetUnlock(key);
-                    else if (key.Contains("IRM"))
-                        content = App.factory.stringFactory.GetRoomName(key);
-                    else
-                        content = App.factory.stringFactory.GetItemName(key);
                     
-                    // string content = key.Contains("ULK")
-                    //     ? App.factory.stringFactory.GetUnlock(key)
-                    //     : App.factory.stringFactory.GetItemName(key);
-                    
-                    unlockContents[i].text = content;
+                    var unlock = unlockItems[i];
+                    unlockContents[i].text = unlock.Name;
                     continue;
                 }
-            
+                
                 unlocks[i].SetActive(false);
             }
             

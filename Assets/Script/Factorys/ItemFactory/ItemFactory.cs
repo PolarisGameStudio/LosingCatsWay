@@ -89,7 +89,7 @@ public class ItemFactory : SerializedMonoBehaviour
     }
 
     // Get current level rewards from 0 to 10
-    public List<Reward[]> GetRewardsByLevel(int level)
+    public List<Reward[]> GetRewardsByTenLevel(int level)
     {
         List<Reward[]> result = new List<Reward[]>();
         MathfExtension.GetNumberRangeByTen(level, out int startIndex, out int endIndex);
@@ -103,6 +103,11 @@ public class ItemFactory : SerializedMonoBehaviour
         }
 
         return result;
+    }
+
+    public Reward[] GetRewardsByLevel(int level)
+    {
+        return LevelRewards.ContainsKey(level) ? LevelRewards[level] : null;
     }
 
     public List<Item> GetUnlockItemsByLevel(int level) // 取等級解鎖的Items // todo LevelUpSystem, CatGuideCard的解鎖項
