@@ -18,6 +18,7 @@ public class Controller_Shop : ControllerBehavior
 
     public void Close()
     {
+        SelectType(-1);
         App.system.bgm.FadeOut();
         App.system.transition.Active(0, () =>
         {

@@ -588,7 +588,7 @@ public class CatSkin : MvcBehaviour
         }
     }
 
-    private void SetSkinSlotNull()
+    public void SetSkinSlotNull()
     {
         Skeleton catSkeleton = GetCatSkeleton();
         
@@ -615,6 +615,10 @@ public class CatSkin : MvcBehaviour
         //Robot
         catSkeleton.SetAttachment("Robot_Card", null);
         catSkeleton.SetAttachment("Robot_Wire", null);
+        
+        // extra
+        for (int i = 0; i < extraSkins.Length; i++)
+            extraSkins[i].SetActive(false);
     }
 
     #endregion

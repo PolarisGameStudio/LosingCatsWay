@@ -161,12 +161,10 @@ public class Controller_Clinic : ControllerBehavior
 
     public void OpenInvoice()
     {
-        int index = App.model.clinic.FunctionIndex;
         Cat cat = App.model.clinic.SelectedCat;
+        
+        int index = App.model.clinic.FunctionIndex;
         var payment = new Dictionary<string, int>();
-
-        if (cat.cloudCatData.CatHealthData.SickId is "SK001" or "SK002")
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
         
         #region Invoice
 
@@ -249,7 +247,7 @@ public class Controller_Clinic : ControllerBehavior
 
     #region Function
 
-    private void DoFunction()
+    public void DoFunction()
     {
         Cat cat = App.model.clinic.SelectedCat;
         int index = App.model.clinic.FunctionIndex;

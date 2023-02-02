@@ -71,9 +71,9 @@ public class View_SubInfo_Status : ViewBehaviour
         catNameText.text = cat.cloudCatData.CatData.CatName;
         chipInfo.SetData(cat.cloudCatData);
 
-        catSizeText.text = $"{CatExtension.GetCatRealSize(cat.cloudCatData.CatData.BodyScale):0.00}cm";
-
         bool isKitty = CatExtension.GetCatAgeLevel(cat.cloudCatData.CatData.SurviveDays) == 0;
+
+        catSizeText.text = isKitty ? "25cm" : $"{CatExtension.GetCatRealSize(cat.cloudCatData.CatData.BodyScale):0.00}cm";
         catVarietyText.text = isKitty ? App.factory.stringFactory.GetKittyName() : App.factory.stringFactory.GetCatVariety(cat.cloudCatData.CatData.Variety);
         
         catAgeText.text = cat.cloudCatData.CatData.CatAge.ToString();

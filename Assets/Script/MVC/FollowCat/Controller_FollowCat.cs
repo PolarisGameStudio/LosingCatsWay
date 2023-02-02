@@ -139,10 +139,14 @@ public class Controller_FollowCat : ControllerBehavior
         
         animator.Play(CatAnimTable.ToTrait.ToString());
         CloseSensor();
+        App.view.followCat.OpenTrait();
+        
         DOVirtual.DelayedCall(duration, () =>
         {
             OpenSensor();
             App.system.cat.PauseCatsGame(false);
+            App.view.followCat.CloseTrait();
+            App.system.screenshot.Close();
         });
     }
 
@@ -173,6 +177,21 @@ public class Controller_FollowCat : ControllerBehavior
         Open();
         App.system.screenshot.OnScreenshotComplete -= CloseScreenshot;
         App.system.screenshot.OnScreenshotCancel -= CloseScreenshot;
+    }
+
+    public void OpenTraitScreenshot()
+    {
+        App.system.screenshot.OnScreenshotComplete += CloseTraitScreenshot;
+        App.system.screenshot.OnScreenshotCancel += CloseTraitScreenshot;
+        App.view.followCat.CloseTrait();
+        App.system.screenshot.Open();
+    }
+
+    private void CloseTraitScreenshot()
+    {
+        App.view.followCat.OpenTrait();
+        App.system.screenshot.OnScreenshotComplete -= CloseTraitScreenshot;
+        App.system.screenshot.OnScreenshotCancel -= CloseTraitScreenshot;
     }
 
     #endregion

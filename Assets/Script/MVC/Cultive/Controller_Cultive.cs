@@ -74,6 +74,9 @@ public class Controller_Cultive : ControllerBehavior
         LoadCleanLitterData();
         
         DOVirtual.DelayedCall(0.3f, () => SelectType(1));
+        
+        // 即時刷新貓狀態
+        InvokeRepeating(nameof(RefreshCatStatus), 1, 1);
     }
 
     public void Close()
@@ -83,6 +86,7 @@ public class Controller_Cultive : ControllerBehavior
         if (isDragging) 
             return;
         
+        CancelInvoke(nameof(RefreshCatStatus));
         CancelInvoke(nameof(CountDownTimer));
         SaveCleanLitterData();
         isOpen = false;
@@ -241,28 +245,10 @@ public class Controller_Cultive : ControllerBehavior
         float lastMoisture = cat.cloudCatData.CatSurviveData.Moisture;
         float lastFavourbility = cat.cloudCatData.CatSurviveData.Favourbility;
 
-        // cat.cloudCatData.CatSurviveData.Satiety =
-        //     Mathf.Clamp(cat.cloudCatData.CatSurviveData.Satiety + satietyValue, 0, 100);
-        // cat.cloudCatData.CatSurviveData.Moisture =
-        //     Mathf.Clamp(cat.cloudCatData.CatSurviveData.Moisture + moistureValue, 0, 100);
-        // cat.cloudCatData.CatSurviveData.Favourbility =
-        //     Mathf.Clamp(cat.cloudCatData.CatSurviveData.Favourbility + funValue, 0, 100);
-
-        // float newSatiety = cat.cloudCatData.CatSurviveData.Satiety;
-        // float newMoisture = cat.cloudCatData.CatSurviveData.Moisture;
-        // float newFavourbility = cat.cloudCatData.CatSurviveData.Favourbility;
-
         float newSatiety = AddSatiety(satietyValue);
         float newMoisture = AddMoisture(moistureValue);
         float newFavourbility = AddFun(funValue);
 
-        // OnAddFun?.Invoke(newFavourbility - lastFavourbility);
-        // OnAddFun?.Invoke(funValue);
-        // OnAddSatiety?.Invoke(newSatiety - lastSatiety);
-        // OnAddSatiety?.Invoke(satietyValue);
-        // OnAddMoisture?.Invoke(newMoisture - lastMoisture);
-        // OnAddMoisture?.Invoke(moistureValue);
-        
         if (lastSatiety < 90f && newSatiety >= 90f)
             cat.cloudCatData.CatDiaryData.DiarySatietyScore++;
 
@@ -279,8 +265,6 @@ public class Controller_Cultive : ControllerBehavior
         App.system.cloudSave.UpdateCloudCatSurviveData(cat.cloudCatData);
         App.system.cloudSave.UpdateCloudCatDiaryData(cat.cloudCatData);
 
-        // SelectType(App.model.cultive.SelectedType);
-
         if (satietyValue > 0)
             satietyEffect.Play();
         if (moistureValue > 0)
@@ -291,8 +275,6 @@ public class Controller_Cultive : ControllerBehavior
         satietyPop.Pop(satietyValue);
         moisturePop.Pop(moistureValue);
         funPop.Pop(funValue);
-
-        //DOVirtual.DelayedCall(1.5f, () => App.model.cultive.SelectedCat = cat);
 
         catSkeleton.AnimationState.Start -= SetFeedData;
     }
@@ -347,11 +329,6 @@ public class Controller_Cultive : ControllerBehavior
         catSkeleton.AnimationState.Start -= SetPlayData;
 
         float lastFavourbility = App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.Favourbility;
-
-        // cat.cloudCatData.CatSurviveData.Favourbility =
-        //     Mathf.Clamp(cat.cloudCatData.CatSurviveData.Favourbility + 20, 0, 100);
-        
-        // float newFavourbility = App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.Favourbility;
         float newFavourbility = AddFun(20);
 
         if (lastFavourbility < 96f && newFavourbility >= 96f)
@@ -385,7 +362,7 @@ public class Controller_Cultive : ControllerBehavior
 
             DOVirtual.DelayedCall(entry.Animation.Duration, () =>
             {
-                App.model.cultive.SelectedCat = App.model.cultive.SelectedCat;
+                RefreshCatStatus();
                 isCanDrag = true;
                 OpenClickCat();
                 SelectType(App.model.cultive.SelectedType);
@@ -398,10 +375,16 @@ public class Controller_Cultive : ControllerBehavior
     {
         if (App.model.cultive.UsingLitterIndex >= 0)
             if (App.model.cultive.NextCleanDateTime > App.system.myTime.MyTimeNow) //時間還沒到
+            {
+                Reject();
                 return;
+            }
 
         if (App.model.cultive.CleanLitterCount > 0)
+        {
+            Reject();
             return;
+        }
 
         var item = App.model.cultive.DragItem;
 
@@ -431,8 +414,6 @@ public class Controller_Cultive : ControllerBehavior
         var cloudCatData = App.model.cultive.SelectedCat.cloudCatData;
         cloudCatData.CatDiaryData.DiaryLitterScore++;
         AddFun(40);
-        // cloudCatData.CatSurviveData.Favourbility =
-        //     Mathf.Clamp(cloudCatData.CatSurviveData.Favourbility + 40, 0, 100);
         
         App.system.cloudSave.UpdateCloudItemData();
         App.system.cloudSave.UpdateCloudCatDiaryData(cloudCatData);
@@ -445,10 +426,12 @@ public class Controller_Cultive : ControllerBehavior
         string animName = isAdult ? "Rearing_Cat/Rearing_Smile_IDLE" : "Rearing_Cat/Rearing_Smile_Sit";
         
         var t = catSkeleton.AnimationState.SetAnimation(0, animName, false);
+        
         DOVirtual.DelayedCall(t.Animation.Duration, () =>
         {
-            App.model.cultive.SelectedCat = App.model.cultive.SelectedCat;
+            RefreshCatStatus();
             SelectType(App.model.cultive.SelectedType);
+            catSkeleton.AnimationState.SetAnimation(0, "AI_Main/IDLE_Ordinary01", true);
         });
         
         OnChangeLitter?.Invoke();
@@ -766,7 +749,7 @@ public class Controller_Cultive : ControllerBehavior
     {
         App.system.catRename.Active(App.model.cultive.SelectedCat.cloudCatData, "Shelter", () =>
         {
-            App.model.cultive.SelectedCat = App.model.cultive.SelectedCat;
+            RefreshCatStatus();
         });
     }
 
@@ -892,11 +875,20 @@ public class Controller_Cultive : ControllerBehavior
     }
 
     #endregion
+
+    #region Refresh
+
+    private void RefreshCatStatus()
+    {
+        App.view.cultive.RefreshStatus(App.model.cultive.SelectedCat.cloudCatData);
+    }
+
+    #endregion
     
     //TODO Debug
     public void DebugSick()
     {
-        App.model.cultive.SelectedCat.cloudCatData.CatHealthData.SickId = "SK008";
+        App.model.cultive.SelectedCat.cloudCatData.CatHealthData.SickId = "SK002";
         App.model.cultive.SelectedCat.cloudCatData.CatHealthData.MetDoctorCount =
             App.factory.sickFactory.GetMetCount(App.model.cultive.SelectedCat.cloudCatData.CatHealthData.SickId);
         App.model.cultive.SelectedCat.ChangeSkin();

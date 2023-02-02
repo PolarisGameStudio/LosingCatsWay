@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -24,6 +23,11 @@ public class CatchCatBubble : MvcBehaviour
     [SerializeField] private TextMeshProUGUI hintText;
     [SerializeField] private CanvasGroup textCanvasGroup;
 
+    [Title("Dots")] 
+    [SerializeField] private Image[] dots;
+    [SerializeField] private Sprite noFillDot;
+    [SerializeField] private Sprite fillDot;
+
     private int hintIndex;
     private bool isTrigger;
     private bool isTweening;
@@ -41,6 +45,11 @@ public class CatchCatBubble : MvcBehaviour
 
         _personalitys = personalitys;
         _levels = levels;
+
+        for (int i = 0; i < dots.Length; i++)
+        {
+            dots[i].gameObject.SetActive(i < personalitys.Count);
+        }
 
         talkBubble.transform.DOKill();
         hintBubble.transform.DOKill();
@@ -89,6 +98,11 @@ public class CatchCatBubble : MvcBehaviour
 
             string id = $"{personality}{level}";
             hintText.text = App.factory.stringFactory.GetCatchCatHint(id);
+
+            for (int i = 0; i < dots.Length; i++)
+            {
+                dots[i].sprite = i == hintIndex ? fillDot : noFillDot;
+            }
             
             OpenHint();
         });

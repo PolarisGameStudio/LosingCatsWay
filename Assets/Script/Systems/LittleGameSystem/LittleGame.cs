@@ -32,6 +32,7 @@ public abstract class LittleGame : MvcBehaviour
     protected void Close()
     {
         App.system.littleGame.Close();
+        cat.ChangeSkin();
     }
 
     protected void OpenLobby()
@@ -39,14 +40,14 @@ public abstract class LittleGame : MvcBehaviour
         App.controller.followCat.CloseByOpenLobby();
     }
 
-    public virtual void Success()
+    public void Success()
     {
         int exp = App.system.player.playerDataSetting.LittleGameExp;
         int coin = App.system.player.playerDataSetting.GetLittleGameCoinsByLevel(App.system.player.Level);
         cat.CatRewardCanvas.PopReward(exp, coin);
     }
 
-    public virtual void Failed()
+    public void Failed()
     {
         int exp = App.system.player.playerDataSetting.LittleGameExp;
         cat.CatRewardCanvas.PopReward(exp, 0);

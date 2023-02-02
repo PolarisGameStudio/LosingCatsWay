@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Doozy.Runtime.UIManager.Components;
+using Doozy.Runtime.UIManager.Containers;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,10 +23,10 @@ public class View_FollowCat : ViewBehaviour
     [SerializeField] private Image moistureFill;
     [SerializeField] private Image favourabilityFill;
 
-
     [Title("Trait")]
     [SerializeField] private UIButton traitButton;
     [SerializeField] private GameObject traitMask;
+    [SerializeField] private UIView traitView;
 
     public override void Open()
     {
@@ -37,6 +38,16 @@ public class View_FollowCat : ViewBehaviour
     {
         catSkin.SetActive(false);
         base.Close();
+    }
+
+    public void OpenTrait()
+    {
+        traitView.Show();
+    }
+
+    public void CloseTrait()
+    {
+        traitView.InstantHide();
     }
 
     public override void Init()

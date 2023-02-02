@@ -126,34 +126,13 @@ public class View_Cultive : ViewBehaviour
         
         for (int i = 0; i < genderImages.Length; i++)
         {
-            if (i == cat.cloudCatData.CatData.Sex) genderImages[i].SetActive(true);
-            else genderImages[i].SetActive(false);
+            if (i == cat.cloudCatData.CatData.Sex)
+                genderImages[i].SetActive(true);
+            else
+                genderImages[i].SetActive(false);
         }
 
-        satietyFillInner.sprite = cat.cloudCatData.CatSurviveData.Satiety > 20 ? highValueSprite : lowValueSprite;
-        moistureFillInner.sprite = cat.cloudCatData.CatSurviveData.Moisture > 20 ? highValueSprite : lowValueSprite;
-        funFillInner.sprite = cat.cloudCatData.CatSurviveData.Favourbility > 20 ? highValueSprite : lowValueSprite;
-
-        satietyFill.DOFillAmount(cat.cloudCatData.CatSurviveData.Satiety / 100, 0.25f).SetEase(Ease.OutExpo);
-        moistureFill.DOFillAmount(cat.cloudCatData.CatSurviveData.Moisture / 100, 0.25f).SetEase(Ease.OutExpo);
-        funFill.DOFillAmount(cat.cloudCatData.CatSurviveData.Favourbility / 100, 0.25f).SetEase(Ease.OutExpo);
-
-        satietyText.text = $"{cat.cloudCatData.CatSurviveData.Satiety:0} / 100";
-        moistureText.text = $"{cat.cloudCatData.CatSurviveData.Moisture:0} / 100";
-        funText.text = $"{cat.cloudCatData.CatSurviveData.Favourbility:0} / 100";
-
-        realSatietyText.text = cat.cloudCatData.CatSurviveData.RealSatiety.ToString("0.00");
-        realMoistureText.text = cat.cloudCatData.CatSurviveData.RealMoisture.ToString("0.00");
-        realFunText.text = cat.cloudCatData.CatSurviveData.RealFavourbility.ToString("0.00");
-
-        openChooseSkinButton.interactable = false;
-        openChooseSkinMask.SetActive(true);
-        if (CatExtension.GetCatAgeLevel(cat.cloudCatData.CatData.SurviveDays) == 0)
-            return;
-        if (!string.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId) || cat.cloudCatData.CatHealthData.IsBug)
-            return;
-        openChooseSkinButton.interactable = true;
-        openChooseSkinMask.SetActive(false);
+        RefreshStatus(cat.cloudCatData);
     }
 
     private void OnSelectedTypeChange(object value)
@@ -344,4 +323,32 @@ public class View_Cultive : ViewBehaviour
     }
 
     #endregion
+
+    public void RefreshStatus(CloudCatData cloudCatData)
+    {
+        satietyFillInner.sprite = cloudCatData.CatSurviveData.Satiety > 20 ? highValueSprite : lowValueSprite;
+        moistureFillInner.sprite = cloudCatData.CatSurviveData.Moisture > 20 ? highValueSprite : lowValueSprite;
+        funFillInner.sprite = cloudCatData.CatSurviveData.Favourbility > 20 ? highValueSprite : lowValueSprite;
+
+        satietyFill.DOFillAmount(cloudCatData.CatSurviveData.Satiety / 100, 0.25f).SetEase(Ease.OutExpo);
+        moistureFill.DOFillAmount(cloudCatData.CatSurviveData.Moisture / 100, 0.25f).SetEase(Ease.OutExpo);
+        funFill.DOFillAmount(cloudCatData.CatSurviveData.Favourbility / 100, 0.25f).SetEase(Ease.OutExpo);
+
+        satietyText.text = $"{cloudCatData.CatSurviveData.Satiety:0} / 100";
+        moistureText.text = $"{cloudCatData.CatSurviveData.Moisture:0} / 100";
+        funText.text = $"{cloudCatData.CatSurviveData.Favourbility:0} / 100";
+
+        realSatietyText.text = cloudCatData.CatSurviveData.RealSatiety.ToString("0.00");
+        realMoistureText.text = cloudCatData.CatSurviveData.RealMoisture.ToString("0.00");
+        realFunText.text = cloudCatData.CatSurviveData.RealFavourbility.ToString("0.00");
+
+        openChooseSkinButton.interactable = false;
+        openChooseSkinMask.SetActive(true);
+        if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) == 0)
+            return;
+        if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId) || cloudCatData.CatHealthData.IsBug)
+            return;
+        openChooseSkinButton.interactable = true;
+        openChooseSkinMask.SetActive(false);
+    }
 }

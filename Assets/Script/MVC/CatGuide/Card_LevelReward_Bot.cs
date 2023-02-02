@@ -129,6 +129,7 @@ public class Card_LevelReward_Bot : MvcBehaviour
                 {
                     bestItem = rewards[i].item;
                     bestCount = rewards[i].count;
+                    break;
                 }
 
                 bestItem = rewards[i].item;

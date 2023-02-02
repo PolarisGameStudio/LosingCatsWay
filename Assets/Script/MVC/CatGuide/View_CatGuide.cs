@@ -1,10 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using DG.Tweening;
 using Sirenix.OdinInspector;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +15,6 @@ public class View_CatGuide : ViewBehaviour
     [SerializeField] private Card_LevelReward_Top nextLevelCard;
     
     [Title("Bottom")]
-    // [SerializeField] private Card_CatGuide[] cards;
     [SerializeField] private Scrollbar scrollbar;
     [SerializeField] private Card_LevelReward_Bot[] botCards;
 
@@ -57,81 +53,6 @@ public class View_CatGuide : ViewBehaviour
     {
         int level = (int)value;
         
-        /*
-        // List<Reward[]> rewards;
-        // MathfExtension.GetNumberRangeByTen(level, out int start, out int end);
-        //
-        // //封頂
-        // if (level >= 40)
-        //     rewards = App.factory.itemFactory.GetRewardsByTenLevel(39);
-        // else
-        //     rewards = App.factory.itemFactory.GetRewardsByTenLevel(App.system.player.Level);
-
-        // for (int i = 0; i < cards.Length; i++)
-        // {
-        //     int tmpLevel = start + i;
-        //     cards[i].SetLevel(tmpLevel);
-        // }
-        
-        // for (int i = 0; i < cards.Length; i++)
-        // {
-        //     // 設定等級
-        //     int tmpLevel = start + i;
-        //     // cards[i].SetLevel(tmpLevel);
-        //     
-        //     cards[i].SetLevelRewards(rewards[i], tmpLevel);
-        //     if (level >= 40)
-        //     {
-        //         cards[i].SetSelect(false);
-        //         cards[i].IsGet(true);
-        //     }
-        //     else
-        //     {
-        //         cards[i].SetSelect(false);
-        //         cards[i].IsGet(false);
-        //     }
-        // }
-        //
-        // //Find current level
-        // int index = level % 10;
-        // int now = index == 0 ? 9 : index - 1;
-        // int next = now == 9 ? 0 : now + 1;
-        //
-        // if (now != 9)
-        // {
-        //     cards[now].IsGet(true);
-        //     for (int i = 0; i < now; i++)
-        //     {
-        //         cards[i].IsGet(true);
-        //     }
-        //     // nowLevelCard.SetLevel(level);
-        //     // nowLevelCard.SetData(rewards[now]);
-        //     nowLevelCard.SetLevelRewards(rewards[now], level);
-        // }
-        // else
-        // {
-        //     var lastRewards = App.factory.itemFactory.GetRewardsByTenLevel(App.system.player.Level - 1);
-        //     // nowLevelCard.SetLevel(level);
-        //     // nowLevelCard.SetData(lastRewards.Last());
-        //     nowLevelCard.SetLevelRewards(lastRewards.Last(), level);
-        // }
-        //
-        // if (level >= 40)
-        // {
-        //     cards[next].SetSelect(false);
-        //     // nextLevelCard.SetLevel(level + 1);
-        //     // nextLevelCard.SetData(null);
-        //     nextLevelCard.SetLevelRewards(null, level);
-        // }
-        // else
-        // {
-        //     cards[next].SetSelect(true);
-        //     // nextLevelCard.SetLevel(level + 1);
-        //     // nextLevelCard.SetData(rewards[next]);
-        //     nextLevelCard.SetLevelRewards(rewards[next], level);
-        // }
-        */
-
         if (level > 40)
         {
             for (int i = 0; i < botCards.Length; i++)

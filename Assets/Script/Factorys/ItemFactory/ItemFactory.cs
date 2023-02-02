@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
@@ -80,6 +79,9 @@ public class ItemFactory : SerializedMonoBehaviour
             Item item = items[i];
 
             if (type != 0 && item.itemType != (ItemType)type)
+                continue;
+
+            if (item.itemType == ItemType.Unlock)
                 continue;
 
             result.Add(item);

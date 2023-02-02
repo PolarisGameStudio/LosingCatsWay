@@ -72,7 +72,6 @@ public class Item : ScriptableObject
     [InlineEditor(InlineEditorModes.GUIAndPreview)] public Sprite content;
 
     public bool canUse;
-    public bool notShowAtStore;
     public bool notShowAtBag;
 
     [ShowIf("@itemType == ItemType.CatSkin")]
@@ -174,12 +173,6 @@ public class Item : ScriptableObject
 
     // 心情的
     public bool ForFun => likeFun > 0;
-
-    // public int UnlockStatus
-    // {
-    //     get => app.system.inventory.UnlockStatus[id];
-    //     set => app.system.inventory.UnlockStatus[id] = value;
-    // }
 
     public bool Unlock
     {

@@ -406,6 +406,8 @@ public class Cat : MvcBehaviour
 
         CancelGame();
 
+        catSkin.SetSkinSlotNull();
+        
         App.system.littleGame.Active(this);
         App.system.catNotify.Remove(this);
 

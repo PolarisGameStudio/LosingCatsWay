@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Doozy.Runtime.UIManager.Containers;
 using Firebase.Firestore;
 using Sirenix.OdinInspector;
+using Spine.Unity;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -116,6 +117,9 @@ public class AbandonSystem : MvcBehaviour
         OpenConfirm();
         
         catSkin.ChangeSkin(selectedCat.cloudCatData);
+        SkeletonGraphic skeletonGraphic = catSkin.skeletonGraphic;
+        skeletonGraphic.AnimationState.SetAnimation(0, "Situation_Cat/Abandoned_1-1", false);
+        skeletonGraphic.AnimationState.AddAnimation(0, "Situation_Cat/Abandoned_1-2", true, 0);
 
         bool isChip = selectedCat.cloudCatData.CatHealthData.IsChip;
         copyButton.interactable = isChip;
@@ -151,6 +155,14 @@ public class AbandonSystem : MvcBehaviour
             selectedCat.cloudCatData.CatSurviveData.UsingLitter = -1;
             App.system.cloudSave.UpdateCloudCatSurviveData(selectedCat.cloudCatData);
 
+            if (!string.IsNullOrEmpty(selectedCat.cloudCatData.CatSkinData.UseSkinId))
+            {
+                Item skinItem = App.factory.itemFactory.GetItem(selectedCat.cloudCatData.CatSkinData.UseSkinId);
+                skinItem.Count++;
+                selectedCat.cloudCatData.CatSkinData.UseSkinId = string.Empty;
+                App.system.cloudSave.UpdateCloudCatSkinData(selectedCat.cloudCatData);
+            }
+            
             item.Count -= 1;
             
             CloseFinalConfirm();

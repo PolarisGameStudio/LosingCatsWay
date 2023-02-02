@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -26,19 +25,18 @@ public class Controller_Shelter : ControllerBehavior
     public void Init()
     {
         App.system.myTime.OnFirstLogin += ResetRefreshPerDay;
-
-        UpdateRefresh();
+        App.system.myTime.OnAlreadyLogin += UpdateRefresh;
         
         freeRefresh.Init();
         adsRefresh.Init();
+        
+        GetCloudCatDatas();
     }
     
     public void Open()
     {
         App.system.bgm.FadeIn().Play("Shelter");
         App.view.shelter.Open();
-        GetCloudCatDatas();
-        scrollbar.value = 0;
     }
 
     public void Close()
@@ -82,6 +80,8 @@ public class Controller_Shelter : ControllerBehavior
             App.view.shelter.cages[i].button.interactable = true;
             App.view.shelter.cages[i].catSkin.SetActive(true);
         }
+        
+        scrollbar.value = 0;
     }
 
     #endregion
@@ -95,7 +95,6 @@ public class Controller_Shelter : ControllerBehavior
             App.system.confirm.Active(ConfirmTable.RefreshConfirm, () => 
             {
                 GetCloudCatDatas();
-                scrollbar.value = 0;
                 
                 OnFreeRefresh?.Invoke();
                 UpdateRefresh();
@@ -110,7 +109,6 @@ public class Controller_Shelter : ControllerBehavior
             {
                 //TODO Ads
                 GetCloudCatDatas();
-                scrollbar.value = 0;
                 
                 OnAdsRefresh?.Invoke();
                 UpdateRefresh();
@@ -145,6 +143,7 @@ public class Controller_Shelter : ControllerBehavior
     {
         freeRefresh.Progress = 0;
         adsRefresh.Progress = 0;
+        UpdateRefresh();
     }
 
     #endregion

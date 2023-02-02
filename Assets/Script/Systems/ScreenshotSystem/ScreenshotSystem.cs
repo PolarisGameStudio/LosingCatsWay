@@ -21,6 +21,11 @@ public class ScreenshotSystem : MvcBehaviour
     public void Close()
     {
         view.InstantHide();
+    }
+
+    public void Cancel()
+    {
+        Close();
         OnScreenshotCancel?.Invoke();
     }
 

@@ -32,16 +32,20 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
         //拒絕
         if (isCat)
         {
-            // 未在倒數不可玩
-            if (item.itemType == ItemType.Play && App.model.cultive.NextCleanDateTime <= App.system.myTime.MyTimeNow)
+            // 玩具拒絕
+            if (item.itemType == ItemType.Play)
             {
-                if (App.model.cultive.CleanLitterCount > 0)
-                    App.controller.cultive.NoLitterCatTalk();
-                else
-                    App.controller.cultive.NoLitterPopUp();
+                // 未在倒數不可玩
+                if (App.model.cultive.NextCleanDateTime <= App.system.myTime.MyTimeNow)
+                {
+                    if (App.model.cultive.CleanLitterCount > 0)
+                        App.controller.cultive.NoLitterCatTalk();
+                    else
+                        App.controller.cultive.NoLitterPopUp();
                 
-                App.controller.cultive.Reject();
-                return;
+                    App.controller.cultive.Reject();
+                    return;
+                }
             }
             
             // 食物拒絕
@@ -53,8 +57,8 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
                     return;
                 }
                 
-                // 飽足大等於100不接受
-                if (cat.cloudCatData.CatSurviveData.Satiety >= 100f)
+                // 飽足大等於91不接受
+                if (cat.cloudCatData.CatSurviveData.Satiety >= 91f)
                 {
                     App.controller.cultive.Reject();
                     return;
@@ -77,8 +81,8 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
                     return;
                 }
                 
-                // 水分大等於100不接受
-                if (cat.cloudCatData.CatSurviveData.Moisture >= 100f)
+                // 水分大等於91不接受
+                if (cat.cloudCatData.CatSurviveData.Moisture >= 91f)
                 {
                     App.controller.cultive.Reject();
                     return;
@@ -106,19 +110,12 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
             // 罐頭拒絕
             if (item.itemType == ItemType.Feed && item.itemFeedType == ItemFeedType.Can)
             {
-                // 飽足大等於100不接受
-                if (cat.cloudCatData.CatSurviveData.Satiety >= 100f)
+                // 飽足大等於91不接受
+                if (cat.cloudCatData.CatSurviveData.Satiety >= 91f)
                 {
                     App.controller.cultive.Reject();
                     return;
                 }
-            }
-            
-            // 貓砂拒絕
-            if (item.itemType == ItemType.Litter)
-            {
-                if (!canChangeLitter)
-                    return;
             }
         }
         
@@ -127,6 +124,9 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
         
         if (item.itemType == ItemType.Litter && !isCat)
         {
+            if (!canChangeLitter)
+                return;
+            
             App.controller.cultive.ChangeLitter();
             return;
         }

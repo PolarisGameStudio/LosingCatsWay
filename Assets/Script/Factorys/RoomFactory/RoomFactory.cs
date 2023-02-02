@@ -32,6 +32,9 @@ public class RoomFactory : SerializedMonoBehaviour
                 if (sortType != (int) room.roomData.roomSortType)
                     continue;
 
+            if (!room.Unlock)
+                continue;
+
             if (type == (int) room.roomData.roomType)
                 tmp.Add(room);
         }

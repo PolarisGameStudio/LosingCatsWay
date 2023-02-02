@@ -91,6 +91,15 @@ public class Room : MvcBehaviour
         }
     }
 
+    public bool Unlock
+    {
+        get
+        {
+            Item item = App.factory.itemFactory.GetItem(roomData.id);
+            return item.Unlock;
+        }
+    }
+
     #endregion
 
     private int endCount;

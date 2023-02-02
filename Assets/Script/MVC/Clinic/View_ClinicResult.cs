@@ -61,7 +61,10 @@ public class View_ClinicResult : ViewBehaviour
         panelRect.localScale = Vector2.zero;
 
         if (cat.cloudCatData.CatHealthData.SickId is "SK001" or "SK002")
-            return;
+        {
+            resultIds.Enqueue("CP001");
+            App.controller.clinic.DoFunction(); // 設定絕症已看診，下次才會顯示不可治療
+        }
         
         ReadResult();
     }
@@ -152,15 +155,11 @@ public class View_ClinicResult : ViewBehaviour
             if (string.IsNullOrEmpty(_sickId))
             {
                 resultIds = new Queue<string>(resultIds.Where(x => x != "CP001")); //客製化病狀單
-                contentGroup.DOFade(0, 0.25f).From(1);
-                DOVirtual.DelayedCall(0.25f, ChangeContent);
-                contentGroup.DOFade(1, 0.25f).From(0).SetDelay(.5f);
+                FadeContent();
             }
             else
             {
-                contentGroup.DOFade(0, 0.25f).From(1);
-                DOVirtual.DelayedCall(0.25f, ChangeContent);
-                contentGroup.DOFade(1, 0.25f).From(0).SetDelay(.5f);
+                FadeContent();
             }
         }
         else
@@ -168,6 +167,13 @@ public class View_ClinicResult : ViewBehaviour
             App.controller.clinic.CloseCheckResult();
             App.controller.clinic.OpenChooseFunction();
         }
+    }
+
+    private void FadeContent()
+    {
+        contentGroup.DOFade(0, 0.25f).From(1);
+        DOVirtual.DelayedCall(0.25f, ChangeContent);
+        contentGroup.DOFade(1, 0.25f).From(0).SetDelay(.5f);
     }
 
     // 病狀單內容

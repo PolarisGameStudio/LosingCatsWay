@@ -65,7 +65,8 @@ public class View_ClinicCheck : ViewBehaviour
 
         if (sickId is "SK001" or "SK002")
         {
-            App.controller.clinic.OpenCheckResult();
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix, App.controller.clinic.OpenCheckResult);
+            // App.controller.clinic.OpenCheckResult();
             return;
         }
         
