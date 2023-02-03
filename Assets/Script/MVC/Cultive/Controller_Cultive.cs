@@ -54,9 +54,14 @@ public class Controller_Cultive : ControllerBehavior
     public CallbackValue OnAddFun;
     public CallbackValue OnAddSatiety;
     public CallbackValue OnAddMoisture;
-
+    
     #region Basic
 
+    public void Init()
+    {
+        DrawDontLikePlay();
+    }
+    
     public void Open()
     {
         closeButton.interactable = !App.system.tutorial.isTutorial;
@@ -279,13 +284,22 @@ public class Controller_Cultive : ControllerBehavior
         catSkeleton.AnimationState.Start -= SetFeedData;
     }
 
+    private void DrawDontLikePlay()
+    {
+        int random = Random.Range(1, 5);
+        App.model.cultive.dontLikePlayId = "ICP" + random.ToString("00000");
+    }
+
     // Drag到貓sensor + ItemType是Tool的話 = 事件
     public void Play()
     {
-        isCanDrag = false;
-
         // 播放動畫
         var item = App.model.cultive.DragItem;
+
+        if (item.id == App.model.cultive.dontLikePlayId)
+            return;
+        
+        isCanDrag = false;
 
         catSkeleton.AnimationState.Start += SetPlayData;
         catSkeleton.AnimationState.Start += SetEndSensor;
@@ -636,8 +650,6 @@ public class Controller_Cultive : ControllerBehavior
 
     public void OpenScreenshot()
     {
-        if (!isCanDrag)
-            return;
         if (isDragging)
             return;
         

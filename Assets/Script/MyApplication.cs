@@ -58,6 +58,7 @@ public class MyApplication : MonoBehaviour
         system.cat.Init();
         controller.pedia.Init();
         controller.shelter.Init();
+        controller.cultive.Init();
 
         await system.post.Init();
 
