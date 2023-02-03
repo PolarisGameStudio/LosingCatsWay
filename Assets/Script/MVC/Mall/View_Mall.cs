@@ -27,6 +27,7 @@ public class View_Mall : ViewBehaviour
     public UIView previewPackageView;
     public Transform previewPackageContent;
     public Item_Mall_Preview previewPackageObject;
+    public Scrollbar previewPackageScrollbar;
 
     [Title("Rules")]
     public UIView ruleView;
@@ -52,6 +53,7 @@ public class View_Mall : ViewBehaviour
     public void OpenPreviewPackageView()
     {
         previewPackageView.Show();
+        previewPackageScrollbar.value = 1;
     }
 
     public void ClosePreviewPackageView()

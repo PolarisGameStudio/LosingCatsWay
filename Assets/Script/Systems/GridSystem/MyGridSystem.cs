@@ -1,9 +1,6 @@
 using System;
-using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
-using CodeMonkey.Utils;
-using Lean.Common;
 using Lean.Touch;
 using UnityEngine;
 using DG.Tweening;
@@ -22,9 +19,6 @@ public class MyGridSystem : MvcBehaviour
 
     public int maxHomeParticle;
 
-    //討論結束再public
-    public int maxHomeLight;
-    
     [Title("Build")]
     public GameObject buildTmp;
     public GameObject buildTmpCircle;
@@ -331,7 +325,7 @@ public class MyGridSystem : MvcBehaviour
         }
     }
 
-    void SetHomeParticle()
+    private void SetHomeParticle()
     {
         int homeParticleCount = 0;
 

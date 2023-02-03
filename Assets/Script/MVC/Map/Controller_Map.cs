@@ -84,6 +84,7 @@ public class Controller_Map : ControllerBehavior
         App.system.transition.Active(0, () =>
         {
             App.view.map.Close();
+            App.system.grid.SetCameraToOrigin();
             DOVirtual.DelayedCall(0.175f, App.controller.lobby.Open);
         });
     }
