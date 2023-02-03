@@ -209,7 +209,7 @@ public class Controller_Shelter : ControllerBehavior
             return;
         }
 
-        App.system.confirm.Active(ConfirmTable.AdoptConfirm, okEvent:() =>
+        App.system.confirm.Active(ConfirmTable.AdoptConfirm, okEvent: () =>
         {
             var cloudCatData = App.model.shelter.SelectedAdoptCloudCatData;
 

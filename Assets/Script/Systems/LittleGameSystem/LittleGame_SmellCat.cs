@@ -26,26 +26,6 @@ public class LittleGame_SmellCat : LittleGame
 
     public void SmellCat()
     {
-        // cam.orthographicSize -= 0.001f * zoomSpeed;
-        //
-        // App.system.soundEffect.PlayUntilEnd("Button");
-        //
-        // //FillAmount
-        // float distance = originSize - zoomSize;
-        // fillCircle.fillAmount += 0.001f * zoomSpeed / distance;
-        //
-        // if (cam.orthographicSize <= zoomSize)
-        // {
-        //     cam.orthographicSize = originSize;
-        //     Close();
-        //     Success();
-        //     cat.catHeartEffect.Play();
-        //     OpenLobby();
-        //         
-        //     //ExitAnim
-        //     anim.SetBool(CatAnimTable.IsCanExit.ToString(), true);
-        // }
-
         cam.orthographicSize -= zoomSpeed;
         fillCircle.fillAmount += fillSpeed;
         
@@ -55,9 +35,10 @@ public class LittleGame_SmellCat : LittleGame
         {
             Close();
             cam.orthographicSize = originSize;
-            Success();
             cat.catHeartEffect.Play();
-            OpenLobby();
+            // Success();
+            // OpenLobby();
+            SuccessToLobby();
             
             //ExitAnim
             anim.SetBool(CatAnimTable.IsCanExit.ToString(), true);

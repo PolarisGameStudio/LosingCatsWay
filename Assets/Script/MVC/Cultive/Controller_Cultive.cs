@@ -900,7 +900,7 @@ public class Controller_Cultive : ControllerBehavior
     //TODO Debug
     public void DebugSick()
     {
-        App.model.cultive.SelectedCat.cloudCatData.CatHealthData.SickId = "SK002";
+        App.model.cultive.SelectedCat.cloudCatData.CatHealthData.SickId = "SK008";
         App.model.cultive.SelectedCat.cloudCatData.CatHealthData.MetDoctorCount =
             App.factory.sickFactory.GetMetCount(App.model.cultive.SelectedCat.cloudCatData.CatHealthData.SickId);
         App.model.cultive.SelectedCat.ChangeSkin();

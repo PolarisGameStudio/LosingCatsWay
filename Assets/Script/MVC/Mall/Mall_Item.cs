@@ -24,4 +24,18 @@ public class Mall_Item : ScriptableObject
     
     [HideIf("@refreshType == MallItemRefreshType.Infinity")] 
     public bool isSesson;
+
+    private MyApplication myApp = null;
+    private MyApplication app
+    {
+        get
+        {
+            if (myApp == null)
+                myApp = FindObjectOfType<MyApplication>();
+            
+            return myApp;
+        }
+    }
+
+    public string Name => app.factory.stringFactory.GetMallItemName(id);
 }

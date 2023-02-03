@@ -28,9 +28,8 @@ public class LittleGame_TouchCat : LittleGame
 
             //ExitAnim
             anim.SetBool(CatAnimTable.IsCanExit.ToString(), true);
-            Success();
             cat.catHeartEffect.Play();
-            OpenLobby();
+            SuccessToLobby();
         }
     }
 }

@@ -44,12 +44,13 @@ public class LittleGame_Ass : LittleGame
         if (tmpClick == 0)
         {
             Close();
-            Success();
             cat.catHeartEffect.Play();
             cat.hand.gameObject.SetActive(false);
             //ExitAnim
             anim.SetBool(CatAnimTable.IsCanExit.ToString(), true);
-            OpenLobby();
+            // Success();
+            // OpenLobby();
+            SuccessToLobby();
         }
     }
 

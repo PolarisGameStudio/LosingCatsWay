@@ -11,7 +11,7 @@ public class Mall_CatSkin_FAA00002 : Mall_CatSkin
         CloudCatData cloudCatData = new CloudCatData();
         cloudCatData.CatSkinData = new CloudSave_CatSkinData();
         cloudCatData.CatSkinData.UseSkinId = "Magic_Hat";
-        catSkin.SetSkin(cloudCatData);
+        catSkin.SetUsingSkin(cloudCatData);
         catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "SSR_Main/Magic_Shopidle", true);
     }
 }

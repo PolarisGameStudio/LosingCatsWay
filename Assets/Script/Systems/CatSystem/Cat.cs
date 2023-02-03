@@ -290,6 +290,12 @@ public class Cat : MvcBehaviour
     [Button]
     public void DrawGame()
     {
+        if (isPauseGame)
+        {
+            Debug.LogWarning("生病不能玩");
+            return;
+        }
+        
         CancelInvoke(nameof(CountTimerDrawGame));
         if (App.system.bigGames.GetBigGames().Count > 0)
         {
@@ -335,6 +341,9 @@ public class Cat : MvcBehaviour
     [Button]
     public void CancelGame()
     {
+        if (isPauseGame)
+            return;
+        
         CancelInvoke(nameof(CountTimerCancelGame));
         CloseBigGame();
         CloseLittleGame();
@@ -399,12 +408,12 @@ public class Cat : MvcBehaviour
         if (App.model.build.IsCanMoveOrRemove)
             return;
         
-        if (isPauseGame)
-            return;
-
         CancelGame();
 
-        catSkin.SetSkinSlotNull();
+        if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) != 0)
+        {
+            catSkin.SetUsingSkinNull();
+        }
         
         App.system.littleGame.Active(this);
         App.system.catNotify.Remove(this);
@@ -418,9 +427,6 @@ public class Cat : MvcBehaviour
             return;
 
         if (App.model.build.IsCanMoveOrRemove)
-            return;
-
-        if (isPauseGame)
             return;
 
         CancelGame();
@@ -502,7 +508,8 @@ public class Cat : MvcBehaviour
         GetLikeSnack();
         GetLikeSoup();
 
-        if (cloudCatData.CatServerData.IsDead) return;
+        if (cloudCatData.CatServerData.IsDead)
+            return;
         
         if (cloudCatData.CatHealthData.SickId is "SK001" or "SK002")
         {
@@ -518,7 +525,8 @@ public class Cat : MvcBehaviour
         
         CheckNaturalDead();
         
-        if (cloudCatData.CatServerData.IsDead) return;
+        if (cloudCatData.CatServerData.IsDead)
+            return;
 
         //表定順序
         if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
@@ -670,6 +678,10 @@ public class Cat : MvcBehaviour
     public void ChangeSkin()
     {
         catSkin.ChangeSkin(cloudCatData);
+
+        Card_CatNotify cardCatNotify = App.system.catNotify.GetNotify(this);
+        if (cardCatNotify != null)
+            cardCatNotify.SetData(this);
     }
 
     public void CloseFace()

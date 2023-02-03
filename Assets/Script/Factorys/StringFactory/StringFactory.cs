@@ -5,28 +5,30 @@ using UnityEngine;
 
 public class StringFactory : SerializedMonoBehaviour
 {
-    [Title("Room")] [SerializeField] private Dictionary<string, StringData> RoomNameData;
+    [Title("Room")] 
+    [SerializeField] private Dictionary<string, StringData> RoomNameData;
 
-    [Title("Item")] [SerializeField] private Dictionary<string, StringData> ItemName;
+    [Title("Item")] 
+    [SerializeField] private Dictionary<string, StringData> ItemName;
     [SerializeField] private Dictionary<string, StringData> ItemDescription;
     [SerializeField] private Dictionary<string, StringData> UseItemTitle = new Dictionary<string, StringData>();
     [SerializeField] private Dictionary<string, StringData> ItemType;
 
-    [Title("Character")] [SerializeField] private Dictionary<string, StringData> CharacterName;
+    [Title("Character")] 
+    [SerializeField] private Dictionary<string, StringData> CharacterName;
 
-    [Title("CatNotify")] [SerializeField]
-    private Dictionary<string, StringData> CatNotifyData = new Dictionary<string, StringData>();
+    [Title("CatNotify")]
+    [SerializeField] private Dictionary<string, StringData> CatNotifyData = new Dictionary<string, StringData>();
 
-    [Title("Confirm")] [SerializeField]
-    private Dictionary<string, StringData> ConfirmTitleData = new Dictionary<string, StringData>();
-
+    [Title("Confirm")] 
+    [SerializeField] private Dictionary<string, StringData> ConfirmTitleData = new Dictionary<string, StringData>();
     [SerializeField] private Dictionary<string, StringData> ConfirmContentData = new Dictionary<string, StringData>();
 
-    [Title("Npc")] [SerializeField]
-    private Dictionary<string, StringData> NpcData = new Dictionary<string, StringData>();
+    [Title("Npc")] 
+    [SerializeField] private Dictionary<string, StringData> NpcData = new Dictionary<string, StringData>();
 
-    [Title("Quest")] [SerializeField]
-    private Dictionary<string, StringData> QuestData = new Dictionary<string, StringData>();
+    [Title("Quest")] 
+    [SerializeField] private Dictionary<string, StringData> QuestData = new Dictionary<string, StringData>();
     [SerializeField] private Dictionary<string, StringData> QuestTitleData = new Dictionary<string, StringData>();
 
     [Title("Cat")] 
@@ -35,12 +37,11 @@ public class StringFactory : SerializedMonoBehaviour
     [SerializeField] private Dictionary<string, StringData> PersonalityData = new Dictionary<string, StringData>();
     [SerializeField] private Dictionary<string, StringData> TraitData = new Dictionary<string, StringData>();
 
-    [Title("Unlock")] [SerializeField]
-    private Dictionary<string, StringData> UnlockData = new Dictionary<string, StringData>();
+    [Title("Unlock")] 
+    [SerializeField] private Dictionary<string, StringData> UnlockData = new Dictionary<string, StringData>();
 
-    [Title("Diary")] [SerializeField]
-    private Dictionary<string, StringData> DiaryTitle_A = new Dictionary<string, StringData>();
-
+    [Title("Diary")]
+    [SerializeField] private Dictionary<string, StringData> DiaryTitle_A = new Dictionary<string, StringData>();
     [SerializeField] private Dictionary<string, StringData> DiaryTitle_B = new Dictionary<string, StringData>();
     [SerializeField] private Dictionary<string, StringData> DiaryTitle_C = new Dictionary<string, StringData>();
     [SerializeField] private Dictionary<string, StringData> DiaryTitle_D = new Dictionary<string, StringData>();
@@ -55,27 +56,33 @@ public class StringFactory : SerializedMonoBehaviour
     [SerializeField] private Dictionary<string, StringData> PediaTitle = new Dictionary<string, StringData>();
     [SerializeField] private Dictionary<string, StringData> PediaContent = new Dictionary<string, StringData>();
 
-    [Title("Game")] [SerializeField]
-    private Dictionary<string, StringData> GameString = new Dictionary<string, StringData>();
+    [Title("Game")]
+    [SerializeField] private Dictionary<string, StringData> GameString = new Dictionary<string, StringData>();
 
-    [Title("Gender")] [SerializeField] private Dictionary<string, string> boyString = new Dictionary<string, string>();
+    [Title("Gender")]
+    [SerializeField] private Dictionary<string, string> boyString = new Dictionary<string, string>();
     [SerializeField] private Dictionary<string, string> girlString = new Dictionary<string, string>();
 
     [Title("Health")]
     [SerializeField] private Dictionary<string, StringData> sickName;
     [SerializeField] private Dictionary<string, StringData> sickInfo;
 
-    [Title("AgeLevel")] [SerializeField]
-    private Dictionary<string, StringData> ageLevelStringDatas;
+    [Title("AgeLevel")]
+    [SerializeField] private Dictionary<string, StringData> ageLevelStringDatas;
 
-    [Title("FindCat")] [SerializeField]
-    private Dictionary<string, StringData> MapNameData = new Dictionary<string, StringData>();
+    [Title("FindCat")]
+    [SerializeField] private Dictionary<string, StringData> MapNameData = new Dictionary<string, StringData>();
     [SerializeField] private Dictionary<string, StringData> MapContentData = new Dictionary<string, StringData>();
 
-    [Title("Clinic")] [SerializeField] private Dictionary<string, StringData> paymentName;
+    [Title("Clinic")]
+    [SerializeField] private Dictionary<string, StringData> paymentName;
     [SerializeField] private Dictionary<string, StringData> paymentInfo;
 
-    [Title("CatchCat")] [SerializeField] private Dictionary<string, StringData> CatchCatHints;
+    [Title("CatchCat")]
+    [SerializeField] private Dictionary<string, StringData> CatchCatHints;
+
+    [Title("Mall")]
+    [SerializeField] private Dictionary<string, StringData> MallItemName;
 
     private string countryId = "tw";
 
@@ -457,6 +464,14 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = CatchCatHints[CountryId].Contents.ContainsKey(id)
             ? CatchCatHints[CountryId].Contents[id]
+            : "要叫阿邦上";
+        return result;
+    }
+
+    public string GetMallItemName(string id)
+    {
+        string result = MallItemName[CountryId].Contents.ContainsKey(id)
+            ? MallItemName[CountryId].Contents[id]
             : "要叫阿邦上";
         return result;
     }

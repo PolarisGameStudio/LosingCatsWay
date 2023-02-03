@@ -71,20 +71,22 @@ public class LittleGame_Hand : LittleGame
                 Close();
                 if (isSuccess)
                 {
-                    Success();
+                    //Success();
+                    SuccessToLobby();
                     cat.catHeartEffect.Play();
                     //Anim
                     anim.SetBool(CatAnimTable.LittleGameHandEndStatus.ToString(), true);
                 }
                 else
                 {
-                    Failed();
+                    //Failed();
+                    FailedToLobby();
                     //Anim
                     anim.SetBool(CatAnimTable.LittleGameHandEndStatus.ToString(), false);
                 }
                 
                 anim.SetBool(CatAnimTable.IsCanExit.ToString(), true);
-                OpenLobby();
+                //OpenLobby();
             });
         }).SetEase(Ease.OutBack);
     }

@@ -49,14 +49,11 @@ public class SickFactory : SerializedMonoBehaviour
     public string GetCatSick(CloudCatData cloudCatData)
     {
         int ageLevel = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays);
-        bool isVaccine = cloudCatData.CatHealthData.IsVaccine;
         bool isBoy = cloudCatData.CatData.Sex == 0;
         float percent;
 
         if (ageLevel == 0)
         {
-            if (!isVaccine && Random.value < 0.03f)
-                return vaccineSicks.GetRandom();
             if (cloudCatData.CatSurviveData.RealSatiety <= 0)
                 return "SK011";
             if (cloudCatData.CatSurviveData.RealMoisture <= 0)

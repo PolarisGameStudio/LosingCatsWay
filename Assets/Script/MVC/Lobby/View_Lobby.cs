@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Coffee.UIExtensions;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -43,6 +44,11 @@ public class View_Lobby : ViewBehaviour
     [Title("CardCatNotifies")] 
     public Transform cardCatNotifyContent;
 
+    [Title("Particle")]
+    [SerializeField] private UIParticle expParticle;
+    [SerializeField] private UIParticle moneyParticle;
+    [SerializeField] private UIParticle diamondParticle;
+
     public override void Open()
     {
         UIView.InstantShow();
@@ -82,6 +88,11 @@ public class View_Lobby : ViewBehaviour
         App.system.player.OnDiamondChange += OnDiamondChange;
         App.system.player.OnUsingIconChange += OnUsingIconChange;
         App.system.player.OnUsingAvatarChange += OnUsingAvatarChange;
+        
+        //噴
+        App.system.player.OnAddCoinChange += OnAddCoinChange;
+        App.system.player.OnAddDiamondChange += OnAddDiamondChange;
+        App.system.player.OnAddExpChange += OnAddExpChange;
 
         App.system.cat.OnCatsChange += OnCatsChange;
         App.system.room.OnRoomsChange += OnRoomsChange;
@@ -98,6 +109,22 @@ public class View_Lobby : ViewBehaviour
         }
 
         #endregion
+    }
+
+    private void OnAddExpChange(object value)
+    {
+        expParticle.Play();
+        //TODO 吸完再加UI條
+    }
+
+    private void OnAddDiamondChange(object value)
+    {
+        diamondParticle.Play();
+    }
+
+    private void OnAddCoinChange(object value)
+    {
+        moneyParticle.Play();
     }
 
     private void OnUsingAvatarChange(object value)

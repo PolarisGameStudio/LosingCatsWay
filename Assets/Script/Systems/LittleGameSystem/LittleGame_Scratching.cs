@@ -30,8 +30,9 @@ public class LittleGame_Scratching : LittleGame
 
             //ExitAnim
             anim.SetBool(CatAnimTable.IsCanExit.ToString(), true);
-            Success();
-            OpenLobby();
+            // Success();
+            // OpenLobby();
+            SuccessToLobby();
         }
     }
 }

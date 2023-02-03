@@ -40,15 +40,29 @@ public abstract class LittleGame : MvcBehaviour
         App.controller.followCat.CloseByOpenLobby();
     }
 
-    public void Success()
+    protected void SuccessToLobby()
     {
+        App.controller.lobby.OnLobbyDelayOpen += Success;
+        App.controller.followCat.CloseByOpenLobby();
+    }
+
+    protected void FailedToLobby()
+    {
+        App.controller.lobby.OnLobbyDelayOpen += Failed;
+        App.controller.followCat.CloseByOpenLobby();
+    }
+
+    private void Success()
+    {
+        App.controller.lobby.OnLobbyDelayOpen -= Success;
         int exp = App.system.player.playerDataSetting.LittleGameExp;
         int coin = App.system.player.playerDataSetting.GetLittleGameCoinsByLevel(App.system.player.Level);
         cat.CatRewardCanvas.PopReward(exp, coin);
     }
 
-    public void Failed()
+    private void Failed()
     {
+        App.controller.lobby.OnLobbyDelayOpen -= Failed;
         int exp = App.system.player.playerDataSetting.LittleGameExp;
         cat.CatRewardCanvas.PopReward(exp, 0);
     }

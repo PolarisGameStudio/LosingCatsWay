@@ -4,10 +4,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Spine;
 using Spine.Unity;
-using Spine.Unity.AttachmentTools;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 public class CatSkin : MvcBehaviour
 {
@@ -114,9 +111,9 @@ public class CatSkin : MvcBehaviour
             ChangeCatSkin(cloudCatData);
             
             if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
-                SetSkin(cloudCatData);
+                SetUsingSkin(cloudCatData);
             else
-                SetSkinSlotNull();
+                SetUsingSkinNull();
         }
         else
             ChangeKittySkin(cloudCatData);
@@ -144,12 +141,7 @@ public class CatSkin : MvcBehaviour
         
             var catData = cloudCatData.CatData;
             var catSkinData = cloudCatData.CatSkinData;
-            Skeleton catSkeleton = null;
-
-            if (isGUI)
-                catSkeleton = skeletonGraphic.Skeleton;
-            else
-                catSkeleton = skeletonMecanim.Skeleton;
+            Skeleton catSkeleton = GetCatSkeleton();
             
             var variety = catData.Variety.Replace('_', '-');
 
@@ -279,10 +271,13 @@ public class CatSkin : MvcBehaviour
     {
         CloseSickEye();
         
-        if (!isAdult)
-            return;
-        
         Skeleton catSkeleton = GetCatSkeleton();
+        
+        if (!isAdult)
+        {
+            catSkeleton.SetAttachment(sick_Expression_Flush, null);
+            return;
+        }
         
         catSkeleton.SetAttachment(sick_Expression_Flush, null);
         
@@ -344,13 +339,7 @@ public class CatSkin : MvcBehaviour
             transform.localPosition = kittyGuiPosition;
         }
         
-        SetSickSlotNull(false);
-        
-        Skeleton catSkeleton = null;
-        if (isGUI)
-            catSkeleton = skeletonGraphic.Skeleton;
-        else
-            catSkeleton = skeletonMecanim.Skeleton;
+        Skeleton catSkeleton = GetCatSkeleton();
         
         var catSickId = cloudCatData.CatHealthData.SickId;
         if (!string.IsNullOrEmpty(catSickId) || cloudCatData.CatHealthData.IsBug)
@@ -364,7 +353,10 @@ public class CatSkin : MvcBehaviour
             //     catSkeleton.SetAttachment(ringworm_1, ringworm_1);
         }
         else
+        {
+            SetSickSlotNull(false);
             OpenEye(cloudCatData);
+        }
 
         SetKittyCatBodyScale();
     }
@@ -420,12 +412,7 @@ public class CatSkin : MvcBehaviour
 
     public void SetAngry()
     {
-        Skeleton catSkeleton = null;
-
-        if (isGUI)
-            catSkeleton = skeletonGraphic.Skeleton;
-        else
-            catSkeleton = skeletonMecanim.Skeleton;
+        Skeleton catSkeleton = GetCatSkeleton();
 
         CloseFace();
         catSkeleton.SetAttachment(slot_faceAngry, key_faceAngry);
@@ -433,12 +420,7 @@ public class CatSkin : MvcBehaviour
     
     public void SetCold()
     {
-        Skeleton catSkeleton = null;
-        
-        if (isGUI)
-            catSkeleton = skeletonGraphic.Skeleton;
-        else
-            catSkeleton = skeletonMecanim.Skeleton;
+        Skeleton catSkeleton = GetCatSkeleton();
         
         CloseFace();
         catSkeleton.SetAttachment(slot_faceCold, key_faceCold);
@@ -446,12 +428,7 @@ public class CatSkin : MvcBehaviour
 
     public void SetCry()
     {
-        Skeleton catSkeleton = null;
-        
-        if (isGUI)
-            catSkeleton = skeletonGraphic.Skeleton;
-        else
-            catSkeleton = skeletonMecanim.Skeleton;
+        Skeleton catSkeleton = GetCatSkeleton();
         
         CloseFace();
         catSkeleton.SetAttachment(slot_faceCry, key_faceCry);
@@ -459,12 +436,7 @@ public class CatSkin : MvcBehaviour
     
     public void SetSinisterSmile()
     {
-        Skeleton catSkeleton = null;
-        
-        if (isGUI)
-            catSkeleton = skeletonGraphic.Skeleton;
-        else
-            catSkeleton = skeletonMecanim.Skeleton;
+        Skeleton catSkeleton = GetCatSkeleton();
         
         CloseFace();
         // catSkeleton.SetAttachment(slot_faceSinisterSmile, key_sinisterSmile);
@@ -472,12 +444,7 @@ public class CatSkin : MvcBehaviour
 
     public void SetLove()
     {
-        Skeleton catSkeleton = null;
-        
-        if (isGUI)
-            catSkeleton = skeletonGraphic.Skeleton;
-        else
-            catSkeleton = skeletonMecanim.Skeleton;
+        Skeleton catSkeleton = GetCatSkeleton();
         
         CloseFace();
         catSkeleton.SetAttachment(slot_faceLove, key_faceLove);
@@ -485,12 +452,7 @@ public class CatSkin : MvcBehaviour
 
     public void SetDocile()
     {
-        Skeleton catSkeleton = null;
-        
-        if (isGUI)
-            catSkeleton = skeletonGraphic.Skeleton;
-        else
-            catSkeleton = skeletonMecanim.Skeleton;
+        Skeleton catSkeleton = GetCatSkeleton();
         
         CloseFace();
         catSkeleton.SetAttachment(slot_faceDocile, key_docile);
@@ -512,11 +474,11 @@ public class CatSkin : MvcBehaviour
 
     #region Skin
 
-    public void SetSkin(CloudCatData cloudCatData)
+    public void SetUsingSkin(CloudCatData cloudCatData)
     {
         var useSkinId = cloudCatData.CatSkinData.UseSkinId;
 
-        SetSkinSlotNull();
+        SetUsingSkinNull();
         
         if (String.IsNullOrEmpty(useSkinId))
         {
@@ -526,13 +488,8 @@ public class CatSkin : MvcBehaviour
             
             return;
         }
-        
-        Skeleton catSkeleton = null;
-        
-        if (isGUI)
-            catSkeleton = skeletonGraphic.Skeleton;
-        else
-            catSkeleton = skeletonMecanim.Skeleton;
+
+        Skeleton catSkeleton = GetCatSkeleton();
 
         // 要顯示的
         switch (useSkinId)
@@ -588,7 +545,7 @@ public class CatSkin : MvcBehaviour
         }
     }
 
-    public void SetSkinSlotNull()
+    public void SetUsingSkinNull()
     {
         Skeleton catSkeleton = GetCatSkeleton();
         

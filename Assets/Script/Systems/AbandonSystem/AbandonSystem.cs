@@ -141,7 +141,7 @@ public class AbandonSystem : MvcBehaviour
             return;
         }
         
-        App.system.confirm.Active(ConfirmTable.AbandonCatConfirm, okEvent:() => 
+        App.system.confirm.Active(ConfirmTable.AbandonCatConfirm, okEvent: () => 
         {
             //Notify
             App.system.catNotify.Remove(selectedCat);

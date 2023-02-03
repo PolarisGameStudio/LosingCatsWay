@@ -36,7 +36,9 @@ public class PlayerSystem : SerializedMonoBehaviour
     public ValueChange OnPlayerIdChange;
     public ValueChange OnPlayerNameChange;
     public ValueChange OnLevelChange;
+    
     public ValueChangeFromTo OnExpChange;
+    public ValueChange OnAddExpChange;
     
     public ValueChange OnCoinChange;
     public ValueChange OnAddCoinChange;
@@ -288,6 +290,7 @@ public class PlayerSystem : SerializedMonoBehaviour
     {
         int result = Exp + value;
         int nextExp = playerDataSetting.GetNextLevelUpExp(Level);
+        OnAddExpChange?.Invoke(value);
 
         // 判斷 是否會升等
         if (result >= nextExp)

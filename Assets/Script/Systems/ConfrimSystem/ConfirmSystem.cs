@@ -28,7 +28,7 @@ public class ConfirmSystem : MvcBehaviour
         return this;
     }
 
-    public ConfirmSystem Active(ConfirmTable key, UnityAction okEvent = null, UnityAction cancelEvent = null)
+    public void Active(ConfirmTable key, UnityAction okEvent = null, UnityAction cancelEvent = null)
     {
         UnityAction action = () =>
         {
@@ -49,11 +49,10 @@ public class ConfirmSystem : MvcBehaviour
         {
             action.Invoke();
         }
-
-        return this;
     }
     
-    public ConfirmSystem ActiveByInsert(ConfirmTable key, string titleInsert = "", string contentInsert = "", UnityAction okEvent = null, UnityAction cancelEvent = null)
+    public void ActiveByInsert(ConfirmTable key, string titleInsert = "", string contentInsert = "",
+        UnityAction okEvent = null, UnityAction cancelEvent = null)
     {
         UnityAction action = () =>
         {
@@ -77,8 +76,6 @@ public class ConfirmSystem : MvcBehaviour
         {
             action.Invoke();
         }
-
-        return this;
     }
 
     IEnumerator WaitUntilClose(UnityAction action)

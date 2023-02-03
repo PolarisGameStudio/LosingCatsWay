@@ -125,9 +125,11 @@ public class MallContainer : ViewBehaviour
 
     public void BuyItem(int index)
     {
-        App.system.confirm.Active(ConfirmTable.BuyConfirm, () =>
+        var itemMall = mallItems[index];
+        
+        App.system.confirm.ActiveByInsert(ConfirmTable.BuyConfirm, string.Empty, itemMall.Name, () =>
         {
-            var itemMall = mallItems[index];
+            // var itemMall = mallItems[index];
 
             if (itemMall.itemBoughtType == ItemBoughtType.Free)
             {
@@ -164,6 +166,6 @@ public class MallContainer : ViewBehaviour
     public void OnPurchaseFailed(Product product, PurchaseFailureReason purchaseFailureReason)
     {
         App.system.waiting.Close();
-        App.system.confirm.Active(ConfirmTable.FindGameFailed);
+        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
     }
 }
