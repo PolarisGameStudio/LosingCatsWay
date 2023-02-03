@@ -44,7 +44,7 @@ public class Cat : MvcBehaviour
 
     #endregion
 
-    private Room specialSpineRoom;
+    public Room specialSpineRoom;
 
     public void Active()
     {
@@ -211,11 +211,9 @@ public class Cat : MvcBehaviour
         anim.Play("SpecialSpine");
         
         specialSpineRoom.PlaySpecialSpine();
-        
-        specialSpineRoom.spcialSpineIsUse = false;
         CancelInvoke("WaitMoveEnd");
     }
-
+    
     public void RandomMoveAtRoom()
     {
         FriendRoom_GridSystem friendGridSystem = null;
