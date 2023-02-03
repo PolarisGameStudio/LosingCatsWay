@@ -11,6 +11,11 @@ public class Controller_GreenHouse : ControllerBehavior
 
     #region Basic
 
+    public void Init()
+    {
+        App.view.greenHouse.RefreshGreenHousePlace();
+    }
+
     public void Open()
     {
         App.system.bgm.FadeIn().Play("GreenHouse");
@@ -65,8 +70,25 @@ public class Controller_GreenHouse : ControllerBehavior
 
     public void OpenChooseFlower(int index)
     {
-        chooseFlower.Show();
+        int positionIndex = index;
+        int pageIndex = 0; 
 
+        var greenHouseData =
+            App.model.greenHouse.GreenHouseDatas.Find(x => x.Page == pageIndex && x.Position == positionIndex);
+
+        if (greenHouseData != null)
+        {
+            App.system.confirm.Active(ConfirmTable.Fix, () =>
+            {
+                App.model.greenHouse.GreenHouseDatas.Remove(greenHouseData);
+                App.view.greenHouse.RefreshGreenHousePlace();
+            });
+            chooseFlower.Hide();
+            return;
+        }
+        
+        chooseFlower.Show();
+        
         List<CloudLosingCatData> cloudLosingCatDatas =
             App.model.cloister.LosingCatDatas.FindAll(x => x.LosingCatStatus.Contains("Flower"));
 
@@ -84,10 +106,26 @@ public class Controller_GreenHouse : ControllerBehavior
             }
         }
 
-        print(cloudLosingCatDatas.Count);
-        print(greenHouseDatas.Count);
-
         App.model.greenHouse.ChooseFlowers = cloudLosingCatDatas;
+        App.model.greenHouse.selectPositionIndex = index;
+    }
+
+    public void ChooseFlower(int index)
+    {
+        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        {
+            int flowerIndex = index;
+            int positionIndex = App.model.greenHouse.selectPositionIndex;
+
+            GreenHouseData greenHouseData = new GreenHouseData();
+            greenHouseData.Page = 0;
+            greenHouseData.Position = positionIndex;
+            greenHouseData.FlowerID = App.model.greenHouse.ChooseFlowers[flowerIndex].CatData.CatId;
+
+            App.model.greenHouse.GreenHouseDatas.Add(greenHouseData);
+            App.view.greenHouse.RefreshGreenHousePlace();
+            CloseChooseFlower();
+        });
     }
 
     public void CloseChooseFlower()

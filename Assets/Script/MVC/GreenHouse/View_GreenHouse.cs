@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class View_GreenHouse : ViewBehaviour
 {
+    // GreenHouseDatas
+    public GreenHouse_PlaceObject[] places;
+
     // ChooseCat
     public GreenHouse_PlaceObject chooseFlowerObject;
     public Transform chooseFlowerContent;
@@ -12,16 +15,25 @@ public class View_GreenHouse : ViewBehaviour
     public override void Init()
     {
         base.Init();
-        App.model.greenHouse.OnGreenHouseDatasChange += OnGreenHouseDatasChange;
         App.model.greenHouse.OnChooseFlowersChange += OnChooseFlowersChange;
     }
 
-    private void OnGreenHouseDatasChange(object value)
+    public void RefreshGreenHousePlace()
     {
-        List<GreenHouseData> greenHouseDatas = (List<GreenHouseData>)value;
+        for (int i = 0; i < places.Length; i++)
+        {
+            places[i].Close();
+        }
         
+        List<GreenHouseData> greenHouseDatas = App.model.greenHouse.GreenHouseDatas;
+
+        for (int i = 0; i < greenHouseDatas.Count; i++)
+        {
+            var data = App.model.cloister.LosingCatDatas.Find(x => x.CatData.CatId == greenHouseDatas[i].FlowerID);
+            places[greenHouseDatas[i].Position].Active(data);
+        }
     }
-    
+
     private void OnChooseFlowersChange(object value)
     {
         for (int i = 0; i < chooseFlowerContent.childCount; i++)
