@@ -91,8 +91,10 @@ public class MyApplication : MonoBehaviour
         system.myTime.Init();
 
         // myTime 弄死貓之後再叫
-        controller.cloister.Init();
-
+        await controller.cloister.Init();
+        print(model.cloister.LosingCatDatas.Count);
+        controller.greenHouse.Init();
+        
         await system.mail.Init();
 
         system.cat.CheckAngelCat();

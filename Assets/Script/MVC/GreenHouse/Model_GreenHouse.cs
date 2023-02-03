@@ -7,14 +7,12 @@ public class Model_GreenHouse : ModelBehavior
     private List<GreenHouseData> greenHouseDatas;
     private List<CloudLosingCatData> chooseFlowers;
 
+    public int selectPositionIndex;
+    
     public List<GreenHouseData> GreenHouseDatas
     {
         get => greenHouseDatas;
-        set
-        {
-            greenHouseDatas = value;
-            OnGreenHouseDatasChange.Invoke(value);
-        }
+        set => greenHouseDatas = value;
     }
 
     public List<CloudLosingCatData> ChooseFlowers

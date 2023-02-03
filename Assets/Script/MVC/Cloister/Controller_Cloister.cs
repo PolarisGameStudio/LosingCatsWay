@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Controller_Cloister : ControllerBehavior
@@ -8,7 +9,7 @@ public class Controller_Cloister : ControllerBehavior
 
     #region Basic
 
-    public async void Init()
+    public async Task Init()
     {
         var losingCats = await App.system.cloudSave.LoadCloudLosingCatDatas(App.system.player.PlayerId);
         for (int i = losingCats.Count - 1; i >= 0; i--)
