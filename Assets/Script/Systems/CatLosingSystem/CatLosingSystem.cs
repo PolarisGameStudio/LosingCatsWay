@@ -3,21 +3,36 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Doozy.Runtime.UIManager.Containers;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 
 public class CatLosingSystem : MvcBehaviour
 {
     [SerializeField] private UIView _uiView;
+    [SerializeField] private CatSkin catskin;
+    [SerializeField] private TextMeshProUGUI catNameText;
 
-    [Title("DoTween")] [SerializeField] private CanvasGroup letterCanvasGroup;
+    [Title("DoTween")] 
+    [SerializeField] private CanvasGroup letterCanvasGroup;
     [SerializeField] private RectTransform letterRect;
     [SerializeField] private CanvasGroup contentCanvasGroup;
     [SerializeField] private RectTransform paperRect;
     [SerializeField] private CanvasGroup paperCanvasGroup;
 
+    private Cat removeCat;
+    
     [Button]
-    public void Open()
+    public void Active()
     {
+        removeCat = App.system.cat.GetCats()[0];
+        Open(removeCat.cloudCatData);
+    }
+
+    public void Open(CloudCatData cloudCatData)
+    {
+        catskin.ChangeSkin(cloudCatData);
+        catNameText.text = cloudCatData.CatData.CatName;
+        
         //Letter
         letterCanvasGroup.alpha = 0;
         Vector2 letterOrigin = letterRect.anchoredPosition;
@@ -45,11 +60,26 @@ public class CatLosingSystem : MvcBehaviour
         contentCanvasGroup.DOFade(1, 0.35f).From(0).SetDelay(1f);
     }
 
+    public void AdsRescue()
+    {
+        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        {
+            removeCat.cloudCatData.CatSurviveData.Favourbility += 50;
+            _uiView.InstantHide();
+        });
+    }
+
     [Button]
     public void Close()
     {
         App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
+            int randomLocationIndex = Random.Range(0, 2);
+            removeCat.cloudCatData.CatData.Owner = "Location" + randomLocationIndex;
+            
+            App.system.cloudSave.UpdateCloudCatData(removeCat.cloudCatData);
+            App.system.cat.Remove(removeCat);
+
             _uiView.InstantHide();
         });
     }

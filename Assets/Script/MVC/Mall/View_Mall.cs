@@ -71,7 +71,7 @@ public class View_Mall : ViewBehaviour
 
         pages[value2].Open();
         
-        selectedBlock.DOMove(sections[value2].position + new Vector3(0, 27.5f, 0), 0.25f);
+        selectedBlock.DOMove(sections[value2].position + new Vector3(0, 12.75f, 0), 0.25f);
 
         // Text
         var text = sections[value2].GetComponentInChildren<TextMeshProUGUI>().text;

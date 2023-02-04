@@ -164,6 +164,6 @@ public class MallContainer : ViewBehaviour
     public void OnPurchaseFailed(Product product, PurchaseFailureReason purchaseFailureReason)
     {
         App.system.waiting.Close();
-        App.system.confirm.Active(ConfirmTable.FindGameFailed);
+        App.system.confirm.Active(ConfirmTable.Fix);
     }
 }
