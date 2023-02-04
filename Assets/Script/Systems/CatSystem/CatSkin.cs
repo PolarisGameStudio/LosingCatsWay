@@ -116,7 +116,9 @@ public class CatSkin : MvcBehaviour
                 SetUsingSkinNull();
         }
         else
+        {
             ChangeKittySkin(cloudCatData);
+        }
         
         if (wormEffect != null)
             wormEffect.SetActive(cloudCatData.CatHealthData.IsBug);
@@ -243,10 +245,10 @@ public class CatSkin : MvcBehaviour
 
         if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) == 0)
         {
-            catSkeleton.SetAttachment(slot_eyeLeft, slot_eyeLeft);
-            catSkeleton.SetAttachment(slot_eyeRight, slot_eyeRight);
-            catSkeleton.SetAttachment(slot_pupilLeft, key_pupilLeft);
-            catSkeleton.SetAttachment(slot_pupilRight, key_pupilRight);
+            // catSkeleton.SetAttachment(slot_eyeLeft, slot_eyeLeft);
+            // catSkeleton.SetAttachment(slot_eyeRight, slot_eyeRight);
+            // catSkeleton.SetAttachment(slot_pupilLeft, key_pupilLeft);
+            // catSkeleton.SetAttachment(slot_pupilRight, key_pupilRight);
             return;
         }
         

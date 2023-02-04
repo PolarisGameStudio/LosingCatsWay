@@ -70,4 +70,26 @@ public class CatDataSetting : SerializedScriptableObject
             return 0.9f;
         return 1;
     }
+
+    public float SickDeadPercent(int sickLevel, int metCount)
+    {
+        if (sickLevel == 0) // 輕
+        {
+            return 0.05f;
+        }
+
+        if (sickLevel == 1) // 中
+        {
+            if (metCount == 2)
+                return 0.1f;
+            return 0.05f;
+        }
+
+        // 重
+        if (metCount == 3)
+            return 0.15f;
+        if (metCount == 2)
+            return 0.1f;
+        return 0.05f;
+    }
 }

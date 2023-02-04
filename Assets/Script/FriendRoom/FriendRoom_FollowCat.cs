@@ -31,7 +31,6 @@ public class FriendRoom_FollowCat : MonoBehaviour
     public TextMeshProUGUI catAgeText;
     public Image catSexImage;
     public TextMeshProUGUI varietyText;
-    [SerializeField] private TmpRevolving tmpRevolving;
 
     public Image satietyValueImage;
     public Image favorabilityValueImage;
@@ -59,7 +58,6 @@ public class FriendRoom_FollowCat : MonoBehaviour
         SetUI(cat);
 
         catSkin.SetActive(true);
-        tmpRevolving.StartRevolving();
         view.Show();
         friendRoom.Close();
     }
@@ -71,7 +69,6 @@ public class FriendRoom_FollowCat : MonoBehaviour
         isFollowing = false;
 
         catSkin.SetActive(false);
-        tmpRevolving.StopRevolving();
         view.Hide();
         friendRoom.Open();
     }

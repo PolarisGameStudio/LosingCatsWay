@@ -25,6 +25,8 @@ public class ModelContainer : MvcBehaviour
     public Model_FollowCat followCat;
     
     public Model_GreenHouse greenHouse;
+
+    public Model_Hospital hospital;
     
     public Model_Information information;
     

@@ -9,6 +9,7 @@ public class FriendRoom_CatSystem : MonoBehaviour
     [Title("Require")] 
     public FactoryContainer factory;
     public Cat catObject;
+    public Cat kittyObject;
     public Transform catsTransform;
     
     private FriendRoom_RoomSystem roomSystem;
@@ -26,7 +27,11 @@ public class FriendRoom_CatSystem : MonoBehaviour
     
     public void CreateCatObject(CloudCatData cloudCatData)
     {
-        Cat cat = Instantiate(catObject, catsTransform);
+        Cat tmp = catObject;
+        if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) == 0)
+            tmp = kittyObject;
+        
+        Cat cat = Instantiate(tmp, catsTransform);
         cat.SetCloudCatData(cloudCatData);
         cat.isFriendMode = true;
         

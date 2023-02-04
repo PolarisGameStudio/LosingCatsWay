@@ -23,6 +23,8 @@
 
     public View_GreenHouse greenHouse;
 
+    public View_Hospital hospital;
+
     public View_Information information;
 
     public View_Lobby lobby;

@@ -27,26 +27,21 @@ public class CatSystem : MvcBehaviour
     {
         InvokeRepeating(nameof(CheckCatStatus), 0, 180);
 
-        App.system.myTime.OnFirstLogin += DailyCheckCatStatus;
-        App.system.myTime.OnFirstLogin += LoginCheckCatStatus;
-
-        App.system.myTime.OnAlreadyLogin += LoginCheckCatStatus;
+        App.system.myTime.OnFirstLogin += CheckCatsStatusPerDay;
+        App.system.myTime.OnAlreadyLogin += CheckCatsStatusPerLogin;
     }
 
     #region CatStatus
 
-    private void DailyCheckCatStatus()
+    private async void CheckCatsStatusPerDay()
     {
-        for (int i = 0; i < myCats.Count; i++)
-            myCats[i].DailyCheckStatus();
-    }
-
-    private async void LoginCheckCatStatus()
-    {
-        for (int i = 0; i < myCats.Count; i++)
-            myCats[i].LoginCheckStatus();
-
-        for (int i = myCats.Count - 1; i >= 0; i--)
+        for (int i = 0; i < myCats.Count; i++) // 計算上次離開之後的三項
+            myCats[i].CheckCatStatusPerLogin();
+        
+        for (int i = 0; i < myCats.Count; i++) // 檢查會不會死亡 離家出走 生病 跳蚤
+            myCats[i].CheckCatStatusPerDay();
+        
+        for (int i = myCats.Count - 1; i >= 0; i--) // 如果要死就進入死亡流程
             if (myCats[i].cloudCatData.CatServerData.IsDead)
             {
                 if (i == 0)
@@ -57,10 +52,19 @@ public class CatSystem : MvcBehaviour
         App.model.entrance.LosingCatDatas = _losingCatDatas;
     }
 
+    private void CheckCatsStatusPerLogin()
+    {
+        for (int i = 0; i < myCats.Count; i++)
+            myCats[i].CheckCatStatusPerLogin(); // 計算上次離開之後的三項
+    }
+
     private void CheckCatStatus()
     {
         for (int i = 0; i < myCats.Count; i++)
+        {
             myCats[i].CheckStatus();
+            myCats[i].CheckCatSickByStatus();
+        }
     }
 
     #endregion

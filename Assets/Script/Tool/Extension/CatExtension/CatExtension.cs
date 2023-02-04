@@ -54,7 +54,7 @@ public static class CatExtension
 
     public static float GetCatRealValue(int ageLevel, float value)
     {
-        if (ageLevel == 0 || ageLevel == 1)
+        if (ageLevel is 0 or 1)
         {
             if (value >= 90)
                 return 0.2f;
@@ -75,9 +75,9 @@ public static class CatExtension
         if (value >= 50)
             return 0f;
         if (value >= 25)
-            return 0.1f;
+            return -0.1f;
 
-        return 0.15f;
+        return -0.15f;
     }
 
     /// 0: Happy
@@ -152,7 +152,7 @@ public static class CatExtension
         if (bodyScale > 1)
         {
             bodyScale -= 1f;
-            bodyScale /= (1.1f - 0.9f); //預設隨機值
+            bodyScale /= 1.1f - 0.9f; //預設隨機值
             bodyScale *= 1.5f;
             float result = bodyScale + 45f;
             return result;
@@ -160,7 +160,7 @@ public static class CatExtension
         if (bodyScale < 1)
         {
             bodyScale = Mathf.Abs(bodyScale - 1f);
-            bodyScale /= (1.1f - 0.9f); //預設隨機值
+            bodyScale /= 1.1f - 0.9f; //預設隨機值
             bodyScale *= 1.5f;
             float result = 45f - bodyScale;
             return result;

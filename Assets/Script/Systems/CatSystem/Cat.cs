@@ -498,101 +498,118 @@ public class Cat : MvcBehaviour
             SetSatiety();
             SetFavorability();
         }
-        
-        CheckSick();
     }
 
-    // 每天固定一次
-    public void DailyCheckStatus()
-    {
-        GetLikeSnack();
-        GetLikeSoup();
+    // public void DailyCheckStatus() // 每天固定一次
+    // {
+    //     GetLikeSnack();
+    //     GetLikeSoup();
+    //
+    //     if (cloudCatData.CatServerData.IsDead)
+    //         return;
+    //     
+    //     if (cloudCatData.CatHealthData.SickId is "SK001" or "SK002")
+    //     {
+    //         if (Random.value < 0.9f)
+    //         {
+    //             cloudCatData.CatServerData.IsDead = true;
+    //             App.system.cloudSave.UpdateCloudCatServerData(cloudCatData);
+    //             return;
+    //         }
+    //
+    //         CheckNaturalDead();
+    //     }
+    //     
+    //     CheckNaturalDead();
+    //     
+    //     if (cloudCatData.CatServerData.IsDead)
+    //         return;
+    //
+    //     //表定順序
+    //     if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
+    //         cloudCatData.CatHealthData.SickId = App.factory.sickFactory.GetCatSick(cloudCatData);
+    //     if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
+    //         cloudCatData.CatHealthData.SickId = App.factory.sickFactory.GetVaccineSicks(cloudCatData);
+    //     if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
+    //         cloudCatData.CatHealthData.SickId = App.factory.sickFactory.GetLigationSicks(cloudCatData);
+    //     //得病換皮
+    //     if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
+    //         ChangeSkin();
+    //
+    //     CheckBug();
+    // }
 
-        if (cloudCatData.CatServerData.IsDead)
-            return;
-        
-        if (cloudCatData.CatHealthData.SickId is "SK001" or "SK002")
-        {
-            if (Random.value < 0.9f)
-            {
-                cloudCatData.CatServerData.IsDead = true;
-                App.system.cloudSave.UpdateCloudCatServerData(cloudCatData);
-                return;
-            }
-
-            CheckNaturalDead();
-        }
-        
-        CheckNaturalDead();
-        
-        if (cloudCatData.CatServerData.IsDead)
-            return;
-
-        //表定順序
-        if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
-            cloudCatData.CatHealthData.SickId = App.factory.sickFactory.GetCatSick(cloudCatData);
-        if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
-            cloudCatData.CatHealthData.SickId = App.factory.sickFactory.GetVaccineSicks(cloudCatData);
-        if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
-            cloudCatData.CatHealthData.SickId = App.factory.sickFactory.GetLigationSicks(cloudCatData);
-        //得病換皮
-        if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
-            ChangeSkin();
-
-        CheckBug();
-    }
-
-    private void CheckNaturalDead()
+    private bool CheckNaturalDead()
     {
         float percent = App.factory.catFactory.catDataSetting.NaturalDeadPercent(cloudCatData.CatData.SurviveDays);
+        
         if (Random.value > percent)
-            return;
+            return false;
+        
         cloudCatData.CatServerData.IsDead = true;
         App.system.cloudSave.UpdateCloudCatServerData(cloudCatData);
+        return true;
     }
 
-    // 每次上線執行一次
-    public void LoginCheckStatus()
+    private bool CheckSickDead()
     {
-        int passMinutes = (int)(App.system.myTime.MyTimeNow - App.system.myTime.LastLoginDateTime).TotalMinutes;
-        for (int i = 0; i < passMinutes; i++)
-        {
-            SetMoisture();
-            SetSatiety();
-            SetFavorability();
-        }
+        int sickLevel = App.factory.sickFactory.GetSickLevel(cloudCatData.CatHealthData.SickId);
+        int metCount = cloudCatData.CatHealthData.MetDoctorCount;
+        float percent = 0;
 
-        App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
-
-        // 載入今日最愛零食
-        LoadLikeSnackIndex();
-        LoadLikeSoupIndex();
-    }
-
-    private void CheckSick()
-    {
-        if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
-        {
-            isPauseGame = true;
-            return;
-        }
+        if (cloudCatData.CatHealthData.SickId is "SK001" or "SK002")
+            percent = 0.9f;
+        else
+            App.factory.catFactory.catDataSetting.SickDeadPercent(sickLevel, metCount);
         
-        cloudCatData.CatHealthData.SickId = App.factory.sickFactory.GetCatSick(cloudCatData);
+        if (Random.value > percent)
+            return false;
         
-        if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
-        {
-            CancelGame();
-            isPauseGame = true;
-            
-            cloudCatData.CatHealthData.MetDoctorCount =
-                App.factory.sickFactory.GetMetCount(cloudCatData.CatHealthData.SickId);
-            App.system.cloudSave.UpdateCloudCatHealthData(cloudCatData);
-            ChangeSkin();
-        }
+        cloudCatData.CatServerData.IsDead = true;
+        App.system.cloudSave.UpdateCloudCatServerData(cloudCatData);
+        return true;
     }
+    
+    // public void LoginCheckStatus() // 每次上線執行一次
+    // {
+    //     int passMinutes = (int)(App.system.myTime.MyTimeNow - App.system.myTime.LastLoginDateTime).TotalMinutes;
+    //     for (int i = 0; i < passMinutes; i++)
+    //     {
+    //         SetMoisture();
+    //         SetSatiety();
+    //         SetFavorability();
+    //     }
+    //
+    //     App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
+    //
+    //     // 載入今日最愛零食
+    //     LoadLikeSnackIndex();
+    //     LoadLikeSoupIndex();
+    // }
 
-    // 檢查長蟲
-    private void CheckBug()
+    // private void CheckSick()
+    // {
+    //     if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
+    //     {
+    //         isPauseGame = true;
+    //         return;
+    //     }
+    //     
+    //     cloudCatData.CatHealthData.SickId = App.factory.sickFactory.GetCatSick(cloudCatData);
+    //     
+    //     if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
+    //     {
+    //         CancelGame();
+    //         isPauseGame = true;
+    //         
+    //         cloudCatData.CatHealthData.MetDoctorCount =
+    //             App.factory.sickFactory.GetMetCount(cloudCatData.CatHealthData.SickId);
+    //         App.system.cloudSave.UpdateCloudCatHealthData(cloudCatData);
+    //         ChangeSkin();
+    //     }
+    // }
+    
+    private void CheckBug() // 檢查長蟲
     {
         DateTime noBugExpiredDate = cloudCatData.CatHealthData.NoBugExpireTimestamp.ToDateTime().ToLocalTime();
         if (noBugExpiredDate > App.system.myTime.MyTimeNow)
@@ -679,6 +696,9 @@ public class Cat : MvcBehaviour
     {
         catSkin.ChangeSkin(cloudCatData);
 
+        if (isFriendMode)
+            return;
+        
         Card_CatNotify cardCatNotify = App.system.catNotify.GetNotify(this);
         if (cardCatNotify != null)
             cardCatNotify.SetData(this);
@@ -687,5 +707,122 @@ public class Cat : MvcBehaviour
     public void CloseFace()
     {
         catSkin.CloseFace();
+    }
+
+    public void CheckCatStatusPerDay()
+    {
+        if (cloudCatData.CatServerData.IsDead) // 該死了
+            return;
+
+        if (CheckNaturalDead()) // 要自然死了
+            return;
+
+        if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId)) // 病了
+        {
+            if (CheckSickDead())
+                return;
+            
+            CheckBug();
+            return;
+        }
+
+        int ageLevel = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays);
+        string sickId = string.Empty;
+
+        if (ageLevel == 0) //Kitty
+        {
+            if (cloudCatData.CatSurviveData.RealSatiety <= 0 || cloudCatData.CatSurviveData.RealMoisture <= 0 || cloudCatData.CatSurviveData.RealFavourbility <= 0)
+                UpdateSick("SK011");
+        }
+        else // Adult
+        {
+            if (cloudCatData.CatSurviveData.RealMoisture <= 0)
+                sickId = App.factory.sickFactory.GetMoistureSick(cloudCatData);
+            else if (cloudCatData.CatSurviveData.RealFavourbility <= 0)
+                sickId = App.factory.sickFactory.GetFavourbilitySick(cloudCatData);
+            else if (cloudCatData.CatSurviveData.RealSatiety <= 0)
+                sickId = App.factory.sickFactory.GetSatietySick(cloudCatData);
+        }
+
+        if (!string.IsNullOrEmpty(sickId)) // 三項生病不跑後面
+        {
+            UpdateSick(sickId);
+            CheckBug();
+            return;
+        }
+
+        if (!cloudCatData.CatHealthData.IsVaccine)
+            sickId = App.factory.sickFactory.GetVaccineSick();
+        
+        if (!string.IsNullOrEmpty(sickId)) // 疫苗生病不跑後面
+        {
+            UpdateSick(sickId);
+            CheckBug();
+            return;
+        }
+        
+        if (!cloudCatData.CatHealthData.IsLigation)
+            sickId = App.factory.sickFactory.GetLigationSick(cloudCatData);
+
+        if (!string.IsNullOrEmpty(sickId)) // 結紮生病不跑後面
+        {
+            UpdateSick(sickId);
+            CheckBug();
+            return;
+        }
+        
+        //沒病的話檢查跳蚤
+        CheckBug();
+    }
+
+    public void CheckCatSickByStatus()
+    {
+        if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId)) // 病了
+            return;
+        
+        int ageLevel = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays);
+        string sickId = string.Empty;
+
+        if (ageLevel == 0) //Kitty
+        {
+            if (cloudCatData.CatSurviveData.RealSatiety <= 0 || cloudCatData.CatSurviveData.RealMoisture <= 0 || cloudCatData.CatSurviveData.RealFavourbility <= 0)
+                UpdateSick("SK011");
+        }
+        else // Adult
+        {
+            if (cloudCatData.CatSurviveData.RealMoisture <= 0)
+                sickId = App.factory.sickFactory.GetMoistureSick(cloudCatData);
+            else if (cloudCatData.CatSurviveData.RealFavourbility <= 0)
+                sickId = App.factory.sickFactory.GetFavourbilitySick(cloudCatData);
+            else if (cloudCatData.CatSurviveData.RealSatiety <= 0)
+                sickId = App.factory.sickFactory.GetSatietySick(cloudCatData);
+        }
+
+        if (!string.IsNullOrEmpty(sickId))
+            UpdateSick(sickId);
+    }
+
+    public void CheckCatStatusPerLogin()
+    {
+        int passMinutes = (int)(App.system.myTime.MyTimeNow - App.system.myTime.LastLoginDateTime).TotalMinutes;
+        for (int i = 0; i < passMinutes; i++)
+        {
+            SetMoisture();
+            SetSatiety();
+            SetFavorability();
+        }
+
+        App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
+
+        // 載入今日最愛零食
+        LoadLikeSnackIndex();
+        LoadLikeSoupIndex();
+    }
+
+    private void UpdateSick(string sickId)
+    {
+        cloudCatData.CatHealthData.SickId = sickId;
+        ChangeSkin();
+        App.system.cloudSave.UpdateCloudCatHealthData(cloudCatData);
     }
 }

@@ -23,6 +23,8 @@
 
     public Controller_GreenHouse greenHouse;
 
+    public Controller_Hospital hospital;
+    
     public Controller_Information information;
 
     public Controller_Lobby lobby;

@@ -46,98 +46,83 @@ public class SickFactory : SerializedMonoBehaviour
         "SK012", "SK013", "SK014", "SK015"
     };
 
-    public string GetCatSick(CloudCatData cloudCatData)
+    #region GetSicks
+
+    public string GetMoistureSick(CloudCatData cloudCatData) // 水病
     {
         int ageLevel = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays);
         bool isBoy = cloudCatData.CatData.Sex == 0;
         float percent;
-
-        if (ageLevel == 0)
-        {
-            if (cloudCatData.CatSurviveData.RealSatiety <= 0)
-                return "SK011";
-            if (cloudCatData.CatSurviveData.RealMoisture <= 0)
-                return "SK011";
-            if (cloudCatData.CatSurviveData.RealFavourbility <= 0)
-                return "SK011";
-            return string.Empty;
-        }
-
-        if (cloudCatData.CatSurviveData.RealMoisture <= 0)
-        {
-            tmpSicks.Clear();
-            tmpSicks.AddRange(moistureSicks);
-            
-            if (ageLevel == 2)
-                tmpSicks.AddRange(oldSicks);
-
-            percent = 1f / tmpSicks.Count * 2;
-            if (isBoy && Random.value < percent)
-                return "SK019";
-            
-            return tmpSicks.GetRandom();
-        }
-
-        if (cloudCatData.CatSurviveData.RealFavourbility <= 0)
-        {
-            tmpSicks.Clear();
-            tmpSicks.AddRange(favourbilitySicks);
-            
-            if (ageLevel == 2)
-                tmpSicks.AddRange(oldSicks);
-            
-            percent = 1f / tmpSicks.Count * 2;
-            if (isBoy && Random.value < percent)
-                return "SK019";
-            
-            return tmpSicks.GetRandom();
-        }
-
-        if (cloudCatData.CatSurviveData.RealSatiety <= 0)
-        {
-            tmpSicks.Clear();
-            tmpSicks.AddRange(satietySicks);
         
-            if (ageLevel == 2)
-                tmpSicks.AddRange(oldSicks);
+        tmpSicks.Clear();
+        tmpSicks.AddRange(moistureSicks);
             
-            percent = 1f / tmpSicks.Count * 2;
-            if (isBoy && Random.value < percent)
-                return "SK019";
-        
-            return tmpSicks.GetRandom();
-        }
+        if (ageLevel == 2)
+            tmpSicks.AddRange(oldSicks);
 
-        return string.Empty; // 無
+        percent = 1f / tmpSicks.Count * 2;
+        if (isBoy && Random.value < percent)
+            return "SK019";
+            
+        return tmpSicks.GetRandom();
     }
 
-    public string GetVaccineSicks(CloudCatData cloudCatData)
+    public string GetFavourbilitySick(CloudCatData cloudCatData) // 心病
     {
         int ageLevel = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays);
-        bool isVaccine = cloudCatData.CatHealthData.IsVaccine;
-
-        if (isVaccine)
-            return string.Empty;
+        bool isBoy = cloudCatData.CatData.Sex == 0;
+        float percent;
         
-        if (Random.value < 0.03f && ageLevel != 2)
+        tmpSicks.Clear();
+        tmpSicks.AddRange(favourbilitySicks);
+            
+        if (ageLevel == 2)
+            tmpSicks.AddRange(oldSicks);
+            
+        percent = 1f / tmpSicks.Count * 2;
+        if (isBoy && Random.value < percent)
+            return "SK019";
+            
+        return tmpSicks.GetRandom();
+    }
+
+    public string GetSatietySick(CloudCatData cloudCatData) //吃病
+    {
+        int ageLevel = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays);
+        bool isBoy = cloudCatData.CatData.Sex == 0;
+        float percent;
+        
+        tmpSicks.Clear();
+        tmpSicks.AddRange(satietySicks);
+        
+        if (ageLevel == 2)
+            tmpSicks.AddRange(oldSicks);
+            
+        percent = 1f / tmpSicks.Count * 2;
+        if (isBoy && Random.value < percent)
+            return "SK019";
+        
+        return tmpSicks.GetRandom();
+    }
+
+    public string GetVaccineSick()
+    {
+        if (Random.value < 0.03f)
             return vaccineSicks.GetRandom();
 
         return string.Empty;
     }
 
-    public string GetLigationSicks(CloudCatData cloudCatData)
+    public string GetLigationSick(CloudCatData cloudCatData)
     {
-        bool isLigation = cloudCatData.CatHealthData.IsLigation;
-
-        if (isLigation)
-            return string.Empty;
-        
         if (Random.value < GetLigationSickPercent(cloudCatData.CatData.SurviveDays))
             return vaccineSicks.GetRandom();
 
         return string.Empty;
     }
-    
+
+    #endregion
+
     public int GetSickLevel(string id)
     {
         return SickLevels[id];

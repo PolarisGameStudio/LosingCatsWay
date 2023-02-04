@@ -36,10 +36,10 @@ public class FriendRoom : MonoBehaviour
 
         // 拿取好友資料
         var friendId = PlayerPrefs.GetString("FriendRoomId");
-        CloudSaveData playerData = await LoadFriendData(friendId);
+        CloudSaveData playerData = await LoadFriendData(friendId); // todo Helper設定地板之類的 好了才Transition打開
 
         // 生地板
-        gridSystem.Init(31, 31, 5.12f);
+        gridSystem.Init(31, 31, 5.12f); // todo 朋友的GridSize
         gridSystem.CreateGrid();
 
         // 生房間
