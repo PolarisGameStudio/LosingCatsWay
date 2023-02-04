@@ -27,7 +27,7 @@ using UnityEngine.tvOS;
 //debug
 using UnityEngine.UI;
 
-public class Login : MonoBehaviour
+public class Login : MyApplication
 {
     [Title("UI")] public GameObject startGameButton;
     [SerializeField] TextMeshProUGUI idText;
@@ -36,8 +36,10 @@ public class Login : MonoBehaviour
     public PostSystem post;
 
     [Title("Login")] public UIView loginView;
-    [Title("Confirm")] [SerializeField] private UIView confirmView;
 
+    [Title("Confirm")] 
+    public ConfirmSystem confirmSystem;
+    
     [Title("LoginButtons")] [SerializeField]
     private GameObject googleButton;
     [SerializeField] private GameObject appleButton;
@@ -47,6 +49,15 @@ public class Login : MonoBehaviour
 
     private async void Start()
     {
+        VersionChecker versionChecker = new VersionChecker();
+        bool isActive = await versionChecker.Check();
+
+        if (!isActive)
+        {
+            system.confirm.ActiveByBlock(ConfirmTable.Fix);
+            return;
+        }
+
         googleButton.SetActive(false);
         appleButton.SetActive(false);
         
@@ -220,22 +231,11 @@ public class Login : MonoBehaviour
         loginView.InstantShow();
         idText.text = $"UID: -";
 
-        CloseConfirm();
     }
 
     public void OpenAnnouncement()
     {
         post.Open();
-    }
-
-    public void OpenConfirm()
-    {
-        confirmView.Show();
-    }
-
-    public void CloseConfirm()
-    {
-        confirmView.InstantHide();
     }
 
     private string GenerateRandomString(int length)

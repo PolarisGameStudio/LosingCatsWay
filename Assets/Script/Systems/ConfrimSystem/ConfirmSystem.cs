@@ -10,6 +10,7 @@ public class ConfirmSystem : MvcBehaviour
 {
     [SerializeField] private UIView view;
 
+    [SerializeField] private GameObject okButton;
     [SerializeField] private GameObject cancelButton;
 
     [SerializeField] private TextMeshProUGUI titleText;
@@ -20,6 +21,7 @@ public class ConfirmSystem : MvcBehaviour
 
     private int siblingIndex = -1;
     private bool isOnlyConfirm = false;
+    private bool isBlock = false;
 
     public ConfirmSystem OnlyConfirm()
     {
@@ -68,6 +70,31 @@ public class ConfirmSystem : MvcBehaviour
 
             _okEvent = okEvent;
             _cancelEvent = cancelEvent;
+        };
+
+        if (view.isVisible)
+            StartCoroutine(WaitUntilClose(action));
+        else
+        {
+            action.Invoke();
+        }
+    }
+
+    public void ActiveByBlock(ConfirmTable key)
+    {
+        UnityAction action = () =>
+        {
+            Open();
+
+            string id = key.ToString();
+
+            titleText.text = App.factory.confirmFactory.GetNormalTitle(id);
+            contentText.text = App.factory.confirmFactory.GetNormalContent(id);
+
+            okButton.SetActive(false);
+            cancelButton.SetActive(false);
+
+            isBlock = true;
         };
 
         if (view.isVisible)
@@ -135,6 +162,9 @@ public class ConfirmSystem : MvcBehaviour
         if (view.isShowing)
             return;
         if (view.isHiding)
+            return;
+        
+        if (isBlock)
             return;
         
         if (isOnlyConfirm)
