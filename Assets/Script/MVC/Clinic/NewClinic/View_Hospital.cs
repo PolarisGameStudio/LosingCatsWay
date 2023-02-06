@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class View_Hospital : ViewBehaviour
@@ -10,9 +11,12 @@ public class View_Hospital : ViewBehaviour
     [SerializeField] private View_HospitalInvoice Invoice;
     [SerializeField] private View_HospitalDoctorFunction DoctorFunction;
     [SerializeField] private View_HospitalDoctorResult DoctorResult;
+
+    [Title("Bg")] [SerializeField] private GameObject bgMask;
     
     public void OpenChooseFunction()
     {
+        bgMask.SetActive(false);
         ChooseFunction.Open();
     }
 
@@ -33,6 +37,7 @@ public class View_Hospital : ViewBehaviour
 
     public void OpenDoctorCheck()
     {
+        bgMask.SetActive(true);
         DoctorCheck.Open();
     }
 
@@ -43,7 +48,7 @@ public class View_Hospital : ViewBehaviour
 
     public void SkipDoctorCheck()
     {
-        //
+        DoctorCheck.SkipDoctorCheck();
     }
 
     public void OpenInvoice()
@@ -58,7 +63,7 @@ public class View_Hospital : ViewBehaviour
 
     public void SkipInvoice()
     {
-        //
+        Invoice.SkipTween();
     }
 
     public void OpenDoctorFunction()
@@ -73,7 +78,7 @@ public class View_Hospital : ViewBehaviour
 
     public void SkipDoctorFunction()
     {
-        //
+        DoctorFunction.SkipDoctorFunction();
     }
 
     public void OpenDoctorResult()
@@ -88,6 +93,6 @@ public class View_Hospital : ViewBehaviour
 
     public void NextDoctorResult()
     {
-        //
+        DoctorResult.NextDoctorResult();
     }
 }

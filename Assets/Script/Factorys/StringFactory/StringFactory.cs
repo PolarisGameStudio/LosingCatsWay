@@ -66,6 +66,8 @@ public class StringFactory : SerializedMonoBehaviour
     [Title("Health")]
     [SerializeField] private Dictionary<string, StringData> sickName;
     [SerializeField] private Dictionary<string, StringData> sickInfo;
+    [SerializeField] private Dictionary<string, StringData> HospitalFunctionName;
+    [SerializeField] private Dictionary<string, StringData> HospitalFunctionInfo;
 
     [Title("AgeLevel")]
     [SerializeField] private Dictionary<string, StringData> ageLevelStringDatas;
@@ -472,6 +474,22 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = MallItemName[CountryId].Contents.ContainsKey(id)
             ? MallItemName[CountryId].Contents[id]
+            : "要叫阿邦上";
+        return result;
+    }
+
+    public string GetHospitalFunctionName(string id)
+    {
+        string result = HospitalFunctionName[CountryId].Contents.ContainsKey(id)
+            ? HospitalFunctionName[CountryId].Contents[id]
+            : "要叫阿邦上";
+        return result;
+    }
+    
+    public string GetHospitalFunctionInfo(string id)
+    {
+        string result = HospitalFunctionInfo[CountryId].Contents.ContainsKey(id)
+            ? HospitalFunctionInfo[CountryId].Contents[id]
             : "要叫阿邦上";
         return result;
     }

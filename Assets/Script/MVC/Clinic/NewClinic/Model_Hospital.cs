@@ -8,6 +8,7 @@ public class Model_Hospital : ModelBehavior
     private List<Cat> cats;
     private int catIndex = -1;
     private Cat selectedCat;
+    private bool isCatHasWorm;
 
     public int FunctionIndex
     {
@@ -49,8 +50,19 @@ public class Model_Hospital : ModelBehavior
         }
     }
 
+    public bool IsCatHasWorm
+    {
+        get => isCatHasWorm;
+        set
+        {
+            isCatHasWorm = value;
+            OnIsCatHasWormChange?.Invoke(value);
+        }
+    }
+
     public ValueChange OnFunctionIndexChange;
     public ValueChange OnCatsChange;
     public ValueChange OnCatIndexChange;
     public ValueChange OnSelectedCatChange;
+    public ValueChange OnIsCatHasWormChange;
 }

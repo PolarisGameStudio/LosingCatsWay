@@ -195,7 +195,7 @@ public class View_ClinicResult : ViewBehaviour
         sickNameText.text = App.factory.stringFactory.GetPaymentName(id);
         sickInfoText.text = App.factory.stringFactory.GetPaymentInfo(id);
         metCountText.text = "-";
-        sickInfoImage.sprite = App.factory.sickFactory.GetClinicSprite(id);
+        sickInfoImage.sprite = App.factory.sickFactory.GetHospitalFunctionSprite(id);
         
         for (int i = 0; i < sickLevels.Length; i++)
             sickLevels[i].SetActive(i == 3);

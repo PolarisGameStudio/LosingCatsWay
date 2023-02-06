@@ -30,12 +30,16 @@ public class View_HospitalDoctorCheck : ViewBehaviour
     {
         base.Close();
         tableGraphic.SetActive(false);
+        functionGraphic.gameObject.SetActive(false);
+        catSkin.SetActive(false);
     }
 
     public override void Open()
     {
         base.Open();
         tableGraphic.SetActive(true);
+        functionGraphic.gameObject.SetActive(true);
+        catSkin.SetActive(true);
         PlayDoctorCheck();
     }
 
@@ -44,6 +48,14 @@ public class View_HospitalDoctorCheck : ViewBehaviour
         catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "Hospital_Cat/Checking_Cat", false);
         TrackEntry t = functionGraphic.AnimationState.SetAnimation(0, "Hospital_Tool/Checking", false);
         t.Complete += DoctorCheckEnd;
+    }
+
+    public void SkipDoctorCheck()
+    {
+        var catTrack = catSkin.skeletonGraphic.AnimationState.GetCurrent(0);
+        catTrack.TrackTime = catTrack.Animation.Duration;
+        var functionTrack = functionGraphic.AnimationState.GetCurrent(0);
+        functionTrack.TrackTime = functionTrack.Animation.Duration;
     }
 
     private void DoctorCheckEnd(TrackEntry trackentry)

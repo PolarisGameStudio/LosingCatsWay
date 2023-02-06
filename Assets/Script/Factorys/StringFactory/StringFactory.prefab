@@ -141,6 +141,12 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 0b81fa7df590aa642a9e3279562ecb1a, type: 2}
     - {fileID: 11400000, guid: 5544ba8d53b8d64409574b3b53389073, type: 2}
     - {fileID: 11400000, guid: 51cf601e582f2714797397b19265f608, type: 2}
+    - {fileID: 11400000, guid: 20ab3c7aebc08f4408c0974685a3e0c7, type: 2}
+    - {fileID: 11400000, guid: e7b962990af731b458a772c33f88127f, type: 2}
+    - {fileID: 11400000, guid: 8331eb4c8a0617240883d6a064c4d9af, type: 2}
+    - {fileID: 11400000, guid: 197edd55ca41ecc45bd02cf0d0db81ff, type: 2}
+    - {fileID: 11400000, guid: e84191473df980847937987bb69d2f4b, type: 2}
+    - {fileID: 11400000, guid: 539a0c49acc9b7743a7ecbcc5738380f, type: 2}
     - {fileID: 11400000, guid: f4ba23b9de3e5ed419b31496d584ca56, type: 2}
     - {fileID: 11400000, guid: 18aedeeffe8dbe644805c9f12413ae36, type: 2}
     - {fileID: 11400000, guid: a8060a7f2aaf756478eab1631fa996ae, type: 2}
@@ -2023,7 +2029,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: ageLevelStringDatas
+    - Name: HospitalFunctionName
       Entry: 7
       Data: 56|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
         Assembly-CSharp]], mscorlib
@@ -2042,7 +2048,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: cn
+      Data: tw
     - Name: $v
       Entry: 10
       Data: 93
@@ -2054,7 +2060,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: tw
+      Data: us
     - Name: $v
       Entry: 10
       Data: 94
@@ -2066,7 +2072,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: us
+      Data: cn
     - Name: $v
       Entry: 10
       Data: 95
@@ -2079,7 +2085,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: MapNameData
+    - Name: HospitalFunctionInfo
       Entry: 7
       Data: 58|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
         Assembly-CSharp]], mscorlib
@@ -2098,7 +2104,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: cn
+      Data: tw
     - Name: $v
       Entry: 10
       Data: 96
@@ -2110,7 +2116,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: tw
+      Data: us
     - Name: $v
       Entry: 10
       Data: 97
@@ -2122,7 +2128,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: us
+      Data: cn
     - Name: $v
       Entry: 10
       Data: 98
@@ -2135,13 +2141,17 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: MapContentData
+    - Name: ageLevelStringDatas
       Entry: 7
       Data: 60|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
         Assembly-CSharp]], mscorlib
     - Name: comparer
-      Entry: 9
-      Data: 59
+      Entry: 7
+      Data: 61|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 12
       Data: 3
@@ -2150,7 +2160,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: us
+      Data: cn
     - Name: $v
       Entry: 10
       Data: 99
@@ -2174,7 +2184,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: cn
+      Data: us
     - Name: $v
       Entry: 10
       Data: 101
@@ -2187,13 +2197,13 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: paymentName
+    - Name: MapNameData
       Entry: 7
-      Data: 61|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
+      Data: 62|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 62|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 63|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -2243,13 +2253,13 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: paymentInfo
+    - Name: MapContentData
       Entry: 7
-      Data: 63|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
+      Data: 64|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 9
-      Data: 62
+      Data: 63
     - Name: 
       Entry: 12
       Data: 3
@@ -2258,7 +2268,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: cn
+      Data: us
     - Name: $v
       Entry: 10
       Data: 105
@@ -2282,7 +2292,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: us
+      Data: cn
     - Name: $v
       Entry: 10
       Data: 107
@@ -2295,13 +2305,13 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: CatchCatHints
+    - Name: paymentName
       Entry: 7
-      Data: 64|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
+      Data: 65|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 65|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 66|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -2314,7 +2324,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: tw
+      Data: cn
     - Name: $v
       Entry: 10
       Data: 108
@@ -2326,7 +2336,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: cn
+      Data: tw
     - Name: $v
       Entry: 10
       Data: 109
@@ -2351,17 +2361,13 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: MallItemName
+    - Name: paymentInfo
       Entry: 7
-      Data: 66|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
+      Data: 67|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
         Assembly-CSharp]], mscorlib
     - Name: comparer
-      Entry: 7
-      Data: 67|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 9
+      Data: 66
     - Name: 
       Entry: 12
       Data: 3
@@ -2370,7 +2376,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: tw
+      Data: cn
     - Name: $v
       Entry: 10
       Data: 111
@@ -2382,7 +2388,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: cn
+      Data: tw
     - Name: $v
       Entry: 10
       Data: 112
@@ -2398,6 +2404,118 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 113
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CatchCatHints
+      Entry: 7
+      Data: 68|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 69|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: tw
+    - Name: $v
+      Entry: 10
+      Data: 114
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: cn
+    - Name: $v
+      Entry: 10
+      Data: 115
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: us
+    - Name: $v
+      Entry: 10
+      Data: 116
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: MallItemName
+      Entry: 7
+      Data: 70|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 71|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: tw
+    - Name: $v
+      Entry: 10
+      Data: 117
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: cn
+    - Name: $v
+      Entry: 10
+      Data: 118
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: us
+    - Name: $v
+      Entry: 10
+      Data: 119
     - Name: 
       Entry: 8
       Data: 

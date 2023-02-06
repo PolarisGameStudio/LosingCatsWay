@@ -138,7 +138,7 @@ public class SickFactory : SerializedMonoBehaviour
         return sickSprites[sickId];
     }
 
-    public Sprite GetClinicSprite(string id)
+    public Sprite GetHospitalFunctionSprite(string id)
     {
         return clinicSprites[id];
     }

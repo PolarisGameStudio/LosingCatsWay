@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Controller_Hospital : ControllerBehavior
 {
+    //todo tutorial接上
+    
     public void Open()
     {
         App.view.hospital.Open();
@@ -28,6 +30,7 @@ public class Controller_Hospital : ControllerBehavior
     public void SelectFunction(int index)
     {
         App.model.hospital.FunctionIndex = index;
+        CloseChooseFunction();
         OpenChooseCat();
     }
 
@@ -51,6 +54,7 @@ public class Controller_Hospital : ControllerBehavior
     {
         int index = App.model.hospital.CatIndex;
         App.model.hospital.SelectedCat = App.model.hospital.Cats[index];
+        CloseChooseCat();
         OpenDoctorCheck();
     }
 
@@ -63,13 +67,14 @@ public class Controller_Hospital : ControllerBehavior
     {
         CloseDoctorCheck();
         
-        //todo 討論看診之外的功能在生病時能不能不讓生病貓咪使用
-        
         string sickId = App.model.hospital.SelectedCat.cloudCatData.CatHealthData.SickId;
         if (sickId is "SK001" or "SK002")
             OpenDoctorResult();
         else
             OpenInvoice();
+        
+        //todo payment
+        //todo HasWorm
     }
     
     public void CloseDoctorCheck()
@@ -99,12 +104,21 @@ public class Controller_Hospital : ControllerBehavior
 
     public void CancelPay()
     {
-        //
+        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        {
+            CloseInvoice();
+            OpenChooseFunction();
+        });
     }
 
     public void Pay()
     {
-        //
+        //todo money
+        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        {
+            CloseInvoice();
+            OpenDoctorFuntion();
+        });
     }
 
     public void OpenDoctorFuntion() // 醫生做事
