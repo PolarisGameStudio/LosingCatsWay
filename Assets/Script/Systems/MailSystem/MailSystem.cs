@@ -15,6 +15,7 @@ public class MailSystem : MvcBehaviour
 
     [Title("UI")] 
     public UIView view;
+    public GameObject content;
     public GameObject receiveButtonMask;
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI contentText;
@@ -25,7 +26,7 @@ public class MailSystem : MvcBehaviour
     
     public Transform mailButtonsContent;
     public MailButton mailButton;
-
+    
     private int prevIndex = -1;
     private List<MailData> _mailDatas = new List<MailData>();
     private List<MailButton> _mailButtons = new List<MailButton>();
@@ -34,6 +35,15 @@ public class MailSystem : MvcBehaviour
     public async Task Init()
     {
         _mailDatas = await LoadMailDatas();
+        Timestamp nowTime = Timestamp.GetCurrentTimestamp();
+
+        for (int i = 0; i < _mailDatas.Count; i++)
+        {
+            MailData mailData = _mailDatas[i];
+
+            if (mailData.StartTime > nowTime || nowTime > mailData.EndTime)
+                _mailDatas.Remove(mailData);
+        }
         
         for (int i = 0; i < _mailDatas.Count; i++)
         {
@@ -44,6 +54,8 @@ public class MailSystem : MvcBehaviour
 
         if (_mailDatas.Count != 0)
         {
+            content.SetActive(true);
+            
             for (int i = 0; i < _mailDatas.Count; i++)
             {
                 if (!_mailDatas[i].IsReceived(mailReceivedDatas))
@@ -54,6 +66,10 @@ public class MailSystem : MvcBehaviour
 
             Select(0);
         }
+        else
+            content.SetActive(false);
+        
+        RefreshPoint();
     }
 
     public void Open()
@@ -68,6 +84,8 @@ public class MailSystem : MvcBehaviour
 
     public void Select(int index)
     {
+        print(index);
+        
         if (index == prevIndex)
             return;
 
@@ -113,6 +131,8 @@ public class MailSystem : MvcBehaviour
         mailReceivedDatas.Add(_mailDatas[prevIndex].Id);
         App.system.reward.Open(_rewards.ToArray());
         receiveButtonMask.SetActive(true);
+
+        RefreshPoint();
     }
 
     private async Task<List<MailData>> LoadMailDatas()
@@ -136,6 +156,22 @@ public class MailSystem : MvcBehaviour
             tmp.Add(doc.ConvertTo<MailData>());
 
         return tmp;
+    }
+
+    private void RefreshPoint()
+    {
+        for (int i = 0; i < _mailDatas.Count; i++)
+        {
+            MailData mailData = _mailDatas[i];
+            
+            if (!mailData.IsReceived(mailReceivedDatas))
+            {
+                App.view.lobby.mailRedPoint.SetActive(true);
+                return;
+            }
+        }
+        
+        App.view.lobby.mailRedPoint.SetActive(false);
     }
 }
 

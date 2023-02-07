@@ -286,7 +286,7 @@ public class Controller_Cultive : ControllerBehavior
 
     private void DrawDontLikePlay()
     {
-        int random = Random.Range(1, 5);
+        int random = Random.Range(0, 5);
         App.model.cultive.dontLikePlayId = "ICP" + random.ToString("00000");
     }
 
@@ -297,8 +297,11 @@ public class Controller_Cultive : ControllerBehavior
         var item = App.model.cultive.DragItem;
 
         if (item.id == App.model.cultive.dontLikePlayId)
+        {
+            Reject();
             return;
-        
+        }
+
         isCanDrag = false;
 
         catSkeleton.AnimationState.Start += SetPlayData;

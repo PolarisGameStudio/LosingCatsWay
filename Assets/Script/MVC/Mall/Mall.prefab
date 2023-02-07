@@ -3315,7 +3315,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &30868869288301117
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3945,7 +3945,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 477184509251021439}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}
@@ -4632,10 +4632,22 @@ MonoBehaviour:
   - {fileID: 6468599609712785857}
   - {fileID: 3337505692508239573}
   - {fileID: 3602840541987607975}
-  - {fileID: 8069110355743650709}
-  - {fileID: 7371185922438858870}
-  - {fileID: 9106130096502413779}
-  - {fileID: 6081415866405746733}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  cash1000:
+  - item: {fileID: 11400000, guid: 22688ec2587731d41b8f6fb6256ea643, type: 2}
+    count: 0
+  cash3000:
+  - item: {fileID: 0}
+    count: 0
+  cash5000:
+  - item: {fileID: 0}
+    count: 0
+  cash25000:
+  - item: {fileID: 0}
+    count: 0
 --- !u!1 &503990426324563940
 GameObject:
   m_ObjectHideFlags: 0
@@ -6796,7 +6808,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6809218859756197899}
   m_HandleRect: {fileID: 3556524398187697061}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -18131,7 +18143,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7371789579824084241}
-  - component: {fileID: 7371185922438858870}
   m_Layer: 5
   m_Name: Item - IEX00008
   m_TagString: Untagged
@@ -18163,19 +18174,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7371185922438858870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1551447353779274749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e127e5eeedd79a1409b5ac56605beaae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mask: {fileID: 7149137233799661601}
 --- !u!1 &1551976892657668166
 GameObject:
   m_ObjectHideFlags: 0
@@ -20766,9 +20764,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 674093758852249476}
-        m_TargetAssemblyTypeName: MallContainer, Assembly-CSharp
-        m_MethodName: BuyItem
-        m_Mode: 3
+        m_TargetAssemblyTypeName: MallContainer_Diamond, Assembly-CSharp
+        m_MethodName: Buy1000CashByDiamond
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -22418,9 +22416,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 674093758852249476}
-        m_TargetAssemblyTypeName: MallContainer, Assembly-CSharp
-        m_MethodName: BuyItem
-        m_Mode: 3
+        m_TargetAssemblyTypeName: MallContainer_Diamond, Assembly-CSharp
+        m_MethodName: Buy25000CashByDiamond
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -26242,7 +26240,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3573811120159727826}
-  - component: {fileID: 8069110355743650709}
   m_Layer: 5
   m_Name: Item - IEX00007
   m_TagString: Untagged
@@ -26274,19 +26271,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8069110355743650709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2581904679793030770}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e127e5eeedd79a1409b5ac56605beaae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mask: {fileID: 9043916907379611427}
 --- !u!1 &2604846812928597873
 GameObject:
   m_ObjectHideFlags: 0
@@ -37686,9 +37670,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 674093758852249476}
-        m_TargetAssemblyTypeName: MallContainer, Assembly-CSharp
-        m_MethodName: BuyItem
-        m_Mode: 3
+        m_TargetAssemblyTypeName: MallContainer_Diamond, Assembly-CSharp
+        m_MethodName: Buy3000CashByDiamond
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -39768,7 +39752,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3477760194545237589}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}
@@ -43891,7 +43875,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3871028178641543909}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}
@@ -45460,7 +45444,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1184683947734096886}
-  - component: {fileID: 6081415866405746733}
   m_Layer: 5
   m_Name: Item - IEX00010
   m_TagString: Untagged
@@ -45492,19 +45475,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6081415866405746733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3972070041953277373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e127e5eeedd79a1409b5ac56605beaae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mask: {fileID: 7210569517300498107}
 --- !u!1 &3986168438483488023
 GameObject:
   m_ObjectHideFlags: 0
@@ -50923,7 +50893,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &88590226531658418
 RectTransform:
   m_ObjectHideFlags: 0
@@ -59912,7 +59882,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7511323682094122788}
-  - component: {fileID: 9106130096502413779}
   m_Layer: 5
   m_Name: Item - IEX00009
   m_TagString: Untagged
@@ -59944,19 +59913,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &9106130096502413779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5333439824942953347}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e127e5eeedd79a1409b5ac56605beaae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mask: {fileID: 2604846812928597873}
 --- !u!1 &5335896641840266909
 GameObject:
   m_ObjectHideFlags: 0
@@ -75821,7 +75777,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3010455848690550679}
   m_HandleRect: {fileID: 8612515113587783342}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -81514,9 +81470,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 674093758852249476}
-        m_TargetAssemblyTypeName: MallContainer, Assembly-CSharp
-        m_MethodName: BuyItem
-        m_Mode: 3
+        m_TargetAssemblyTypeName: MallContainer_Diamond, Assembly-CSharp
+        m_MethodName: Buy5000CashByDiamond
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -88943,7 +88899,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 7721285818949469500}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.6548553
+  m_Size: 0.6548554
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -98812,7 +98768,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1668997949773899525}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.5328678
+  m_Size: 0.53286785
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -101731,7 +101687,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8297203032150292181
 RectTransform:
   m_ObjectHideFlags: 0
@@ -107053,7 +107009,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 864335009282451190}
   m_HandleRect: {fileID: 2168830356698925909}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

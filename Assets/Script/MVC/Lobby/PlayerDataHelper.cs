@@ -248,8 +248,7 @@ public class PlayerDataHelper
         cloudSaveData.ExistRoomDatas = GetExistRoomDatas();
         cloudSaveData.PurchaseRecords = app.model.mall.PurchaseRecords;
 
-        // MailReceivedDatas
-        cloudSaveData.MailReceivedDatas = new List<string>();
+        cloudSaveData.MailReceivedDatas = app.system.mail.mailReceivedDatas;
 
         cloudSaveData.GreenHouseDatas = app.model.greenHouse.GreenHouseDatas;
 
