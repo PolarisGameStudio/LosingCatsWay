@@ -8,7 +8,7 @@ public class Controller_Pedia : ControllerBehavior
 {
     [SerializeField] private Button pediaLeftArrow;
     [SerializeField] private Button pediaRightArrow;
-    
+
     public void Init()
     {
         ArchiveInit();
@@ -17,7 +17,7 @@ public class Controller_Pedia : ControllerBehavior
     public void SelectTab(int index)
     {
         App.model.pedia.TabIndex = index;
-        
+
         if (index == 0)
             OpenArchive();
         else if (index == 1)
@@ -57,14 +57,14 @@ public class Controller_Pedia : ControllerBehavior
                 break;
         }
     }
-    
+
     #region Pedia
-    
+
     private void OpenPedia()
     {
         CloseArchive();
         ClosePediaCats();
-        
+
         App.view.pedia.Open();
         App.view.pedia.subPedia.Open();
         CloseChoosePedia();
@@ -84,7 +84,7 @@ public class Controller_Pedia : ControllerBehavior
     {
         if (!App.view.pedia.IsVisible)
             return;
-        
+
         ClosePedia();
         CloseArchive();
         App.view.pedia.Close();
@@ -127,7 +127,7 @@ public class Controller_Pedia : ControllerBehavior
             App.system.confirm.Active(ConfirmTable.Fix);
             return;
         }
-        
+
         App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
             string pediaId = App.model.pedia.UsingPediaIds[index];
@@ -157,7 +157,7 @@ public class Controller_Pedia : ControllerBehavior
         int type = App.model.pedia.SelectedPediaType;
         int index = App.model.pedia.PediaPageIndex;
         List<string> tmp = App.factory.pediaFactory.GetPediaIds(type);
-        
+
         if (index < 0)
             index = 0;
 
@@ -167,33 +167,33 @@ public class Controller_Pedia : ControllerBehavior
 
         pediaLeftArrow.gameObject.SetActive(true);
         pediaRightArrow.gameObject.SetActive(true);
-        
+
         pediaLeftArrow.interactable = index > 0;
         pediaRightArrow.interactable = index < end - 1;
-        
+
         List<string> result = new List<string>();
         for (int i = index * 8; i < index * 8 + 8; i++)
         {
             if (i >= tmp.Count)
                 break;
-            
+
             result.Add(tmp[i]);
         }
 
         App.model.pedia.UsingPediaIds = result;
     }
-    
+
     #endregion
 
     #region Archive
-
+    
     private void OpenArchive()
-    { 
+    {
         App.model.pedia.ArchiveQuests = App.model.pedia.ArchiveQuests;
-        
+
         ClosePedia();
         ClosePediaCats();
-        
+
         App.view.pedia.Open();
         App.view.pedia.archive.Open();
 
@@ -231,9 +231,11 @@ public class Controller_Pedia : ControllerBehavior
         // quest.IsReceived = true;
         var strings = quest.id.Split('_');
         App.system.quest.QuestReceivedStatusData[strings[0]] += 1;
-        
+
         App.system.reward.Open(quest.Rewards);
         ArchiveInit();
+        
+        RefreshRedPoint();
     }
 
     private void ArchiveInit()
@@ -252,8 +254,9 @@ public class Controller_Pedia : ControllerBehavior
             // if (quest.IsReceived)
             //     quest.Init();
         }
-
+        
         App.model.pedia.ArchiveQuests = quests;
+        RefreshRedPoint();
     }
 
     private void ClearAchieveQuests()
@@ -282,6 +285,23 @@ public class Controller_Pedia : ControllerBehavior
         return result;
     }
 
+    private void RefreshRedPoint()
+    {
+        List<Quest> quests = App.model.pedia.ArchiveQuests;
+
+        for (int i = 0; i < quests.Count; i++)
+        {
+            Quest quest = quests[i];
+            if (quest.IsReach && !quest.IsReceived)
+            {
+                App.view.lobby.archiveRedPoint.SetActive(true);
+                return;
+            }
+        }
+        
+        App.view.lobby.archiveRedPoint.SetActive(false);
+    }
+    
     #endregion
 
     #region PediaCats
@@ -290,7 +310,7 @@ public class Controller_Pedia : ControllerBehavior
     {
         ClosePedia();
         CloseArchive();
-        
+
         App.view.pedia.pediaCats.Open();
     }
 

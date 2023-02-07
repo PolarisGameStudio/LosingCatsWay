@@ -38,9 +38,6 @@ public class View_Lobby : ViewBehaviour
     [SerializeField] private TextMeshProUGUI nextQuestText;
     [SerializeField] private GameObject nextQuestChat;
     
-    [Title("DailyQuest")]
-    public GameObject lobbyDailyQuestRed;
-
     [Title("CardCatNotifies")] 
     public Transform cardCatNotifyContent;
 
@@ -48,6 +45,11 @@ public class View_Lobby : ViewBehaviour
     [SerializeField] private UIParticle expParticle;
     [SerializeField] private UIParticle moneyParticle;
     [SerializeField] private UIParticle diamondParticle;
+
+    [Title("Red")]
+    public GameObject lobbyDailyQuestRed;
+    public GameObject archiveRedPoint;
+    public GameObject mailRedPoint;
 
     public override void Open()
     {
@@ -66,7 +68,7 @@ public class View_Lobby : ViewBehaviour
         // Left
         for (int i = 0; i < leftButtons.Length; i++)
             leftButtons[i].DOLocalMoveX(45, 0.25f).SetEase(Ease.OutBack).From(-150).SetDelay(i * 0.0625f);
-
+        
         // Right
         tip.DOAnchorPosX(-34f, 0.25f).SetEase(Ease.OutBack).From(new Vector2(tip.sizeDelta.x * 2 + 34f, tip.anchoredPosition.y));
         nextQuestChat.transform.DOScale(Vector2.one, 0.4f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.1625f);

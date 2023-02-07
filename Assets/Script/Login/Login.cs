@@ -224,13 +224,15 @@ public class Login : MyApplication
 
     public void SignOut()
     {
-        Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
-        auth.SignOut();
+        system.confirm.Active(ConfirmTable.Fix, () =>
+        {
+            Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+            auth.SignOut();
 
-        startGameButton.SetActive(false);
-        loginView.InstantShow();
-        idText.text = $"UID: -";
-
+            startGameButton.SetActive(false);
+            loginView.InstantShow();
+            idText.text = $"UID: -";
+        });
     }
 
     public void OpenAnnouncement()
