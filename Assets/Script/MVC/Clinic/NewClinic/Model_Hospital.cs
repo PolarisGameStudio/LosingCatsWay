@@ -9,6 +9,8 @@ public class Model_Hospital : ModelBehavior
     private int catIndex = -1;
     private Cat selectedCat;
     private bool isCatHasWorm;
+    private int invoiceMoney;
+    private Cat tmpCat; // 暫存的貓 顯示用
 
     public int FunctionIndex
     {
@@ -60,9 +62,31 @@ public class Model_Hospital : ModelBehavior
         }
     }
 
+    public int InvoiceMoney
+    {
+        get => invoiceMoney;
+        set
+        {
+            invoiceMoney = value;
+            OnInvoiceMoneyChange?.Invoke(value);
+        }
+    }
+
+    public Cat TmpCat
+    {
+        get => tmpCat;
+        set
+        {
+            tmpCat = value;
+            OnTmpCatChange?.Invoke(value);
+        }
+    }
+
     public ValueChange OnFunctionIndexChange;
     public ValueChange OnCatsChange;
     public ValueChange OnCatIndexChange;
     public ValueChange OnSelectedCatChange;
     public ValueChange OnIsCatHasWormChange;
+    public ValueChange OnInvoiceMoneyChange;
+    public ValueChange OnTmpCatChange;
 }

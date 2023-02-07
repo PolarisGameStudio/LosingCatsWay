@@ -12,7 +12,7 @@ public class ShortcutSystem : MvcBehaviour
         App.controller.followCat.Close();
         App.controller.feed.Close();
         App.controller.shelter.Close();
-        App.controller.clinic.Close();
+        App.controller.hospital.Close();
         App.controller.friend.Close();
         App.controller.shop.Close();
         App.controller.greenHouse.Close();

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using Spine;
 using Spine.Unity;
@@ -14,7 +15,7 @@ public class View_HospitalDoctorFunction : ViewBehaviour
     [Title("Animation")]
     [SerializeField] private string[] functionTrackNames;
     [SerializeField] private string[] catTrackNames;
-    
+
     public override void Open()
     {
         base.Open();
@@ -50,8 +51,8 @@ public class View_HospitalDoctorFunction : ViewBehaviour
         catSkin.skeletonGraphic.freeze = true;
         functionGraphic.freeze = true;
         
-        catSkin.skeletonGraphic.AnimationState.AddAnimation(0, "", false, 0);
-        functionGraphic.AnimationState.AddAnimation(0, "", false, 0);
+        catSkin.skeletonGraphic.AnimationState.AddAnimation(0, "Hospital_Cat/Deworming_Cat", false, 0);
+        functionGraphic.AnimationState.AddAnimation(0, "Hospital_Tool/Deworming", false, 0);
     }
 
     private void OnFunctionIndexChange(object value)
@@ -82,8 +83,8 @@ public class View_HospitalDoctorFunction : ViewBehaviour
         catSkin.skeletonGraphic.freeze = false;
         functionGraphic.freeze = false;
 
-        TrackEntry t = functionGraphic.AnimationState.GetCurrent(0);
-        t.Complete += DoctorFunctionEnd;
+        TrackEntry t = functionGraphic.AnimationState.AddEmptyAnimation(0, 0, 0);
+        t.Start += DoctorFunctionEnd;
     }
 
     public void SkipDoctorFunction()
@@ -94,9 +95,9 @@ public class View_HospitalDoctorFunction : ViewBehaviour
         functionTrack.TrackTime = functionTrack.Animation.Duration;
     }
 
-    private void DoctorFunctionEnd(TrackEntry trackentry)
+    private void DoctorFunctionEnd(TrackEntry trackEntry)
     {
-        trackentry.Complete -= DoctorFunctionEnd;
+        trackEntry.Start -= DoctorFunctionEnd;
         App.controller.hospital.CloseDoctorFuntion();
         App.controller.hospital.OpenDoctorResult();
     }

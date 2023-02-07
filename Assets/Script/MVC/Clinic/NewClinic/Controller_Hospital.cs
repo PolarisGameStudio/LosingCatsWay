@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Firebase.Firestore;
 using UnityEngine;
 
 public class Controller_Hospital : ControllerBehavior
@@ -14,6 +16,7 @@ public class Controller_Hospital : ControllerBehavior
 
     public void Close()
     {
+        CloseChooseCat();
         App.view.hospital.Close();
     }
 
@@ -54,6 +57,8 @@ public class Controller_Hospital : ControllerBehavior
     {
         int index = App.model.hospital.CatIndex;
         App.model.hospital.SelectedCat = App.model.hospital.Cats[index];
+        App.model.hospital.TmpCat = App.model.hospital.Cats[index];
+        App.model.hospital.IsCatHasWorm = App.model.hospital.SelectedCat.cloudCatData.CatHealthData.IsBug;
         CloseChooseCat();
         OpenDoctorCheck();
     }
@@ -72,9 +77,6 @@ public class Controller_Hospital : ControllerBehavior
             OpenDoctorResult();
         else
             OpenInvoice();
-        
-        //todo payment
-        //todo HasWorm
     }
     
     public void CloseDoctorCheck()
@@ -89,6 +91,7 @@ public class Controller_Hospital : ControllerBehavior
 
     public void OpenInvoice()
     {
+        App.model.hospital.InvoiceMoney = GetInvoiceMoney();
         App.view.hospital.OpenInvoice();
     }
 
@@ -102,6 +105,36 @@ public class Controller_Hospital : ControllerBehavior
         App.view.hospital.SkipInvoice();
     }
 
+    private int GetInvoiceMoney()
+    {
+        int result = 0;
+        int index = App.model.hospital.FunctionIndex;
+
+        switch (index)
+        {
+            case 0:
+                result = 300;
+                break;
+            case 1:
+                result = 200;
+                break;
+            case 2:
+                result = 150;
+                break;
+            case 3:
+                result = 100;
+                break;
+            case 4:
+                result = 500;
+                break;
+        }
+
+        if (App.model.hospital.IsCatHasWorm)
+            result += 150;
+        
+        return result;
+    }
+    
     public void CancelPay()
     {
         App.system.confirm.Active(ConfirmTable.Fix, () =>
@@ -113,12 +146,72 @@ public class Controller_Hospital : ControllerBehavior
 
     public void Pay()
     {
-        //todo money
         App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
-            CloseInvoice();
-            OpenDoctorFuntion();
+            if (App.system.player.ReduceMoney(GetInvoiceMoney()))
+            {
+                ActiveFunction();
+                CloseInvoice();
+                OpenDoctorFuntion();
+            }
+            else
+            {
+                App.system.confirm.OnlyConfirm().Active(ConfirmTable.NotEnoughCoin);
+            }
         });
+    }
+
+    private void ActiveFunction()
+    {
+        Cat cat = App.model.hospital.SelectedCat;
+        int index = App.model.hospital.FunctionIndex;
+
+        if (index == 0)
+        {
+            // 看診
+            cat.cloudCatData.CatHealthData.IsMetDoctor = true;
+            
+            int metCount = cat.cloudCatData.CatHealthData.MetDoctorCount;
+            metCount -= 1;
+            
+            if (metCount <= 0)
+            {
+                metCount = 0;
+                cat.cloudCatData.CatHealthData.SickId = string.Empty;
+                cat.cloudCatData.CatHealthData.IsMetDoctor = false;
+            }
+            
+            cat.cloudCatData.CatHealthData.MetDoctorCount = metCount;
+            
+            // 除蟲
+            bool hasWorm = App.model.hospital.IsCatHasWorm;
+            if (hasWorm)
+                cat.cloudCatData.CatHealthData.IsBug = false;
+        }
+
+        if (index == 1)
+        {
+            cat.cloudCatData.CatHealthData.IsVaccine = true;
+        }
+
+        if (index == 2)
+        {
+            DateTime expired = App.system.myTime.MyTimeNow.AddDays(3);
+            cat.cloudCatData.CatHealthData.NoBugExpireTimestamp = Timestamp.FromDateTime(expired);
+        }
+
+        if (index == 3)
+        {
+            cat.cloudCatData.CatHealthData.IsChip = true;
+        }
+
+        if (index == 4)
+        {
+            cat.cloudCatData.CatHealthData.IsLigation = true;
+        }
+        
+        App.system.cloudSave.UpdateCloudCatHealthData(cat.cloudCatData);
+        App.model.hospital.SelectedCat = cat;
     }
 
     public void OpenDoctorFuntion() // 醫生做事

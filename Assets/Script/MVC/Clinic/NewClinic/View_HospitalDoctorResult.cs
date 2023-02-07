@@ -56,7 +56,26 @@ public class View_HospitalDoctorResult : ViewBehaviour
         base.Init();
         App.model.hospital.OnFunctionIndexChange += OnFunctionIndexChange;
         App.model.hospital.OnSelectedCatChange += OnSelectedCatChange;
+        App.model.hospital.OnTmpCatChange += OnTmpCatChange;
         App.model.hospital.OnIsCatHasWormChange += OnIsCatHasWormChange;
+    }
+
+    private void OnTmpCatChange(object value)
+    {
+        Cat cat = (Cat)value;
+        int healthStatus;
+        string sickId = cat.cloudCatData.CatHealthData.SickId;
+        
+        if (string.IsNullOrEmpty(sickId)) // 只有除蟲的話就會有健康的情況
+            healthStatus = 0;
+        else if (sickId is "SK001" or "SK002") // 不治
+            healthStatus = 2;
+        else //一般生病
+            healthStatus = 1;
+
+        // 圖文介紹
+        if (healthStatus != 0)
+            infoStrings.Enqueue(sickId);
     }
 
     private void OnIsCatHasWormChange(object value)
@@ -99,8 +118,8 @@ public class View_HospitalDoctorResult : ViewBehaviour
             healthTextObjects[i].SetActive(i == healthStatus);
         
         // 圖文介紹
-        if (healthStatus != 0)
-            infoStrings.Enqueue(sickId);
+        // if (healthStatus != 0)
+        //     infoStrings.Enqueue(sickId);
 
         metCountText.text = cat.cloudCatData.CatHealthData.MetDoctorCount.ToString();
     }
@@ -129,6 +148,7 @@ public class View_HospitalDoctorResult : ViewBehaviour
                 break;
         }
 
+        infoStrings.Clear();
         infoStrings.Enqueue(id);
     }
 
@@ -136,7 +156,14 @@ public class View_HospitalDoctorResult : ViewBehaviour
     {
         base.Open();
         panelRect.localScale = Vector2.zero;
+        catSkin.SetActive(true);
         NextDoctorResult();
+    }
+
+    public override void Close()
+    {
+        base.Close();
+        catSkin.SetActive(false);
     }
 
     public void NextDoctorResult()

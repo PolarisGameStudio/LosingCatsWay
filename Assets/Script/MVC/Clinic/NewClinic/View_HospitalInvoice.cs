@@ -16,7 +16,7 @@ public class View_HospitalInvoice : ViewBehaviour
     [SerializeField] private GameObject wormSubject;
     [SerializeField] private TextMeshProUGUI totalText;
     [SerializeField] private TextMeshProUGUI myMoneyText;
-    
+
     [Title("Tween")]
     [SerializeField] private ScrollRect scrollRect;
     [SerializeField] private RectTransform invoiceRect;
@@ -44,6 +44,13 @@ public class View_HospitalInvoice : ViewBehaviour
         App.model.hospital.OnIsCatHasWormChange += OnIsCatHasWormChange;
         App.model.hospital.OnFunctionIndexChange += OnFunctionIndexChange;
         App.model.hospital.OnSelectedCatChange += OnSelectedCatChange;
+        App.model.hospital.OnInvoiceMoneyChange += OnInvoiceMoneyChange;
+    }
+
+    private void OnInvoiceMoneyChange(object value)
+    {
+        int money = (int)value;
+        totalText.text = money.ToString();
     }
 
     private void OnSelectedCatChange(object value)
