@@ -13,7 +13,6 @@ public class View_Information : ViewBehaviour
 {
     public View_SubInformation view_SubInformation;
 
-    [FormerlySerializedAs("playerHeadImage")]
     [Title("Player")]
     [SerializeField] private Image playerIcon;
     [SerializeField] private Image playerAvatar;
@@ -28,8 +27,6 @@ public class View_Information : ViewBehaviour
     [SerializeField] private TextMeshProUGUI diamondText;
 
     [Title("TopRight")]
-    [SerializeField] private TextMeshProUGUI chapterNameText;
-    [SerializeField] private TextMeshProUGUI chapterIndexText;
     [SerializeField] private TextMeshProUGUI slotText;
 
     [Title("Cats")]
@@ -37,21 +34,7 @@ public class View_Information : ViewBehaviour
     [SerializeField] private GameObject diamondUnlockBlock;
     [SerializeField] private GameObject levelUnlockBlock;
     [SerializeField] private TextMeshProUGUI levelUnlockSlotText;
-
-    public override void Init()
-    {
-        base.Init();
-        App.model.information.OnMyCatsChange += OnMyCatsChange;
-        App.system.player.OnExpChange += OnPlayerExpChange;
-        App.system.player.OnPlayerIdChange += OnPlayerIdChange;
-        App.system.player.OnLevelChange += OnPlayerLevelChange;
-        App.system.player.OnPlayerNameChange += OnPlayerNameChange;
-        App.system.player.OnCoinChange += OnCoinChange;
-        App.system.player.OnDiamondChange += OnDiamondChange;
-        App.system.player.OnDiamondCatSlotChange += OnDiamondCatSlotChange;
-        App.system.player.OnUsingIconChange += OnUsingIconChange;
-        App.system.player.OnUsingAvatarChange += OnUsingAvatarChange;
-    }
+    [SerializeField] private TextMeshProUGUI diamondUnlockSlotText;
 
     public override void Open()
     {
@@ -66,6 +49,29 @@ public class View_Information : ViewBehaviour
         {
             catInformations[i].gameObject.SetActive(false);
         }
+    }
+
+    public override void Init()
+    {
+        base.Init();
+        App.model.information.OnMyCatsChange += OnMyCatsChange;
+        App.model.information.OnNextDiamondSlotPriceChange += OnNextDiamondSlotPriceChange;
+        
+        App.system.player.OnExpChange += OnPlayerExpChange;
+        App.system.player.OnPlayerIdChange += OnPlayerIdChange;
+        App.system.player.OnLevelChange += OnPlayerLevelChange;
+        App.system.player.OnPlayerNameChange += OnPlayerNameChange;
+        App.system.player.OnCoinChange += OnCoinChange;
+        App.system.player.OnDiamondChange += OnDiamondChange;
+        App.system.player.OnDiamondCatSlotChange += OnDiamondCatSlotChange;
+        App.system.player.OnUsingIconChange += OnUsingIconChange;
+        App.system.player.OnUsingAvatarChange += OnUsingAvatarChange;
+    }
+
+    private void OnNextDiamondSlotPriceChange(object value)
+    {
+        int price = (int)value;
+        diamondUnlockSlotText.text = price.ToString();
     }
 
     private void OnUsingAvatarChange(object value)

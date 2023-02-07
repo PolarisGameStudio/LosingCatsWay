@@ -16,14 +16,19 @@ public class View_HospitalDoctorCheck : ViewBehaviour
     public override void Init()
     {
         base.Init();
-        App.model.hospital.OnSelectedCatChange += OnSelectedCatChange;
+        App.model.hospital.OnTmpCatChange += OnTmpCatChange;
     }
 
-    private void OnSelectedCatChange(object value)
+    private void OnTmpCatChange(object value)
     {
         Cat cat = (Cat)value;
         catSkin.ChangeSkin(cat.cloudCatData);
-        //todo scale function spine
+        
+        if (!string.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId))
+        {
+            catSkin.CloseSickEye();
+            catSkin.OpenEye(cat.cloudCatData);
+        }
     }
 
     public override void Close()
@@ -37,9 +42,13 @@ public class View_HospitalDoctorCheck : ViewBehaviour
     public override void Open()
     {
         base.Open();
+        
         tableGraphic.SetActive(true);
         functionGraphic.gameObject.SetActive(true);
         catSkin.SetActive(true);
+
+        functionGraphic.transform.localScale = catSkin.transform.localScale;
+        
         PlayDoctorCheck();
     }
 

@@ -4,6 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using Doozy.Runtime.UIManager.Containers;
 using Sirenix.OdinInspector;
+using TMPro;
 
 public class RewardSystem : MvcBehaviour
 {
@@ -20,6 +21,7 @@ public class RewardSystem : MvcBehaviour
     [Title("UI")] 
     public Transform content;
     public Card_RewardSystem itemObject;
+    public TextMeshProUGUI continueText;
 
     private int siblingIndex;
 
@@ -57,6 +59,9 @@ public class RewardSystem : MvcBehaviour
 
         animator.Play("Get_Item", 0, 0);
         InvokeRepeating("WaitAnimationEnd", 0.25f, 0.1f);
+
+        continueText.DOKill();
+        continueText.DOFade(1, 0.75f).From(0).SetLoops(-1, LoopType.Yoyo).SetDelay(1);
     }
 
     public void Close()

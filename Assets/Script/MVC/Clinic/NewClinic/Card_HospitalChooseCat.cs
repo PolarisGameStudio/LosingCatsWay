@@ -33,6 +33,8 @@ public class Card_HospitalChooseCat : MvcBehaviour
     [SerializeField] private GameObject questionObject;
     [SerializeField] private GameObject countObject; // 包含其他UI一組
     [SerializeField] private TextMeshProUGUI countText;
+    [SerializeField] private GameObject metCountTitle;
+    [SerializeField] private GameObject antiWormTitle;
 
     [HideInInspector] public int functionIndex;
     
@@ -78,6 +80,7 @@ public class Card_HospitalChooseCat : MvcBehaviour
             }
 
             countObject.SetActive(true);
+            metCountTitle.SetActive(true);
         }
 
         if (functionIndex == 1) // 疫苗
@@ -105,9 +108,9 @@ public class Card_HospitalChooseCat : MvcBehaviour
             if (expired > App.system.myTime.MyTimeNow)
             {
                 countObject.SetActive(true);
-                int day = (expired - App.system.myTime.MyTimeNow).Days;
-                if (day <= 0)
-                    day = 1;
+                antiWormTitle.SetActive(true);
+                
+                int day = (expired - App.system.myTime.MyTimeNow).Days + 1;
                 countText.text = day.ToString("00");
                 return;
             }
@@ -158,6 +161,8 @@ public class Card_HospitalChooseCat : MvcBehaviour
         noObject.SetActive(false);
         questionObject.SetActive(false);
         countObject.SetActive(false);
+        metCountTitle.SetActive(false);
+        antiWormTitle.SetActive(false);
         
         blockMask.SetActive(false);
         deadMask.SetActive(false);

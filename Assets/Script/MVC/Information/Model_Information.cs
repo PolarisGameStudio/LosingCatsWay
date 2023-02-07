@@ -9,6 +9,7 @@ public class Model_Information : ModelBehavior
     private int tabIndex = -1;
     private List<Item> skinItems;
     private int selectedSkinIndex;
+    private int nextDiamondSlotPrice;
 
     public List<Cat> MyCats
     {
@@ -60,9 +61,20 @@ public class Model_Information : ModelBehavior
         }
     }
 
+    public int NextDiamondSlotPrice
+    {
+        get => nextDiamondSlotPrice;
+        set
+        {
+            nextDiamondSlotPrice = value;
+            OnNextDiamondSlotPriceChange?.Invoke(value);
+        }
+    }
+
     public ValueChange OnMyCatsChange;
     public ValueChange OnSelectedCatChange;
     public ValueChange OnTabIndexChange;
     public ValueChange OnSkinItemsChange;
     public ValueChange OnSelectedSkinIndexChange;
+    public ValueChange OnNextDiamondSlotPriceChange;
 }

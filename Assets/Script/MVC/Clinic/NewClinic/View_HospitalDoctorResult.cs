@@ -51,6 +51,8 @@ public class View_HospitalDoctorResult : ViewBehaviour
     private Vector2 botOrigin = Vector2.zero;
     private Vector2 botOffset = Vector2.zero;
 
+    private int tmpFunctionIndex;
+
     public override void Init()
     {
         base.Init();
@@ -63,6 +65,10 @@ public class View_HospitalDoctorResult : ViewBehaviour
     private void OnTmpCatChange(object value)
     {
         Cat cat = (Cat)value;
+
+        if (tmpFunctionIndex != 0)
+            return;
+        
         int healthStatus;
         string sickId = cat.cloudCatData.CatHealthData.SickId;
         
@@ -81,6 +87,8 @@ public class View_HospitalDoctorResult : ViewBehaviour
     private void OnIsCatHasWormChange(object value)
     {
         bool hasWorm = (bool)value;
+        if (tmpFunctionIndex != 0)
+            return;
         if (!hasWorm)
             return;
         infoStrings.Enqueue("Deworm"); // 除蟲
@@ -117,10 +125,6 @@ public class View_HospitalDoctorResult : ViewBehaviour
         for (int i = 0; i < healthTextObjects.Length; i++)
             healthTextObjects[i].SetActive(i == healthStatus);
         
-        // 圖文介紹
-        // if (healthStatus != 0)
-        //     infoStrings.Enqueue(sickId);
-
         metCountText.text = cat.cloudCatData.CatHealthData.MetDoctorCount.ToString();
     }
 
@@ -128,10 +132,12 @@ public class View_HospitalDoctorResult : ViewBehaviour
     {
         int index = (int)value;
 
+        tmpFunctionIndex = index;
+
         if (index == 0) // 看診
             return;
         
-        string id = string.Empty; // todo id改
+        string id = string.Empty;
         switch (index)
         {
             case 1:

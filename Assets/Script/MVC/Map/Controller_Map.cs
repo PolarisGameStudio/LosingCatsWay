@@ -47,7 +47,7 @@ public class Controller_Map : ControllerBehavior
         App.system.transition.Active(0.15f, () =>
         {
             App.view.map.Close();
-            App.controller.clinic.Open();
+            App.controller.hospital.Open();
         });
     }
 

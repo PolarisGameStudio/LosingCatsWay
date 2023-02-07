@@ -7,6 +7,16 @@ using UnityEngine;
 public class Controller_Hospital : ControllerBehavior
 {
     //todo tutorial接上
+
+    public void CloseToMap()
+    {
+        App.system.bgm.FadeOut();
+        App.system.transition.Active(0, () =>
+        {
+            Close();
+            App.controller.map.Open();
+        });
+    }
     
     public void Open()
     {

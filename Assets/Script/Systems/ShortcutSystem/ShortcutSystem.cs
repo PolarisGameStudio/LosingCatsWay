@@ -17,15 +17,15 @@ public class ShortcutSystem : MvcBehaviour
         App.controller.shop.Close();
         App.controller.greenHouse.Close();
         App.controller.map.Close();
-        
-        //TODO Transition call too many times: Map, Shop, Clinic, Shelter
     }
     
     public void ToLobby()
     {
-        CloseAll();
-
-        App.controller.lobby.Open();
-        App.system.grid.SetCameraToOrigin();
+        App.system.transition.Active(0, () =>
+        {
+            CloseAll();
+            App.controller.lobby.Open();
+            App.system.grid.SetCameraToOrigin();
+        });
     }
 }

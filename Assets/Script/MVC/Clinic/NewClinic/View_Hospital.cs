@@ -1,18 +1,56 @@
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 
 public class View_Hospital : ViewBehaviour
 {
+    [SerializeField] private GameObject bgMask;
+    [SerializeField] private GameObject npcObject;
+    [SerializeField] private TextMeshProUGUI moneyText;
+    [SerializeField] private TextMeshProUGUI diamondText;
+
+    [Title("SubView")]
     [SerializeField] private View_HospitalChooseFunction ChooseFunction;
     [SerializeField] private View_HospitalChooseCat ChooseCat;
     [SerializeField] private View_HospitalDoctorCheck DoctorCheck;
     [SerializeField] private View_HospitalInvoice Invoice;
     [SerializeField] private View_HospitalDoctorFunction DoctorFunction;
     [SerializeField] private View_HospitalDoctorResult DoctorResult;
+    
+    // todo parallex
 
-    [Title("Bg")] [SerializeField] private GameObject bgMask;
+    public override void Init()
+    {
+        base.Init();
+        App.system.player.OnCoinChange += OnCoinChange;
+        App.system.player.OnDiamondChange += OnDiamondChange;
+    }
+
+    private void OnDiamondChange(object value)
+    {
+        int diamond = (int)value;
+        diamondText.text = diamond.ToString();
+    }
+
+    private void OnCoinChange(object value)
+    {
+        int money = (int)value;
+        moneyText.text = money.ToString();
+    }
+
+    public override void Open()
+    {
+        base.Open();
+        npcObject.SetActive(true);
+    }
+
+    public override void Close()
+    {
+        base.Close();
+        npcObject.SetActive(false);
+    }
     
     public void OpenChooseFunction()
     {

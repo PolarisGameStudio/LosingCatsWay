@@ -15,6 +15,7 @@ public class Controller_Information : ControllerBehavior
     {
         App.view.information.Open();
         App.model.information.MyCats = App.system.cat.GetCats();
+        RefreshDiamondUnlockSlotPrice();
     }
    
     public void Close()
@@ -81,17 +82,70 @@ public class Controller_Information : ControllerBehavior
 
     public void DiamondUnlockCatSlot()
     {
+        int price = App.model.information.NextDiamondSlotPrice;
         App.system.confirm.ActiveByInsert(ConfirmTable.BuyConfirm, "", App.factory.stringFactory.GetUnlock("ULK001"),() =>
         {
-            if (!App.system.player.ReduceDiamond(2000))
+            if (!App.system.player.ReduceDiamond(price))
             {
                 DOVirtual.DelayedCall(0.1f, () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.NotEnoughDiamond));
                 return;
             }
             
             App.system.player.DiamondCatSlot += 1;
+            App.model.information.MyCats = App.system.cat.GetCats();
+            RefreshDiamondUnlockSlotPrice();
             DOVirtual.DelayedCall(0.1f, () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix));
         });
+    }
+
+    private void RefreshDiamondUnlockSlotPrice()
+    {
+        int nextSlot = App.system.player.DiamondCatSlot + 1;
+        int result;
+        switch (nextSlot)
+        {
+            case 1:
+                result = 120;
+                break;
+            case 2:
+                result = 180;
+                break;
+            case 3:
+                result = 300;
+                break;
+            case 4:
+                result = 600;
+                break;
+            case 5:
+                result = 900;
+                break;
+            case 6:
+                result = 1080;
+                break;
+            case 7:
+                result = 1200;
+                break;
+            case 8:
+                result = 1200;
+                break;
+            case 9:
+                result = 1200;
+                break;
+            case 10:
+                result = 1200;
+                break;
+            case 11:
+                result = 1200;
+                break;
+            case 12:
+                result = 1200;
+                break;
+            default:
+                result = -1;
+                break;
+        }
+
+        App.model.information.NextDiamondSlotPrice = result;
     }
 
     public void OpenMap() // 獲得新貓咪的卡片可點擊

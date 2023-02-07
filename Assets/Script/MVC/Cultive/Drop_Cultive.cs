@@ -46,6 +46,13 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
                     App.controller.cultive.Reject();
                     return;
                 }
+                
+                // 生病不能玩
+                if (!string.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId) || cat.cloudCatData.CatHealthData.IsBug)
+                {
+                    App.controller.cultive.Reject();
+                    return;
+                }
             }
             
             // 食物拒絕

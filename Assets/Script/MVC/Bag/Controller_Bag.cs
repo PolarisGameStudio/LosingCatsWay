@@ -26,8 +26,6 @@ public class Controller_Bag : ControllerBehavior
 
     public void ChooseType(int type)
     {
-        App.system.soundEffect.Play("Button");
-
         if (App.model.bag.Type == type)
             return;
 
@@ -106,7 +104,7 @@ public class Controller_Bag : ControllerBehavior
     
         if (item.id == "ITL00021")
         {
-            App.factory.itemFactory.GetItem("ITL00021").Count -= 1;
+            item.Count--;
             App.system.cloudSave.UpdateCloudItemData();
 
             List<Reward> rewards = new List<Reward>();
@@ -132,14 +130,13 @@ public class Controller_Bag : ControllerBehavior
             });
 
             App.system.reward.Open(rewards.ToArray());
-            App.model.bag.SelectedItems = App.model.bag.SelectedItems;
-            
-            return;
+            ChooseType(-1);
+            ChooseType(2);
         }
         
         if (item.id == "ITL00022")
         {
-            App.factory.itemFactory.GetItem("ITL00022").Count -= 1;
+            item.Count--;
             App.system.cloudSave.UpdateCloudItemData();
             
             List<Reward> rewards = new List<Reward>();
@@ -165,14 +162,13 @@ public class Controller_Bag : ControllerBehavior
             });
             
             App.system.reward.Open(rewards.ToArray());
-            App.model.bag.SelectedItems = App.model.bag.SelectedItems;
-            
-            return;
+            ChooseType(-1);
+            ChooseType(2);
         }
         
         if (item.id == "ITL00023")
         {
-            App.factory.itemFactory.GetItem("ITL00023").Count -= 1;
+            item.Count--;
             App.system.cloudSave.UpdateCloudItemData();
             
             List<Reward> rewards = new List<Reward>();
@@ -198,8 +194,8 @@ public class Controller_Bag : ControllerBehavior
             });
             
             App.system.reward.Open(rewards.ToArray());
-            App.model.bag.SelectedItems = App.model.bag.SelectedItems;
-            return;
+            ChooseType(-1);
+            ChooseType(2);
         }
         
         if (item.id == "ISL00001")
