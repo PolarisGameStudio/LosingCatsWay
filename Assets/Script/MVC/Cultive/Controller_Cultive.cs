@@ -72,7 +72,8 @@ public class Controller_Cultive : ControllerBehavior
         
         CloseDropSensor();
         LoadCleanLitterData();
-        
+        App.view.cultive.RefreshTimeUI();
+
         DOVirtual.DelayedCall(0.3f, () => SelectType(1));
         
         // 即時刷新貓狀態
@@ -403,6 +404,8 @@ public class Controller_Cultive : ControllerBehavior
         //開始計算
         InvokeRepeating(nameof(CountDownTimer), 1f, 1f);
 
+        App.view.cultive.RefreshTimeUI();
+
         SaveCleanLitterData();
         
         if (!App.system.tutorial.isTutorial)
@@ -541,6 +544,7 @@ public class Controller_Cultive : ControllerBehavior
         if (dt <= App.system.myTime.MyTimeNow)
         {
             App.model.cultive.NextCleanDateTime = dt;
+            App.view.cultive.RefreshTimeUI();
             CancelInvoke(nameof(CountDownTimer));
             return;
         }

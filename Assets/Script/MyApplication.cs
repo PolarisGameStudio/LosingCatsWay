@@ -87,6 +87,8 @@ public class MyApplication : MonoBehaviour
         if (backStatus != 2)
             system.openFlow.Init();
 
+        system.settle.Init();
+        
         // MyTime 一定要放最後
         system.myTime.Init();
 
