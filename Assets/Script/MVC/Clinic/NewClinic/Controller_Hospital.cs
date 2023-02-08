@@ -35,6 +35,14 @@ public class Controller_Hospital : ControllerBehavior
         App.view.hospital.OpenChooseFunction();
     }
 
+    public void CloseToFunction()
+    {
+        if (App.system.tutorial.isTutorial)
+            return;
+        CloseChooseCat();
+        OpenChooseFunction();
+    }
+    
     public void CloseChooseFunction()
     {
         App.view.hospital.CloseChooseFunction();
@@ -147,6 +155,9 @@ public class Controller_Hospital : ControllerBehavior
     
     public void CancelPay()
     {
+        if (App.system.tutorial.isTutorial)
+            return;
+        
         App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
             CloseInvoice();

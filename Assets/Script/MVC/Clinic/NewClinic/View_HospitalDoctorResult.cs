@@ -178,6 +178,9 @@ public class View_HospitalDoctorResult : ViewBehaviour
         {
             App.controller.hospital.CloseDoctorResult();
             App.controller.hospital.OpenChooseFunction();
+            
+            if(App.system.tutorial.isTutorial)
+                App.system.tutorial.Next();
             return;
         }
         
