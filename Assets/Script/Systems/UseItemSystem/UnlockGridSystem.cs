@@ -15,11 +15,8 @@ public class UnlockGridSystem : MvcBehaviour
     [SerializeField] private TextMeshProUGUI itemNameText;
     [SerializeField] private TextMeshProUGUI itemCountText;
 
-    [Title("Unlock")] 
-    public int[] unlockLevels;
+    [Title("Unlock")] public int[] unlockLevels;
     public Reward[] unlockItems;
-
-    private int count = 0;
 
     public void Init()
     {
@@ -35,13 +32,13 @@ public class UnlockGridSystem : MvcBehaviour
         int gridLevel = App.system.player.GridSizeLevel - 1;
         Item item = unlockItems[gridLevel].item;
 
+        int count = App.system.player.Diamond;
+
         if (item.id == "Money")
             count = App.system.player.Coin;
-        else
-            count = App.system.player.Diamond;
 
         int needCount = unlockItems[gridLevel].count;
-        
+
         itemNameText.text = item.Name;
         itemCountText.text = $"{count}/{needCount}";
         itemIcon.sprite = item.icon;
@@ -49,19 +46,44 @@ public class UnlockGridSystem : MvcBehaviour
         uiView.Show();
     }
 
-    public void Confirm()
+    public async void Confirm()
     {
         int gridLevel = App.system.player.GridSizeLevel - 1;
+
+        Item item = unlockItems[gridLevel].item;
         int needCount = unlockItems[gridLevel].count;
-        
-        if (count < needCount)
+
+        if (item.id == "Money")
         {
-            App.system.confirm.Active(ConfirmTable.NotEnoughCoin);
-            return;
+            if (!App.system.player.ReduceMoney(needCount))
+            {
+                App.system.confirm.Active(ConfirmTable.NotEnoughCoin);
+                return;
+            }
+        }
+        else
+        {
+            if (!App.system.player.ReduceDiamond(needCount))
+            {
+                App.system.confirm.Active(ConfirmTable.NotEnoughDiamond);
+                return;
+            }
         }
 
         App.system.player.GridSizeLevel++;
+
+        // 要對每個房間去往上移一格
+        var rooms = App.system.room.MyRooms;
+        for (int i = 0;
+             i < rooms.Count;
+             i++)
+        {
+            rooms[i].x++;
+            rooms[i].y++;
+        }
+
         App.system.cloudSave.SaveCloudSaveData();
+        await App.system.cloudSave.UpdateAllCatSurviveData();
 
         App.system.transition.OnlyOpen(() =>
         {

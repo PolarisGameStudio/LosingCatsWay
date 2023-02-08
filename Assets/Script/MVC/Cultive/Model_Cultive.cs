@@ -16,8 +16,6 @@ public class Model_Cultive : ModelBehavior
     private int selectedTab = -1;
     private List<Item> skinItems;
     private int selectedSkinIndex;
-
-    public string dontLikePlayId;
     
     public Cat SelectedCat
     {

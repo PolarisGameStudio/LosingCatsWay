@@ -15,6 +15,7 @@ public class SystemContainer : MvcBehaviour
     public CatchCatSystem catchCat;
     public CatRenameSystem catRename;
     public CatNotifySystem catNotify;
+    public CatLosingSystem catLosing;
     public ConfirmSystem confirm;
     public ChoosePlayerGenderSystem choosePlayerGenderSystem;
     

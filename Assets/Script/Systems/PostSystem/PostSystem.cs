@@ -46,11 +46,15 @@ public class PostSystem : MvcBehaviour
             _postCards[0].Select();
     }
 
-    public void Open()
+    public void Open(bool fastMode = false)
     {
         if (_postCards.Count == 0)
             return;
-        uiView.Show();
+        
+        if (fastMode)
+            uiView.InstantShow();
+        else
+            uiView.Show();
     }
 
     public void Close()

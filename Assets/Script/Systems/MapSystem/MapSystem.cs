@@ -202,8 +202,6 @@ public class MapSystem : MvcBehaviour
 
             result.Add(tmp);
         }
-
-        print(deletePoints.Count);
         
         // 刪除多餘點
 

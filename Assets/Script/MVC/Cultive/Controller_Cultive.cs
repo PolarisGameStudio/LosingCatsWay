@@ -57,11 +57,6 @@ public class Controller_Cultive : ControllerBehavior
     
     #region Basic
 
-    public void Init()
-    {
-        DrawDontLikePlay();
-    }
-    
     public void Open()
     {
         closeButton.interactable = !App.system.tutorial.isTutorial;
@@ -284,19 +279,13 @@ public class Controller_Cultive : ControllerBehavior
         catSkeleton.AnimationState.Start -= SetFeedData;
     }
 
-    private void DrawDontLikePlay()
-    {
-        int random = Random.Range(0, 5);
-        App.model.cultive.dontLikePlayId = "ICP" + random.ToString("00000");
-    }
-
     // Drag到貓sensor + ItemType是Tool的話 = 事件
     public void Play()
     {
         // 播放動畫
         var item = App.model.cultive.DragItem;
 
-        if (item.id == App.model.cultive.dontLikePlayId)
+        if (item.id == App.model.cultive.SelectedCat.dontLikePlayId)
         {
             Reject();
             return;

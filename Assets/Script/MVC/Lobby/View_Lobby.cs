@@ -50,6 +50,7 @@ public class View_Lobby : ViewBehaviour
     public GameObject lobbyDailyQuestRed;
     public GameObject archiveRedPoint;
     public GameObject mailRedPoint;
+    public GameObject mallRedPoint;
 
     public override void Open()
     {
