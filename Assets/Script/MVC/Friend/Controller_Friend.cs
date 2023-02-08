@@ -18,6 +18,8 @@ public class Controller_Friend : ControllerBehavior
         friendData.PlayerId = App.system.player.PlayerId;
         friendData.PlayerName = App.system.player.PlayerName;
         friendData.Level = App.system.player.Level;
+        friendData.UsingIcon = App.system.player.UsingIcon;
+        friendData.UsingAvatar = App.system.player.UsingAvatar;
 
         App.view.friend.myPlayerCard.SetData(friendData);
         

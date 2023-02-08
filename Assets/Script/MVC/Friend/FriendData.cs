@@ -7,4 +7,6 @@ public class FriendData
     public string PlayerId;
     public string PlayerName;
     public int Level;
+    public string UsingAvatar;
+    public string UsingIcon;
 }

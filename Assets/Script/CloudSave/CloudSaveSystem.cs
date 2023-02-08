@@ -371,6 +371,8 @@ public class CloudSaveSystem : MvcBehaviour
             friendData.PlayerId = cloudSaveData.PlayerData.PlayerId;
             friendData.PlayerName = cloudSaveData.PlayerData.PlayerName;
             friendData.Level = cloudSaveData.PlayerData.Level;
+            friendData.UsingIcon = cloudSaveData.PlayerData.UsingIcon;
+            friendData.UsingAvatar = cloudSaveData.PlayerData.UsingAvatar;
 
             result.Add(friendData);
         }
@@ -391,6 +393,8 @@ public class CloudSaveSystem : MvcBehaviour
         friendData.PlayerId = cloudSaveData.PlayerData.PlayerId;
         friendData.PlayerName = cloudSaveData.PlayerData.PlayerName;
         friendData.Level = cloudSaveData.PlayerData.Level;
+        friendData.UsingIcon = cloudSaveData.PlayerData.UsingIcon;
+        friendData.UsingAvatar = cloudSaveData.PlayerData.UsingAvatar;
         
         return friendData;
     }
@@ -415,7 +419,9 @@ public class CloudSaveSystem : MvcBehaviour
             friendData.PlayerId = cloudSaveData.PlayerData.PlayerId;
             friendData.PlayerName = cloudSaveData.PlayerData.PlayerName;
             friendData.Level = cloudSaveData.PlayerData.Level;
-
+            friendData.UsingIcon = cloudSaveData.PlayerData.UsingIcon;
+            friendData.UsingAvatar = cloudSaveData.PlayerData.UsingAvatar;
+            
             result.Add(friendData);
         }
 

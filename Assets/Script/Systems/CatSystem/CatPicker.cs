@@ -12,7 +12,8 @@ public class CatPicker : MvcBehaviour
     [SerializeField] private PolyNavAgent agent;
     [SerializeField] private Animator animator;
     [SerializeField] private Cat cat;
-
+    private PolyNavMap _polyNavMap;
+    
     private Camera cam;
     private LeanPinchCamera pinchCam;
     private LeanDragCamera dragCam;
@@ -29,6 +30,7 @@ public class CatPicker : MvcBehaviour
         cam = Camera.main;
         pinchCam = cam.GetComponent<LeanPinchCamera>();
         dragCam = cam.GetComponent<LeanDragCamera>();
+        _polyNavMap = FindObjectOfType<PolyNavMap>();
     }
 
     private void Active()
@@ -80,12 +82,15 @@ public class CatPicker : MvcBehaviour
         int gridY = (int)(position.y / 5.12);
 
         int gridValue = App.system.grid.GetGrid(gridX, gridY).Value;
-
-        if (gridValue != 1)
+        
+        if (gridValue != 1 || !_polyNavMap.PointIsValid(position))
         {
             cat.transform.position = startPosition;
             cat.Reset();
+            return;
         }
+        
+        cat.GetComponent<CatSkin>().ChangeSkin(cat.cloudCatData);
     }
 
     private void PlaySound()

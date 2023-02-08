@@ -32,7 +32,7 @@ public class View_Cultive : ViewBehaviour
     [SerializeField] private TextMeshProUGUI cleanCountText;
     [SerializeField] private Image litterImage;
     [SerializeField] private Sprite emptyLitterSprite;
-    [SerializeField] private Sprite fullLitterSprite;
+    [SerializeField] private Sprite[] fullLitterSprite;
     public GameObject noLitterObject;
     public GameObject catDialogObject;
 
@@ -113,7 +113,7 @@ public class View_Cultive : ViewBehaviour
     }
 
     #endregion
-
+    
     #region ValueChange
 
     private void OnSelectedCatChange(object value)
@@ -202,35 +202,8 @@ public class View_Cultive : ViewBehaviour
         DateTime nextDate = (DateTime)value;
         TimeSpan ts = nextDate - App.system.myTime.MyTimeNow;
         
-        //時候未到
-        if (nextDate > App.system.myTime.MyTimeNow)
-        {
-            cleanLitterButton.gameObject.SetActive(false);
-            noLitterObject.SetActive(false);
-            timerObject.SetActive(true);
-            
-            string str = $"{ts.Hours:00}:{ts.Minutes:00}:{ts.Seconds:00}";
-            timerText.text = str;
-            litterImage.sprite = fullLitterSprite;
-        }
-        else
-        {
-            timerObject.SetActive(false);
-            
-            if (_count > 0)
-            {
-                cleanLitterButton.gameObject.SetActive(true);
-                noLitterObject.SetActive(false);
-                litterImage.sprite = fullLitterSprite;
-            }
-            else
-            {
-                cleanLitterButton.gameObject.SetActive(false);
-                noLitterObject.SetActive(true);
-                litterImage.sprite = emptyLitterSprite;
-            }
-        }
-            
+        string str = $"{ts.Hours:00}:{ts.Minutes:00}:{ts.Seconds:00}";
+        timerText.text = str;
     }
 
     private void OnCleanLitterCountChange(object value)
@@ -323,7 +296,7 @@ public class View_Cultive : ViewBehaviour
     }
 
     #endregion
-
+    
     public void RefreshStatus(CloudCatData cloudCatData)
     {
         satietyFillInner.sprite = cloudCatData.CatSurviveData.Satiety > 20 ? highValueSprite : lowValueSprite;
@@ -350,5 +323,37 @@ public class View_Cultive : ViewBehaviour
             return;
         openChooseSkinButton.interactable = true;
         openChooseSkinMask.SetActive(false);
+    }
+
+    public void RefreshTimeUI()
+    {
+        DateTime nextDate = App.model.cultive.NextCleanDateTime;
+       
+        //時候未到
+        if (nextDate > App.system.myTime.MyTimeNow)
+        {
+            cleanLitterButton.gameObject.SetActive(false);
+            noLitterObject.SetActive(false);
+            timerObject.SetActive(true);
+
+            litterImage.sprite = fullLitterSprite[App.model.cultive.UsingLitterIndex];
+        }
+        else
+        {
+            timerObject.SetActive(false);
+            
+            if (_count > 0)
+            {
+                cleanLitterButton.gameObject.SetActive(true);
+                noLitterObject.SetActive(false);
+                litterImage.sprite = fullLitterSprite[App.model.cultive.UsingLitterIndex];
+            }
+            else
+            {
+                cleanLitterButton.gameObject.SetActive(false);
+                noLitterObject.SetActive(true);
+                litterImage.sprite = emptyLitterSprite;
+            }
+        }
     }
 }

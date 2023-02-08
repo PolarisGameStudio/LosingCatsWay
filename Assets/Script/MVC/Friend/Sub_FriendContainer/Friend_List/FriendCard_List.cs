@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class FriendCard_List : MonoBehaviour
+public class FriendCard_List : MvcBehaviour
 {
     [SerializeField] private Button selectFriendButton;
 
@@ -21,6 +21,10 @@ public class FriendCard_List : MonoBehaviour
 
     [SerializeField] private Button goFriendHomeButton;
 
+    [SerializeField] private Image avatarImage;
+    [SerializeField] private Image iconImage;
+
+    
     public void SetData(FriendData friendData, UnityAction selectFriendAction = null,
         UnityAction goFriendHomeAction = null)
     {
@@ -31,7 +35,16 @@ public class FriendCard_List : MonoBehaviour
 
         playerIdText.text = "ID:" + friendData.PlayerId;
         selectedIdText.text = "ID:" + friendData.PlayerId;
-
+        
+        iconImage.sprite = App.factory.itemFactory.GetItem(friendData.UsingIcon).icon;
+        avatarImage.sprite = App.factory.itemFactory.GetItem(friendData.UsingAvatar).icon;
+        
+        if (!App.factory.itemFactory.avatarEffects.ContainsKey(friendData.UsingAvatar))
+            return;
+        
+        GameObject effectObject = App.factory.itemFactory.avatarEffects[friendData.UsingAvatar];
+        Instantiate(effectObject, avatarImage.transform);
+        
         if (selectFriendAction != null)
             selectFriendButton.onClick.AddListener(selectFriendAction);
 

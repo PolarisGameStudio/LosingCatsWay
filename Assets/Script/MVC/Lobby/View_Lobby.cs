@@ -138,6 +138,7 @@ public class View_Lobby : ViewBehaviour
 
         if (!App.factory.itemFactory.avatarEffects.ContainsKey(id))
             return;
+        
         GameObject effectObject = App.factory.itemFactory.avatarEffects[id];
         Instantiate(effectObject, playerAvatar.transform);
     }
