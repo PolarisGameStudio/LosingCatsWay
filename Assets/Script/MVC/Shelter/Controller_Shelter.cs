@@ -13,12 +13,11 @@ public class Controller_Shelter : ControllerBehavior
     [SerializeField] private Card_ChipInfo info;
     [SerializeField] private Scrollbar scrollbar;
 
-    [Title("Quest")] [SerializeField] private SHR001 freeRefresh;
+    [Title("Quest")]
+    [SerializeField] private SHR001 freeRefresh;
     [SerializeField] private SHR002 adsRefresh;
 
     public CallbackValue OnAdoptCat;
-    public Callback OnFreeRefresh;
-    public Callback OnAdsRefresh;
     
     #region Basic
 
@@ -95,8 +94,7 @@ public class Controller_Shelter : ControllerBehavior
             App.system.confirm.Active(ConfirmTable.RefreshConfirm, () => 
             {
                 GetCloudCatDatas();
-                
-                OnFreeRefresh?.Invoke();
+                freeRefresh.Progress++;
                 UpdateRefresh();
             });
             return;
@@ -109,8 +107,7 @@ public class Controller_Shelter : ControllerBehavior
             {
                 //TODO Ads
                 GetCloudCatDatas();
-                
-                OnAdsRefresh?.Invoke();
+                adsRefresh.Progress++;
                 UpdateRefresh();
 
                 if (App.model.shelter.AdsRefresh <= 0)

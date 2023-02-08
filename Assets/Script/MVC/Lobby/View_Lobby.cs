@@ -54,6 +54,8 @@ public class View_Lobby : ViewBehaviour
 
     public override void Open()
     {
+        catCountText.text = App.system.cat.GetCats().Count.ToString("00");
+        
         UIView.InstantShow();
 
         // Top
@@ -97,7 +99,6 @@ public class View_Lobby : ViewBehaviour
         App.system.player.OnAddDiamondChange += OnAddDiamondChange;
         App.system.player.OnAddExpChange += OnAddExpChange;
 
-        App.system.cat.OnCatsChange += OnCatsChange;
         App.system.room.OnRoomsChange += OnRoomsChange;
         
         App.model.dailyQuest.OnQuestsChange += OnQuestsChange;
@@ -182,12 +183,6 @@ public class View_Lobby : ViewBehaviour
             count++;
         }
         roomCountText.text = count.ToString("00");
-    }
-
-    private void OnCatsChange(object value)
-    {
-        List<Cat> cats = (List<Cat>)value;
-        catCountText.text = cats.Count.ToString("00");
     }
 
     private void OnPlayerNameChange(object value)

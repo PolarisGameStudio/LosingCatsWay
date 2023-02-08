@@ -67,7 +67,7 @@ public class CatRewardCanvas : MvcBehaviour
     private void Open()
     {
         rectTransform.DOScale(originScale, 0.5f).From(Vector2.zero);
-        rectTransform.DOLocalMoveY(3.5f, 0.5f).From(1);
+        rectTransform.DOLocalMoveY(3.5f, 0.5f).From(2);
         canvasGroup.DOFade(1, 0.5f).From(0);
 
         DOVirtual.DelayedCall(0.75f, Close);

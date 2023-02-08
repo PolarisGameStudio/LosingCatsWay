@@ -11,6 +11,10 @@ public class Controller_MonthSign : ControllerBehavior
     public Transform FrontTransform; // 圖層解決
     public Transform BackTransform;
 
+    [Title("Resign")]
+    [SerializeField] private MSR001 freeResign;
+    [SerializeField] private MSR002 adsResign;
+    
     public async void Init()
     {
         int day = App.system.myTime.MyTimeNow.Day;
@@ -24,6 +28,7 @@ public class Controller_MonthSign : ControllerBehavior
     {
         App.view.monthSign.Open();
         CheckCalender();
+        CheckCanResign();
     }
 
     public void Close()
@@ -69,23 +74,46 @@ public class Controller_MonthSign : ControllerBehavior
     /// 按鈕補簽
     public void Resign()
     {
-        if (App.model.monthSign.ResignCount <= 0) return;
-
-        //TODO 廣告
-
+        int todayIndex = App.model.monthSign.TodayIndex;
         var signs = App.model.monthSign.SignIndexs;
-        for (int i = 0; i < signs.Count; i++)
+        
+        if (!freeResign.IsReach)
         {
-            if (i == App.system.myTime.MyTimeNow.Day - 1) break; //不超過今天
-            if (signs[i] == 1) continue; //簽到了
+            for (int i = 0; i < signs.Count; i++)
+            {
+                if (i == todayIndex)
+                    break;
+                if (signs[i] == 1)
+                    continue;
 
-            ReceiveReward(i + 1);
-            signs[i] = 1;
-            App.model.monthSign.ResignCount--;
-            break;
+                ReceiveReward(i + 1);
+                signs[i] = 1;
+                freeResign.Progress++;
+                CheckCanResign();
+                App.model.monthSign.SignIndexs = signs;
+                break;
+            }
+
+            return;
         }
 
-        App.model.monthSign.SignIndexs = signs;
+        if (!adsResign.IsReach)
+        {
+            for (int i = 0; i < signs.Count; i++)
+            {
+                if (i == todayIndex)
+                    break;
+                if (signs[i] == 1)
+                    continue;
+
+                ReceiveReward(i + 1);
+                signs[i] = 1;
+                adsResign.Progress++;
+                CheckCanResign();
+                App.model.monthSign.SignIndexs = signs;
+                break;
+            }
+        }
     }
 
     private void CreateCalander(int year, int month)
@@ -98,7 +126,9 @@ public class Controller_MonthSign : ControllerBehavior
 
         App.model.monthSign.SignIndexs = signs;
         App.model.monthSign.Month = month;
-        App.model.monthSign.ResignCount = 7; //重設補簽次數
+        //重設補簽次數
+        freeResign.Progress = 0;
+        adsResign.Progress = 0;
     }
 
     private void ReceiveReward(int day)
@@ -132,6 +162,28 @@ public class Controller_MonthSign : ControllerBehavior
     public void SortDateObjects()
     {
         App.view.monthSign.SortDateObjects();
+    }
+
+    private void CheckCanResign()
+    {
+        if (freeResign.IsReach && adsResign.IsReach)
+        {
+            App.model.monthSign.IsCanResign = false;
+            return;
+        }
+
+        List<int> canResignDays = new List<int>();
+        List<int> currentSigns = App.model.monthSign.SignIndexs;
+        int todayIndex = App.model.monthSign.TodayIndex;
+
+        for (int i = 0; i < todayIndex; i++)
+        {
+            if (currentSigns[i] == 1) // 簽了
+                continue;
+            canResignDays.Add(currentSigns[i]);
+        }
+
+        App.model.monthSign.IsCanResign = canResignDays.Count > 0;
     }
 }
 

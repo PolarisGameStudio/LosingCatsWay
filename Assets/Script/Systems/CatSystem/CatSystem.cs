@@ -20,7 +20,6 @@ public class CatSystem : MvcBehaviour
     private List<CloudLosingCatData> _losingCatDatas = new List<CloudLosingCatData>();
     private AngelCat _angelCat;
 
-    public CallbackValue OnCatsChange;
     public Callback OnCatDead;
 
     public void Init()
@@ -49,7 +48,14 @@ public class CatSystem : MvcBehaviour
                 await SetDead(myCats[i]);
             }
 
-        App.model.entrance.LosingCatDatas = _losingCatDatas;
+        App.model.entrance.LosingCatDatas = _losingCatDatas; // 僅本日死亡
+
+        if (_losingCatDatas.Count <= 0)
+            return;
+
+        var lastLosingCatDatas = App.model.cloister.LosingCatDatas; // 以前死亡的貓
+        lastLosingCatDatas.AddRange(_losingCatDatas);
+        App.model.cloister.LosingCatDatas = lastLosingCatDatas;
     }
 
     private void CheckCatsStatusPerLogin()
@@ -100,7 +106,6 @@ public class CatSystem : MvcBehaviour
     private void Add(Cat cat)
     {
         myCats.Add(cat);
-        OnCatsChange?.Invoke(myCats);
     }
 
     /// 本地移除指定貓，伺服器不變(死亡、棄養)
@@ -108,7 +113,6 @@ public class CatSystem : MvcBehaviour
     {
         myCats.Remove(cat);
         cat.gameObject.SetActive(false);
-        OnCatsChange?.Invoke(myCats);
     }
 
     /// 讓貓移動到墓地
@@ -116,6 +120,8 @@ public class CatSystem : MvcBehaviour
     {
         cat.Death();
         Remove(cat);
+
+        App.system.catNotify.Remove(cat);
 
         App.system.player.CatDeadCount += 1;
         // deadCats.Insert(0, cat);

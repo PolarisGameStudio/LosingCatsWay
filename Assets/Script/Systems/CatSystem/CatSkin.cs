@@ -245,10 +245,10 @@ public class CatSkin : MvcBehaviour
 
         if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) == 0)
         {
-            // catSkeleton.SetAttachment(slot_eyeLeft, slot_eyeLeft);
-            // catSkeleton.SetAttachment(slot_eyeRight, slot_eyeRight);
-            // catSkeleton.SetAttachment(slot_pupilLeft, key_pupilLeft);
-            // catSkeleton.SetAttachment(slot_pupilRight, key_pupilRight);
+            catSkeleton.SetAttachment("Eye_Left", "Eye_Left");
+            catSkeleton.SetAttachment("Eye_Right", "Eye_Right");
+            catSkeleton.SetAttachment("Pupil_Left", "Pupil_Left");
+            catSkeleton.SetAttachment("Pupil_Right", "Pupil_Right");
             return;
         }
         

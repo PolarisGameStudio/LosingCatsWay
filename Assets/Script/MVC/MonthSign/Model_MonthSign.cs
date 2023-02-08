@@ -8,10 +8,10 @@ public class Model_MonthSign : ModelBehavior
     private List<int> signIndexs;
     private int month;
     private DateTime lastMonthSignDate;
-    private int resignCount;
     private List<Reward> monthRewards;
     private int todayIndex = -1;
-
+    private bool isCanResign;
+    
     public List<int> SignIndexs
     {
         get => signIndexs;
@@ -38,16 +38,6 @@ public class Model_MonthSign : ModelBehavior
         set => lastMonthSignDate = value;
     }
 
-    public int ResignCount
-    {
-        get => resignCount;
-        set
-        {
-            resignCount = value;
-            OnResignCountChange(value);
-        }
-    }
-
     public List<Reward> MonthRewards
     {
         get => monthRewards;
@@ -68,9 +58,19 @@ public class Model_MonthSign : ModelBehavior
         }
     }
 
+    public bool IsCanResign
+    {
+        get => isCanResign;
+        set
+        {
+            isCanResign = value;
+            OnIsCanResignChange?.Invoke(value);
+        }
+    }
+
     public ValueChange OnSignIndexsChange;
     public ValueChange OnMonthChange;
-    public ValueChange OnResignCountChange;
     public ValueChange OnMonthRewardsChange;
     public ValueChange OnTodayIndexChange;
+    public ValueChange OnIsCanResignChange;
 }

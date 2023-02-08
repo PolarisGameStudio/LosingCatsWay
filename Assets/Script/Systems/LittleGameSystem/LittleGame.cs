@@ -57,14 +57,15 @@ public abstract class LittleGame : MvcBehaviour
         App.controller.lobby.OnLobbyDelayOpen -= Success;
         int exp = App.system.player.playerDataSetting.LittleGameExp;
         int coin = App.system.player.playerDataSetting.GetLittleGameCoinsByLevel(App.system.player.Level);
-        cat.CatRewardCanvas.PopReward(exp, coin);
+        App.system.player.AddExp(exp);
+        App.system.player.AddMoney(coin);
     }
 
     private void Failed()
     {
         App.controller.lobby.OnLobbyDelayOpen -= Failed;
         int exp = App.system.player.playerDataSetting.LittleGameExp;
-        cat.CatRewardCanvas.PopReward(exp, 0);
+        App.system.player.AddExp(exp);
     }
 }
 

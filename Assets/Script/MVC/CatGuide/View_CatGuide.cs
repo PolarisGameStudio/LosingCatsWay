@@ -53,7 +53,7 @@ public class View_CatGuide : ViewBehaviour
     {
         int level = (int)value;
         
-        if (level > 40)
+        if (level >= 40)
         {
             for (int i = 0; i < botCards.Length; i++)
                 botCards[i].gameObject.SetActive(false);

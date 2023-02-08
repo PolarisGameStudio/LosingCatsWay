@@ -34,12 +34,18 @@ public class View_MonthSign : ViewBehaviour
     public override void Init()
     {
         base.Init();
-        
         App.model.monthSign.OnSignIndexsChange += OnSignIndexsChange;
         App.model.monthSign.OnMonthChange += OnMonthChange;
-        App.model.monthSign.OnResignCountChange += OnResignCountChange;
         App.model.monthSign.OnMonthRewardsChange += OnMonthRewardsChange;
         App.model.monthSign.OnTodayIndexChange += OnTodayIndexChange;
+        App.model.monthSign.OnIsCanResignChange += OnIsCanResignChange;
+    }
+
+    private void OnIsCanResignChange(object value)
+    {
+        bool canResign = (bool)value;
+        resignButton.interactable = canResign;
+        resignText.color = canResign ? canSignColor : noSignColor;
     }
 
     private void OnTodayIndexChange(object value)
@@ -135,21 +141,6 @@ public class View_MonthSign : ViewBehaviour
         continueDayText.text = continueDays.ToString("00");
 
         #endregion
-    }
-
-    private void OnResignCountChange(object value)
-    {
-        int count = Convert.ToInt32(value);
-
-        if (count <= 0)
-        {
-            resignButton.interactable = false;
-            resignText.color = noSignColor;
-            return;
-        }
-
-        resignButton.interactable = true;
-        resignText.color = canSignColor;
     }
 
     private void RefreshDateObject()

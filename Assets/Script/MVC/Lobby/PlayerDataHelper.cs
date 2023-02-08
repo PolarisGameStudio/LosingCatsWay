@@ -97,7 +97,6 @@ public class PlayerDataHelper
         var signData = cloudSaveData.SignData;
 
         monthSign.SignIndexs = signData.MonthSigns == null ? new List<int>(new int[31]) : signData.MonthSigns;
-        monthSign.ResignCount = signData.MonthResignCount;
         monthSign.LastMonthSignDate = signData.LastMonthSignDate.ToDateTime().ToLocalTime();
     }
 
@@ -157,16 +156,28 @@ public class PlayerDataHelper
 
     private void SetMissionData(CloudSaveData cloudSaveData)
     {
-        var quest = app.system.quest;
+        // var quest = app.system.quest;
         var missionData = cloudSaveData.MissionData;
 
-        quest.QuestProgressData = missionData.QuestProgressData == null
-            ? app.system.quest.QuestProgressData
-            : missionData.QuestProgressData;
-        quest.QuestReceivedStatusData = missionData.QuestReceivedStatusData == null
-            ? app.system.quest.QuestReceivedStatusData
-            : missionData.QuestReceivedStatusData;
+        DictSetValueHelper dictSetValueHelper = new DictSetValueHelper();
 
+        // quest.QuestProgressData = missionData.QuestProgressData == null
+        //     ? app.system.quest.QuestProgressData
+        //     : missionData.QuestProgressData;
+        // quest.QuestReceivedStatusData = missionData.QuestReceivedStatusData == null
+        //     ? app.system.quest.QuestReceivedStatusData
+        //     : missionData.QuestReceivedStatusData;
+
+        if (missionData.QuestProgressData == null)
+            missionData.QuestProgressData = app.system.quest.QuestProgressData;
+        else
+            dictSetValueHelper.SetDict(missionData.QuestProgressData, app.system.quest.QuestProgressData);
+        
+        if (missionData.QuestReceivedStatusData == null)
+            missionData.QuestReceivedStatusData = app.system.quest.QuestReceivedStatusData;
+        else
+            dictSetValueHelper.SetDict(missionData.QuestReceivedStatusData, app.system.quest.QuestReceivedStatusData);
+        
         if (missionData.MyQuests == null)
             missionData.MyQuests = new List<string>();
 
@@ -322,7 +333,6 @@ public class PlayerDataHelper
         CloudSave_SignData signData = new CloudSave_SignData();
 
         signData.MonthSigns = app.model.monthSign.SignIndexs;
-        signData.MonthResignCount = app.model.monthSign.ResignCount;
         signData.LastMonthSignDate = Timestamp.FromDateTime(app.model.monthSign.LastMonthSignDate);
 
         return signData;

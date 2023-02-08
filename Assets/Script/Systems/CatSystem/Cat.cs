@@ -31,8 +31,6 @@ public class Cat : MvcBehaviour
     [HideInInspector] public string catNotifyId; //每次刷遊戲覆蓋
     [HideInInspector] public bool isPauseGame;
 
-    public CatRewardCanvas CatRewardCanvas;
-
     [Title("Effects")] public ParticleSystem catHeartEffect;
 
     // ID變化

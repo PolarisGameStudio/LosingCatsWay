@@ -25,6 +25,10 @@ public class View_Bag : ViewBehaviour
     [SerializeField] private TextMeshProUGUI coinText;
     [SerializeField] private TextMeshProUGUI diamondText;
 
+    [Title("Position")]
+    [SerializeField] private RectTransform iconRect;
+    [SerializeField] private Vector2[] iconPositions;
+    
     private List<Card_BagItem> cardBagItems = new List<Card_BagItem>();
 
     public override void Close()
@@ -115,6 +119,32 @@ public class View_Bag : ViewBehaviour
         itemImage.enabled = true;
         itemImage.sprite = item.icon;
 
+        Vector2 tmpPos = Vector2.zero;
+        switch (item.itemType)
+        {
+            case ItemType.Feed:
+                tmpPos = iconPositions[0];
+                break;
+            case ItemType.Tool:
+                tmpPos = iconPositions[1];
+                break;
+            case ItemType.Litter:
+                tmpPos = iconPositions[2];
+                break;
+            case ItemType.Room:
+                tmpPos = iconPositions[3];
+                break;
+            case ItemType.Special:
+                tmpPos = iconPositions[5];
+                break;
+            case ItemType.CatSkin:
+                tmpPos = iconPositions[4];
+                break;
+            default:
+                break;
+        }
+
+        iconRect.anchoredPosition = tmpPos;
         itemImage.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutBack);
         
         // 判斷是否能使用
