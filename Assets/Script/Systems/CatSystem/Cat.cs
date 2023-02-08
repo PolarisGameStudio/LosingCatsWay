@@ -23,6 +23,8 @@ public class Cat : MvcBehaviour
     public CloudCatData cloudCatData;
     public bool isFriendMode = false;
 
+    public string dontLikePlayId;
+    
     //GameType
     [HideInInspector] public int littleGameIndex;
     [HideInInspector] public BigGameBehaviour bigGameBehaviour;
@@ -59,6 +61,8 @@ public class Cat : MvcBehaviour
         if (catHeartEffect.isPlaying)
             catHeartEffect.Stop();
 
+        DrawDontLikeId();
+        
         //隨機開始時間
         int randTimer = Random.Range(10, 15);
         DrawGameTimer = randTimer;
@@ -739,7 +743,12 @@ public class Cat : MvcBehaviour
             if (cloudCatData.CatSurviveData.RealMoisture <= 0)
                 sickId = App.factory.sickFactory.GetMoistureSick(cloudCatData);
             else if (cloudCatData.CatSurviveData.RealFavourbility <= 0)
-                sickId = App.factory.sickFactory.GetFavourbilitySick(cloudCatData);
+            {
+                if (Random.value > 0.5f)
+                    App.system.catLosing.Active(this);
+                else
+                    sickId = App.factory.sickFactory.GetFavourbilitySick(cloudCatData);
+            }
             else if (cloudCatData.CatSurviveData.RealSatiety <= 0)
                 sickId = App.factory.sickFactory.GetSatietySick(cloudCatData);
         }
@@ -817,6 +826,16 @@ public class Cat : MvcBehaviour
         // 載入今日最愛零食
         LoadLikeSnackIndex();
         LoadLikeSoupIndex();
+    }
+
+    private void DrawDontLikeId()
+    {
+        int index = 0;
+        
+        if (Random.value > .5f)
+            index = Random.Range(1, 5);
+        
+        dontLikePlayId = "ICP" + index.ToString("00000");
     }
 
     private void UpdateSick(string sickId)

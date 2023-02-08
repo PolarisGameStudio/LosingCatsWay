@@ -112,6 +112,8 @@ public class CloudSaveSystem : MvcBehaviour
         await docRef.UpdateAsync(updates);
     }
 
+
+
     #endregion
 
     #region Cats
@@ -127,7 +129,15 @@ public class CloudSaveSystem : MvcBehaviour
         await docRef.UpdateAsync(updates);
     }
 
-    public async void UpdateCloudCatSurviveData(CloudCatData cloudCatData)
+    public async Task UpdateAllCatSurviveData()
+    {
+        var cats = App.system.cat.GetCats();
+
+        for (int i = 0; i < cats.Count; i++)
+            await UpdateCloudCatSurviveData(cats[i].cloudCatData);
+    }
+    
+    public async Task UpdateCloudCatSurviveData(CloudCatData cloudCatData)
     {
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("Cats").Document(cloudCatData.CatData.CatId);

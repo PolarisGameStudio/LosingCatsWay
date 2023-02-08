@@ -4620,10 +4620,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1928aff6fb594d74ba876b21547caf3e, type: 2}
   - {fileID: 11400000, guid: cddcebc6bf8b2bf4eba8b623401df1dd, type: 2}
   - {fileID: 11400000, guid: 3e2b2c928c9475440b31c8925e1ee7a2, type: 2}
-  - {fileID: 11400000, guid: 70bb89d5dcab4af4c8471a5df6884f82, type: 2}
-  - {fileID: 11400000, guid: 1f29eb961fb270f49b8dbd3fbe0c0746, type: 2}
-  - {fileID: 11400000, guid: fa1bd9ee7e6e96a4f9d35f9b11b723c7, type: 2}
-  - {fileID: 11400000, guid: 0e3fe2ffe062c874f8137f24a47f6ff6, type: 2}
   scrollBar: {fileID: 1255685584590691144}
   itemMallLimiteds:
   - {fileID: 1980603011493667454}
@@ -4632,22 +4628,18 @@ MonoBehaviour:
   - {fileID: 6468599609712785857}
   - {fileID: 3337505692508239573}
   - {fileID: 3602840541987607975}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   cash1000:
   - item: {fileID: 11400000, guid: 22688ec2587731d41b8f6fb6256ea643, type: 2}
-    count: 0
+    count: 1000
   cash3000:
-  - item: {fileID: 0}
-    count: 0
+  - item: {fileID: 11400000, guid: 22688ec2587731d41b8f6fb6256ea643, type: 2}
+    count: 3000
   cash5000:
-  - item: {fileID: 0}
-    count: 0
+  - item: {fileID: 11400000, guid: 22688ec2587731d41b8f6fb6256ea643, type: 2}
+    count: 5000
   cash25000:
-  - item: {fileID: 0}
-    count: 0
+  - item: {fileID: 11400000, guid: 22688ec2587731d41b8f6fb6256ea643, type: 2}
+    count: 25000
 --- !u!1 &503990426324563940
 GameObject:
   m_ObjectHideFlags: 0
@@ -6808,7 +6800,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6809218859756197899}
   m_HandleRect: {fileID: 3556524398187697061}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -14618,8 +14610,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2263097040608146292}
   m_HandleRect: {fileID: 3009373691163324249}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.80961907
+  m_Value: -0.00000018257124
+  m_Size: 0.8096191
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -20765,7 +20757,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 674093758852249476}
         m_TargetAssemblyTypeName: MallContainer_Diamond, Assembly-CSharp
-        m_MethodName: Buy1000CashByDiamond
+        m_MethodName: Buy1000MoneyByDiamond
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -37671,7 +37663,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 674093758852249476}
         m_TargetAssemblyTypeName: MallContainer_Diamond, Assembly-CSharp
-        m_MethodName: Buy3000CashByDiamond
+        m_MethodName: Buy3000MoneyByDiamond
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -72630,8 +72622,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6624572364502723346}
   m_HandleRect: {fileID: 6263817723611091752}
   m_Direction: 2
-  m_Value: 0.99999523
-  m_Size: 0.6025432
+  m_Value: 0.9999954
+  m_Size: 0.60254323
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -75777,7 +75769,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3010455848690550679}
   m_HandleRect: {fileID: 8612515113587783342}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -80466,7 +80458,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8716902330715795249}
   m_HandleRect: {fileID: 6336951969602335387}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -88898,8 +88890,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6468657888259055249}
   m_HandleRect: {fileID: 7721285818949469500}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.6548554
+  m_Value: -0.00000016291057
+  m_Size: 0.65485543
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -95967,8 +95959,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 751657689964629586}
   m_HandleRect: {fileID: 5980456184744891519}
   m_Direction: 2
-  m_Value: 0.99999523
-  m_Size: 0.6025432
+  m_Value: 0.9999954
+  m_Size: 0.60254323
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

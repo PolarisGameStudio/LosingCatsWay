@@ -21,7 +21,7 @@ public class View_Mall : ViewBehaviour
     public TextMeshProUGUI selectedBlockText;
 
     [Title("Page")] 
-    public ViewBehaviour[] pages;
+    public MallContainer[] pages;
 
     [Title("PreviewPackage")] 
     public UIView previewPackageView;

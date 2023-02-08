@@ -58,7 +58,6 @@ public class MyApplication : MonoBehaviour
         system.cat.Init();
         controller.pedia.Init();
         controller.shelter.Init();
-        controller.cultive.Init();
 
         await system.post.Init();
 
@@ -93,11 +92,11 @@ public class MyApplication : MonoBehaviour
 
         // myTime 弄死貓之後再叫
         await controller.cloister.Init();
-        print(model.cloister.LosingCatDatas.Count);
         controller.greenHouse.Init();
         
+        controller.mall.Init();
         await system.mail.Init();
-
+        
         system.cat.CheckAngelCat();
 
         DOVirtual.DelayedCall(0.35f, controller.lobby.Open);

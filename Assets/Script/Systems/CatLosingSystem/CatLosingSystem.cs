@@ -22,9 +22,9 @@ public class CatLosingSystem : MvcBehaviour
     private Cat removeCat;
     
     [Button]
-    public void Active()
+    public void Active(Cat cat)
     {
-        removeCat = App.system.cat.GetCats()[0];
+        removeCat = cat;
         Open(removeCat.cloudCatData);
     }
 

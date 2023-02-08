@@ -35,11 +35,10 @@ public class Login : MyApplication
     [FormerlySerializedAs("notice")] [Title("NoticeSystem")]
     public PostSystem post;
 
-    [Title("Login")] public UIView loginView;
+    [Title("Login")] 
+    public UIView loginView;
+    public Image bgMask;
 
-    [Title("Confirm")] 
-    public ConfirmSystem confirmSystem;
-    
     [Title("LoginButtons")] [SerializeField]
     private GameObject googleButton;
     [SerializeField] private GameObject appleButton;
@@ -102,7 +101,7 @@ public class Login : MyApplication
         {
             idText.text = $"UID: {auth.CurrentUser.UserId}";
             startGameButton.SetActive(true);
-            DOVirtual.DelayedCall(1f, post.Open);
+            post.Open(true);
         }
         else
         {
@@ -110,6 +109,8 @@ public class Login : MyApplication
             startGameButton.SetActive(false);
             loginView.InstantShow();
         }
+        
+        bgMask.DOFade(0, 1).From(1);
     }
 
     private void Update()
