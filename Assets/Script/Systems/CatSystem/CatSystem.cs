@@ -87,7 +87,7 @@ public class CatSystem : MvcBehaviour
             
             var cat = myCats[i];
             var mood = CatExtension.GetCatMood(cat.cloudCatData);
-            if (mood == 2)
+            if (mood == 2 || mood == 3)
                 hasRed = true;
         }
 

@@ -7,7 +7,14 @@ public class View_PediaCats : ViewBehaviour
 {
     [SerializeField] private UIView chooseCatView;
     [SerializeField] private UIView readCatView;
-
+    [SerializeField] private Card_ChooseCat[] cards;
+    
+    public override void Init()
+    {
+        base.Init();
+        App.model.pedia.OnUsingCasIdsChange += OnUsingCasIdsChange;
+    }
+    
     public override void Open()
     {
         base.Open();
@@ -40,5 +47,22 @@ public class View_PediaCats : ViewBehaviour
     private void CloseReadCat()
     {
         readCatView.InstantHide();
+    }
+
+    private void OnUsingCasIdsChange(object value)
+    {
+        List<string> usingCasIds = (List<string>)value;
+
+        for (int i = 0; i < cards.Length; i++)
+        {
+            if (i >= usingCasIds.Count)
+            {
+                cards[i].gameObject.SetActive(false);
+                continue;
+            }
+            
+            cards[i].gameObject.SetActive(true);
+            cards[i].SetData(usingCasIds[i]);
+        }
     }
 }

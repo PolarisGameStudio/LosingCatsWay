@@ -608,7 +608,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -2.4000015, y: 29.8}
+  m_AnchoredPosition: {x: -2.399994, y: 29.8}
   m_SizeDelta: {x: 148.1, y: 38.6}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &5467990671473172455
@@ -821,6 +821,7 @@ GameObject:
   - component: {fileID: 5467990671510985624}
   - component: {fileID: 5467990671510985625}
   - component: {fileID: 5467990671510985631}
+  - component: {fileID: 238331030839124139}
   m_Layer: 5
   m_Name: OpenBagButton
   m_TagString: Untagged
@@ -847,9 +848,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 84.5, y: 305}
+  m_AnchoredPosition: {x: 154.50006, y: 375}
   m_SizeDelta: {x: 140, y: 140}
-  m_Pivot: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5467990671510985629
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -921,7 +922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
+  m_IgnoreReversedGraphics: 0
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
@@ -2380,19 +2381,7 @@ MonoBehaviour:
       Runners: []
       Event:
         m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 5467990671847018415}
-            m_TargetAssemblyTypeName: Controller_Lobby, Assembly-CSharp
-            m_MethodName: OpenBag
-            m_Mode: 1
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
+          m_Calls: []
   SelectedState:
     StateType: 3
     StateName: Selected
@@ -2414,12 +2403,58 @@ MonoBehaviour:
         m_PersistentCalls:
           m_Calls: []
   Behaviours:
-    Behaviours: []
+    Behaviours:
+    - Enabled: 1
+      EventName: PointerUp
+      Runners: []
+      Event:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 5467990671847018415}
+            m_TargetAssemblyTypeName: Controller_Lobby, Assembly-CSharp
+            m_MethodName: OpenBag
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      BehaviourName: 3
+      Receiver:
+        ConnectionMode: 1
+        SignalProviderId:
+          Type: 0
+          Category: Pointer
+          Name: Up
+        ProviderReference: {fileID: 238331030839124139}
+        StreamId:
+          Category: None
+          Name: None
+          Custom: 1
+      Cooldown: 0
     SignalSource: {fileID: 5467990671510985633}
   Id:
     Category: None
     Name: None
     Custom: 0
+--- !u!114 &238331030839124139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5467990671510985633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6d2103f249f4f43ab16cb631d0f264f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProviderCurrentState: 20
+  SignalCooldown: 0
+  SignalTimescale: 0
 --- !u!1 &5467990671544359206
 GameObject:
   m_ObjectHideFlags: 0
@@ -5972,6 +6007,9 @@ MonoBehaviour:
   archiveRedPoint: {fileID: 2832888345782009462}
   mailRedPoint: {fileID: 5812278716007694731}
   mallRedPoint: {fileID: 6148170511286992443}
+  bagRedPoint: {fileID: 5467990672040836013}
+  catRedPoint: {fileID: 5467990671774986142}
+  friendRedPoint: {fileID: 5467990671748371410}
 --- !u!114 &5467990671918205687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7328,9 +7366,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 53.9, y: 69.9}
+  m_AnchoredPosition: {x: 158.90009, y: 174.89996}
   m_SizeDelta: {x: 210, y: 210}
-  m_Pivot: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5467990672052089100
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8329,9 +8367,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 242.1, y: 239.4}
+  m_AnchoredPosition: {x: 312.1, y: 309.39996}
   m_SizeDelta: {x: 140, y: 140}
-  m_Pivot: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5467990672245214677
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13650,9 +13688,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 287, y: 62.7}
+  m_AnchoredPosition: {x: 357, y: 132.20001}
   m_SizeDelta: {x: 140, y: 139}
-  m_Pivot: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5467990673244169460
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -31164,6 +31202,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4515635346583621727, guid: 41f8298ccc8d1414788310e8ababc025,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515635346583621727, guid: 41f8298ccc8d1414788310e8ababc025,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515635346583621727, guid: 41f8298ccc8d1414788310e8ababc025,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515635346583621727, guid: 41f8298ccc8d1414788310e8ababc025,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -31319,6 +31372,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 150812366596103214, guid: 5c186e0394e5c744cb3b67da7d8af9ae,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 150812366596103214, guid: 5c186e0394e5c744cb3b67da7d8af9ae,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 150812366596103214, guid: 5c186e0394e5c744cb3b67da7d8af9ae,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 150812366596103214, guid: 5c186e0394e5c744cb3b67da7d8af9ae,
         type: 3}
@@ -31482,6 +31550,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6045696343484244222, guid: a7d848b4337dacb47b729a7458e7240b,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6045696343484244222, guid: a7d848b4337dacb47b729a7458e7240b,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6045696343484244222, guid: a7d848b4337dacb47b729a7458e7240b,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6045696343484244222, guid: a7d848b4337dacb47b729a7458e7240b,
         type: 3}

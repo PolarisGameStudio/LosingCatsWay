@@ -19,8 +19,7 @@ public class MyGridSystem : MvcBehaviour
 
     public int maxHomeParticle;
 
-    [Title("Build")]
-    public GameObject buildTmp;
+    [Title("Build")] public GameObject buildTmp;
     public GameObject buildTmpCircle;
     public SpriteRenderer buildTmpMask;
 
@@ -30,7 +29,7 @@ public class MyGridSystem : MvcBehaviour
     private SpriteRenderer[,] buildGridArray;
 
     private List<GameObject> objectPool_Floor = new List<GameObject>();
-    
+
     public void Init()
     {
         width = GetGridSize();
@@ -556,7 +555,7 @@ public class MyGridSystem : MvcBehaviour
     private int GetGridSize()
     {
         int level = Math.Clamp(App.system.player.GridSizeLevel, 1, 11);
-        int result = 9 + level * 2;
+        int result = 5 + (level - 1) * 2;
 
         return result;
     }
