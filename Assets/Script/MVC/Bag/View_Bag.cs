@@ -29,6 +29,9 @@ public class View_Bag : ViewBehaviour
     [SerializeField] private RectTransform iconRect;
     [SerializeField] private Vector2[] iconPositions;
     
+    [Title("Red")]
+    public GameObject[] redPoints;
+
     private List<Card_BagItem> cardBagItems = new List<Card_BagItem>();
 
     public override void Close()

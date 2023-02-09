@@ -25,7 +25,8 @@ public class CatSystem : MvcBehaviour
     public void Init()
     {
         InvokeRepeating(nameof(CheckCatStatus), 0, 180);
-
+        RefreshRedPoint();
+        
         App.system.myTime.OnFirstLogin += CheckCatsStatusPerDay;
         App.system.myTime.OnAlreadyLogin += CheckCatsStatusPerLogin;
     }
@@ -36,10 +37,10 @@ public class CatSystem : MvcBehaviour
     {
         for (int i = 0; i < myCats.Count; i++) // 計算上次離開之後的三項
             myCats[i].CheckCatStatusPerLogin();
-        
+
         for (int i = 0; i < myCats.Count; i++) // 檢查會不會死亡 離家出走 生病 跳蚤
             myCats[i].CheckCatStatusPerDay();
-        
+
         for (int i = myCats.Count - 1; i >= 0; i--) // 如果要死就進入死亡流程
             if (myCats[i].cloudCatData.CatServerData.IsDead)
             {
@@ -71,6 +72,26 @@ public class CatSystem : MvcBehaviour
             myCats[i].CheckStatus();
             myCats[i].CheckCatSickByStatus();
         }
+
+        RefreshRedPoint();
+    }
+
+    public void RefreshRedPoint()
+    {
+        bool hasRed = false;
+
+        for (int i = 0; i < myCats.Count; i++)
+        {
+            if (hasRed)
+                continue;
+            
+            var cat = myCats[i];
+            var mood = CatExtension.GetCatMood(cat.cloudCatData);
+            if (mood == 2)
+                hasRed = true;
+        }
+
+        App.view.lobby.catRedPoint.SetActive(hasRed);
     }
 
     #endregion
@@ -203,13 +224,13 @@ public class CatSystem : MvcBehaviour
     {
         List<CloudLosingCatData> losingCatDatas = App.model.cloister.LosingCatDatas;
         CloudLosingCatData angelCat = losingCatDatas.Find(x => x.LosingCatStatus.Contains("AngelCat"));
-        
+
         if (angelCat == null)
             return;
 
         if (_angelCat != null)
             return;
-        
+
         AngelCat cat = Instantiate(angelCatObject, transform);
         cat.SetCloudCatData(angelCat);
 

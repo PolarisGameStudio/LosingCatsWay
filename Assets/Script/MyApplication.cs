@@ -76,8 +76,10 @@ public class MyApplication : MonoBehaviour
         system.bgm.Init();
         system.soundEffect.Init();
 
+        controller.bag.Init();
         controller.settings.Init(); //BGM SE 之後
-
+        controller.friend.Init();
+        
         FindObjectOfType<LoadScene>()?.Close();
 
         canSave = true;
@@ -88,7 +90,7 @@ public class MyApplication : MonoBehaviour
             system.openFlow.Init();
 
         system.settle.Init();
-        
+
         // MyTime 一定要放最後
         system.myTime.Init();
 

@@ -19,7 +19,9 @@ public class FriendContainer_Invite : ViewBehaviour
     private void OnInvitesChange(object value)
     {
         List<FriendData> invites = (List<FriendData>)value;
-
+        
+        App.view.lobby.friendRedPoint.SetActive(invites.Count != 0);
+        
         int contentCount = content.childCount;
 
         for (int i = 0; i < contentCount; i++)
