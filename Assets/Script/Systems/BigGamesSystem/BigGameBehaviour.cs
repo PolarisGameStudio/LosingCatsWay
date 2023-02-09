@@ -86,9 +86,12 @@ public class BigGameBehaviour : MvcBehaviour
 
     private void GameEndAction()
     {
-        if (exp != 0)
+        if (App.system.tutorial.isTutorial)
+            return;
+        
+        if (exp > 0)
             App.system.player.AddExp(exp);
-        if (coins != 0)
+        if (coins > 0)
             App.system.player.AddMoney(coins);
     }
 }

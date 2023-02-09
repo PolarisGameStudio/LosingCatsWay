@@ -222,17 +222,26 @@ public class Controller_Cultive : ControllerBehavior
         }
         else if (item.itemFeedType == ItemFeedType.Water)
         {
-            if (cat.cloudCatData.CatSurviveData.IsLikeDrink)
+            if (item.waterType == WaterType.Water)
+            {
+                if (cat.cloudCatData.CatSurviveData.IsLikeDrink)
+                {
+                    satietyValue = item.likeSatiety;
+                    moistureValue = item.likeMoisture;
+                    funValue = item.likeFun;
+                }
+                else
+                {
+                    satietyValue = item.hateSatiety;
+                    moistureValue = item.hateMoisture;
+                    funValue = item.hateFun;
+                }
+            }
+            else
             {
                 satietyValue = item.likeSatiety;
                 moistureValue = item.likeMoisture;
                 funValue = item.likeFun;
-            }
-            else
-            {
-                satietyValue = item.hateSatiety;
-                moistureValue = item.hateMoisture;
-                funValue = item.hateFun;
             }
         }
         else // 零食和罐頭是定值

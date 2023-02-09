@@ -344,7 +344,7 @@ public class Controller_Clinic : ControllerBehavior
         }
         
         App.system.cloudSave.UpdateCloudCatHealthData(cloudCatData);
-        App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
+        _ = App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
         App.model.clinic.SelectedCat.ChangeSkin();
     }
 

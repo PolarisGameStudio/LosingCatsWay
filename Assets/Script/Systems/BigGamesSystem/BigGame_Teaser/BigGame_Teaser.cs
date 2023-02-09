@@ -216,7 +216,7 @@ public class BigGame_Teaser : BigGameBehaviour
         hearts[hearts.Length - chance].transform.DOScale(Vector2.zero, 0.25f).SetEase(Ease.InBack).From(Vector2.one);
         chance--;
 
-        if (chance == 0 || chance == 3)
+        if (chance == 0 || turn == 3)
         {
             DOVirtual.DelayedCall(2f, OpenSettle);
             return;

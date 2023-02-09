@@ -18,11 +18,16 @@ public class Controller_Shop : ControllerBehavior
 
     public void Close()
     {
+        App.view.shop.Close();
+    }
+
+    public void CloseByOpenMap()
+    {
         SelectType(-1);
         App.system.bgm.FadeOut();
         App.system.transition.Active(0, () =>
         {
-            App.view.shop.Close();
+            Close();
             App.controller.map.Open();
         });
     }

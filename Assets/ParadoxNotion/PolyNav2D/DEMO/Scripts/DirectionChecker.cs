@@ -8,13 +8,15 @@ using PolyNav;
 * Furthermore, if doFlip is checked, the gameobject will flip on it's x axis, usefull for 2D sprites moving left/right like for example in an adventure game.
 * Once again, this is an example to see how it can be done, for you to take and customize to your needs :)
 */
-public class DirectionChecker : MonoBehaviour
+public class DirectionChecker : MvcBehaviour
 {
     public bool doFlip = true;
     private bool isMoving = false;
     
     private Vector2 lastDir;
     private float originalScaleX;
+
+    public Callback OnDirectionChange;
 
     private PolyNavAgent _agent;
     private PolyNavAgent agent {
@@ -57,6 +59,8 @@ public class DirectionChecker : MonoBehaviour
             scale.x = -originalScaleX;
             transform.localScale = scale;
         }
+        
+        OnDirectionChange?.Invoke();
     }
 
     public void TurnRight()
@@ -66,6 +70,8 @@ public class DirectionChecker : MonoBehaviour
             scale.x = originalScaleX;
             transform.localScale = scale;
         }
+        
+        OnDirectionChange?.Invoke();
     }
 
     void Update() {

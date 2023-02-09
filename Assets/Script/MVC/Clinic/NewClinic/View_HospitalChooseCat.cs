@@ -7,6 +7,7 @@ using UnityEngine;
 public class View_HospitalChooseCat : ViewBehaviour
 {
     [SerializeField] private Card_HospitalChooseCat[] cards;
+    [SerializeField] private GameObject[] titles;
 
     [Title("Tween")]
     [SerializeField] private RectTransform panelTransform;
@@ -71,5 +72,7 @@ public class View_HospitalChooseCat : ViewBehaviour
         int index = (int)value;
         for (int i = 0; i < cards.Length; i++)
             cards[i].functionIndex = index;
+        for (int i = 0; i < titles.Length; i++)
+            titles[i].SetActive(i == index);
     }
 }

@@ -30,7 +30,8 @@ public class Controller_Entrance : ControllerBehavior
 
     public void Close()
     {
-        App.view.entrance.CloseChooseDiary();
+        App.controller.cloister.OnClose -= Close;
+        
         App.view.entrance.Close();
         App.model.entrance.OpenType = 0;
         App.system.openFlow.NextAction();
@@ -49,6 +50,11 @@ public class Controller_Entrance : ControllerBehavior
         rightObject.SetActive(App.model.entrance.LosingCatDatas.Count > 1);
         RefreshDiary();
         App.view.entrance.OpenChooseDiary();
+    }
+
+    public void CloseChooseDiary()
+    {
+        App.view.entrance.CloseChooseDiary();
     }
 
     public void ToLeft()
@@ -111,10 +117,14 @@ public class Controller_Entrance : ControllerBehavior
 
     public void ReadDiary()
     {
-        Close();
+        CloseChooseDiary();
+        App.view.entrance.Close(); // 不要觸發NextAction
+        
         var index = App.model.entrance.SelectedDiaryIndex;
         var losingCatData = App.model.entrance.LosingCatDatas[index];
         App.model.diary.LosingCatData = losingCatData;
+        
         App.controller.diary.Open();
+        App.controller.cloister.OnClose += Close; // 通過Close觸發NextAction
     }
 }

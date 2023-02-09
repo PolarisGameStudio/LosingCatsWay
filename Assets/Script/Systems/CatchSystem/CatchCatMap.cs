@@ -27,7 +27,6 @@ public class CatchCatMap : MvcBehaviour
     [Title("CatSkin")] [SerializeField] private CatSkin catSkin;
 
     [Title("UI")] 
-    [SerializeField] private Image hpBar;
     [SerializeField] private TextMeshProUGUI turnText;
     [SerializeField] private Button[] chooseTypeButtons; //選擇種類按鈕*4
     [SerializeField] private Button catchButton; //捕捉按鈕
@@ -45,10 +44,6 @@ public class CatchCatMap : MvcBehaviour
     [TabGroup("TopLeft")] [SerializeField] private RectTransform aboutButtonRect;
     [TabGroup("TopLeft")] [SerializeField] private Image exitDarkMask;
     [TabGroup("TopLeft")] [SerializeField] private Image aboutDarkMask;
-
-    [TabGroup("Center")] [SerializeField] private RectTransform hpBarRect;
-    [TabGroup("Center")] [SerializeField] private RectTransform barHeartRect;
-    [TabGroup("Center")] [SerializeField] private RectTransform barTitleRect;
 
     [TabGroup("Item")] [SerializeField]
     private Image itemImage;
@@ -155,11 +150,16 @@ public class CatchCatMap : MvcBehaviour
 
     private void GameEndAction()
     {
-        App.system.player.AddExp(exp);
-        App.system.player.AddMoney(money);
-
         for (int i = 0; i < usedItems.Count; i++)
             usedItems[i].Count--;
+
+        if (App.system.tutorial.isTutorial)
+            return;
+        
+        if (exp > 0)
+            App.system.player.AddExp(exp);
+        if (money > 0)
+            App.system.player.AddMoney(money);
     }
 
     #endregion
@@ -518,6 +518,7 @@ public class CatchCatMap : MvcBehaviour
     private void Gotcha()
     {
         catSkin.SetActive(false);
+        bubble.Close();
 
         SetCloudCatDataToUse(false);
         
@@ -539,10 +540,11 @@ public class CatchCatMap : MvcBehaviour
 
     private void RunAway()
     {
-        catSkin.SetActive(false);
-
         if (App.system.tutorial.isTutorial)
         {
+            catSkin.SetActive(false);
+            bubble.Close();
+            
             App.system.cloudSave.DeleteCloudCatData(cloudCatData);
             cloudCatData = null;
             
@@ -556,7 +558,10 @@ public class CatchCatMap : MvcBehaviour
 
         if (turn >= 7)
         {
+            catSkin.SetActive(false);
+            bubble.Close();
             SetCloudCatDataToUse(false);
+            
             App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchCatGameEnd, () =>
             {
                 if (hp <= 51)
@@ -577,6 +582,8 @@ public class CatchCatMap : MvcBehaviour
         
         App.system.catchCat.runAway.Active(cloudCatData, NextTurn, () =>
         {
+            catSkin.SetActive(false);
+            bubble.Close();
             SetCloudCatDataToUse(false);
             
             App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchGameFailed, () =>

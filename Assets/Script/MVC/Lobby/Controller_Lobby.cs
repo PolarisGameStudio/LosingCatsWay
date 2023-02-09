@@ -5,15 +5,11 @@ using UnityEngine;
 
 public class Controller_Lobby : ControllerBehavior
 {
-    public Callback OnLobbyDelayOpen; //todo 噴錢鑽石經驗
-    
     public void Open()
     {
         App.system.bgm.FadeIn().Play("Lobby");
         App.view.lobby.Open();
         App.system.room.OpenRooms();
-
-        DOVirtual.DelayedCall(0.25f, () => OnLobbyDelayOpen?.Invoke()); //todo 噴錢鑽石經驗
     }
 
     public void Close()

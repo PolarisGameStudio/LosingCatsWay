@@ -28,11 +28,15 @@ public class Controller_GreenHouse : ControllerBehavior
     public void Close()
     {
         LockGyro();
-        
+        App.view.greenHouse.Close();
+    }
+
+    public void CloseByOpenMap()
+    {
         App.system.bgm.FadeOut();
         App.system.transition.Active(0, () =>
         {
-            App.view.greenHouse.Close();
+            Close();
             App.controller.map.Open();
         });
     }

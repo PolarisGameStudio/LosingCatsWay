@@ -1,13 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Firebase.Auth;
 using Firebase.Extensions;
 using Firebase.Firestore;
-using Sirenix.OdinInspector;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class CloudSaveSystem : MvcBehaviour
 {
@@ -27,16 +24,16 @@ public class CloudSaveSystem : MvcBehaviour
         return cloudSaveData;
     }
 
-    public async Task<CloudCatData> LoadCloudCatData(string catId)
-    {
-        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        DocumentReference docRef = db.Collection("Cats").Document(catId);
-
-        DocumentSnapshot result = await docRef.GetSnapshotAsync();
-        CloudCatData cloudCatData = result.ConvertTo<CloudCatData>();
-
-        return cloudCatData;
-    }
+    // public async Task<CloudCatData> LoadCloudCatData(string catId)
+    // {
+    //     FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+    //     DocumentReference docRef = db.Collection("Cats").Document(catId);
+    //
+    //     DocumentSnapshot result = await docRef.GetSnapshotAsync();
+    //     CloudCatData cloudCatData = result.ConvertTo<CloudCatData>();
+    //
+    //     return cloudCatData;
+    // }
 
     public async void SaveCloudSaveData()
     {
@@ -73,18 +70,18 @@ public class CloudSaveSystem : MvcBehaviour
         await docRef.UpdateAsync(updates);
     }
 
-    public async void UpdateCloudTimeData()
-    {
-        CloudSave_TimeData timeData = new PlayerDataHelper(App).GetTimeData();
-       
-        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
-        Dictionary<string, object> updates = new Dictionary<string, object>
-        {
-            { "TimeData", timeData }
-        };
-        await docRef.UpdateAsync(updates);
-    }
+    // public async void UpdateCloudTimeData()
+    // {
+    //     CloudSave_TimeData timeData = new PlayerDataHelper(App).GetTimeData();
+    //    
+    //     FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+    //     DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
+    //     Dictionary<string, object> updates = new Dictionary<string, object>
+    //     {
+    //         { "TimeData", timeData }
+    //     };
+    //     await docRef.UpdateAsync(updates);
+    // }
 
     public async void UpdateCloudMissionData()
     {
@@ -111,8 +108,6 @@ public class CloudSaveSystem : MvcBehaviour
         };
         await docRef.UpdateAsync(updates);
     }
-
-
 
     #endregion
 

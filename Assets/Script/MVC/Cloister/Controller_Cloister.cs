@@ -7,6 +7,8 @@ public class Controller_Cloister : ControllerBehavior
 {
     [SerializeField] private GameObject catFlowerObject;
 
+    public Callback OnClose;
+    
     #region Basic
 
     public async Task Init()
@@ -29,7 +31,6 @@ public class Controller_Cloister : ControllerBehavior
 
     public void Open()
     {
-        App.controller.greenHouse.LockGyro();
         App.view.cloister.Open();
 
         if (App.model.cloister.LosingCatDatas.Count > 0)
@@ -41,12 +42,7 @@ public class Controller_Cloister : ControllerBehavior
     public void Close()
     {
         App.view.cloister.Close();
-    }
-
-    public void CloseToGreenHouse()
-    {
-        Close();
-        App.controller.greenHouse.UnlockGyro();
+        OnClose?.Invoke();
     }
 
     public void OpenDiary()

@@ -132,6 +132,7 @@ public class CatSystem : MvcBehaviour
     /// 本地移除指定貓，伺服器不變(死亡、棄養)
     public void Remove(Cat cat)
     {
+        cat.CancelInvoke();
         myCats.Remove(cat);
         cat.gameObject.SetActive(false);
     }

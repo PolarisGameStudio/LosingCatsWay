@@ -125,6 +125,9 @@ public class SettleSystem : MvcBehaviour
 
     private void CheckKnowledgeCard()
     {
+        if (App.system.tutorial.isTutorial)
+            return;
+        
         if (_score < 30)
             return;
 

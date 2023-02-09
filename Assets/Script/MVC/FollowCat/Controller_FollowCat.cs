@@ -203,12 +203,12 @@ public class Controller_FollowCat : ControllerBehavior
         if (followCat.bigGameBubble.gameObject.activeSelf)
         {
             followCat.bigGameBubble.DOScale(Vector3.one, 0.5f).From(Vector3.zero);
-            followCat.bigGameBubble.DOLocalMoveY(followCat.bigGameBubbleDistance, 0.5f).From(1);
+            followCat.bigGameBubble.DOLocalMoveY(3, 0.5f).From(1);
         }
         if (followCat.littleGameBubble.gameObject.activeSelf)
         {
             followCat.littleGameBubble.DOScale(Vector3.one, 0.5f).From(Vector3.zero);
-            followCat.littleGameBubble.DOLocalMoveY(followCat.littleGameBubbleDistance, 0.5f).From(1);
+            followCat.littleGameBubble.DOLocalMoveY(3, 0.5f).From(1);
         }
     }
 

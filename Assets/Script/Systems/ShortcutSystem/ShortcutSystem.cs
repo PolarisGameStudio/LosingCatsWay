@@ -16,7 +16,7 @@ public class ShortcutSystem : MvcBehaviour
         App.controller.friend.Close();
         App.controller.shop.Close();
         App.controller.greenHouse.Close();
-        App.controller.map.Close();
+        App.controller.map.Close(); // todo 獨立CloseByOpenXX
     }
     
     public void ToLobby()

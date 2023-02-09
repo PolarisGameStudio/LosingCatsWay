@@ -40,10 +40,15 @@ public class Controller_Shelter : ControllerBehavior
 
     public void Close()
     {
+        App.view.shelter.Close();
+    }
+
+    public void CloseByOpenMap()
+    {
         App.system.bgm.FadeOut();
         App.system.transition.Active(0, () =>
         {
-            App.view.shelter.Close();
+            Close();
             App.controller.map.Open();
         });
     }

@@ -23,9 +23,14 @@ public class Controller_Bag : ControllerBehavior
 
     public void Close()
     {
+        App.view.bag.Close();
+    }
+
+    public void CloseByOpenLobby()
+    {
+        Close();
         App.system.soundEffect.Play("Button");
         App.controller.lobby.Open();
-        App.view.bag.Close();
         ChooseType(-1);
     }
 

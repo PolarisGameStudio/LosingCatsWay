@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Doozy.Runtime.UIManager.Containers;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -35,37 +36,37 @@ public abstract class LittleGame : MvcBehaviour
         cat.ChangeSkin();
     }
 
-    protected void OpenLobby()
-    {
-        App.controller.followCat.CloseByOpenLobby();
-    }
-
     protected void SuccessToLobby()
     {
-        App.controller.lobby.OnLobbyDelayOpen += Success;
         App.controller.followCat.CloseByOpenLobby();
+        DOVirtual.DelayedCall(0.25f, Success);
     }
 
     protected void FailedToLobby()
     {
-        App.controller.lobby.OnLobbyDelayOpen += Failed;
         App.controller.followCat.CloseByOpenLobby();
+        DOVirtual.DelayedCall(0.25f, Failed);
     }
 
     private void Success()
     {
-        App.controller.lobby.OnLobbyDelayOpen -= Success;
         int exp = App.system.player.playerDataSetting.LittleGameExp;
         int coin = App.system.player.playerDataSetting.GetLittleGameCoinsByLevel(App.system.player.Level);
+        
         App.system.player.AddExp(exp);
         App.system.player.AddMoney(coin);
+        
+        cat.catCanvas.ActiveExp(exp, () =>
+        {
+            cat.catCanvas.ActiveMoney(coin);
+        });
     }
 
     private void Failed()
     {
-        App.controller.lobby.OnLobbyDelayOpen -= Failed;
         int exp = App.system.player.playerDataSetting.LittleGameExp;
         App.system.player.AddExp(exp);
+        cat.catCanvas.ActiveExp(exp);
     }
 }
 

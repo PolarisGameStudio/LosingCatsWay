@@ -42,6 +42,11 @@ public class Controller_Friend : ControllerBehavior
     public void Close()
     {
         App.view.friend.Close();
+    }
+
+    public void CloseByOpenLobby()
+    {
+        Close();
         App.controller.lobby.Open();
     }
 

@@ -16,14 +16,14 @@ public class Controller_Diary : ControllerBehavior
     public void Close()
     {
         App.view.diary.Close();
-        App.controller.cloister.Open();
-    }
-    
-    public void CloseDiaryOnlyDiary()
-    {
-        App.controller.diary.Close();
     }
 
+    public void CloseByOpenCloister()
+    {
+        Close();
+        App.controller.cloister.Open();
+    }
+ 
     private void ToPage(int index)
     {
         var datas = App.model.diary.LosingCatData.CatDiaryData.DiaryDatas;

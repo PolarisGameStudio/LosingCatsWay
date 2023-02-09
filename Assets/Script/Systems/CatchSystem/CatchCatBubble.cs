@@ -47,9 +47,7 @@ public class CatchCatBubble : MvcBehaviour
         _levels = levels;
 
         for (int i = 0; i < dots.Length; i++)
-        {
             dots[i].gameObject.SetActive(i < personalitys.Count);
-        }
 
         talkBubble.transform.DOKill();
         hintBubble.transform.DOKill();
@@ -70,6 +68,17 @@ public class CatchCatBubble : MvcBehaviour
     public void Open()
     {
         OpenTalk();
+    }
+
+    public void Close()
+    {
+        if (!isTrigger)
+            CloseTalk();
+        else
+            CloseHint();
+        
+        for (int i = 0; i < smallBubbles.Length; i++)
+            smallBubbles[i].transform.DOScale(Vector2.zero, 0.15f);
     }
 
     public void Active()

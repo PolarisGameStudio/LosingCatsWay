@@ -67,9 +67,8 @@ public class MyApplication : MonoBehaviour
         system.tutorial.Init();
         controller.events.Init();
         controller.monthSign.Init();
-        controller.dailyQuest
-            .Init(); //todo 把迴廊改成進入條件式，如果是OpenFlow呼叫就日記返回不打開迴廊，並且OnClose加入NextAction，移除Entrance原本的NextAction
         controller.entrance.Init();
+        controller.dailyQuest.Init();
 
         #endregion
 
@@ -110,23 +109,24 @@ public class MyApplication : MonoBehaviour
 
     private void OnApplicationFocus(bool focus)
     {
-        if (!canSave) return;
-
+        if (!canSave)
+            return;
         if (!focus)
             SaveData();
     }
 
     private void OnApplicationPause(bool pause)
     {
-        if (!canSave) return;
-
+        if (!canSave)
+            return;
         if (pause)
             SaveData();
     }
 
     private void OnApplicationQuit()
     {
-        if (!canSave) return;
+        if (!canSave)
+            return;
         SaveData();
     }
 

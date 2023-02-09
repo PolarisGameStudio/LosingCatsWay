@@ -20,8 +20,13 @@ public class Controller_Information : ControllerBehavior
    
     public void Close()
     {
-        App.system.soundEffect.Play("Button");
         App.view.information.Close();
+    }
+
+    public void CloseByOpenLobby()
+    {
+        Close();
+        App.system.soundEffect.Play("Button");
         App.controller.lobby.Open();
     }
 
