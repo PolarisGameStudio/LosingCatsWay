@@ -23,16 +23,19 @@ public class View_Shop : ViewBehaviour
     [SerializeField] private View_ShopBuy shopBuy;
     [SerializeField] private Scrollbar itemsScrollBar;
 
-    [Title("Nav")] [SerializeField] private TextMeshProUGUI coinText;
+    [Title("Nav")]
+    [SerializeField] private TextMeshProUGUI coinText;
     [SerializeField] private TextMeshProUGUI diamondText;
 
     [Title("Spine")] 
     public GameObject npc;
 
-    [Title("MoneyBar")] [SerializeField] private Transform shopMoneyBar;
+    [Title("MoneyBar")]
+    [SerializeField] private Transform shopMoneyBar;
     [SerializeField] private Transform shopBuyMoneyBar;
 
-    [Title("Gyro")] [SerializeField] private I2Parallax_Layer[] ParallaxLayers;
+    [Title("Gyro")]
+    [SerializeField] private I2Parallax_Layer[] ParallaxLayers;
 
     private List<Card_ShopItem> itemPool = new List<Card_ShopItem>();
     private List<GameObject> layerPool = new List<GameObject>();
@@ -40,6 +43,9 @@ public class View_Shop : ViewBehaviour
     public override void Init()
     {
         base.Init();
+        
+        CreatePool();
+        
         App.model.shop.OnSelectedTypeChange += OnSelectedTypeChange;
         App.model.shop.OnSelectedItemsChange += OnSelectedItemsChange;
         App.system.player.OnCoinChange += OnCoinChange;
@@ -48,7 +54,9 @@ public class View_Shop : ViewBehaviour
 
     public override void Open()
     {
-        base.Open();
+        // base.Open();
+        UIView.InstantShow();
+        
         npc.SetActive(true);
         itemsScrollBar.value = 1;
 
@@ -60,14 +68,17 @@ public class View_Shop : ViewBehaviour
         base.Close();
         npc.SetActive(false);
 
-        for (int i = 0; i < itemPool.Count; i++)
-            Destroy(itemPool[i].gameObject);
-
         for (int i = 0; i < layerPool.Count; i++)
-            Destroy(layerPool[i].gameObject);
+            if (layerPool[i].activeSelf)
+                layerPool[i].SetActive(false);
         
-        itemPool.Clear();
-        layerPool.Clear();
+        for (int i = 0; i < itemPool.Count; i++)
+            if (itemPool[i].gameObject.activeSelf)
+            {
+                itemPool[i].gameObject.SetActive(false);
+                itemPool[i].transform.DOKill();
+                itemPool[i].transform.localScale = Vector2.zero;
+            }
 
         SetParallex(false);
     }
@@ -105,35 +116,8 @@ public class View_Shop : ViewBehaviour
     {
         List<Item> items = (List<Item>) value;
 
-        // Pool
-        if (items.Count > itemPool.Count)
-        {
-            int refillCount = items.Count - itemPool.Count;
-            for (int i = 0; i < refillCount; i++)
-            {
-                var newCard = Instantiate(shopItemPrefab, content);
-                itemPool.Add(newCard);
-            }
-        }
-        
-        #region 生架子層數
-
         float f = items.Count / 3f;
         int layerCount = (int)Mathf.Ceil(f);
-
-        if (layerCount > layerPool.Count)
-        {
-            int refillCount = layerCount - layerPool.Count;
-            for (int i = 0; i < refillCount; i++)
-            {
-                var newLayer = Instantiate(layerPrefab, layerContent);
-                layerPool.Add(newLayer);
-            }
-        }
-
-        for (int i = 0; i < layerPool.Count; i++)
-            if (layerPool[i].activeSelf)
-                layerPool[i].SetActive(false);
 
         for (int i = 0; i < layerPool.Count; i++)
         {
@@ -147,24 +131,23 @@ public class View_Shop : ViewBehaviour
             layerPool[i].SetActive(true);
         }
         
-        #endregion
-        
         for (int i = 0; i < itemPool.Count; i++)
             if (itemPool[i].gameObject.activeSelf)
+            {
                 itemPool[i].gameObject.SetActive(false);
+                itemPool[i].transform.DOKill();
+                itemPool[i].transform.localScale = Vector2.zero;
+            }
 
         for (int i = 0; i < itemPool.Count; i++)
         {
             if (i >= items.Count)
-            {
-                if (itemPool[i].gameObject.activeSelf)
-                    itemPool[i].gameObject.SetActive(false);
-                continue;
-            }
+                break;
 
             var card = itemPool[i];
             card.SetData(items[i]);
             card.gameObject.SetActive(true);
+            card.transform.DOScale(Vector2.one, 0.15f).From(Vector2.zero).SetDelay(i * 0.06f);
         }
         
         itemsScrollBar.value = 1;
@@ -188,6 +171,28 @@ public class View_Shop : ViewBehaviour
         {
             ParallaxLayers[i].UpdateLayer(Vector2.zero);
             ParallaxLayers[i].enabled = value;
+        }
+    }
+
+    private void CreatePool()
+    {
+        var items = App.factory.itemFactory.GetItemByType(0); // all
+
+        for (int i = 0; i < items.Count; i++)
+        {
+            var newItem = Instantiate(shopItemPrefab, content);
+            newItem.transform.localScale = Vector2.zero;
+            newItem.gameObject.SetActive(false);
+            itemPool.Add(newItem);
+        }
+        
+        float f = items.Count / 3f;
+        int layerCount = (int)Mathf.Ceil(f);
+
+        for (int i = 0; i < layerCount; i++)
+        {
+            var newLayer = Instantiate(layerPrefab, layerContent);
+            layerPool.Add(newLayer);
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Firebase.Firestore;
 using UnityEngine;
 
@@ -21,7 +22,7 @@ public class Controller_Hospital : ControllerBehavior
     public void Open()
     {
         App.view.hospital.Open();
-        OpenChooseFunction();
+        DOVirtual.DelayedCall(0.25f, OpenChooseFunction);
     }
 
     public void Close()

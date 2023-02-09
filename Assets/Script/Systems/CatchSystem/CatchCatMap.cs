@@ -51,12 +51,13 @@ public class CatchCatMap : MvcBehaviour
     [TabGroup("Bot")] [SerializeField] private CanvasGroup botDarkMask;
     [TabGroup("Bot")] [SerializeField] private GameObject lastTurnCatchButton;
 
-    [Title("Particles")] [SerializeField] private UIParticle loveParticle;
-    [SerializeField] private UIParticle hateParticle;
-    [SerializeField] private UIParticle bigLoveParticle;
-    [SerializeField] private UIParticle catchButtonParticle;
-
-    [Title("Animator")] [SerializeField] private Animator catchFlowerAnimator;
+    [Title("Animator")]
+    [SerializeField] private Animator catchFlowerAnimator;
+    
+    [Title("UIParticle")]
+    [SerializeField] private UIParticle hateEffect;
+    [SerializeField] private UIParticle loveEffect;
+    [SerializeField] private UIParticle bigLoveEffect;
 
     [Title("Module")]
     [SerializeField] private CatchCatBubble bubble;
@@ -207,7 +208,6 @@ public class CatchCatMap : MvcBehaviour
 
         lastTurnCatchButton.transform.DOKill();
         lastTurnCatchButton.SetActive(false);
-        catchButtonParticle.Stop();
         
         hp = 100f;
         healthBar.ChangeBarValue(hp / 100f);
@@ -253,7 +253,6 @@ public class CatchCatMap : MvcBehaviour
                 CloseAction();
 
                 lastTurnCatchButton.SetActive(true);
-                catchButtonParticle.Play();
 
                 Vector2 endSize = new Vector2(1.1f, 1.1f);
                 lastTurnCatchButton.transform.DOScale(endSize, 0.1f).From(Vector2.one).SetEase(Ease.OutExpo)
@@ -284,6 +283,8 @@ public class CatchCatMap : MvcBehaviour
         catchButton.interactable = true;
         blockRaycastObject.SetActive(false);
         
+        bubble.Open();
+        
         DoTopLeftLight();
         DoTopLight();
         DoBotLight();
@@ -300,6 +301,8 @@ public class CatchCatMap : MvcBehaviour
 
         for (int i = 0; i < cardItems.Length; i++)
             cardItems[i].SetInteractable(false);
+        
+        bubble.Close();
         
         DoTopLeftDark();
         DoTopDark();
@@ -370,17 +373,7 @@ public class CatchCatMap : MvcBehaviour
 
         var personalitys = cloudCatData.CatData.PersonalityTypes;
         var levels = cloudCatData.CatData.PersonalityLevels;
-        // var availablePersonality = new List<int>(); //當前回合可以對比的個性
-        // var availableLevel = new List<int>();
-
-        //取得當前回合可用的個性
-        // for (int i = 0; i < personalitys.Count; i++)
-        // {
-        //     if (i >= turn) continue;
-        //     availablePersonality.Add(personalitys[i]);
-        //     availableLevel.Add(levels[i]);
-        // }
-        
+ 
         itemImage.sprite = item.icon;
         DoItemTween(() =>
         {
@@ -400,7 +393,7 @@ public class CatchCatMap : MvcBehaviour
                             if (index == 4) //廣告道具 + 負面個性
                                 value *= 0.2f;
                             
-                            hateParticle.Play();
+                            hateEffect.Play();
                             SpineCatAngry();
                             break;
                         case 1:
@@ -409,21 +402,21 @@ public class CatchCatMap : MvcBehaviour
                             if (index == 4) //廣告道具 + 負面個性
                                 value *= 0.2f;
 
-                            hateParticle.Play();
+                            hateEffect.Play();
                             SpineCatAngry();
                             break;
                         case 2:
                             value *= 1.5f;
-                            loveParticle.Play();
+                            loveEffect.Play();
                             SpineCatHappy();
                             break;
                         case 3:
                             value *= 2f;
-                            bigLoveParticle.Play();
+                            bigLoveEffect.Play();
                             SpineCatHappy();
                             break;
                         default:
-                            loveParticle.Play();
+                            loveEffect.Play();
                             SpineCatHappy();
                             break;
                     }
@@ -433,7 +426,7 @@ public class CatchCatMap : MvcBehaviour
             }
             else //該回合沒有匹配的個性
             {
-                loveParticle.Play();
+                loveEffect.Play();
                 SpineCatHappy();
             }
 

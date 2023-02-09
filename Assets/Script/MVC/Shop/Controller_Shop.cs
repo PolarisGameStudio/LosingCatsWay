@@ -13,7 +13,7 @@ public class Controller_Shop : ControllerBehavior
     {
         App.system.bgm.FadeIn().Play("Shop");
         App.view.shop.Open();
-        SelectType(0);
+        DOVirtual.DelayedCall(0.2f, () => SelectType(0));
     }
 
     public void Close()

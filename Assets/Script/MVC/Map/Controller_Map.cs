@@ -34,7 +34,7 @@ public class Controller_Map : ControllerBehavior
     public void OpenShop()
     {
         App.system.bgm.FadeOut();
-        App.system.transition.Active(0.5f, () =>
+        App.system.transition.Active(0, () =>
         {
             App.view.map.Close();
             App.controller.shop.Open();

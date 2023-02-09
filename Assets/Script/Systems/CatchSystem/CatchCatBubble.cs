@@ -67,7 +67,13 @@ public class CatchCatBubble : MvcBehaviour
 
     public void Open()
     {
-        OpenTalk();
+        if (!isTrigger)
+            OpenTalk();
+        else
+            OpenHint();
+        
+        for (int i = 0; i < smallBubbles.Length; i++)
+            smallBubbles[i].transform.DOScale(Vector2.one, 0.15f).SetDelay(i * 0.1f);
     }
 
     public void Close()
@@ -121,8 +127,8 @@ public class CatchCatBubble : MvcBehaviour
     {
         isTweening = true;
         
-        for (int i = 0; i < smallBubbles.Length; i++)
-            smallBubbles[i].transform.DOScale(Vector2.one, 0.15f).SetDelay(i * 0.1f);
+        // for (int i = 0; i < smallBubbles.Length; i++)
+        //     smallBubbles[i].transform.DOScale(Vector2.one, 0.15f).SetDelay(i * 0.1f);
         
         talkBubble.transform.DOScaleX(1, 0.18f).SetEase(Ease.OutBack)
             .SetDelay(0.3f)
