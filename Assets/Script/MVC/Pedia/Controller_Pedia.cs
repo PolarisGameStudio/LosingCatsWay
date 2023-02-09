@@ -1,13 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
+using Doozy.Runtime.UIManager.Components;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Controller_Pedia : ControllerBehavior
 {
-    [SerializeField] private Button pediaLeftArrow;
-    [SerializeField] private Button pediaRightArrow;
+    [SerializeField] private Button archiveLeftArrow;
+    [SerializeField] private Button archiveRightArrow;
+    [SerializeField] private UIButton catLeftArrow;
+    [SerializeField] private UIButton catRightArrow;
+    [SerializeField] private Button subPediaLeftArrow;
+    [SerializeField] private Button subPediaRightArrow;
 
     public void Init()
     {
@@ -34,9 +42,11 @@ public class Controller_Pedia : ControllerBehavior
                 App.model.pedia.ArchivePageIndex--;
                 break;
             case 1:
+                App.model.pedia.CatPageIndex--;
+                RefreshCatItems();
                 break;
             case 2:
-                App.model.pedia.PediaPageIndex -= 1;
+                App.model.pedia.PediaPageIndex--;
                 RefreshPediaItems();
                 break;
         }
@@ -50,9 +60,11 @@ public class Controller_Pedia : ControllerBehavior
                 App.model.pedia.ArchivePageIndex++;
                 break;
             case 1:
+                App.model.pedia.CatPageIndex++;
+                RefreshCatItems();
                 break;
             case 2:
-                App.model.pedia.PediaPageIndex += 1;
+                App.model.pedia.PediaPageIndex++;
                 RefreshPediaItems();
                 break;
         }
@@ -68,6 +80,9 @@ public class Controller_Pedia : ControllerBehavior
         App.view.pedia.Open();
         App.view.pedia.subPedia.Open();
         CloseChoosePedia();
+        
+        subPediaLeftArrow.gameObject.SetActive(true);
+        subPediaRightArrow.gameObject.SetActive(true);
 
         DOVirtual.DelayedCall(0.1f, () => { SelectPediaType(0); });
         App.model.pedia.PediaPageIndex = 0;
@@ -76,6 +91,9 @@ public class Controller_Pedia : ControllerBehavior
 
     private void ClosePedia()
     {
+        subPediaLeftArrow.gameObject.SetActive(false);
+        subPediaRightArrow.gameObject.SetActive(false);
+        
         App.view.pedia.subPedia.Close();
         SelectPediaType(-1);
     }
@@ -139,14 +157,16 @@ public class Controller_Pedia : ControllerBehavior
 
     public void OpenReadPedia()
     {
-        pediaLeftArrow.gameObject.SetActive(false);
-        pediaRightArrow.gameObject.SetActive(false);
+        subPediaLeftArrow.gameObject.SetActive(false);
+        subPediaRightArrow.gameObject.SetActive(false);
         CloseChoosePedia();
         App.view.pedia.subPedia.readPedia.Open();
     }
 
     public void CloseReadPedia()
     {
+        subPediaLeftArrow.gameObject.SetActive(true);
+        subPediaRightArrow.gameObject.SetActive(true);
         App.view.pedia.subPedia.readPedia.Close();
         RefreshPediaItems();
         OpenChoosePedia();
@@ -165,12 +185,9 @@ public class Controller_Pedia : ControllerBehavior
         if (index > end)
             index = end;
 
-        pediaLeftArrow.gameObject.SetActive(true);
-        pediaRightArrow.gameObject.SetActive(true);
-
-        pediaLeftArrow.interactable = index > 0;
-        pediaRightArrow.interactable = index < end - 1;
-
+        subPediaLeftArrow.interactable = index > 0;
+        subPediaRightArrow.interactable = index < end - 1;
+        
         List<string> result = new List<string>();
         for (int i = index * 8; i < index * 8 + 8; i++)
         {
@@ -200,14 +217,17 @@ public class Controller_Pedia : ControllerBehavior
         DOVirtual.DelayedCall(0.1f, () => { SelectArchiveType(0); });
         App.model.pedia.ArchivePageIndex = 0;
 
-        pediaLeftArrow.gameObject.SetActive(false);
-        pediaRightArrow.gameObject.SetActive(false);
+        archiveLeftArrow.gameObject.SetActive(true);
+        archiveRightArrow.gameObject.SetActive(true);
     }
 
     private void CloseArchive()
     {
         App.view.pedia.archive.Close();
         SelectArchiveType(-1);
+        
+        archiveLeftArrow.gameObject.SetActive(false);
+        archiveRightArrow.gameObject.SetActive(false);
     }
 
     public void SelectArchiveType(int index)
@@ -312,11 +332,43 @@ public class Controller_Pedia : ControllerBehavior
         CloseArchive();
 
         App.view.pedia.pediaCats.Open();
+        App.model.pedia.CatPageIndex = 0;
+        RefreshCatItems();
+        
+        
     }
 
     private void ClosePediaCats()
     {
         App.view.pedia.pediaCats.Close();
+    }
+    
+    private void RefreshCatItems()
+    {
+        int index = App.model.pedia.CatPageIndex;
+        List<String> tmp = Enum.GetNames(typeof(MixedCatType)).ToList();
+        tmp.AddRange(Enum.GetNames(typeof(PurebredCatType)).ToList());
+        
+        if (index < 0)
+            index = 0;
+        
+        int end = Mathf.CeilToInt(tmp.Count / 8f);
+        if (index > end)
+            index = end;
+
+        catLeftArrow.interactable = index > 0;
+        catRightArrow.interactable = index < end - 1;
+
+        List<string> result = new List<string>();
+        for (int i = index * 8; i < index * 8 + 8; i++)
+        {
+            if (i >= tmp.Count)
+                break;
+        
+            result.Add(tmp[i]);
+        }
+        
+        App.model.pedia.UsingCatIds = result;
     }
 
     #endregion

@@ -43,7 +43,7 @@ public class CatSkin : MvcBehaviour
     private string slot_faceCry = "Face_Cry";
     private string slot_faceLove = "Face_Love";
     private string slot_faceDocile = "Face_Docile";
-    
+
     // private string slot_faceSinisterSmile = "Face_Sinister Smile";
 
     #endregion
@@ -73,7 +73,7 @@ public class CatSkin : MvcBehaviour
     private string key_faceCold = "Face_Cold";
     private string key_faceCry = "Face_Cry";
     private string key_faceLove = "Face_Love";
-    
+
     // private string key_sinisterSmile = "Face_Sinister Smile";
 
     private string key_docile = "Face_Docile";
@@ -95,21 +95,21 @@ public class CatSkin : MvcBehaviour
     public GameObject[] extraSkins;
 
     [SerializeField] private GameObject wormEffect;
-    
+
     public void SetActive(bool active)
     {
         gameObject.SetActive(active);
     }
-    
+
     public void ChangeSkin(CloudCatData cloudCatData)
     {
         if (catGuiPosition == Vector2.zero)
             catGuiPosition = transform.localPosition;
-        
+
         if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) != 0)
         {
             ChangeCatSkin(cloudCatData);
-            
+
             if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
                 SetUsingSkin(cloudCatData);
             else
@@ -119,7 +119,7 @@ public class CatSkin : MvcBehaviour
         {
             ChangeKittySkin(cloudCatData);
         }
-        
+
         if (wormEffect != null)
             wormEffect.SetActive(cloudCatData.CatHealthData.IsBug);
     }
@@ -135,16 +135,31 @@ public class CatSkin : MvcBehaviour
         ChangeLosingCatSkin(cloudCatData);
     }
 
+    public void ChangeSkin(string variety)
+    {
+        var newVariety = variety.Replace('_', '-');
+
+        // 王若呈那邊ID在靠北
+        if (newVariety.Contains("Siamese") && !newVariety.Contains("GT") && !newVariety.Contains("CT"))
+        {
+            var t = newVariety.Split('-');
+            newVariety = t[1] + '-' + t[0];
+        }
+        
+        // transform.localPosition = catGuiPosition;
+        skeletonGraphic.Skeleton.SetSkin("Normal_Cat/" + newVariety);
+    }
+
     private void ChangeLosingCatSkin(CloudCatData cloudCatData)
     {
         if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) != 0)
         {
             SetSkeletonDataAsset(false);
-        
+
             var catData = cloudCatData.CatData;
             var catSkinData = cloudCatData.CatSkinData;
             Skeleton catSkeleton = GetCatSkeleton();
-            
+
             var variety = catData.Variety.Replace('_', '-');
 
             // 王若呈那邊ID在靠北
@@ -153,7 +168,7 @@ public class CatSkin : MvcBehaviour
                 var t = variety.Split('-');
                 variety = t[1] + '-' + t[0];
             }
-            
+
             catSkeleton.SetSkin("Normal_Cat/" + variety);
             SetSkinAttachment(catSkeleton, catSkinData);
             transform.localPosition = catGuiPosition;
@@ -198,7 +213,7 @@ public class CatSkin : MvcBehaviour
         SetSickSlotNull(true);
         if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId) || cloudCatData.CatHealthData.IsBug)
             SetCatSick(cloudCatData, catSkeleton);
-        
+
         SetCatBodyScale(cloudCatData);
     }
 
@@ -232,7 +247,7 @@ public class CatSkin : MvcBehaviour
     private void CloseEye()
     {
         Skeleton catSkeleton = GetCatSkeleton();
-        
+
         catSkeleton.SetAttachment(slot_eyeLeft, null);
         catSkeleton.SetAttachment(slot_eyeRight, null);
         catSkeleton.SetAttachment(slot_pupilLeft, null);
@@ -251,13 +266,15 @@ public class CatSkin : MvcBehaviour
             catSkeleton.SetAttachment("Pupil_Right", "Pupil_Right");
             return;
         }
-        
+
         //眼
         catSkeleton.SetAttachment(slot_eyeLeft,
-            key_eyeLeft + (cloudCatData.CatSkinData.EyeTypeIndex + 1) + key_eyeLeftColor + (cloudCatData.CatSkinData.LeftEyeColorIndex + 1));
+            key_eyeLeft + (cloudCatData.CatSkinData.EyeTypeIndex + 1) + key_eyeLeftColor +
+            (cloudCatData.CatSkinData.LeftEyeColorIndex + 1));
         catSkeleton.SetAttachment(slot_eyeRight,
-            key_eyeRight + (cloudCatData.CatSkinData.EyeTypeIndex + 1) + key_eyeRightColor + (cloudCatData.CatSkinData.RightEyeColorIndex + 1));
-        
+            key_eyeRight + (cloudCatData.CatSkinData.EyeTypeIndex + 1) + key_eyeRightColor +
+            (cloudCatData.CatSkinData.RightEyeColorIndex + 1));
+
         //瞳孔
         catSkeleton.SetAttachment(slot_pupilLeft, key_pupilLeft);
         catSkeleton.SetAttachment(slot_pupilRight, key_pupilRight);
@@ -272,38 +289,38 @@ public class CatSkin : MvcBehaviour
     private void SetSickSlotNull(bool isAdult)
     {
         CloseSickEye();
-        
+
         Skeleton catSkeleton = GetCatSkeleton();
-        
+
         if (!isAdult)
         {
             catSkeleton.SetAttachment(sick_Expression_Flush, null);
             return;
         }
-        
+
         catSkeleton.SetAttachment(sick_Expression_Flush, null);
-        
+
         catSkeleton.SetAttachment(thermometer, null);
         catSkeleton.SetAttachment(ice_Bag, null);
-        
+
         catSkeleton.SetAttachment(ringworm_1, null);
         catSkeleton.SetAttachment(ringworm_2, null);
         catSkeleton.SetAttachment(ringworm_3, null);
     }
-    
+
     private void SetCatSick(CloudCatData cloudCatData, Skeleton catSkeleton)
     {
         CloseEye();
-        
+
         if (cloudCatData.CatHealthData.IsBug)
         {
             catSkeleton.SetAttachment(sick_Expression_Eye, sick_Expression_Eye);
             catSkeleton.SetAttachment(sick_Expression_Flush, sick_Expression_Flush);
         }
-        
+
         if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
             return;
-        
+
         var sickId = cloudCatData.CatHealthData.SickId;
         var sickLevel = App.factory.sickFactory.GetSickLevel(sickId);
 
@@ -340,17 +357,17 @@ public class CatSkin : MvcBehaviour
             SetSkeletonDataAsset(true);
             transform.localPosition = kittyGuiPosition;
         }
-        
+
         Skeleton catSkeleton = GetCatSkeleton();
-        
+
         var catSickId = cloudCatData.CatHealthData.SickId;
         if (!string.IsNullOrEmpty(catSickId) || cloudCatData.CatHealthData.IsBug)
         {
             CloseEye();
-            
+
             catSkeleton.SetAttachment(sick_Expression_Eye, sick_Expression_Eye);
             catSkeleton.SetAttachment(sick_Expression_Flush, sick_Expression_Flush);
-            
+
             // if (catSickId == "SK011")
             //     catSkeleton.SetAttachment(ringworm_1, ringworm_1);
         }
@@ -385,7 +402,7 @@ public class CatSkin : MvcBehaviour
     {
         if (!isGUI)
             return;
-        
+
         if (!isKitty)
         {
             skeletonGraphic.initialSkinName = "Normal_Cat/Benz";
@@ -393,7 +410,7 @@ public class CatSkin : MvcBehaviour
             skeletonGraphic.skeletonDataAsset = catDataAsset;
             skeletonGraphic.Initialize(true);
             skeletonGraphic.Skeleton.SetSkin("Normal_Cat/Benz");
-            
+
             if (skeletonGraphic.AnimationState.GetCurrent(0) == null)
                 skeletonGraphic.AnimationState.SetAnimation(0, "AI_Main/IDLE_Ordinary01", true);
         }
@@ -404,7 +421,7 @@ public class CatSkin : MvcBehaviour
             skeletonGraphic.skeletonDataAsset = kittyCatDataAsset;
             skeletonGraphic.Initialize(true);
             skeletonGraphic.Skeleton.SetSkin("Ordinary");
-            
+
             if (skeletonGraphic.AnimationState.GetCurrent(0) == null)
                 skeletonGraphic.AnimationState.SetAnimation(0, "AI_Main/IDLE_Ordinary01", true);
         }
@@ -419,11 +436,11 @@ public class CatSkin : MvcBehaviour
         CloseFace();
         catSkeleton.SetAttachment(slot_faceAngry, key_faceAngry);
     }
-    
+
     public void SetCold()
     {
         Skeleton catSkeleton = GetCatSkeleton();
-        
+
         CloseFace();
         catSkeleton.SetAttachment(slot_faceCold, key_faceCold);
     }
@@ -431,15 +448,15 @@ public class CatSkin : MvcBehaviour
     public void SetCry()
     {
         Skeleton catSkeleton = GetCatSkeleton();
-        
+
         CloseFace();
         catSkeleton.SetAttachment(slot_faceCry, key_faceCry);
     }
-    
+
     public void SetSinisterSmile()
     {
         Skeleton catSkeleton = GetCatSkeleton();
-        
+
         CloseFace();
         // catSkeleton.SetAttachment(slot_faceSinisterSmile, key_sinisterSmile);
     }
@@ -447,7 +464,7 @@ public class CatSkin : MvcBehaviour
     public void SetLove()
     {
         Skeleton catSkeleton = GetCatSkeleton();
-        
+
         CloseFace();
         catSkeleton.SetAttachment(slot_faceLove, key_faceLove);
     }
@@ -455,7 +472,7 @@ public class CatSkin : MvcBehaviour
     public void SetDocile()
     {
         Skeleton catSkeleton = GetCatSkeleton();
-        
+
         CloseFace();
         catSkeleton.SetAttachment(slot_faceDocile, key_docile);
     }
@@ -463,7 +480,7 @@ public class CatSkin : MvcBehaviour
     public void CloseFace()
     {
         Skeleton catSkeleton = GetCatSkeleton();
-        
+
         catSkeleton.SetAttachment(slot_eyeLeft, null);
         catSkeleton.SetAttachment(slot_eyeRight, null);
         catSkeleton.SetAttachment(slot_mouthAndNose, null);
@@ -481,13 +498,13 @@ public class CatSkin : MvcBehaviour
         var useSkinId = cloudCatData.CatSkinData.UseSkinId;
 
         SetUsingSkinNull();
-        
+
         if (String.IsNullOrEmpty(useSkinId))
         {
             if (!isGUI)
                 for (int i = 0; i < extraSkins.Length; i++)
                     extraSkins[i].SetActive(false);
-            
+
             return;
         }
 
@@ -521,15 +538,15 @@ public class CatSkin : MvcBehaviour
                 catSkeleton.SetAttachment("Robot_Wire", "Robot_Wire");
                 break;
         }
-        
+
         // 額外要開的
-        
+
         if (isGUI)
             return;
-        
+
         for (int i = 0; i < extraSkins.Length; i++)
             extraSkins[i].SetActive(false);
-        
+
         switch (useSkinId)
         {
             case "Little_Yumi":
@@ -550,31 +567,31 @@ public class CatSkin : MvcBehaviour
     public void SetUsingSkinNull()
     {
         Skeleton catSkeleton = GetCatSkeleton();
-        
+
         //Pumpkin
         catSkeleton.SetAttachment("EA_Pumpkin", null);
         catSkeleton.SetAttachment("EA_Pumpkin_z1", null);
         catSkeleton.SetAttachment("EA_Pumpkin_z2", null);
         catSkeleton.SetAttachment("EA_Pumpkin_z3", null);
-        
+
         //Spell
         catSkeleton.SetAttachment("EA_Spell", null);
-        
+
         //Magic_Hat
         catSkeleton.SetAttachment("EA_Magic Hat", null);
         catSkeleton.SetAttachment("EA_Magic Hat_Behind", null);
         catSkeleton.SetAttachment("EA_Magic Hat_Chain", null);
-        
+
         //SantaHat
         catSkeleton.SetAttachment("SantaHat", null);
-        
+
         //Flyfish
         catSkeleton.SetAttachment("Flyfish", null);
-        
+
         //Robot
         catSkeleton.SetAttachment("Robot_Card", null);
         catSkeleton.SetAttachment("Robot_Wire", null);
-        
+
         // extra
         for (int i = 0; i < extraSkins.Length; i++)
             extraSkins[i].SetActive(false);
@@ -585,12 +602,12 @@ public class CatSkin : MvcBehaviour
     private Skeleton GetCatSkeleton()
     {
         Skeleton catSkeleton = null;
-        
+
         if (isGUI)
             catSkeleton = skeletonGraphic.Skeleton;
         else
             catSkeleton = skeletonMecanim.Skeleton;
-        
+
         return catSkeleton;
     }
 }

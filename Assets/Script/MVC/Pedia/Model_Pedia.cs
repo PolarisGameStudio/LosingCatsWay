@@ -20,10 +20,9 @@ public class Model_Pedia : ModelBehavior
     private int archivePageIndex = -1;
 
     //Cats
-    // private int selectedPediaType = -1;
-    // private List<string> usingPediaIds;
-    // private string selectedPediaId;
-    
+    private List<string> usingCatIds;
+    private int catPageIndex = -1;
+
     #endregion
 
     #region Properties
@@ -55,7 +54,6 @@ public class Model_Pedia : ModelBehavior
         set
         {
             pediaPageIndex = value;
-            OnPediaPageIndexChange?.Invoke(value);
         }
     }
 
@@ -106,8 +104,24 @@ public class Model_Pedia : ModelBehavior
         set
         {
             archivePageIndex = value;
-            OnArchivePageIndexChange?.Invoke(value);
         }
+    }
+    
+    //Cat
+    public List<string> UsingCatIds
+    {
+        get => usingCatIds;
+        set
+        {
+            usingCatIds = value;
+            OnUsingCasIdsChange?.Invoke(value);
+        }
+    }
+
+    public int CatPageIndex
+    {
+        get => catPageIndex;
+        set => catPageIndex = value;
     }
 
     #endregion
@@ -118,17 +132,15 @@ public class Model_Pedia : ModelBehavior
     
     //Pedia
     public ValueChange OnSelectedPediaTypeChange;
-    public ValueChange OnPediaPageIndexChange;
     public ValueChange OnUsingPediaIdsChange;
     public ValueChange OnSelectPediaIdChange;
     
     //Archive
     public ValueChange OnSelectedArchiveTypeChange;
     public ValueChange OnArchiveQuestsChange;
-    public ValueChange OnArchivePageIndexChange;
     
     //Cats
-    
+    public ValueChange OnUsingCasIdsChange;
 
     #endregion
 }
