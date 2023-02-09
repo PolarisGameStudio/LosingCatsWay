@@ -51,6 +51,9 @@ public class View_Lobby : ViewBehaviour
     public GameObject archiveRedPoint;
     public GameObject mailRedPoint;
     public GameObject mallRedPoint;
+    public GameObject bagRedPoint;
+    public GameObject catRedPoint;
+    public GameObject friendRedPoint;
 
     public override void Open()
     {

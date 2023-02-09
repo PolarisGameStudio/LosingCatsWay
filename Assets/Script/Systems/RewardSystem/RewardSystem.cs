@@ -37,6 +37,8 @@ public class RewardSystem : MvcBehaviour
         view.InstantShow();
         rewards = value;
 
+        CheckBagRed(value);
+        
         if (setData)
             SetDatas(rewards);
 
@@ -126,5 +128,44 @@ public class RewardSystem : MvcBehaviour
             return;
         transform.SetSiblingIndex(siblingIndex);
         siblingIndex = -1;
+    }
+
+    private void CheckBagRed(Reward[] value)
+    {
+        for (int i = 0; i < value.Length; i++)
+        {
+            Reward reward = rewards[i];
+
+            if (reward.count <= 0)
+                continue;
+
+            int index = 0;
+            
+            switch (reward.item.itemType)
+            {
+                case ItemType.Feed:
+                    index = 1;
+                    break;
+                case ItemType.Tool:
+                    index = 2;
+                    break;
+                case ItemType.Litter:
+                    index = 3;
+                    break;
+                case ItemType.Room:
+                    index = 4;
+                    break;
+                case ItemType.CatSkin:
+                    index = 5;
+                    break;
+                case ItemType.Special:
+                    index = 6;
+                    break;
+            }
+
+            PlayerPrefs.SetInt("BagRedPoint" + index, 1);
+        }
+        
+        App.controller.bag.RefreshReds();
     }
 }

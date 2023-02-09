@@ -455,6 +455,8 @@ public class Cat : MvcBehaviour
         int ageLevel = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays);
         var realValue = CatExtension.GetCatRealValue(ageLevel, cloudCatData.CatSurviveData.Moisture);
         cloudCatData.CatSurviveData.ChangeRealMoisture(realValue);
+        
+        App.system.cat.RefreshRedPoint();
     }
 
     private void SetSatiety()
@@ -467,6 +469,8 @@ public class Cat : MvcBehaviour
         int ageLevel = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays);
         var realValue = CatExtension.GetCatRealValue(ageLevel, cloudCatData.CatSurviveData.Satiety);
         cloudCatData.CatSurviveData.ChangeRealSatiety(realValue);
+        
+        App.system.cat.RefreshRedPoint();
     }
 
     private void SetFavorability()
@@ -485,6 +489,8 @@ public class Cat : MvcBehaviour
         int ageLevel = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays);
         var realValue = CatExtension.GetCatRealValue(ageLevel, cloudCatData.CatSurviveData.Favourbility);
         cloudCatData.CatSurviveData.ChangeRealFavourbility(realValue);
+        
+        App.system.cat.RefreshRedPoint();
     }
 
     #endregion

@@ -124,10 +124,8 @@ public class Controller_Shop : ControllerBehavior
                         () => App.system.confirm.Active(ConfirmTable.NoMoney, OpenTopUp));
                 else
                 {
-                    item.Count += App.model.shop.BuyCount;
-                    App.system.cloudSave.UpdateCloudItemData();
+                    AddItem();
                     ClosePayment();
-                    DOVirtual.DelayedCall(0.1f, () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.IsAddToBag));
                 }
 
                 OnBuyComplete?.Invoke(item);
@@ -142,15 +140,20 @@ public class Controller_Shop : ControllerBehavior
                     DOVirtual.DelayedCall(0.1f, () => App.system.confirm.Active(ConfirmTable.NoDiamond, OpenTopUp));
                 else
                 {
-                    item.Count += App.model.shop.BuyCount;
-                    App.system.cloudSave.UpdateCloudItemData();
+                    AddItem();
                     ClosePayment();
-                    DOVirtual.DelayedCall(0.1f, () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.IsAddToBag));
                 }
             }
         });
     }
-    
+
+    private void AddItem()
+    {
+        Reward[] rewards = new Reward[1];
+        rewards[0] = new Reward(App.model.shop.SelectedItem, App.model.shop.BuyCount);
+        App.system.reward.Open(rewards);
+    }
+
     private void OpenTopUp()
     {
         App.controller.mall.Open();

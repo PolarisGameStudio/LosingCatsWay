@@ -8,7 +8,12 @@ public class Controller_Bag : ControllerBehavior
 {
     public View_BagChooseCat viewBagChooseCat;
     private UnityAction<string> _chooseCatAction;
-    
+
+    public void Init()
+    {
+        RefreshReds();
+    }
+
     public void Open()
     {
         App.view.bag.Open();
@@ -68,6 +73,14 @@ public class Controller_Bag : ControllerBehavior
         
         if (buffer.Count > 0)
             ChooseItem(0);
+
+        int redPoint = PlayerPrefs.GetInt("BagRedPoint" + type, 0);
+
+        if (redPoint >= 1)
+        {
+            PlayerPrefs.SetInt("BagRedPoint" + type, 0);
+            RefreshReds();
+        }
     }
 
     public void ChooseItem(int index)
@@ -239,5 +252,20 @@ public class Controller_Bag : ControllerBehavior
         _chooseCatAction?.Invoke(catId);
         _chooseCatAction = null;
     }
-    
+
+    public void RefreshReds()
+    {
+        bool hasRed = false;
+
+        for (int i = 1; i <= 6; i++)
+        {
+            int bagRedPoint = PlayerPrefs.GetInt("BagRedPoint" + i, 0);
+            App.view.bag.redPoints[i - 1].SetActive(bagRedPoint >= 1);
+            
+            if (bagRedPoint == 1)
+                hasRed = true;
+        }
+        
+        App.view.lobby.bagRedPoint.SetActive(hasRed);
+    }
 }
