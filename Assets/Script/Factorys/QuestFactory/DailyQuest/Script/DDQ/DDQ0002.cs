@@ -7,6 +7,7 @@ public class DDQ0002 : DailyQuest
 {
     public override void Init()
     {
+        App.controller.mall.OnBuyMallItem += Bind;
         //TODO �ӫ��[callback
     }
 
@@ -16,7 +17,7 @@ public class DDQ0002 : DailyQuest
 
         if (Progress == TargetCount)
         {
-            //�ӫ���callback
+            App.controller.mall.OnBuyMallItem -= Bind;
         }
     }
 }

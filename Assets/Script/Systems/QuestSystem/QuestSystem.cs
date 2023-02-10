@@ -10,4 +10,7 @@ public class QuestSystem : SerializedMonoBehaviour
 {
     public Dictionary<string, int> QuestProgressData;
     public Dictionary<string, int> QuestReceivedStatusData; // 0 還沒領 1 領了
+    public Dictionary<string, int> KnowledgeCardData;
+    public Dictionary<string, int> KnowledgeCardStatus;
+
 }

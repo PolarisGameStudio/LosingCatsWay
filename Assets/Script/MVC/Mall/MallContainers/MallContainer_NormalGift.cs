@@ -18,7 +18,6 @@ public class MallContainer_NormalGift : MallContainer
         
         if (!App.model.mall.PurchaseRecords.ContainsKey(id))
         {
-            print("t1");
             App.view.lobby.mallRedPoint.SetActive(true);
             return;    
         }
@@ -27,12 +26,10 @@ public class MallContainer_NormalGift : MallContainer
 
         if (purchaseRecord.BuyCount < mallItems[0].limitCount)
         {
-            print("t2");
             App.view.lobby.mallRedPoint.SetActive(true);
             return;   
         }
 
-        print("t3");
         App.view.lobby.mallRedPoint.SetActive(false);
     }
 }

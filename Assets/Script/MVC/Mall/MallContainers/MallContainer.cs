@@ -53,38 +53,52 @@ public class MallContainer : ViewBehaviour
                     continue;
                 }
             }
-            
+
             if (buyCount < limitCount)
             {
                 itemMallLimiteds[i].Close();
                 continue;
             }
-            
+
             PurchaseRecord purchaseRecord = App.model.mall.PurchaseRecords[mallItem.id];
             DateTime lastBuyTime = purchaseRecord.LastBuyTime.ToDateTime();
+            DateTime nowTime = Timestamp.GetCurrentTimestamp().ToDateTime();
 
-            switch (mallItem.refreshType)
+            if (mallItem.refreshType == MallItemRefreshType.PerDay)
             {
-                case MallItemRefreshType.PerDay:
-                    lastBuyTime = lastBuyTime.AddDays(1);
-                    break;
-                case MallItemRefreshType.PerWeek:
-                    lastBuyTime = lastBuyTime.AddDays(7);
-                    break;
-                case MallItemRefreshType.PerMonth:
-                    lastBuyTime = lastBuyTime.AddDays(30);
-                    break;
+                if (nowTime.Year > lastBuyTime.Year || nowTime.Month > lastBuyTime.Month || nowTime.Day > lastBuyTime.Day)
+                {
+                    itemMallLimiteds[i].Close();
+                    App.model.mall.PurchaseRecords[mallItem.id].BuyCount = 0;
+                }
+                else
+                    itemMallLimiteds[i].Open();
             }
-
-            DateTime notTime = Timestamp.GetCurrentTimestamp().ToDateTime();
-
-            if (notTime > lastBuyTime)
+            
+            if (mallItem.refreshType == MallItemRefreshType.PerWeek)
             {
-                itemMallLimiteds[i].Close();
-                App.model.mall.PurchaseRecords[mallItem.id].BuyCount = 0;
+                int lastWeek = App.system.myTime.GetWeekOfYear(lastBuyTime);
+                int nowWeek = App.system.myTime.GetWeekOfYear(nowTime);
+
+                if (nowTime.Year > lastBuyTime.Year || nowWeek > lastWeek)
+                {
+                    itemMallLimiteds[i].Close();
+                    App.model.mall.PurchaseRecords[mallItem.id].BuyCount = 0;
+                }
+                else
+                    itemMallLimiteds[i].Open();
             }
-            else
-                itemMallLimiteds[i].Open();
+            
+            if (mallItem.refreshType == MallItemRefreshType.PerMonth)
+            {
+                if (nowTime.Year > lastBuyTime.Year || nowTime.Month > lastBuyTime.Month)
+                {
+                    itemMallLimiteds[i].Close();
+                    App.model.mall.PurchaseRecords[mallItem.id].BuyCount = 0;
+                }
+                else
+                    itemMallLimiteds[i].Open();
+            }
         }
     }
 
@@ -119,14 +133,21 @@ public class MallContainer : ViewBehaviour
             App.model.mall.PurchaseRecords.Add(id, purchaseRecord);
         }
 
+        App.controller.mall.OnBuyMallItem?.Invoke();
         App.system.reward.Open(itemMall.rewards);
         Refresh();
+    }
+
+    public void GetItem(Reward[] rewards)
+    {
+        App.controller.mall.OnBuyMallItem?.Invoke();
+        App.system.reward.Open(rewards);
     }
 
     public void BuyItem(int index)
     {
         var itemMall = mallItems[index];
-        
+
         App.system.confirm.ActiveByInsert(ConfirmTable.BuyConfirm, string.Empty, itemMall.Name, () =>
         {
             // var itemMall = mallItems[index];

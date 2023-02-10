@@ -12,7 +12,6 @@ public class InventorySystem : SerializedMonoBehaviour
     public Dictionary<string, int> ToolData;
     public Dictionary<string, int> LitterData;
     public Dictionary<string, int> SkinData;
-    public Dictionary<string, int> KnowledgeCardDatas;
 
     [Title("Player")] 
     public Dictionary<string, int> PlayerIconData;
