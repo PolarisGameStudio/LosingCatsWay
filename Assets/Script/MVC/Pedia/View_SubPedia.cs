@@ -20,6 +20,11 @@ public class View_SubPedia : ViewBehaviour
     [SerializeField] private Material[] typeBackMaterials;
     [SerializeField] private Color32[] typeBackColors;
     
+    public override void Init()
+    {
+        base.Init();
+        App.model.pedia.OnSelectedPediaTypeChange += OnSelectedPediaTypeChange;
+    }
 
     private void OnSelectedPediaTypeChange(object value)
     {

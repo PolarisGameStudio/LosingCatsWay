@@ -137,12 +137,7 @@ public class PlayerDataHelper
             itemData.SkinData = app.system.inventory.SkinData;
         else
             dictSetValueHelper.SetDict(itemData.SkinData, inventory.SkinData);
-
-        if (itemData.KnowledgeCardDatas == null)
-            itemData.KnowledgeCardDatas = app.system.inventory.KnowledgeCardDatas;
-        else
-            dictSetValueHelper.SetDict(itemData.KnowledgeCardDatas, inventory.KnowledgeCardDatas);
-
+        
         if (itemData.PlayerIconData == null)
             itemData.PlayerIconData = app.system.inventory.PlayerIconData;
         else
@@ -177,7 +172,17 @@ public class PlayerDataHelper
             missionData.QuestReceivedStatusData = app.system.quest.QuestReceivedStatusData;
         else
             dictSetValueHelper.SetDict(missionData.QuestReceivedStatusData, app.system.quest.QuestReceivedStatusData);
+
+        if (missionData.KnowledgeCardData == null)
+            missionData.KnowledgeCardData = app.system.quest.KnowledgeCardData;
+        else
+            dictSetValueHelper.SetDict(missionData.KnowledgeCardData, app.system.quest.KnowledgeCardData);
         
+        if (missionData.KnowledgeCardStatus == null)
+            missionData.KnowledgeCardStatus = app.system.quest.KnowledgeCardStatus;
+        else
+            dictSetValueHelper.SetDict(missionData.KnowledgeCardStatus, app.system.quest.KnowledgeCardStatus);
+
         if (missionData.MyQuests == null)
             missionData.MyQuests = new List<string>();
 
@@ -347,7 +352,6 @@ public class PlayerDataHelper
         itemData.ToolData = app.system.inventory.ToolData;
         itemData.LitterData = app.system.inventory.LitterData;
         itemData.SkinData = app.system.inventory.SkinData;
-        itemData.KnowledgeCardDatas = app.system.inventory.KnowledgeCardDatas;
         itemData.PlayerIconData = app.system.inventory.PlayerIconData;
         itemData.PlayerAvatarData = app.system.inventory.PlayerAvatarData;
 
@@ -360,6 +364,9 @@ public class PlayerDataHelper
 
         missionData.QuestProgressData = app.system.quest.QuestProgressData;
         missionData.QuestReceivedStatusData = app.system.quest.QuestReceivedStatusData;
+        missionData.KnowledgeCardData = app.system.quest.KnowledgeCardData;
+        missionData.KnowledgeCardStatus = app.system.quest.KnowledgeCardStatus;
+        
         missionData.MyQuests = new List<string>();
         for (int i = 0; i < app.model.dailyQuest.Quests.Count; i++)
         {

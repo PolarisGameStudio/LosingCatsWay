@@ -69,8 +69,7 @@ public class MallContainer_Tool : MallContainer
             int adsDiamondCount = PlayerPrefs.GetInt("adsDiamondCount");
             PlayerPrefs.SetInt("adsDiamondCount", adsDiamondCount + 1);
 
-            App.system.reward.Open(adsDiamond);
-            
+            GetItem(adsDiamond);
             Refresh();
         });
     }
@@ -82,8 +81,7 @@ public class MallContainer_Tool : MallContainer
             int adsMoneyCount = PlayerPrefs.GetInt("adsMoneyCount");
             PlayerPrefs.SetInt("adsMoneyCount", adsMoneyCount + 1);
 
-            App.system.reward.Open(adsMoney);
-            
+            GetItem(adsMoney);
             Refresh();
         });
     }
@@ -100,7 +98,7 @@ public class MallContainer_Tool : MallContainer
             int adsToolCount = PlayerPrefs.GetInt("adsToolCount");
             PlayerPrefs.SetInt("adsToolCount", adsToolCount + 1);
 
-            App.system.reward.Open(rewards);
+            GetItem(rewards);
             Refresh();
         });
     }
@@ -112,7 +110,7 @@ public class MallContainer_Tool : MallContainer
             int adsFeedCount = PlayerPrefs.GetInt("adsFeedCount");
             PlayerPrefs.SetInt("adsFeedCount", adsFeedCount + 1);
 
-            App.system.reward.Open(adsFeed);
+            GetItem(adsFeed);
             Refresh();
         });
     }
@@ -122,7 +120,7 @@ public class MallContainer_Tool : MallContainer
         App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
             if (App.system.player.ReduceDiamond(60))
-                App.system.reward.Open(diamondFeed);
+                GetItem(diamondFeed);
             else
                 App.system.confirm.Active(ConfirmTable.NotEnoughDiamond);
         });
@@ -133,7 +131,7 @@ public class MallContainer_Tool : MallContainer
         App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
             if (App.system.player.ReduceDiamond(300))
-                App.system.reward.Open(diamondLosingCat);
+                GetItem(diamondLosingCat);
             else
                 App.system.confirm.Active(ConfirmTable.NotEnoughDiamond);
         });
@@ -144,7 +142,7 @@ public class MallContainer_Tool : MallContainer
         App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
             if (App.system.player.ReduceDiamond(120))
-                App.system.reward.Open(diamondChangeName);
+                GetItem(diamondChangeName);
             else
                 App.system.confirm.Active(ConfirmTable.NotEnoughDiamond);
         });
@@ -155,7 +153,7 @@ public class MallContainer_Tool : MallContainer
         App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
             if (App.system.player.ReduceDiamond(900))
-                App.system.reward.Open(diamondFlower);
+                GetItem(diamondFlower);
             else
                 App.system.confirm.Active(ConfirmTable.NotEnoughDiamond);
         });

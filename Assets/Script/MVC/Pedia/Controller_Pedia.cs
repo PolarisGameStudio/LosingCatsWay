@@ -149,7 +149,7 @@ public class Controller_Pedia : ControllerBehavior
         App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
             string pediaId = App.model.pedia.UsingPediaIds[index];
-            App.system.inventory.KnowledgeCardDatas[pediaId]++;
+            App.system.quest.KnowledgeCardData[pediaId]++;
             klc0001.Count -= 10;
             RefreshPediaItems();
         });

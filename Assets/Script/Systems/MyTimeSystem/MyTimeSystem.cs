@@ -75,4 +75,11 @@ public class MyTimeSystem : MvcBehaviour
     public DateTime MyTimeNow => Timestamp.GetCurrentTimestamp().ToDateTime().ToLocalTime();
 
     #endregion
+    
+    public int GetWeekOfYear(DateTime dt)
+    {
+        System.Globalization.GregorianCalendar gc = new System.Globalization.GregorianCalendar();
+        int weekOfYear = gc.GetWeekOfYear(dt, System.Globalization.CalendarWeekRule.FirstDay, DayOfWeek.Monday);
+        return weekOfYear;
+    }
 }

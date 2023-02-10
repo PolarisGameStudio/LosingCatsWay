@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Controller_Mall : ControllerBehavior
 {
+    public Callback OnBuyMallItem;
+
     public void Init()
     {
         for (int i = 0; i < App.view.mall.pages.Length; i++)

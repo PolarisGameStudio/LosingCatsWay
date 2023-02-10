@@ -14,7 +14,7 @@ public class MallContainer_Diamond : MallContainer
         App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
             if (App.system.player.ReduceDiamond(20))
-                App.system.reward.Open(cash1000);
+                GetItem(cash1000);
             else
                 App.system.confirm.Active(ConfirmTable.NotEnoughDiamond);
         });
@@ -25,7 +25,7 @@ public class MallContainer_Diamond : MallContainer
         App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
             if (App.system.player.ReduceDiamond(60))
-                App.system.reward.Open(cash3000);
+                GetItem(cash3000);
             else
                 App.system.confirm.Active(ConfirmTable.NotEnoughDiamond);
         });
@@ -36,7 +36,7 @@ public class MallContainer_Diamond : MallContainer
         App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
             if (App.system.player.ReduceDiamond(100))
-                App.system.reward.Open(cash5000);
+                GetItem(cash5000);
             else
                 App.system.confirm.Active(ConfirmTable.NotEnoughDiamond);
         });
@@ -47,7 +47,7 @@ public class MallContainer_Diamond : MallContainer
         App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
             if (App.system.player.ReduceDiamond(500))
-                App.system.reward.Open(cash25000);
+                GetItem(cash25000);
             else
                 App.system.confirm.Active(ConfirmTable.NotEnoughDiamond);
         });

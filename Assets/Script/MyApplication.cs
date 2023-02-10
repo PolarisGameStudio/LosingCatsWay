@@ -1,10 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using Firebase.Auth;
 using Firebase.Firestore;
 using Lean.Common;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class MyApplication : MonoBehaviour
@@ -19,6 +21,12 @@ public class MyApplication : MonoBehaviour
     public LeanPlane globalLeanPlane;
     
     private bool canSave;
+
+    [Button]
+    public void Week()
+    {
+        print(system.myTime.GetWeekOfYear(DateTime.Now));
+    }
 
     private async void Start()
     {
