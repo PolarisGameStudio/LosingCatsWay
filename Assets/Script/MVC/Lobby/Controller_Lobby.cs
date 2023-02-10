@@ -5,11 +5,20 @@ using UnityEngine;
 
 public class Controller_Lobby : ControllerBehavior
 {
+    public void Init()
+    {
+        App.model.lobby.TmpExp = App.system.player.Exp;
+        App.model.lobby.TmpMoney = App.system.player.Coin;
+        App.model.lobby.TmpDiamond = App.system.player.Diamond;
+    }
+    
     public void Open()
     {
         App.system.bgm.FadeIn().Play("Lobby");
         App.view.lobby.Open();
         App.system.room.OpenRooms();
+        
+        SetBuffer();
     }
 
     public void Close()
@@ -130,5 +139,54 @@ public class Controller_Lobby : ControllerBehavior
     public void OpenEvent()
     {
         App.controller.events.Open();
+    }
+
+    public void AddExpBuffer(int value)
+    {
+        App.model.lobby.ExpBuffer += value;
+    }
+
+    public void AddLevelBuffer(int value)
+    {
+        App.model.lobby.LevelBuffer = value;
+    }
+
+    public void AddMoneyBuffer(int value)
+    {
+        App.model.lobby.MoneyBuffer += value;
+    }
+
+    public void AddDiamondBuffer(int value)
+    {
+        App.model.lobby.DiamondBuffer += value;
+    }
+
+    public void SetBuffer()
+    {
+        if (App.model.lobby.ExpBuffer > 0)
+        {
+            App.model.lobby.TmpExp += App.model.lobby.ExpBuffer;
+            App.view.lobby.expParticle.Play();
+            App.model.lobby.ExpBuffer = 0;
+        }
+
+        if (App.model.lobby.LevelBuffer > App.model.lobby.TmpLevel)
+        {
+            App.model.lobby.TmpLevel = App.model.lobby.LevelBuffer;
+        }
+
+        if (App.model.lobby.MoneyBuffer > 0)
+        {
+            App.model.lobby.TmpMoney += App.model.lobby.MoneyBuffer;
+            App.view.lobby.moneyParticle.Play();
+            App.model.lobby.MoneyBuffer = 0;
+        }
+        
+        if (App.model.lobby.DiamondBuffer > 0)
+        {
+            App.model.lobby.TmpDiamond += App.model.lobby.DiamondBuffer;
+            App.view.lobby.diamondParticle.Play();
+            App.model.lobby.DiamondBuffer = 0;
+        }
     }
 }

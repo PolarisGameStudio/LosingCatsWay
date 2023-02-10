@@ -34,7 +34,8 @@ public class Controller_Entrance : ControllerBehavior
         
         App.view.entrance.Close();
         App.model.entrance.OpenType = 0;
-        App.system.openFlow.NextAction();
+        if (!App.system.openFlow.isEnd)
+            App.system.openFlow.NextAction();
     }
 
     public void CloseDeadEffect()

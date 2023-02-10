@@ -27,7 +27,11 @@ public class Controller_Events : ControllerBehavior
     public void Close()
     {
         App.view.events.Close();
-        App.system.openFlow.NextAction();
+        
+        if (!App.system.openFlow.isEnd)
+            App.system.openFlow.NextAction();
+        else
+            App.controller.lobby.SetBuffer();
     }
 
     public void Select(int index)

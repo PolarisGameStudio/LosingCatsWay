@@ -118,8 +118,9 @@ public class CatchCatMap : MvcBehaviour
         App.system.transition.Active(0.5f, () =>
         {
             Close();
+            GameEndAction();
             App.controller.lobby.Open();
-        }, GameEndAction);
+        });
     }
 
     public void CloseToMap()
@@ -127,8 +128,9 @@ public class CatchCatMap : MvcBehaviour
         App.system.transition.Active(0.5f, () =>
         {
             Close();
+            GameEndAction();
             App.controller.map.Open();
-        }, GameEndAction);
+        });
     }
 
     public void OpenPause()

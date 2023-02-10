@@ -54,6 +54,7 @@ public class MyApplication : MonoBehaviour
 
         // 初始化系統
         system.player.Init(); // ValueChange
+        controller.lobby.Init();
         controller.build.Init(); // 中心房要排序在myRooms的第0個
         system.cat.Init();
         controller.pedia.Init();

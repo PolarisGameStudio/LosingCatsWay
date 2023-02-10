@@ -42,9 +42,9 @@ public class View_Lobby : ViewBehaviour
     public Transform cardCatNotifyContent;
 
     [Title("Particle")]
-    [SerializeField] private UIParticle expParticle;
-    [SerializeField] private UIParticle moneyParticle;
-    [SerializeField] private UIParticle diamondParticle;
+    public UIParticle expParticle;
+    public UIParticle moneyParticle;
+    public UIParticle diamondParticle;
 
     [Title("Red")]
     public GameObject lobbyDailyQuestRed;
@@ -97,15 +97,18 @@ public class View_Lobby : ViewBehaviour
         App.system.player.OnUsingIconChange += OnUsingIconChange;
         App.system.player.OnUsingAvatarChange += OnUsingAvatarChange;
         
-        //噴
-        App.system.player.OnAddCoinChange += OnAddCoinChange;
-        App.system.player.OnAddDiamondChange += OnAddDiamondChange;
-        App.system.player.OnAddExpChange += OnAddExpChange;
+        App.system.player.OnReduceCoinChange += OnReduceCoinChange;
+        App.system.player.OnReduceDiamondChange += OnReduceDiamondChange;
 
         App.system.room.OnRoomsChange += OnRoomsChange;
         
         App.model.dailyQuest.OnQuestsChange += OnQuestsChange;
         App.model.catGuide.OnCurrentLevelBestRewardChange += OnCurrentLevelBestRewardChange;
+        
+        App.model.lobby.OnTmpExpChange += OnTmpExpChange;
+        App.model.lobby.OnTmpMoneyChange += OnTmpMoneyChange;
+        App.model.lobby.OnTmpDiamondChange += OnTmpDiamondChange;
+        App.model.lobby.OnTmpLevelChange += OnTmpLevelChange;
         
         #region TweenConfig
 
@@ -118,20 +121,64 @@ public class View_Lobby : ViewBehaviour
         #endregion
     }
 
-    private void OnAddExpChange(object value)
+    private void OnTmpLevelChange(object from, object to)
     {
-        expParticle.Play();
-        //TODO 吸完再加UI條
+        int lastLevel = (int)from;
+        int nextLevel = (int)to;
+
+        DOVirtual.DelayedCall(2f, () =>
+        {
+            levelText.text = nextLevel.ToString("00");
+        });
+        
+        DOVirtual.DelayedCall(2.5f, () =>
+        {
+            App.system.levelUp.Open(lastLevel);
+        });
     }
 
-    private void OnAddDiamondChange(object value)
+    private void OnTmpDiamondChange(object from, object to)
     {
-        diamondParticle.Play();
+        int diamond = (int)to;
+        DOVirtual.DelayedCall(1.75f, () =>
+        {
+            diamondText.text = diamond.ToString();
+        });
     }
 
-    private void OnAddCoinChange(object value)
+    private void OnTmpMoneyChange(object from, object to)
     {
-        moneyParticle.Play();
+        int money = (int)to;
+        DOVirtual.DelayedCall(1.75f, () =>
+        {
+            coinText.text = money.ToString();
+        });
+    }
+
+    private void OnTmpExpChange(object from, object to)
+    {
+        int beforeExp = (int)from;
+        int afterExp = (int)to;
+        int nextLevelExp = App.system.player.NextLevelExp;
+
+        expFill.DOKill(true);
+        expFill.fillAmount = 1f / nextLevelExp * beforeExp;
+        expFill.DOFillAmount(1f / nextLevelExp * afterExp, 0.3f).SetDelay(1.75f).SetEase(Ease.OutExpo)
+            .OnComplete(() =>
+            {
+                if (expFill.fillAmount >= 1)
+                    expFill.DOFillAmount(0, 0).SetDelay(0.05f);
+            });
+    }
+
+    private void OnReduceDiamondChange(object value)
+    {
+        diamondText.text = App.system.player.Diamond.ToString();
+    }
+
+    private void OnReduceCoinChange(object value)
+    {
+        coinText.text = App.system.player.Coin.ToString();
     }
 
     private void OnUsingAvatarChange(object value)
@@ -197,6 +244,9 @@ public class View_Lobby : ViewBehaviour
 
     private void OnLevelChange(object value)
     {
+        // 只要上線SetData用
+        App.system.player.OnLevelChange -= OnLevelChange;
+        
         int level = Convert.ToInt32(value);
         levelText.text = level.ToString("00");
         
@@ -206,6 +256,9 @@ public class View_Lobby : ViewBehaviour
 
     private void OnExpChange(object from, object to)
     {
+        // 只要上線SetData用
+        App.system.player.OnExpChange -= OnExpChange;
+        
         int lastExp = Convert.ToInt32(from);
         int newExp = Convert.ToInt32(to);
         int fullExp = App.system.player.NextLevelExp;
@@ -216,12 +269,16 @@ public class View_Lobby : ViewBehaviour
 
     private void OnCoinChange(object value)
     {
+        // 只要上線SetData用
+        App.system.player.OnCoinChange -= OnCoinChange;
         int coin = Convert.ToInt32(value);
         coinText.text = coin.ToString();
     }
 
     private void OnDiamondChange(object value)
     {
+        // 只要上線SetData用
+        App.system.player.OnDiamondChange -= OnDiamondChange;
         int diamond = Convert.ToInt32(value);
         diamondText.text = diamond.ToString();
     }

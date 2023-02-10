@@ -35,7 +35,11 @@ public class Controller_MonthSign : ControllerBehavior
     {
         App.view.monthSign.Close();
         App.system.cloudSave.UpdateCloudSignData();
-        App.system.openFlow.NextAction();
+        
+        if (!App.system.openFlow.isEnd)
+            App.system.openFlow.NextAction();
+        else
+            App.controller.lobby.SetBuffer();
     }
 
     /// 檢查並創建calender

@@ -106,6 +106,8 @@ public class Controller_Pedia : ControllerBehavior
         ClosePedia();
         CloseArchive();
         App.view.pedia.Close();
+        
+        App.controller.lobby.SetBuffer();
     }
 
     public void SelectPediaType(int index)

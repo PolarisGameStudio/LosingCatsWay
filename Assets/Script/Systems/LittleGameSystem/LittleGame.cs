@@ -38,14 +38,14 @@ public abstract class LittleGame : MvcBehaviour
 
     protected void SuccessToLobby()
     {
+        Success();
         App.controller.followCat.CloseByOpenLobby();
-        DOVirtual.DelayedCall(0.25f, Success);
     }
 
     protected void FailedToLobby()
     {
+        Failed();
         App.controller.followCat.CloseByOpenLobby();
-        DOVirtual.DelayedCall(0.25f, Failed);
     }
 
     private void Success()

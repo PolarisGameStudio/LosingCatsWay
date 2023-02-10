@@ -25,6 +25,47 @@ public class LevelUpSystem : MvcBehaviour
         App.system.player.Level++;
     }
 
+    public void Open(int lastLevel)
+    {
+        SetLastSibling();
+        view.InstantShow();
+
+        int level = lastLevel;
+
+        levelUpText.text = (level + 1).ToString();
+        levelDownText.text = level.ToString();
+
+        var unlockItems = App.factory.itemFactory.GetUnlockItemsByLevel(level + 1);
+        var levelRewards = App.factory.itemFactory.GetRewardsByLevel(level + 1);
+        
+        App.system.reward.SetDatas(levelRewards);
+
+        if (unlockItems.Count <= 0)
+        {
+            animator.Play("SwitchText(NoUnlock)", 0, 0);
+        }
+        else
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (i < unlockItems.Count)
+                {
+                    unlocks[i].SetActive(true);
+                    
+                    var unlock = unlockItems[i];
+                    unlockContents[i].text = unlock.Name;
+                    continue;
+                }
+                
+                unlocks[i].SetActive(false);
+            }
+            
+            animator.Play("SwitchText", 0, 0);
+        }
+
+        InvokeRepeating("WaitAnimationEnd", 0.25f, 0.1f);
+    }
+    
     public void Open()
     {
         SetLastSibling();

@@ -21,6 +21,7 @@ public class Controller_Mall : ControllerBehavior
     public void Close()
     {
         App.view.mall.Close();
+        App.controller.lobby.SetBuffer();
     }
 
     public void SelectPage(int index)

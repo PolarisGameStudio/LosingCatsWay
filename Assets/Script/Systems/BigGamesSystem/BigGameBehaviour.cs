@@ -72,11 +72,12 @@ public class BigGameBehaviour : MvcBehaviour
         {
             uIView.InstantHide();
             App.system.bigGames.Close();
+            GameEndAction();
             App.controller.lobby.Open();
-        }, GameEndAction);
+        });
     }
 
-    public void OpenSettle()
+    protected void OpenSettle()
     {
         exp = App.system.player.playerDataSetting.GetBigGameExpByChance(chance);
         coins = App.system.player.playerDataSetting.GetBigGameCoinsByChance(App.system.player.Level, chance);

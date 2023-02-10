@@ -9,12 +9,12 @@ public class OpenFlowSystem : MvcBehaviour
 {
     private List<UnityAction> openFlowActions = new List<UnityAction>();
     private int flowIndex;
-    private bool isActive;
-    private bool isEnd;
+    public bool isEnd;
 
     public void Init()
     {
-        if (openFlowActions.Count <= 0) return;
+        if (openFlowActions.Count <= 0)
+            return;
         StartAction();
     }
 
@@ -23,29 +23,23 @@ public class OpenFlowSystem : MvcBehaviour
         openFlowActions.Add(action);
     }
 
-    // public void RemoveAction(UnityAction action)
-    // {
-    //     openFlowActions.Remove(action);
-    // }
-
     [Button]
     public void StartAction()
     {
         flowIndex = 0;
         isEnd = false;
-        isActive = true;
         NextAction();
     }
 
     public void NextAction()
     {
-        if (isEnd) return;
-        if (!isActive) return;
+        if (isEnd)
+            return;
 
         if (flowIndex >= openFlowActions.Count)
         {
             isEnd = true;
-            isActive = false;
+            App.controller.lobby.SetBuffer();
             return;
         }
 

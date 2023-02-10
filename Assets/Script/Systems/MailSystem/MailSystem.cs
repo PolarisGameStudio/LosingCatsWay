@@ -7,7 +7,6 @@ using I2.Loc;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MailSystem : MvcBehaviour
 {
@@ -80,6 +79,7 @@ public class MailSystem : MvcBehaviour
     public void Close()
     {
         view.InstantHide();
+        App.controller.lobby.SetBuffer();
     }
 
     public void Select(int index)

@@ -95,7 +95,11 @@ public class Controller_DailyQuest : ControllerBehavior
         App.view.dailyQuest.Close();
         OnClose?.Invoke();
         OnClose = null;
-        App.system.openFlow.NextAction();
+        
+        if (!App.system.openFlow.isEnd)
+            App.system.openFlow.NextAction();
+        else
+            App.controller.lobby.SetBuffer();
     }
 
     public void OpenCatGuide()
@@ -147,9 +151,8 @@ public class Controller_DailyQuest : ControllerBehavior
         
         App.model.dailyQuest.Quests = App.model.dailyQuest.Quests;
         
-        //CheckLevelUp
-        OnClose += AddRewardByClose;
-        App.controller.catGuide.OnClose += AddRewardByClose;
+        App.system.player.AddExp(App.model.dailyQuest.RewardExp);
+        App.model.dailyQuest.RewardExp = 0;
         
         App.system.cloudSave.UpdateCloudMissionData();
     }
@@ -177,9 +180,8 @@ public class Controller_DailyQuest : ControllerBehavior
 
         App.model.dailyQuest.Quests = App.model.dailyQuest.Quests;
         
-        //CheckLevelUp
-        OnClose += AddRewardByClose;
-        App.controller.catGuide.OnClose += AddRewardByClose;
+        App.system.player.AddExp(App.model.dailyQuest.RewardExp);
+        App.model.dailyQuest.RewardExp = 0;
         
         App.system.cloudSave.UpdateCloudMissionData();
     }
@@ -202,9 +204,8 @@ public class Controller_DailyQuest : ControllerBehavior
 
         App.model.dailyQuest.TotalQuest = quest;
         
-        //CheckLevelUp
-        OnClose += AddRewardByClose;
-        App.controller.catGuide.OnClose += AddRewardByClose;
+        App.system.player.AddExp(App.model.dailyQuest.RewardExp);
+        App.model.dailyQuest.RewardExp = 0;
         
         App.system.cloudSave.UpdateCloudMissionData();
         
@@ -241,19 +242,12 @@ public class Controller_DailyQuest : ControllerBehavior
         if (!hasReward)
             return;
         
-        //CheckLevelUp
-        OnClose += AddRewardByClose;
-        App.controller.catGuide.OnClose += AddRewardByClose;
+        App.system.player.AddExp(App.model.dailyQuest.RewardExp);
+        App.model.dailyQuest.RewardExp = 0;
         
         App.system.reward.Open(tmp.ToArray());
         
         App.system.cloudSave.UpdateCloudMissionData();
-    }
-
-    private void AddRewardByClose()
-    {
-        App.system.player.AddExp(App.model.dailyQuest.RewardExp);
-        App.model.dailyQuest.RewardExp = 0;
     }
 
     #endregion

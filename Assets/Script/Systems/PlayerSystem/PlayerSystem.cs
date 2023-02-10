@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,9 +35,8 @@ public class PlayerSystem : SerializedMonoBehaviour
     public ValueChange OnPlayerIdChange;
     public ValueChange OnPlayerNameChange;
     public ValueChange OnLevelChange;
-    
+
     public ValueChangeFromTo OnExpChange;
-    public ValueChange OnAddExpChange;
     
     public ValueChange OnCoinChange;
     public ValueChange OnAddCoinChange;
@@ -116,8 +114,8 @@ public class PlayerSystem : SerializedMonoBehaviour
         get => level;
         set
         {
-            if (value - level == 1 && level != 0)
-                App.system.levelUp.Open();
+            // if (value - level == 1 && level != 0)
+            //     App.system.levelUp.Open();
             
             level = value;
             OnLevelChange?.Invoke(value);
@@ -235,20 +233,6 @@ public class PlayerSystem : SerializedMonoBehaviour
         }
     }
 
-    public int VipStatus
-    {
-        get
-        {
-            string valueString = playerStatus["VipStatus"];
-            return int.Parse(valueString);
-        }
-        set
-        {
-            string valueString = value.ToString();
-            playerStatus["VipStatus"] = valueString;
-        }
-    }
-
     #region Read-Only
 
     // 可養貓數
@@ -289,15 +273,19 @@ public class PlayerSystem : SerializedMonoBehaviour
     public void AddExp(int value)
     {
         int result = Exp + value;
-        int nextExp = playerDataSetting.GetNextLevelUpExp(Level);
-        OnAddExpChange?.Invoke(value);
+        int nextExp = NextLevelExp;
+
+        app.controller.lobby.AddExpBuffer(value);
 
         // 判斷 是否會升等
         if (result >= nextExp)
         {
             int end = result - nextExp;
             Exp = nextExp;
+            
             Level++;
+            app.controller.lobby.AddLevelBuffer(Level);
+            
             Exp = 0;
             Exp = end;
         }
@@ -311,6 +299,7 @@ public class PlayerSystem : SerializedMonoBehaviour
     {
         Coin += value;
         OnAddCoinChange?.Invoke(value);
+        app.controller.lobby.AddMoneyBuffer(value);
     }
     
     public bool ReduceMoney(int value)
@@ -327,6 +316,7 @@ public class PlayerSystem : SerializedMonoBehaviour
     {
         Diamond += value;
         OnAddDiamondChange?.Invoke(value);
+        app.controller.lobby.AddDiamondBuffer(value);
     }
 
     public bool ReduceDiamond(int value)

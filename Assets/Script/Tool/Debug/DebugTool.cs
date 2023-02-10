@@ -53,4 +53,10 @@ public class DebugTool : MvcBehaviour
             SceneManager.LoadSceneAsync("SampleScene", LoadSceneMode.Single);
         });
     }
+
+    [Button]
+    public void DebugAddExp()
+    {
+        App.system.player.AddExp(100);
+    }
 }
