@@ -24,7 +24,6 @@ public class BigGameBehaviour : MvcBehaviour
     protected int score = 0;
     protected int exp = 0;
     protected int chance;
-    protected bool isPause;
     
     private int coins;
 
@@ -50,19 +49,17 @@ public class BigGameBehaviour : MvcBehaviour
     {
         if (App.system.tutorial.isTutorial)
             return;
-        App.system.howToPlay.Open(false, null, () => isPause = false);
+        App.system.howToPlay.Open(false);
         //TODO Pause every game
     }
 
     public virtual void OpenPause()
     {
-        isPause = true;
         //TODO Pause every game
     }
 
     public virtual void ClosePause()
     {
-        isPause = false;
         //TODO Unpause every game
     }
 
@@ -81,7 +78,7 @@ public class BigGameBehaviour : MvcBehaviour
     {
         exp = App.system.player.playerDataSetting.GetBigGameExpByChance(chance);
         coins = App.system.player.playerDataSetting.GetBigGameCoinsByChance(App.system.player.Level, chance);
-        score = Convert.ToInt32((100f / hearts.Length * chance));
+        score = Convert.ToInt32(100f / hearts.Length * chance);
         App.system.settle.Active(exp, coins, score, Close);
     }
 

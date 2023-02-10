@@ -165,6 +165,7 @@ public class BigGame_Teaser : BigGameBehaviour
     public void Return()
     {
         returnButton.interactable = false;
+        returnButton.transform.DOScale(Vector2.zero, 0.15f).SetEase(Ease.InOutSine).SetDelay(0.1f);
         curveBar.PointerPause();
 
         App.system.soundEffect.Play("Button");
@@ -230,20 +231,12 @@ public class BigGame_Teaser : BigGameBehaviour
         });
     }
 
-    private void PausePointer(bool pause)
-    {
-        if (pause)
-            curveBar.PointerPause();
-        else
-            curveBar.Rotate(autobreak: true, resetPointer: false);
-    }
-
     public override void OpenPause()
     {
         if (App.system.tutorial.isTutorial)
             return;
         base.OpenPause();
-        PausePointer(true);
+        curveBar.PointerPause();
         pauseBg.DOFade(1, 0.45f).From(0).OnStart(() =>
         {
             pauseBg.raycastTarget = true;
@@ -254,7 +247,7 @@ public class BigGame_Teaser : BigGameBehaviour
     public override void ClosePause()
     {
         base.ClosePause();
-        PausePointer(false);
+        curveBar.PointerResume();
         pauseBg.DOFade(0, 0.45f).From(1).OnComplete(() =>
         {
             pauseBg.raycastTarget = false;
@@ -279,7 +272,10 @@ public class BigGame_Teaser : BigGameBehaviour
 
     private void CheckPointerReach()
     {
-        if (!curveBar.CheckPointerReachStartPoint()) return;
+        if (!curveBar.CheckPointerReachStartPoint())
+            return;
+        returnButton.interactable = false;
+        returnButton.transform.DOScale(Vector2.zero, 0.15f).SetEase(Ease.InOutSine).SetDelay(0.1f);
         Miss();
     }
 

@@ -55,8 +55,9 @@ public class DebugTool : MvcBehaviour
     }
 
     [Button]
-    public void DebugAddExp()
+    private void DebugAddExp()
     {
-        App.system.player.AddExp(100);
+        App.system.player.AddExp(200);
+        App.controller.lobby.SetBuffer();
     }
 }

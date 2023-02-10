@@ -125,6 +125,8 @@ public class View_Lobby : ViewBehaviour
     {
         int lastLevel = (int)from;
         int nextLevel = (int)to;
+        
+        print($"Level from {from} to {to}");
 
         DOVirtual.DelayedCall(2f, () =>
         {
@@ -159,9 +161,9 @@ public class View_Lobby : ViewBehaviour
     {
         int beforeExp = (int)from;
         int afterExp = (int)to;
-        int nextLevelExp = App.system.player.NextLevelExp;
+        int nextLevelExp = App.system.player.NextLevelExp; // todo bug: 升級的話會抓到下個等級的經驗
 
-        expFill.DOKill(true);
+        expFill.DOKill();
         expFill.fillAmount = 1f / nextLevelExp * beforeExp;
         expFill.DOFillAmount(1f / nextLevelExp * afterExp, 0.3f).SetDelay(1.75f).SetEase(Ease.OutExpo)
             .OnComplete(() =>

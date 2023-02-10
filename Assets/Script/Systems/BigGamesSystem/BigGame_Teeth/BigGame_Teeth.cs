@@ -253,6 +253,7 @@ public class BigGame_Teeth : BigGameBehaviour
         if (App.system.tutorial.isTutorial)
             return;
         base.OpenPause();
+        curveBar.PointerPause();
         pauseBg.DOFade(1, 0.45f).From(0).OnStart(() =>
         {
             pauseBg.raycastTarget = true;
@@ -263,6 +264,7 @@ public class BigGame_Teeth : BigGameBehaviour
     public override void ClosePause()
     {
         base.ClosePause();
+        curveBar.PointerResume();
         pauseBg.DOFade(0, 0.45f).From(1).OnComplete(() =>
         {
             pauseBg.raycastTarget = false;

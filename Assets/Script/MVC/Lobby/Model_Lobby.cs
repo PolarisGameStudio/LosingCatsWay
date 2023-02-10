@@ -29,7 +29,8 @@ public class Model_Lobby : ModelBehavior
         get => tmpLevel;
         set
         {
-            OnTmpLevelChange?.Invoke(tmpLevel, value);
+            if (value - tmpLevel == 1 && tmpLevel > 0)
+                OnTmpLevelChange?.Invoke(tmpLevel, value);
             tmpLevel = value;
         }
     }

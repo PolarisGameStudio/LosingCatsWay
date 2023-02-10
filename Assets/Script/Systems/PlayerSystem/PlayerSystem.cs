@@ -274,7 +274,7 @@ public class PlayerSystem : SerializedMonoBehaviour
     {
         int result = Exp + value;
         int nextExp = NextLevelExp;
-
+        
         app.controller.lobby.AddExpBuffer(value);
 
         // 判斷 是否會升等

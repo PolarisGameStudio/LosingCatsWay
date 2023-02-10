@@ -8,6 +8,7 @@ public class Controller_Lobby : ControllerBehavior
     public void Init()
     {
         App.model.lobby.TmpExp = App.system.player.Exp;
+        App.model.lobby.TmpLevel = App.system.player.Level;
         App.model.lobby.TmpMoney = App.system.player.Coin;
         App.model.lobby.TmpDiamond = App.system.player.Diamond;
     }
@@ -169,7 +170,7 @@ public class Controller_Lobby : ControllerBehavior
             App.view.lobby.expParticle.Play();
             App.model.lobby.ExpBuffer = 0;
         }
-
+        
         if (App.model.lobby.LevelBuffer > App.model.lobby.TmpLevel)
         {
             App.model.lobby.TmpLevel = App.model.lobby.LevelBuffer;

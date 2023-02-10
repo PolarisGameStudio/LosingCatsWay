@@ -75,6 +75,7 @@ public class RewardSystem : MvcBehaviour
         OnClose?.Invoke();
         OnClose = null;
         ResetSibling();
+        App.controller.lobby.SetBuffer();
     }
 
     public void SetDatas(Reward[] rewards)

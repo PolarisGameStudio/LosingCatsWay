@@ -45,10 +45,7 @@ public class CurveBar : MonoBehaviour
 
     #region Method
 
-    /// <summary>
     /// Set pointer hit area and rotate to center.
-    /// </summary>
-    /// <param name="fillSize"></param>
     public void SetFillSize(float fillSize)
     {
         //FillAmount
@@ -62,8 +59,8 @@ public class CurveBar : MonoBehaviour
 
         //Calculate area for pointer
         float outSize = 1f - fillSize; //總外圍
-        this.startPercent = outSize / 2; //左
-        this.endPercent = this.startPercent + fillSize; //右
+        startPercent = outSize / 2; //左
+        endPercent = startPercent + fillSize; //右
     }
 
     public void SetFillSize(float fillSize, bool toLeft)
@@ -121,7 +118,7 @@ public class CurveBar : MonoBehaviour
         clockwiseSeq.timeScale = 0;
         unclockwiseSeq.timeScale = 0;
 
-        float speedMultiply = (clockwise) ? GetPointerPercentByAngle() : (1f - GetPointerPercentByAngle());
+        float speedMultiply = clockwise ? GetPointerPercentByAngle() : (1f - GetPointerPercentByAngle());
 
         clockwiseSeq
             .Append(rotateRect.DORotate(new Vector3(0, 0, -targetAngle), pointerSpeed * speedMultiply).SetEase(Ease.Linear)).SetSpeedBased();
@@ -166,9 +163,7 @@ public class CurveBar : MonoBehaviour
         }
     }
 
-    /// <summary>
     /// Reset pointer rotation to center.
-    /// </summary>
     public void ResetPointer(bool killSequence = true)
     {
         if (killSequence)
@@ -189,10 +184,7 @@ public class CurveBar : MonoBehaviour
         rotateRect.localRotation = resetAngle;
     }
 
-    /// <summary>
     /// Reset pointer rotation to target angle.
-    /// </summary>
-    /// <param name="clockwise"></param>
     public void ResetPointer(bool clockwise, bool killSequence = true)
     {
         if (killSequence)
@@ -224,18 +216,31 @@ public class CurveBar : MonoBehaviour
     public void PointerPause()
     {
         if (clockwiseSeq != null) 
-            if (clockwiseSeq.IsPlaying()) clockwiseSeq.Pause();
+            if (clockwiseSeq.IsPlaying())
+                clockwiseSeq.Pause();
         if (unclockwiseSeq != null) 
-            if (unclockwiseSeq.IsPlaying()) unclockwiseSeq.Pause();
+            if (unclockwiseSeq.IsPlaying())
+                unclockwiseSeq.Pause();
+    }
+
+    public void PointerResume()
+    {
+        if (clockwiseSeq != null) 
+            clockwiseSeq.Play();
+        if (unclockwiseSeq != null) 
+            unclockwiseSeq.Play();
     }
 
     [Button(30)]
     public void PointerHit(bool pause = false, bool autoResume = true)
     {
-        if (pause) clockwiseSeq.timeScale = 0;
-        if (pause) unclockwiseSeq.timeScale = 0;
+        if (pause)
+            clockwiseSeq.timeScale = 0;
+        if (pause)
+            unclockwiseSeq.timeScale = 0;
 
-        if (!autoResume) return;
+        if (!autoResume)
+            return;
 
         DOVirtual.DelayedCall(.1f, () =>
         {

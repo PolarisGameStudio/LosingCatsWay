@@ -163,6 +163,7 @@ public class BigGame_Meat : BigGameBehaviour
         if (App.system.tutorial.isTutorial)
             return;
         base.OpenPause();
+        curveBar.PointerPause();
         CancelInvoke(nameof(CheckStatus));
         pauseBg.DOFade(1, 0.45f).From(0).OnStart(() =>
         {
@@ -174,6 +175,7 @@ public class BigGame_Meat : BigGameBehaviour
     public override void ClosePause()
     {
         base.ClosePause();
+        curveBar.PointerResume();
         InvokeRepeating(nameof(CheckStatus), 0.5f, 0.5f);
         pauseBg.DOFade(0, 0.45f).From(1).OnComplete(() =>
         {
