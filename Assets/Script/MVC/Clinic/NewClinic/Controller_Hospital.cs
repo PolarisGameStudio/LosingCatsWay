@@ -229,6 +229,7 @@ public class Controller_Hospital : ControllerBehavior
 
         if (index == 4)
         {
+            App.controller.pedia.AddLigationCount(cat.cloudCatData.CatData.Variety);
             cat.cloudCatData.CatHealthData.IsLigation = true;
         }
         

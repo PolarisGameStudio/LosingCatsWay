@@ -309,6 +309,10 @@ public class Controller_Pedia : ControllerBehavior
 
     private void RefreshRedPoint()
     {
+        bool hasRed = false;
+        App.view.pedia.archiveRedPoint.SetActive(false);
+        App.view.pedia.catRedPoint.SetActive(false);
+        
         List<Quest> quests = App.model.pedia.ArchiveQuests;
 
         for (int i = 0; i < quests.Count; i++)
@@ -316,17 +320,39 @@ public class Controller_Pedia : ControllerBehavior
             Quest quest = quests[i];
             if (quest.IsReach && !quest.IsReceived)
             {
-                App.view.lobby.archiveRedPoint.SetActive(true);
-                return;
+                hasRed = true;
+                App.view.pedia.archiveRedPoint.SetActive(true);
+                break;
             }
         }
         
-        App.view.lobby.archiveRedPoint.SetActive(false);
+        var status = App.system.quest.KnowledgeCardStatus.ToList();
+
+        for (int i = 0; i < status.Count; i++)
+        {
+            var s = status[i];
+            
+            if (s.Value == 0)
+                if (App.system.quest.KnowledgeCardData[s.Key] > 0)
+                {
+                    hasRed = true;
+                    App.view.pedia.catRedPoint.SetActive(true);
+                    break;
+                }
+        }
+        
+        App.view.lobby.archiveRedPoint.SetActive(hasRed);
     }
     
     #endregion
 
     #region PediaCats
+
+    public void AddLigationCount(string variety)
+    {
+        App.system.quest.KnowledgeCardData[variety]++;
+        RefreshRedPoint();
+    }
 
     private void OpenPediaCats()
     {
@@ -336,8 +362,6 @@ public class Controller_Pedia : ControllerBehavior
         App.view.pedia.pediaCats.Open();
         App.model.pedia.CatPageIndex = 0;
         RefreshCatItems();
-        
-        
     }
 
     private void ClosePediaCats()
@@ -371,6 +395,38 @@ public class Controller_Pedia : ControllerBehavior
         }
         
         App.model.pedia.UsingCatIds = result;
+    }
+
+    public void ChoosePediaCat(int index)
+    {
+        catLeftArrow.gameObject.SetActive(false);
+        catRightArrow.gameObject.SetActive(false);
+
+        App.model.pedia.SelectedCatId = App.model.pedia.UsingCatIds[index];
+        App.view.pedia.pediaCats.OpenReadCat();
+    }
+
+    public void ClosePediaCat()
+    {
+        catLeftArrow.gameObject.SetActive(true);
+        catRightArrow.gameObject.SetActive(true);
+        
+        App.view.pedia.pediaCats.CloseReadCat();
+    }
+
+    public void UnlockPediaCat(int index)
+    {
+        string variety = App.model.pedia.UsingCatIds[index];
+        int count = App.system.quest.KnowledgeCardData[variety];
+        
+        if (count < 1)
+            return;
+
+        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        {
+            App.system.quest.KnowledgeCardStatus[variety]++;
+            RefreshCatItems();
+        });
     }
 
     #endregion

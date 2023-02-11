@@ -22,6 +22,7 @@ public class Model_Pedia : ModelBehavior
     //Cats
     private List<string> usingCatIds;
     private int catPageIndex = -1;
+    private string selectedCatId;
 
     #endregion
 
@@ -124,6 +125,16 @@ public class Model_Pedia : ModelBehavior
         set => catPageIndex = value;
     }
 
+    public string SelectedCatId
+    {
+        get => selectedCatId;
+        set
+        {
+            selectedCatId = value;
+            OnSelectedCatIdChange?.Invoke(value);
+        }
+    }
+
     #endregion
 
     #region ValueChange
@@ -141,6 +152,7 @@ public class Model_Pedia : ModelBehavior
     
     //Cats
     public ValueChange OnUsingCasIdsChange;
+    public ValueChange OnSelectedCatIdChange;
 
     #endregion
 }
