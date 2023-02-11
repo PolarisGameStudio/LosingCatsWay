@@ -10,6 +10,9 @@ public class View_Pedia : ViewBehaviour
 
     [SerializeField] private GameObject[] tabMasks;
 
+    public GameObject archiveRedPoint;
+    public GameObject catRedPoint;
+    
     public override void Init()
     {
         base.Init();

@@ -1,20 +1,34 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Doozy.Runtime.UIManager.Containers;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class View_PediaCats : ViewBehaviour
 {
     [SerializeField] private UIView chooseCatView;
     [SerializeField] private UIView readCatView;
     [SerializeField] private Card_ChooseCat[] cards;
-    
+
+    #region ReadCat
+
+    public Sprite[] starStatusSprites;
+    public Image[] starStatusImages;
+    public TextMeshProUGUI[] levelCountTexts;
+    public TextMeshProUGUI catTypeText;
+    public CatSkin catSkin;
+
+    #endregion
+
     public override void Init()
     {
         base.Init();
         App.model.pedia.OnUsingCasIdsChange += OnUsingCasIdsChange;
+        App.model.pedia.OnSelectedCatIdChange += OnSelectedCatIdChange;
     }
-    
+
     public override void Open()
     {
         base.Open();
@@ -34,9 +48,10 @@ public class View_PediaCats : ViewBehaviour
         chooseCatView.Show();
     }
 
-    private void OpenReadCat()
+    public void OpenReadCat()
     {
         readCatView.Show();
+        CloseChooseCat();
     }
 
     private void CloseChooseCat()
@@ -44,9 +59,10 @@ public class View_PediaCats : ViewBehaviour
         chooseCatView.InstantHide();
     }
 
-    private void CloseReadCat()
+    public void CloseReadCat()
     {
         readCatView.InstantHide();
+        OpenChooseCat();
     }
 
     private void OnUsingCasIdsChange(object value)
@@ -60,9 +76,37 @@ public class View_PediaCats : ViewBehaviour
                 cards[i].gameObject.SetActive(false);
                 continue;
             }
-            
+
             cards[i].gameObject.SetActive(true);
             cards[i].SetData(usingCasIds[i]);
         }
+    }
+
+    private void OnSelectedCatIdChange(object value)
+    {
+        string variety = value.ToString();
+        int count = App.system.quest.KnowledgeCardData[variety];
+
+        if (count >= 10)
+        {
+            starStatusImages[1].sprite = starStatusSprites[1];
+            catSkin.PlayAnimation();
+        }
+        else
+        {
+            starStatusImages[1].sprite = starStatusSprites[0];
+            catSkin.StopAnimation();
+        }
+
+        if (count >= 5)
+            starStatusImages[0].sprite = starStatusSprites[1];
+        else
+            starStatusImages[0].sprite = starStatusSprites[0];
+
+        levelCountTexts[0].text = "(" + Math.Clamp(count, 0, 5) + "/5)";
+        levelCountTexts[1].text = "(" + Math.Clamp(count, 0, 10) + "/10)";
+
+        catTypeText.text = App.factory.stringFactory.GetCatVariety(variety);
+        catSkin.ChangeSkin(variety);
     }
 }

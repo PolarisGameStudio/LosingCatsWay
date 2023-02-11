@@ -145,7 +145,7 @@ public class CatSkin : MvcBehaviour
             var t = newVariety.Split('-');
             newVariety = t[1] + '-' + t[0];
         }
-        
+
         // transform.localPosition = catGuiPosition;
         skeletonGraphic.Skeleton.SetSkin("Normal_Cat/" + newVariety);
     }
@@ -598,6 +598,22 @@ public class CatSkin : MvcBehaviour
     }
 
     #endregion
+
+    public void StopAnimation()
+    {
+        if (!isGUI)
+            return;
+
+        skeletonGraphic.AnimationState.TimeScale = 0;
+    }
+
+    public void PlayAnimation()
+    {
+        if (!isGUI)
+            return;
+        
+        skeletonGraphic.AnimationState.TimeScale = 1;
+    }
 
     private Skeleton GetCatSkeleton()
     {

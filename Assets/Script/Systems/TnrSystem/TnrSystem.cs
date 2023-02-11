@@ -35,15 +35,15 @@ public class TnrSystem : MvcBehaviour
     [SerializeField] private RectTransform ligationButtonRect;
     [SerializeField] private RectTransform titleRect;
     [SerializeField] private RectTransform[] bottomButtonRects;
-    
+
     private CloudCatData cloudCatData;
     private string _location;
-    
+
     public Callback OnDoAdopt;
     public Callback OnDoRelease;
     public Callback OnDoShelter;
     public Callback OnDoLigation;
-    
+
     public CallbackValue OnAdoptCat;
 
     public void Init()
@@ -68,9 +68,9 @@ public class TnrSystem : MvcBehaviour
     {
         adoptMask.SetActive(App.system.player.CanAdoptCatCount <= 0);
         ligationMask.SetActive(cloudCatData.CatHealthData.IsLigation);
-        
+
         uiView.Show();
-        
+
         TweenInit();
         TweenIn();
     }
@@ -87,14 +87,14 @@ public class TnrSystem : MvcBehaviour
 
         if (cloudCatData.CatHealthData.IsChip)
             info.SetData(cloudCatData);
-        
+
         infoMask.SetActive(!cloudCatData.CatHealthData.IsChip);
         idMask.SetActive(!cloudCatData.CatHealthData.IsChip);
         idText.text = cloudCatData.CatHealthData.IsChip ? $"ID:{cloudCatData.CatData.CatId}" : "ID:--";
 
         _location = location;
         locationBg.sprite = App.factory.catFactory.GetCatLocationSprite(location);
-        
+
         Open();
     }
 
@@ -122,7 +122,7 @@ public class TnrSystem : MvcBehaviour
 
                 cloudCatData.CatSurviveData.IsUseToFind = false;
                 App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
-                
+
                 cloudCatData.CatSurviveData.Satiety = Random.Range(50f, 69f);
                 cloudCatData.CatSurviveData.Moisture = Random.Range(50f, 69f);
                 cloudCatData.CatSurviveData.Favourbility = Random.Range(50f, 69f);
@@ -137,8 +137,8 @@ public class TnrSystem : MvcBehaviour
                 Cat cat = App.system.cat.CreateCatObject(cloudCatData);
                 cat.GetLikeSnack();
                 cat.GetLikeSoup();
-                
-                DOVirtual.DelayedCall(0.1f, () => 
+
+                DOVirtual.DelayedCall(0.1f, () =>
                     App.system.confirm.OnlyConfirm().Active(ConfirmTable.HasNewCat, () =>
                     {
                         OnAdoptCat?.Invoke(cloudCatData);
@@ -155,13 +155,12 @@ public class TnrSystem : MvcBehaviour
             cloudCatData.CatSurviveData.IsUseToFind = false;
             App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
 
-            DOVirtual.DelayedCall(0.1f, () => 
+            DOVirtual.DelayedCall(0.1f, () =>
                 App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix, () =>
                 {
                     OnDoRelease?.Invoke();
                     Close();
                 }));
-
         }, () => Open());
     }
 
@@ -175,7 +174,7 @@ public class TnrSystem : MvcBehaviour
             cloudCatData.CatSurviveData.IsUseToFind = false;
             App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
 
-            DOVirtual.DelayedCall(0.1f, () => 
+            DOVirtual.DelayedCall(0.1f, () =>
                 App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix, () =>
                 {
                     OnDoShelter?.Invoke();
@@ -196,8 +195,9 @@ public class TnrSystem : MvcBehaviour
                 return;
             }
 
+            App.controller.pedia.AddLigationCount(cloudCatData.CatData.Variety);
             TweenOut();
-            
+
             cloudCatData.CatHealthData.IsLigation = true;
             App.system.cloudSave.UpdateCloudCatHealthData(cloudCatData);
 
@@ -206,10 +206,7 @@ public class TnrSystem : MvcBehaviour
             catGraphic.AnimationState.SetAnimation(0, "Hospital_Cat/Operation_Cat", false);
             functionGraphic.AnimationState.Complete += DoLigationComplete;
             OnDoLigation?.Invoke();
-        }, () =>
-        {
-            Open();
-        });
+        }, () => { Open(); });
     }
 
     private void DoLigationComplete(TrackEntry trackentry)
@@ -235,7 +232,7 @@ public class TnrSystem : MvcBehaviour
             bottomButtonRects[i].localScale = Vector2.zero;
         }
     }
-    
+
     private void TweenIn()
     {
         currencyRect.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack);
@@ -246,7 +243,8 @@ public class TnrSystem : MvcBehaviour
 
         for (int i = 0; i < bottomButtonRects.Length; i++)
         {
-            bottomButtonRects[i].DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.25f * i);
+            bottomButtonRects[i].DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetEase(Ease.OutBack)
+                .SetDelay(0.25f * i);
         }
     }
 
@@ -260,7 +258,8 @@ public class TnrSystem : MvcBehaviour
 
         for (int i = 0; i < bottomButtonRects.Length; i++)
         {
-            bottomButtonRects[i].DOScale(Vector2.zero, 0.25f).From(Vector2.one).SetEase(Ease.InBack).SetDelay(0.25f * i);
+            bottomButtonRects[i].DOScale(Vector2.zero, 0.25f).From(Vector2.one).SetEase(Ease.InBack)
+                .SetDelay(0.25f * i);
         }
     }
 
