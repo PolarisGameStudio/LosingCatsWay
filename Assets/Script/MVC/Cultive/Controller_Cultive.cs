@@ -644,7 +644,7 @@ public class Controller_Cultive : ControllerBehavior
         catSkeleton.AnimationState.Complete -= WaitReject;
         
         var catSkin = App.view.cultive.catSkin;
-        catSkin.ChangeSkin(App.model.cultive.SelectedCat.cloudCatData);
+        catSkin.OpenFace();
 
         catSkeleton.AnimationState.AddAnimation(0, "AI_Main/IDLE_Ordinary01", true, 0);
     }

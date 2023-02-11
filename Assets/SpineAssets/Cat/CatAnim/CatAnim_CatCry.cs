@@ -12,7 +12,6 @@ public class CatAnim_CatCry : StateMachineBehaviour
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        var cat = animator.gameObject.GetComponent<Cat>();
-        catSkin.ChangeSkin(cat.cloudCatData);
+        catSkin.OpenFace();
     }
 }

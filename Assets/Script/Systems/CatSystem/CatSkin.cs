@@ -5,6 +5,7 @@ using Sirenix.OdinInspector;
 using Spine;
 using Spine.Unity;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CatSkin : MvcBehaviour
 {
@@ -19,6 +20,8 @@ public class CatSkin : MvcBehaviour
     [ShowIf("isGUI"), Title("KittyCat")] public SkeletonDataAsset kittyCatDataAsset;
     [ShowIf("isGUI"), SerializeField] private Vector2 kittyGuiPosition;
 
+    private CloudSave_CatSkinData _prevCatSkinData;
+    
     #region Slot
 
     private string slot_beard = "Beard";
@@ -103,6 +106,8 @@ public class CatSkin : MvcBehaviour
 
     public void ChangeSkin(CloudCatData cloudCatData)
     {
+        _prevCatSkinData = cloudCatData.CatSkinData;
+
         if (catGuiPosition == Vector2.zero)
             catGuiPosition = transform.localPosition;
 
@@ -215,6 +220,37 @@ public class CatSkin : MvcBehaviour
             SetCatSick(cloudCatData, catSkeleton);
 
         SetCatBodyScale(cloudCatData);
+        
+        CancelInvoke("WaitToChangeFace");
+        
+        // GUI特例 要變表情
+        int mood = CatExtension.GetCatMood(cloudCatData);
+
+        if (mood == 0)
+        {
+            if (Random.value > 0.5f)
+                SetDocile();
+            else
+                SetLove();
+            
+            Invoke("WaitToChangeFace", 3);
+        }
+
+        if (mood == 2)
+        {
+            if (Random.value > 0.5f)
+                SetCry();
+            else
+                SetCold();
+            
+            Invoke("WaitToChangeFace", 3);
+        }
+    }
+
+    private void WaitToChangeFace()
+    {
+        OpenFace();
+        CancelInvoke("WaitToChangeFace");
     }
 
     private void SetSkinAttachment(Skeleton catSkeleton, CloudSave_CatSkinData catSkinData)
@@ -487,6 +523,27 @@ public class CatSkin : MvcBehaviour
         catSkeleton.SetAttachment(slot_mouthMeat, null);
         catSkeleton.SetAttachment(slot_pupilLeft, null);
         catSkeleton.SetAttachment(slot_pupilRight, null);
+    }
+
+    public void OpenFace()
+    {
+        CloudSave_CatSkinData catSkinData = _prevCatSkinData;
+        Skeleton catSkeleton = GetCatSkeleton();
+
+        catSkeleton.SetAttachment(slot_faceAngry,  null);
+        catSkeleton.SetAttachment(slot_faceCold,  null);
+        catSkeleton.SetAttachment(slot_faceCry,  null);
+        catSkeleton.SetAttachment(slot_faceLove,  null);
+        catSkeleton.SetAttachment(slot_faceDocile,  null);
+
+        catSkeleton.SetAttachment(slot_eyeLeft,
+            key_eyeLeft + (catSkinData.EyeTypeIndex + 1) + key_eyeLeftColor + (catSkinData.LeftEyeColorIndex + 1));
+        catSkeleton.SetAttachment(slot_eyeRight,
+            key_eyeRight + (catSkinData.EyeTypeIndex + 1) + key_eyeRightColor + (catSkinData.RightEyeColorIndex + 1));
+        catSkeleton.SetAttachment(slot_mouthAndNose, key_mouthAndNose + (catSkinData.MouthAndNosesIndex + 1));
+        catSkeleton.SetAttachment(slot_mouthMeat, key_mouthMeat + (catSkinData.MouthMeatIndex + 1));
+        catSkeleton.SetAttachment(slot_pupilLeft, key_pupilLeft);
+        catSkeleton.SetAttachment(slot_pupilRight, key_pupilRight);
     }
 
     #endregion
