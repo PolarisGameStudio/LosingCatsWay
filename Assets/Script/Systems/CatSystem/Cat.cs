@@ -368,6 +368,7 @@ public class Cat : MvcBehaviour
         littleGameBubble.DOLocalMoveY(3, 0.5f).From(1);
 
         App.system.catNotify.Add(this);
+        App.system.soundEffect.Play("ED00002");
     }
 
     public void CloseLittleGame()
@@ -393,6 +394,7 @@ public class Cat : MvcBehaviour
         //TODO Move
 
         App.system.catNotify.Add(this);
+        App.system.soundEffect.Play("ED00001");
     }
 
     private void CloseBigGame()
