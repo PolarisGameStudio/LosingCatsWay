@@ -72,6 +72,8 @@ public class PostSystem : MvcBehaviour
         if (prevIndex != -1)
             _postCards[prevIndex].Deselect();
 
+        App.system.soundEffect.Play("ED00010");
+
         prevIndex = index;
         DateTime dateTime = _postDatas[index].Time.ToDateTime();
         PostContent postContent = GetPostSubData(index);

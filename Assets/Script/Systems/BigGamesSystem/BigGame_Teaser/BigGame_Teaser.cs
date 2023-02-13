@@ -97,6 +97,8 @@ public class BigGame_Teaser : BigGameBehaviour
         stickSkeleton.AnimationState.AddAnimation(0, "StickIDE", true, 0);
         SetCatNoticeStick();
 
+        App.system.soundEffect.Play("ED00031");
+
         float randomValue = Random.Range(minSwingValue, maxSwingValue);
         swingFill.fillAmount += randomValue;
 
@@ -106,6 +108,7 @@ public class BigGame_Teaser : BigGameBehaviour
 
     private void StartSwingBar()
     {
+        App.system.soundEffect.Play("ED00041");
         turn++;
         RefreshTurnText();
         
@@ -168,7 +171,7 @@ public class BigGame_Teaser : BigGameBehaviour
         returnButton.transform.DOScale(Vector2.zero, 0.15f).SetEase(Ease.InOutSine).SetDelay(0.1f);
         curveBar.PointerPause();
 
-        App.system.soundEffect.Play("Button");
+        App.system.soundEffect.Play("ED00031");
         
         if (curveBar.CheckPointerInArea())
             Hit();
@@ -186,6 +189,7 @@ public class BigGame_Teaser : BigGameBehaviour
         stickSkeleton.AnimationState.SetAnimation(0, "WinStick", false);
         
         hitCount++;
+        App.system.soundEffect.Play("ED00032");
 
         if (hitCount == 3 || turn == 3)
         {
@@ -213,6 +217,7 @@ public class BigGame_Teaser : BigGameBehaviour
         stickSkeleton.AnimationState.SetAnimation(0, "LoseStick", false);
 
         curveBar.PointerMiss();
+        App.system.soundEffect.Play("ED00033");
 
         hearts[hearts.Length - chance].transform.DOScale(Vector2.zero, 0.25f).SetEase(Ease.InBack).From(Vector2.one);
         chance--;

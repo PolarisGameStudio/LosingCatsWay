@@ -92,7 +92,7 @@ public class Controller_ChooseBuild : ControllerBehavior
 
     public void SelectRoomSortType(int type)
     {
-        App.system.soundEffect.Play("Button");
+        App.system.soundEffect.Play("ED00010");
         
         if (App.model.chooseBuild.RoomSortType == type)
             return;
@@ -103,8 +103,8 @@ public class Controller_ChooseBuild : ControllerBehavior
 
     public void SelectRoomType(int index)
     {
-        App.system.soundEffect.Play("Button");
-        
+        App.system.soundEffect.Play("ED00010");
+
         if (App.model.chooseBuild.RoomType == index)
             return;
 

@@ -55,6 +55,7 @@ public class FindCatObject : MvcBehaviour
 
     public void Show()
     {
+        App.system.soundEffect.Play("ED00042");
         outline.DOFade(1f, 0.25f).From(0);
 
         if (isDoll)
@@ -70,6 +71,7 @@ public class FindCatObject : MvcBehaviour
     
     public void Hide()
     {
+        App.system.soundEffect.Play("ED00042");
         outline.DOFade(0, 0);
         
         if (isShowing)

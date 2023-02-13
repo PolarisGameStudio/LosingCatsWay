@@ -197,12 +197,17 @@ public class BigGame_CutNails : BigGameBehaviour, IBeginDragHandler, IDragHandle
         
         if (CheckIsNailsCut())
         {
+            App.system.soundEffect.Play("ED00036");
             CloseSensors();
             DOVirtual.DelayedCall(1f, () =>
             {
                 pawRect.DOKill();
                 OpenSettle();
             });
+        }
+        else
+        {
+            App.system.soundEffect.Play("ED00035");
         }
     }
 

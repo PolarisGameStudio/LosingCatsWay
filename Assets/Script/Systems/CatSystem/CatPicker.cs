@@ -13,7 +13,7 @@ public class CatPicker : MvcBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private Cat cat;
     private PolyNavMap _polyNavMap;
-    
+
     private Camera cam;
     private LeanPinchCamera pinchCam;
     private LeanDragCamera dragCam;
@@ -37,13 +37,13 @@ public class CatPicker : MvcBehaviour
     {
         App.controller.lobby.Close();
         App.view.followCat.Close();
-        
+
         //1.Stop AI
         agent.Stop();
-        
+
         SetStartPosition();
         PlaySound();
-        
+
         isPicking = true;
 
         //2.Stop animator
@@ -72,6 +72,7 @@ public class CatPicker : MvcBehaviour
     {
         if (isPicking)
             return;
+
         startPosition = cat.transform.position;
     }
 
@@ -82,14 +83,14 @@ public class CatPicker : MvcBehaviour
         int gridY = (int)(position.y / 5.12);
 
         int gridValue = App.system.grid.GetGrid(gridX, gridY).Value;
-        
+
         if (gridValue != 1 || !_polyNavMap.PointIsValid(position))
         {
             cat.transform.position = startPosition;
             cat.Reset();
             return;
         }
-        
+
         cat.GetComponent<CatSkin>().ChangeSkin(cat.cloudCatData);
     }
 
@@ -97,7 +98,13 @@ public class CatPicker : MvcBehaviour
     {
         if (isPicking)
             return;
-        App.system.soundEffect.Play("Button");
+
+        int catAgeLevel = CatExtension.GetCatAgeLevel(cat.cloudCatData.CatData.CatAge);
+        
+        if (catAgeLevel == 0)
+            App.system.soundEffect.Play("ED00013");
+        else
+            App.system.soundEffect.Play("ED00012");
     }
 
     #endregion
@@ -127,7 +134,7 @@ public class CatPicker : MvcBehaviour
     {
         if (cat.isFriendMode)
             return;
-        
+
         if (App.model.build.IsCanMoveOrRemove)
             return;
 
@@ -151,5 +158,5 @@ public class CatPicker : MvcBehaviour
         return pos;
     }
 
-#endregion
+    #endregion
 }

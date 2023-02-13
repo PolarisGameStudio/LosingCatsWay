@@ -66,6 +66,7 @@ public class SettleSystem : MvcBehaviour
 
     public void Active(int exp, int coins, float score, Callback onClose = null)
     {
+        App.system.soundEffect.Play("ED00044");
         float lastExp = App.system.player.Exp;
         float newExp = lastExp + exp;
         int level = App.system.player.Level;

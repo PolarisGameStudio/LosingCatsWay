@@ -37,6 +37,7 @@ public class Controller_Events : ControllerBehavior
     public void Select(int index)
     {
         if (App.model.events.SelectIndex == index) return;
+        App.system.soundEffect.Play("ED00010");
         App.model.events.SelectIndex = index;
         myEvents[index].Open();
     }

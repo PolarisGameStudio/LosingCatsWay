@@ -33,6 +33,8 @@ public class ScreenshotSystem : MvcBehaviour
     {
         if (isShot) return;
         isShot = true;
+        App.system.confirm.CloseOpenSoundEffect();
+        App.system.soundEffect.Play("ED00020");
         StartCoroutine(Screenshot());
     }
 

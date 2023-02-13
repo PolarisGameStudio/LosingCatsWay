@@ -53,6 +53,7 @@ public class Controller_Lobby : ControllerBehavior
         App.system.cat.PauseCatsGame(true);
 
         App.system.bgm.FadeOut();
+        App.system.soundEffect.Play("ED00005");
         App.system.transition.Active(0, () =>
         {
             Close();
@@ -98,6 +99,7 @@ public class Controller_Lobby : ControllerBehavior
     public void OpenMall()
     {
         App.controller.mall.Open();
+        App.system.soundEffect.Play("ED00007");
         DOVirtual.DelayedCall(0.25f, () => App.controller.mall.SelectPage(0));
     }
 

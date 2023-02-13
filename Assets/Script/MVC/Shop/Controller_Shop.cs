@@ -44,10 +44,11 @@ public class Controller_Shop : ControllerBehavior
 
     public void SelectType(int index)
     {
-        if (App.model.shop.SelectedType == index) 
+        if (App.model.shop.SelectedType == index)
             return;
-        
+
         App.model.shop.SelectedType = index;
+        App.system.soundEffect.Play("ED00010");
 
         if (index == -1)
             return;
@@ -81,7 +82,7 @@ public class Controller_Shop : ControllerBehavior
             if (items[i].unlockLevel <= 0)
                 items.RemoveAt(i);
         items = items.OrderByDescending(i => i.Unlock).ToList();
-        
+
         App.model.shop.SelectedItems = items;
     }
 
@@ -120,21 +121,26 @@ public class Controller_Shop : ControllerBehavior
     {
         Item item = App.model.shop.SelectedItem;
 
+        App.system.confirm.SetBuyMode();
+
         App.system.confirm.ActiveByInsert(ConfirmTable.BuyConfirm, "", item.Name, () =>
         {
             if (item.itemBoughtType == ItemBoughtType.Coin)
             {
                 if (!App.system.player.ReduceMoney(App.model.shop.TotalAmount))
+                {
+                    App.system.confirm.ClearBuyMode();
                     DOVirtual.DelayedCall(0.1f,
-                        () => App.system.confirm.Active(ConfirmTable.NoMoney, OpenTopUp));
+                        () => App.system.confirm.Active(ConfirmTable.NoMoney, OpenTopUp));   
+                }
                 else
                 {
                     AddItem();
                     ClosePayment();
-                }
 
-                OnBuyComplete?.Invoke(item);
-                OnBuyByValue?.Invoke(item, App.model.shop.BuyCount);
+                    OnBuyComplete?.Invoke(item);
+                    OnBuyByValue?.Invoke(item, App.model.shop.BuyCount);
+                }
 
                 return;
             }
@@ -142,11 +148,17 @@ public class Controller_Shop : ControllerBehavior
             if (item.itemBoughtType == ItemBoughtType.Diamond)
             {
                 if (!App.system.player.ReduceDiamond(App.model.shop.TotalAmount))
+                {
+                    App.system.confirm.ClearBuyMode();
                     DOVirtual.DelayedCall(0.1f, () => App.system.confirm.Active(ConfirmTable.NoDiamond, OpenTopUp));
+                }
                 else
                 {
                     AddItem();
                     ClosePayment();
+
+                    OnBuyComplete?.Invoke(item);
+                    OnBuyByValue?.Invoke(item, App.model.shop.BuyCount);
                 }
             }
         });

@@ -28,6 +28,7 @@ public class Controller_Mall : ControllerBehavior
 
     public void SelectPage(int index)
     {
+        App.system.soundEffect.Play("ED00010");
         App.model.mall.SelectedPageIndex = index;
     }
 

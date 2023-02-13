@@ -183,6 +183,7 @@ public class Controller_Shelter : ControllerBehavior
 
     public void SelectAdopt(int index)
     {
+        App.system.soundEffect.PlayCatMeow();
         App.model.shelter.SelectedAdoptCloudCatData = App.model.shelter.CloudCatDatas[index];
         App.model.shelter.SelectedCageIndex = index;
         OpenSubShelter();

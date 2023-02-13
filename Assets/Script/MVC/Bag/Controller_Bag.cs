@@ -31,14 +31,14 @@ public class Controller_Bag : ControllerBehavior
         Close();
         App.system.soundEffect.Play("Button");
         App.controller.lobby.Open();
-        ChooseType(-1);
+        App.model.bag.Type = -1;
     }
 
     public void ChooseType(int type)
     {
         if (App.model.bag.Type == type)
             return;
-
+        
         App.model.bag.Type = type;
         ItemType targetType = ItemType.All;
         
@@ -93,10 +93,9 @@ public class Controller_Bag : ControllerBehavior
         if (App.model.bag.SelectedItems.Count <= 0)
         {
             App.model.bag.SelectedItem = null;
+            App.system.soundEffect.Play("ED00010");
             return;
         }
-        
-        App.system.soundEffect.Play("Button");
         
         if (index == -1)
         {
@@ -109,6 +108,8 @@ public class Controller_Bag : ControllerBehavior
         if (App.model.bag.SelectedItem == item)
             return;
         
+        App.system.soundEffect.Play("ED00010");
+
         App.model.bag.SelectedItem = item;
         App.view.bag.SetItemFocus(index);
     }

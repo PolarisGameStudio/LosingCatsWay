@@ -53,6 +53,7 @@ public abstract class LittleGame : MvcBehaviour
         int exp = App.system.player.playerDataSetting.LittleGameExp;
         int coin = App.system.player.playerDataSetting.GetLittleGameCoinsByLevel(App.system.player.Level);
         
+        App.system.soundEffect.Play("ED00029");
         App.system.player.AddExp(exp);
         App.system.player.AddMoney(coin);
         

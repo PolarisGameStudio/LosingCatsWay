@@ -145,6 +145,7 @@ public class CatchCatBubble : MvcBehaviour
 
     private void OpenHint()
     {
+        App.system.soundEffect.Play("ED00044");
         isTweening = true;
         
         hintBubble.transform.DOScaleX(1, 0.18f).SetEase(Ease.OutBack)

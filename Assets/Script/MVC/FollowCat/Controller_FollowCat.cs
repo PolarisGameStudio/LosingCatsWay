@@ -61,8 +61,7 @@ public class Controller_FollowCat : ControllerBehavior
 
         StartFollow(cat);
 
-        int rand = Random.Range(1, 6);
-        App.system.soundEffect.Play($"CatMeow_{rand}");
+        App.system.soundEffect.PlayCatMeow();
 
         App.model.followCat.SelectedCat = cat;
 

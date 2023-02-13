@@ -13,6 +13,7 @@ public class Controller_Map : ControllerBehavior
 
     public void OpenShelter()
     {
+        App.system.soundEffect.Play("ED00004");
         App.system.bgm.FadeOut();
         App.system.transition.Active(0.5f, () =>
         {
@@ -23,6 +24,7 @@ public class Controller_Map : ControllerBehavior
 
     public void OpenFindCat(int index)
     {
+        App.system.soundEffect.Play("ED00004");
         App.system.bgm.FadeOut();
         App.system.transition.Active(0.5f, () =>
         {
@@ -33,6 +35,7 @@ public class Controller_Map : ControllerBehavior
 
     public void OpenShop()
     {
+        App.system.soundEffect.Play("ED00004");
         App.system.bgm.FadeOut();
         App.system.transition.Active(0, () =>
         {
@@ -43,6 +46,7 @@ public class Controller_Map : ControllerBehavior
 
     public void OpenHospital()
     {
+        App.system.soundEffect.Play("ED00004");
         App.system.bgm.FadeOut();
         App.system.transition.Active(0.15f, () =>
         {
@@ -53,6 +57,7 @@ public class Controller_Map : ControllerBehavior
 
     public void OpenGreenHouse()
     {
+        App.system.soundEffect.Play("ED00004");
         App.system.bgm.FadeOut();
         App.system.transition.Active(0.5f, () =>
         {
@@ -63,6 +68,7 @@ public class Controller_Map : ControllerBehavior
 
     public void OpenPark()
     {
+        App.system.soundEffect.Play("ED00004");
         App.system.bgm.FadeOut();
         App.system.transition.Active(0.5f, () =>
         {
@@ -73,6 +79,7 @@ public class Controller_Map : ControllerBehavior
 
     public void OpenWorldData()
     {
+        App.system.soundEffect.Play("ED00004");
         App.controller.worldData.Open();
     }
 

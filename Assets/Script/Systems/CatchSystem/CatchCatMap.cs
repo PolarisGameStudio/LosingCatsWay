@@ -440,12 +440,14 @@ public class CatchCatMap : MvcBehaviour
             healthBar.ChangeBarValue(hp / 100);
         });
 
+        App.system.soundEffect.Play("ED00004");
         DoCardTween(index);
         DOVirtual.DelayedCall(0.6f, RefreshItemCount);
     }
 
     public void Catch()
     {
+        App.system.soundEffect.Play("ED00043");
         VibrateExtension.Vibrate(VibrateType.Nope);
         App.system.soundEffect.Play("Button");
         
@@ -837,6 +839,8 @@ public class CatchCatMap : MvcBehaviour
 
     private void SpineCatCatchFail()
     {
+        App.system.soundEffect.Play("ED00046");
+
         if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) != 0)
             catSkin.SetAngry();
         
@@ -849,6 +853,7 @@ public class CatchCatMap : MvcBehaviour
         TrackEntry t = catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "Catch_Cat/Catch_Win", false);
         t.Complete += WaitSpineCatCatchWin;
         
+        App.system.soundEffect.Play("ED00029");
         catSkin.SetLove();
     }
 

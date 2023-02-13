@@ -137,7 +137,7 @@ public class Controller_Build : ControllerBehavior
 
             App.model.build.IsMoving = false;
         }
-
+        
         App.model.build.IsBuilding = false;
         App.model.build.CanBuild = false;
 
@@ -146,6 +146,7 @@ public class Controller_Build : ControllerBehavior
         App.system.map.GenerateMap();
 
         App.system.room.OpenExistRoomsSensor();
+        App.system.soundEffect.Play("ED00006");
     }
 
     public void FirestoreBuild(string roomId, int x, int y)
