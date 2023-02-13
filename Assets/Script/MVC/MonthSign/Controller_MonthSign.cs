@@ -103,20 +103,26 @@ public class Controller_MonthSign : ControllerBehavior
 
         if (!adsResign.IsReach)
         {
-            for (int i = 0; i < signs.Count; i++)
+            App.system.confirm.Active(ConfirmTable.Fix, () =>
             {
-                if (i == todayIndex)
-                    break;
-                if (signs[i] == 1)
-                    continue;
+                App.system.ads.Active(AdsType.SignMonthlySign, () =>
+                {
+                    for (int i = 0; i < signs.Count; i++)
+                    {
+                        if (i == todayIndex)
+                            break;
+                        if (signs[i] == 1)
+                            continue;
 
-                ReceiveReward(i + 1);
-                signs[i] = 1;
-                adsResign.Progress++;
-                CheckCanResign();
-                App.model.monthSign.SignIndexs = signs;
-                break;
-            }
+                        ReceiveReward(i + 1);
+                        signs[i] = 1;
+                        adsResign.Progress++;
+                        CheckCanResign();
+                        App.model.monthSign.SignIndexs = signs;
+                        break;
+                    }
+                });
+            });
         }
     }
 

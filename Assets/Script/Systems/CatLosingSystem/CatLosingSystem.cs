@@ -64,8 +64,11 @@ public class CatLosingSystem : MvcBehaviour
     {
         App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
-            removeCat.cloudCatData.CatSurviveData.Favourbility += 50;
-            _uiView.InstantHide();
+            App.system.ads.Active(AdsType.LobbyCatLosing, () =>
+            {
+                removeCat.cloudCatData.CatSurviveData.Favourbility += 50;
+                _uiView.InstantHide();
+            });
         });
     }
 

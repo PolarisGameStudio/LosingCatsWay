@@ -158,29 +158,32 @@ public class Controller_DailyQuest : ControllerBehavior
 
     public void GetAdsReward()
     {
-        CloseWatchAd();
-        OnGetAdsReward?.Invoke();
+        App.system.ads.Active(AdsType.DailyQuest, () =>
+        {
+            CloseWatchAd();
+            OnGetAdsReward?.Invoke();
 
-        int index = App.model.dailyQuest.GetRewardIndex;
-        var quest = App.model.dailyQuest.Quests[index];
+            int index = App.model.dailyQuest.GetRewardIndex;
+            var quest = App.model.dailyQuest.Quests[index];
         
-        if (!quest.IsReach)
-            return;
+            if (!quest.IsReach)
+                return;
         
-        if (quest.IsReceived)
-            return;
+            if (quest.IsReceived)
+                return;
         
-        App.model.dailyQuest.RewardExp += quest.exp;
+            App.model.dailyQuest.RewardExp += quest.exp;
         
-        App.system.reward.Open(quest.Rewards);
+            App.system.reward.Open(quest.Rewards);
 
-        quest.IsReceived = true;
-        App.model.dailyQuest.Quests[index] = quest;
+            quest.IsReceived = true;
+            App.model.dailyQuest.Quests[index] = quest;
 
-        App.model.dailyQuest.Quests = App.model.dailyQuest.Quests;
+            App.model.dailyQuest.Quests = App.model.dailyQuest.Quests;
         
-        App.system.player.AddExp(App.model.dailyQuest.RewardExp);
-        App.model.dailyQuest.RewardExp = 0;
+            App.system.player.AddExp(App.model.dailyQuest.RewardExp);
+            App.model.dailyQuest.RewardExp = 0;
+        });
     }
     
     public void GetTotalDailyReward()

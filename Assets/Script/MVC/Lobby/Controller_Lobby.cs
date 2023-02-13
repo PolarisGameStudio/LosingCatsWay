@@ -32,21 +32,21 @@ public class Controller_Lobby : ControllerBehavior
     {
         Close();
         App.controller.build.Open();
-        App.system.soundEffect.Play("Button");
+        App.system.soundEffect.Play("ED00004");
     }
 
     public void OpenBag()
     {
         App.controller.bag.Open();
         Close();
-        App.system.soundEffect.Play("Button");
+        App.system.soundEffect.Play("ED00004");
     }
 
     public void OpenFeed()
     {
         App.controller.feed.Open();
         Close();
-        App.system.soundEffect.Play("Button");
+        App.system.soundEffect.Play("ED00004");
     }
 
     public void OpenMap()
@@ -69,7 +69,7 @@ public class Controller_Lobby : ControllerBehavior
         App.system.screenshot.OnScreenshotCancel += CloseScreenshot;
         Close();
         App.system.screenshot.Open();
-        App.system.soundEffect.Play("Button");
+        App.system.soundEffect.Play("ED00004");
     }
 
     private void CloseScreenshot()
@@ -83,18 +83,20 @@ public class Controller_Lobby : ControllerBehavior
     {
         Close();
         App.controller.information.Open();
-        App.system.soundEffect.Play("Button");
+        App.system.soundEffect.Play("ED00004");
     }
 
     public void OpenFriend()
     {
         Close();
         App.controller.friend.Open();
+        App.system.soundEffect.Play("ED00004");
     }
 
     public void OpenMail()
     {
         App.system.mail.Open();
+        App.system.soundEffect.Play("ED00004");
     }
 
     public void OpenMall()
@@ -113,21 +115,25 @@ public class Controller_Lobby : ControllerBehavior
     public void OpenCatGuide()
     {
         App.controller.catGuide.Open();
+        App.system.soundEffect.Play("ED00004");
     }
 
     public void OpenDailyQuest()
     {
         App.controller.dailyQuest.Open();
+        App.system.soundEffect.Play("ED00004");
     }
 
     public void OpenPost()
     {
         App.system.post.Open();
+        App.system.soundEffect.Play("ED00004");
     }
 
     public void OpenSign()
     {
         App.controller.monthSign.Open();
+        App.system.soundEffect.Play("ED00004");
     }
 
     public void OpenSideMenu()
@@ -138,11 +144,13 @@ public class Controller_Lobby : ControllerBehavior
     public void OpenArchive()
     {
         App.controller.pedia.SelectTab(0);
+        App.system.soundEffect.Play("ED00004");
     }
 
     public void OpenEvent()
     {
         App.controller.events.Open();
+        App.system.soundEffect.Play("ED00004");
     }
 
     #region Buffer

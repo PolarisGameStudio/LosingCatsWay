@@ -7,6 +7,7 @@ using Sirenix.OdinInspector;
 using Spine;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Sequence = DG.Tweening.Sequence;
 
@@ -19,21 +20,19 @@ public class CatchCatMap : MvcBehaviour
 
     [SerializeField] private HowToPlayData howToPlayData;
 
-    [Title("UIView")]
-    [SerializeField] private UIView uiView;
+    [Title("UIView")] [SerializeField] private UIView uiView;
 
     [Title("Items")] [SerializeField] private Item_CatchCat[] items;
 
     [Title("CatSkin")] [SerializeField] private CatSkin catSkin;
 
-    [Title("UI")] 
-    [SerializeField] private TextMeshProUGUI turnText;
+    [Title("UI")] [SerializeField] private TextMeshProUGUI turnText;
     [SerializeField] private Button[] chooseTypeButtons; //選擇種類按鈕*4
     [SerializeField] private Button catchButton; //捕捉按鈕
     [SerializeField] private Card_CatchItem[] cardItems; //道具卡*5
     [SerializeField] private GameObject[] chooseTypeMasks;
     [SerializeField] private GameObject blockRaycastObject;
-    
+
     [TabGroup("Top")] [SerializeField] private RectTransform topRect;
     [TabGroup("Top")] [SerializeField] private Image turnDarkMask;
     [TabGroup("Top")] [SerializeField] private CanvasGroup topFullMask;
@@ -45,22 +44,18 @@ public class CatchCatMap : MvcBehaviour
     [TabGroup("TopLeft")] [SerializeField] private Image exitDarkMask;
     [TabGroup("TopLeft")] [SerializeField] private Image aboutDarkMask;
 
-    [TabGroup("Item")] [SerializeField]
-    private Image itemImage;
+    [TabGroup("Item")] [SerializeField] private Image itemImage;
 
     [TabGroup("Bot")] [SerializeField] private CanvasGroup botDarkMask;
     [TabGroup("Bot")] [SerializeField] private GameObject lastTurnCatchButton;
 
-    [Title("Animator")]
-    [SerializeField] private Animator catchFlowerAnimator;
-    
-    [Title("UIParticle")]
-    [SerializeField] private UIParticle hateEffect;
+    [Title("Animator")] [SerializeField] private Animator catchFlowerAnimator;
+
+    [Title("UIParticle")] [SerializeField] private UIParticle hateEffect;
     [SerializeField] private UIParticle loveEffect;
     [SerializeField] private UIParticle bigLoveEffect;
 
-    [Title("Module")]
-    [SerializeField] private CatchCatBubble bubble;
+    [Title("Module")] [SerializeField] private CatchCatBubble bubble;
     [SerializeField] private CatchCatHealthBar healthBar;
 
     private int turn;
@@ -70,7 +65,7 @@ public class CatchCatMap : MvcBehaviour
     private List<Item_CatchCat> selectedItems = new List<Item_CatchCat>();
     private float cardOriginY = 0f;
     private int selectedType;
-    
+
     private List<Item> usedItems = new List<Item>();
     private int exp;
     private int money;
@@ -83,10 +78,10 @@ public class CatchCatMap : MvcBehaviour
     {
         App.system.bgm.FadeIn().Play("Catch");
         uiView.Show();
-        
+
         this.cloudCatData = cloudCatData;
         catSkin.ChangeSkin(cloudCatData);
-        
+
         bubble.Init(cloudCatData.CatData.PersonalityTypes, cloudCatData.CatData.PersonalityLevels);
         healthBar.Init();
 
@@ -158,7 +153,7 @@ public class CatchCatMap : MvcBehaviour
 
         if (App.system.tutorial.isTutorial)
             return;
-        
+
         if (exp > 0)
             App.system.player.AddExp(exp);
         if (money > 0)
@@ -172,7 +167,7 @@ public class CatchCatMap : MvcBehaviour
     private List<Item_CatchCat> GetItems(int personality)
     {
         List<Item_CatchCat> result = new List<Item_CatchCat>();
-        
+
         for (int i = 0; i < items.Length; i++)
         {
             if (items[i].personality != personality) continue;
@@ -196,33 +191,33 @@ public class CatchCatMap : MvcBehaviour
     }
 
     #endregion
-    
+
     #region GameMethod
-    
+
     private void Init()
     {
         usedItems.Clear();
         exp = 0;
         money = 0;
-        
+
         turn = 0;
         turnText.text = "0/7";
 
         lastTurnCatchButton.transform.DOKill();
         lastTurnCatchButton.SetActive(false);
-        
+
         hp = 100f;
         healthBar.ChangeBarValue(hp / 100f);
 
         catSkin.SetActive(true);
-        
+
         CloseAction();
         DoResetTween();
-        
+
         DoTopLeftTween();
         DoPawTween();
         DoCenterTween();
-        
+
         healthBar.Open();
 
         for (int i = 0; i < cardItems.Length; i++)
@@ -230,14 +225,14 @@ public class CatchCatMap : MvcBehaviour
             var rt = cardItems[i].transform as RectTransform;
             rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y - rt.sizeDelta.y * 2);
         }
-        
+
         //不要自動開啓交互所以不用SelectType
         selectedItems = GetItems(0);
         selectedType = 0;
         RefreshType();
         RefreshItemCount();
         DoCardsTween();
-        
+
         DOVirtual.DelayedCall(2f, NextTurn);
         DOVirtual.DelayedCall(3.75f, bubble.Open);
     }
@@ -284,9 +279,9 @@ public class CatchCatMap : MvcBehaviour
 
         catchButton.interactable = true;
         blockRaycastObject.SetActive(false);
-        
+
         bubble.Open();
-        
+
         DoTopLeftLight();
         DoTopLight();
         DoBotLight();
@@ -303,9 +298,9 @@ public class CatchCatMap : MvcBehaviour
 
         for (int i = 0; i < cardItems.Length; i++)
             cardItems[i].SetInteractable(false);
-        
+
         bubble.Close();
-        
+
         DoTopLeftDark();
         DoTopDark();
         DoBotDark();
@@ -314,10 +309,10 @@ public class CatchCatMap : MvcBehaviour
     public void SelectType(int type)
     {
         App.system.soundEffect.Play("Button");
-        
+
         if (selectedType == type)
             return;
-        
+
         selectedType = type;
         selectedItems = GetItems(type);
 
@@ -325,10 +320,7 @@ public class CatchCatMap : MvcBehaviour
         CloseAction();
         DoCardsTween();
 
-        DOVirtual.DelayedCall(0.07f * 5, () =>
-        {
-            RefreshItemCount();
-        });
+        DOVirtual.DelayedCall(0.07f * 5, () => { RefreshItemCount(); });
 
         DOVirtual.DelayedCall(0.7f, OpenAction);
     }
@@ -337,19 +329,19 @@ public class CatchCatMap : MvcBehaviour
     {
         VibrateExtension.Vibrate(VibrateType.Nope);
         App.system.soundEffect.Play("Button");
-        
+
         var item = selectedItems[index];
         int tmpCount = GetTmpItemCount(item);
         int tmpTurn = turn - 1;
-        
+
         if (item.level != 0 && tmpCount <= 0) //物品不是最低等級（無限使用） //物品數量0
             return;
-        
+
         CloseAction();
 
         if (item.level != 0)
             usedItems.Add(item);
-        
+
         float value;
         switch (index)
         {
@@ -375,7 +367,7 @@ public class CatchCatMap : MvcBehaviour
 
         var personalitys = cloudCatData.CatData.PersonalityTypes;
         var levels = cloudCatData.CatData.PersonalityLevels;
- 
+
         itemImage.sprite = item.icon;
         DoItemTween(() =>
         {
@@ -391,16 +383,16 @@ public class CatchCatMap : MvcBehaviour
                     {
                         case 0:
                             value *= -0.5f;
-                            
+
                             if (index == 4) //廣告道具 + 負面個性
                                 value *= 0.2f;
-                            
+
                             hateEffect.Play();
                             SpineCatAngry();
                             break;
                         case 1:
                             value *= -0.25f;
-                            
+
                             if (index == 4) //廣告道具 + 負面個性
                                 value *= 0.2f;
 
@@ -450,10 +442,10 @@ public class CatchCatMap : MvcBehaviour
         App.system.soundEffect.Play("ED00043");
         VibrateExtension.Vibrate(VibrateType.Nope);
         App.system.soundEffect.Play("Button");
-        
+
         CloseAction();
         lastTurnCatchButton.SetActive(false);
-        
+
         catchFlowerAnimator.SetTrigger("Catch");
 
         if (App.system.tutorial.isTutorial) //新手教學必定失敗
@@ -461,26 +453,26 @@ public class CatchCatMap : MvcBehaviour
             SpineCatCatchFail();
             return;
         }
-        
+
         float chance = hp / 100;
         if (Random.value > chance)
             SpineCatCatchWin();
         else
             SpineCatCatchFail();
     }
-    
+
     private bool CheckIsCatRun()
     {
         if (turn >= 7)
             return true;
-        
+
         int index = turn - 1;
         if (index < 0)
             index = 0;
-        
+
         float chance = runChances[index];
         chance = Mathf.Clamp(chance, 0f, 100f);
-        
+
         if (Random.value < chance)
             return true;
         return false;
@@ -498,7 +490,7 @@ public class CatchCatMap : MvcBehaviour
     private void RefreshType()
     {
         int type = selectedType;
-        
+
         for (int i = 0; i < chooseTypeMasks.Length; i++)
         {
             if (i == type)
@@ -507,18 +499,18 @@ public class CatchCatMap : MvcBehaviour
                 chooseTypeMasks[i].SetActive(false);
         }
     }
-    
+
     #endregion
 
     #region GameResult
-    
+
     private void Gotcha()
     {
         catSkin.SetActive(false);
         bubble.Close();
 
         SetCloudCatDataToUse(false);
-        
+
         App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchGameSuccess, () =>
         {
             OnGameEnd?.Invoke();
@@ -541,10 +533,10 @@ public class CatchCatMap : MvcBehaviour
         {
             catSkin.SetActive(false);
             bubble.Close();
-            
+
             App.system.cloudSave.DeleteCloudCatData(cloudCatData);
             cloudCatData = null;
-            
+
             App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchCatGameEnd, () =>
             {
                 // CloseToMap();
@@ -558,7 +550,7 @@ public class CatchCatMap : MvcBehaviour
             catSkin.SetActive(false);
             bubble.Close();
             SetCloudCatDataToUse(false);
-            
+
             App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchCatGameEnd, () =>
             {
                 if (hp <= 51)
@@ -576,13 +568,13 @@ public class CatchCatMap : MvcBehaviour
 
             return;
         }
-        
-        App.system.catchCat.runAway.Active(cloudCatData, NextTurn, () =>
+
+        UnityAction cancelEvent = () =>
         {
             catSkin.SetActive(false);
             bubble.Close();
             SetCloudCatDataToUse(false);
-            
+
             App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchGameFailed, () =>
             {
                 if (hp <= 51)
@@ -597,7 +589,10 @@ public class CatchCatMap : MvcBehaviour
                     CloseToMap();
                 });
             });
-        });
+        };
+
+        App.system.catchCat.runAway.Active(cloudCatData,
+            () => { App.system.ads.Active(AdsType.CatchCatRun, NextTurn, cancelEvent.Invoke); }, cancelEvent.Invoke);
     }
 
     /// 把貓還回伺服器
@@ -619,7 +614,7 @@ public class CatchCatMap : MvcBehaviour
         topFullMask.alpha = 0;
         topBlur.SetActive(false);
     }
-    
+
     private void DoCardTween(int index)
     {
         var rt = cardItems[index].rectTransform;
@@ -627,16 +622,16 @@ public class CatchCatMap : MvcBehaviour
         var origin = new Vector2(rt.anchoredPosition.x, cardOriginY);
         var upOffset = new Vector2(rt.anchoredPosition.x, cardOriginY + rt.sizeDelta.y);
         var downOffset = new Vector2(rt.anchoredPosition.x, cardOriginY - rt.sizeDelta.y);
-        
+
         //Out
         rt.DOAnchorPos(upOffset, 0.5f).From(origin).SetEase(Ease.OutExpo);
         canvasGroup.DOFade(0, 0.5f).From(1).SetEase(Ease.OutExpo);
-        
+
         //In
         rt.DOAnchorPos(origin, 0.2f).From(downOffset).SetEase(Ease.OutSine).SetDelay(0.6f);
         canvasGroup.DOFade(1, 0.2f).From(0).SetEase(Ease.OutSine).SetDelay(0.6f);
     }
-    
+
     private void DoCardsTween()
     {
         //Out
@@ -678,13 +673,13 @@ public class CatchCatMap : MvcBehaviour
 
         catchButton.transform.DOScale(Vector2.one, 0.1f).From(Vector2.zero).SetDelay(0.1f * 5);
     }
-    
+
     private void DoTopLeftTween()
     {
         Vector2 exitOrigin = exitButtonRect.anchoredPosition;
         Vector2 exitOffset = new Vector2(exitOrigin.x, exitOrigin.y + exitButtonRect.sizeDelta.y * 2);
         exitButtonRect.DOAnchorPos(exitOrigin, 0.15f).From(exitOffset).SetEase(Ease.OutBack);
-        
+
         Vector2 aboutOrigin = aboutButtonRect.anchoredPosition;
         Vector2 aboutOffset = new Vector2(aboutOrigin.x, aboutOrigin.y + aboutButtonRect.sizeDelta.y * 2);
         aboutButtonRect.DOAnchorPos(aboutOrigin, 0.15f).From(aboutOffset).SetEase(Ease.OutBack).SetDelay(0.0625f);
@@ -701,11 +696,11 @@ public class CatchCatMap : MvcBehaviour
         itemRect.localScale = Vector2.one;
         var origin = itemRect.anchoredPosition;
         var offset = new Vector2(origin.x - 1200f, origin.y);
-        
+
         //In
         itemRect.DOAnchorPos(origin, 0.6f).From(offset).SetEase(Ease.OutExpo);
         itemRect.GetComponent<Image>().DOFade(255, 0.6f).From(0).SetEase(Ease.InExpo).OnComplete(centerAction);
-        
+
         //Out
         itemRect.DOScale(new Vector2(1.5f, 1.5f), 0.15f).SetDelay(0.0625f + 0.6f);
         itemRect.DOScale(Vector2.zero, 0.2f).SetEase(Ease.InExpo).SetDelay(0.0625f + 0.6f + 0.15f);
@@ -759,7 +754,7 @@ public class CatchCatMap : MvcBehaviour
                 OnComplete?.Invoke();
             });
     }
-    
+
     #endregion
 
     #region DarkUI
@@ -817,7 +812,7 @@ public class CatchCatMap : MvcBehaviour
     {
         if (cloudCatData.CatData.CatAge > 3)
             catSkin.SetAngry();
-        
+
         TrackEntry t = catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "Catch_Cat/Catch_Lose", false);
         t.Complete += WaitSpineIdle;
     }
@@ -826,7 +821,7 @@ public class CatchCatMap : MvcBehaviour
     {
         if (cloudCatData.CatData.CatAge > 3)
             catSkin.ChangeSkin(cloudCatData);
-        
+
         trackEntry.Complete -= WaitSpineIdle;
         catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "AI_Main/IDLE_Ordinary01", true);
 
@@ -841,7 +836,7 @@ public class CatchCatMap : MvcBehaviour
     {
         if (cloudCatData.CatData.CatAge > 3)
             catSkin.SetAngry();
-        
+
         App.system.soundEffect.Play("ED00046");
         TrackEntry t = catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "Catch_Cat/Catch_Lose", false);
         t.Complete += WaitSpineCatCatchFail;
@@ -851,21 +846,20 @@ public class CatchCatMap : MvcBehaviour
     {
         TrackEntry t = catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "Catch_Cat/Catch_Win", false);
         t.Complete += WaitSpineCatCatchWin;
-        
+
         if (cloudCatData.CatData.CatAge > 3)
             catSkin.SetLove();
 
         App.system.soundEffect.Play("ED00029");
-
     }
 
     private void WaitSpineCatCatchFail(TrackEntry trackEntry)
     {
         trackEntry.Complete -= WaitSpineCatCatchFail;
-        
+
         if (cloudCatData.CatData.CatAge > 3)
             catSkin.ChangeSkin(cloudCatData);
-        
+
         //檢查貓是否逃跑，若否開始下回合
         if (CheckIsCatRun())
             RunAway();
@@ -880,9 +874,9 @@ public class CatchCatMap : MvcBehaviour
         trackEntry.Complete -= WaitSpineCatCatchWin;
         Gotcha();
     }
-    
+
     #endregion
-    
+
     #region ApplicationProcess
 
     private void OnApplicationFocus(bool focus)
@@ -905,6 +899,6 @@ public class CatchCatMap : MvcBehaviour
     {
         SetCloudCatDataToUse(false);
     }
-    
+
     #endregion
 }

@@ -110,16 +110,19 @@ public class Controller_Shelter : ControllerBehavior
             //TODO Ads Refresh Confirm
             App.system.confirm.Active(ConfirmTable.Fix, () => 
             {
-                //TODO Ads
-                GetCloudCatDatas();
-                adsRefresh.Progress++;
-                UpdateRefresh();
+                App.system.ads.Active(AdsType.ShelterRefresh, () =>
+                {
+                    //TODO Ads
+                    GetCloudCatDatas();
+                    adsRefresh.Progress++;
+                    UpdateRefresh();
 
-                if (App.model.shelter.AdsRefresh <= 0)
-                    return;
+                    if (App.model.shelter.AdsRefresh <= 0)
+                        return;
 
-                App.model.shelter.Cooldown = App.system.myTime.MyTimeNow.AddMinutes(1);
-                InvokeRepeating(nameof(CooldownCounter), 1f, 1f);
+                    App.model.shelter.Cooldown = App.system.myTime.MyTimeNow.AddMinutes(1);
+                    InvokeRepeating(nameof(CooldownCounter), 1f, 1f);
+                });
             });
         }
     }

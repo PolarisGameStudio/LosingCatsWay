@@ -66,11 +66,14 @@ public class MallContainer_Tool : MallContainer
     {
         App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
-            int adsDiamondCount = PlayerPrefs.GetInt("adsDiamondCount");
-            PlayerPrefs.SetInt("adsDiamondCount", adsDiamondCount + 1);
+            App.system.ads.Active(AdsType.MallDiamond, () =>
+            {
+                int adsDiamondCount = PlayerPrefs.GetInt("adsDiamondCount");
+                PlayerPrefs.SetInt("adsDiamondCount", adsDiamondCount + 1);
 
-            GetItem(adsDiamond);
-            Refresh();
+                GetItem(adsDiamond);
+                Refresh();
+            });
         });
     }
 
@@ -78,11 +81,14 @@ public class MallContainer_Tool : MallContainer
     {
         App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
-            int adsMoneyCount = PlayerPrefs.GetInt("adsMoneyCount");
-            PlayerPrefs.SetInt("adsMoneyCount", adsMoneyCount + 1);
+            App.system.ads.Active(AdsType.MallCoin, () =>
+            {
+                int adsMoneyCount = PlayerPrefs.GetInt("adsMoneyCount");
+                PlayerPrefs.SetInt("adsMoneyCount", adsMoneyCount + 1);
 
-            GetItem(adsMoney);
-            Refresh();
+                GetItem(adsMoney);
+                Refresh();
+            });
         });
     }
 
@@ -90,16 +96,19 @@ public class MallContainer_Tool : MallContainer
     {
         App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
-            var randomIndex = Random.Range(0, adsTool.Length);
+            App.system.ads.Active(AdsType.MallTool, () =>
+            {
+                var randomIndex = Random.Range(0, adsTool.Length);
 
-            var rewards = new Reward[1];
-            rewards[0] = adsTool[randomIndex];
+                var rewards = new Reward[1];
+                rewards[0] = adsTool[randomIndex];
 
-            int adsToolCount = PlayerPrefs.GetInt("adsToolCount");
-            PlayerPrefs.SetInt("adsToolCount", adsToolCount + 1);
+                int adsToolCount = PlayerPrefs.GetInt("adsToolCount");
+                PlayerPrefs.SetInt("adsToolCount", adsToolCount + 1);
 
-            GetItem(rewards);
-            Refresh();
+                GetItem(rewards);
+                Refresh();
+            });
         });
     }
 
@@ -107,11 +116,14 @@ public class MallContainer_Tool : MallContainer
     {
         App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
-            int adsFeedCount = PlayerPrefs.GetInt("adsFeedCount");
-            PlayerPrefs.SetInt("adsFeedCount", adsFeedCount + 1);
+            App.system.ads.Active(AdsType.MallFeed, () =>
+            {
+                int adsFeedCount = PlayerPrefs.GetInt("adsFeedCount");
+                PlayerPrefs.SetInt("adsFeedCount", adsFeedCount + 1);
 
-            GetItem(adsFeed);
-            Refresh();
+                GetItem(adsFeed);
+                Refresh();
+            });
         });
     }
 

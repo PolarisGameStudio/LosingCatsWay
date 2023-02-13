@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 
 public class SystemContainer : MvcBehaviour
 {
+    public AdsSystem ads;
     public AbandonSystem abandon;
     
     public BgmSystem bgm;
