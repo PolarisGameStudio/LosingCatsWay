@@ -54,6 +54,7 @@ public class View_HospitalDoctorCheck : ViewBehaviour
 
     private void PlayDoctorCheck()
     {
+        App.system.soundEffect.Play("ED00023");
         catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "Hospital_Cat/Checking_Cat", false);
         TrackEntry t = functionGraphic.AnimationState.SetAnimation(0, "Hospital_Tool/Checking", false);
         t.Complete += DoctorCheckEnd;

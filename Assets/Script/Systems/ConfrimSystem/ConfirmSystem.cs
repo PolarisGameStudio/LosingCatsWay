@@ -22,6 +22,8 @@ public class ConfirmSystem : MvcBehaviour
     private int siblingIndex = -1;
     private bool isOnlyConfirm = false;
     private bool isBlock = false;
+    private bool isBuy = false;
+    private bool isCloseOpenSound = false;
 
     public ConfirmSystem OnlyConfirm()
     {
@@ -52,7 +54,7 @@ public class ConfirmSystem : MvcBehaviour
             action.Invoke();
         }
     }
-    
+
     public void ActiveByInsert(ConfirmTable key, string titleInsert = "", string contentInsert = "",
         UnityAction okEvent = null, UnityAction cancelEvent = null)
     {
@@ -64,7 +66,7 @@ public class ConfirmSystem : MvcBehaviour
 
             string title = App.factory.confirmFactory.GetNormalTitle(id);
             string content = App.factory.confirmFactory.GetNormalContent(id);
-            
+
             titleText.text = title.Replace("<insert>", titleInsert);
             contentText.text = content.Replace("<insert>", contentInsert);
 
@@ -114,23 +116,47 @@ public class ConfirmSystem : MvcBehaviour
     public void Ok()
     {
         _okEvent?.Invoke();
+        
+        if (!isBuy)
+            App.system.soundEffect.Play("ED00004");
+        else
+            App.system.soundEffect.Play("ED00007");
+        
         Close();
-        App.system.soundEffect.Play("Button");
     }
 
     public void Cancel()
     {
         _cancelEvent?.Invoke();
+        App.system.soundEffect.Play("ED00003");
         Close();
-        App.system.soundEffect.Play("Button");
+    }
+
+    public void SetBuyMode()
+    {
+        isBuy = true;
+    }
+    
+    public void ClearBuyMode()
+    {
+        isBuy = false;
+    }
+
+    public void CloseOpenSoundEffect()
+    {
+        isCloseOpenSound = true;
     }
 
     private void Open()
     {
+        if (!isCloseOpenSound)
+            App.system.soundEffect.Play("ED00008");
+
+        isCloseOpenSound = false;
         SetLastSibling();
         view.Show();
     }
-    
+
     private void Close()
     {
         view.InstantHide();
@@ -141,6 +167,8 @@ public class ConfirmSystem : MvcBehaviour
         cancelButton.SetActive(true);
         isOnlyConfirm = false;
         ResetSibling();
+
+        isBuy = false;
     }
 
     private void SetLastSibling()
@@ -163,10 +191,10 @@ public class ConfirmSystem : MvcBehaviour
             return;
         if (view.isHiding)
             return;
-        
+
         if (isBlock)
             return;
-        
+
         if (isOnlyConfirm)
             Ok();
         else

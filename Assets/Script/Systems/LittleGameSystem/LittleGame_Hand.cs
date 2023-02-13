@@ -80,6 +80,7 @@ public class LittleGame_Hand : LittleGame
                 else
                 {
                     //Failed();
+                    App.system.soundEffect.Play("ED00028");
                     FailedToLobby();
                     //Anim
                     anim.SetBool(CatAnimTable.LittleGameHandEndStatus.ToString(), false);

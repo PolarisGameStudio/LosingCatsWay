@@ -34,6 +34,8 @@ public class SideMenuSystem : MvcBehaviour
         if (App.system.tutorial.isTutorial)
             return;
         
+        App.system.soundEffect.Play("ED00009");
+
         OnOpen?.Invoke();
         OnOpen = null;
         
@@ -45,6 +47,8 @@ public class SideMenuSystem : MvcBehaviour
 
     private void Close()
     {
+        App.system.soundEffect.Play("ED00026");
+
         bgRect.DOAnchorPos(offset, duration).SetEase(Ease.InSine);
         DOVirtual.DelayedCall(duration * 0.75f, uiView.Hide);
 
@@ -53,6 +57,8 @@ public class SideMenuSystem : MvcBehaviour
     
     public void OnlyClose()
     {
+        App.system.soundEffect.Play("ED00026");
+
         bgRect.DOAnchorPos(offset, duration).SetEase(Ease.InSine);
         DOVirtual.DelayedCall(duration * 0.75f, uiView.Hide);
         

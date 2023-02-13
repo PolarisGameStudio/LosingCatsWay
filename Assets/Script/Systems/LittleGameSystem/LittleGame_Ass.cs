@@ -30,6 +30,7 @@ public class LittleGame_Ass : LittleGame
 
     public void Click()
     {
+        App.system.soundEffect.Play("ED00027");
         tmpClick = Mathf.Clamp(tmpClick - 1, 0, clickTimes);
         float addAmount = 1f / clickTimes;
         float prevAmount = fillCircle.fillAmount;

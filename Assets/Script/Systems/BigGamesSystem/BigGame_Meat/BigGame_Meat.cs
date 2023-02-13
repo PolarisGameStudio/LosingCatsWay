@@ -126,8 +126,13 @@ public class BigGame_Meat : BigGameBehaviour
             if (happy >= 50f)
             {
                 turn++;
+                App.system.soundEffect.Play("ED00041");
                 RefreshTurnText();
                 Hit();
+            }
+            else
+            {
+                App.system.soundEffect.Play("ED00038");
             }
 
             return;
@@ -145,6 +150,7 @@ public class BigGame_Meat : BigGameBehaviour
         else
         {
             turn++;
+            App.system.soundEffect.Play("ED00041");
             RefreshTurnText();
             Miss();
         }
@@ -240,12 +246,14 @@ public class BigGame_Meat : BigGameBehaviour
     
     private void PlayWinMeat()
     {
+        App.system.soundEffect.Play("ED00039");
         TrackEntry t = _skeletonGraphic.AnimationState.SetAnimation(0, "Win_MeatPuree", false);
         t.Complete += TrackToWaitMeat;
     }
 
     private void PlayFailMeat()
     {
+        App.system.soundEffect.Play("ED00040");
         TrackEntry t = _skeletonGraphic.AnimationState.SetAnimation(0, "Fail_MeatPuree", false);
         t.Complete += TrackToWaitMeat;
     }

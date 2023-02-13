@@ -39,21 +39,20 @@ public class Controller_Cultive : ControllerBehavior
 
     private bool isRecordSkin;
 
-    [Title("Sensor")]
-    [ReadOnly] public bool isCanDrag = true;
+    [Title("Sensor")] [ReadOnly] public bool isCanDrag = true;
     [ReadOnly] public bool isDragging; // 不能同時Drag數個物件
 
     private string skinBeforePreview;
-    
+
     public Callback OnFeedFood;
     public Callback OnFeedWater;
     public Callback OnChangeLitter;
     public CallbackValue OnPlayCat;
-    
+
     public CallbackValue OnAddFun;
     public CallbackValue OnAddSatiety;
     public CallbackValue OnAddMoisture;
-    
+
     #region Basic
 
     public void Open()
@@ -63,31 +62,31 @@ public class Controller_Cultive : ControllerBehavior
         screenshotButton.interactable = !App.system.tutorial.isTutorial;
         for (int i = 0; i < tabButtons.Length; i++)
             tabButtons[i].interactable = !App.system.tutorial.isTutorial;
-        
+
         App.system.bgm.FadeIn().Play("Cultive");
         App.view.cultive.Open();
-
+        
         CloseDropSensor();
         GetCleanLitterData();
         App.view.cultive.RefreshTimeUI();
 
         DOVirtual.DelayedCall(0.3f, () => SelectType(1));
-        
+
         // 即時刷新貓狀態
         InvokeRepeating(nameof(RefreshCatStatus), 1, 1);
     }
 
     public void Close()
     {
-        if (!isCanDrag) 
+        if (!isCanDrag)
             return;
-        if (isDragging) 
+        if (isDragging)
             return;
-        
+
         CancelInvoke(nameof(RefreshCatStatus));
         CancelInvoke(nameof(CountDownTimer));
         SetCleanLitterData();
-        
+
         App.system.soundEffect.Play("Button");
 
         int index = App.model.cultive.OpenFromIndex; //0:Feed 1:Follow
@@ -99,7 +98,7 @@ public class Controller_Cultive : ControllerBehavior
 
             if (App.system.tutorial.isTutorial)
                 return;
-            
+
             if (index == 0)
                 App.controller.feed.Open();
             if (index == 1)
@@ -117,10 +116,10 @@ public class Controller_Cultive : ControllerBehavior
             return;
 
         App.system.soundEffect.Play("Button");
-        
+
         App.model.cultive.SelectedType = index;
         ItemType targetType = ItemType.Feed;
-        
+
         switch (index)
         {
             case 2:
@@ -147,6 +146,7 @@ public class Controller_Cultive : ControllerBehavior
     public void DragItem(Item item)
     {
         App.model.cultive.DragItem = item;
+        App.system.soundEffect.Play("ED00004");
     }
 
     // Drag到貓sensor上 + ItemType是Food的話 = 飼養
@@ -155,25 +155,31 @@ public class Controller_Cultive : ControllerBehavior
         isCanDrag = false;
         int randomIndex = Random.Range(1, 3);
         bool isChildCat = App.model.cultive.SelectedCat.cloudCatData.CatData.CatAge <= 3;
+
         var dragItem = App.model.cultive.DragItem;
 
         if (isChildCat)
             randomIndex = 2;
-        
-        if (dragItem.itemFeedType == ItemFeedType.Food)
-            catSkeleton.AnimationState.SetAnimation(0, $"AI_Main/Eat_0{randomIndex}_Feed", false);
-        
-        if (dragItem.itemFeedType == ItemFeedType.Snack)
-            catSkeleton.AnimationState.SetAnimation(0, $"AI_Main/Drink_0{randomIndex}_Meat Puree", false);
 
         if (dragItem.itemFeedType == ItemFeedType.Water)
-            catSkeleton.AnimationState.SetAnimation(0, $"AI_Main/Drink_0{randomIndex}_Water", false);
+            App.system.soundEffect.Play("ED00015");
+        else
+            App.system.soundEffect.Play("ED00014");
+
+        if (dragItem.itemFeedType == ItemFeedType.Food)
+            catSkeleton.AnimationState.SetAnimation(0, $"AI_Main/Eat_0{randomIndex}_Feed", false);
+
+        if (dragItem.itemFeedType == ItemFeedType.Snack)
+            catSkeleton.AnimationState.SetAnimation(0, $"AI_Main/Drink_0{randomIndex}_Meat Puree", false);
 
         if (dragItem.itemFeedType == ItemFeedType.Can)
             catSkeleton.AnimationState.SetAnimation(0, $"AI_Main/Eat_0{randomIndex}_Meat", false);
 
+        if (dragItem.itemFeedType == ItemFeedType.Water)
+            catSkeleton.AnimationState.SetAnimation(0, $"AI_Main/Drink_0{randomIndex}_Water", false);
+
         catSkeleton.AnimationState.AddAnimation(0, "AI_Main/IDLE_Ordinary01", true, 0);
-        
+
         // Eat Drink 完才Set資料
         catSkeleton.AnimationState.Start += SetFeedData;
         catSkeleton.AnimationState.Start += SetEndSensor;
@@ -273,7 +279,7 @@ public class Controller_Cultive : ControllerBehavior
             moistureEffect.Play();
         if (funValue > 0)
             funEffects.Play();
-        
+
         satietyPop.Pop(satietyValue);
         moisturePop.Pop(moistureValue);
         funPop.Pop(funValue);
@@ -286,7 +292,7 @@ public class Controller_Cultive : ControllerBehavior
     {
         // 播放動畫
         var item = App.model.cultive.DragItem;
-
+        
         if (item.id == App.model.cultive.SelectedCat.dontLikePlayId)
         {
             Reject();
@@ -300,6 +306,7 @@ public class Controller_Cultive : ControllerBehavior
 
         if (item.id == "ICP00001")
         {
+            App.system.soundEffect.Play("ED00016");
             catSkeleton.AnimationState.SetAnimation(0, "Raising_Cat/IdleToSee", false);
             catSkeleton.AnimationState.AddAnimation(0, "Raising_Cat/See", false, 0);
             catSkeleton.AnimationState.AddAnimation(0, "Raising_Cat/SeeToIdle", false, 0);
@@ -307,6 +314,7 @@ public class Controller_Cultive : ControllerBehavior
 
         if (item.id == "ICP00002")
         {
+            App.system.soundEffect.Play("ED00017");
             catSkeleton.AnimationState.SetAnimation(0, "Raising_Cat/IdleToSing", false);
             catSkeleton.AnimationState.AddAnimation(0, "Raising_Cat/Sing", false, 0);
             catSkeleton.AnimationState.AddAnimation(0, "Raising_Cat/SingToIdle", false, 0);
@@ -314,6 +322,7 @@ public class Controller_Cultive : ControllerBehavior
 
         if (item.id == "ICP00003")
         {
+            App.system.soundEffect.Play("ED00018");
             catSkeleton.AnimationState.SetAnimation(0, "Raising_Cat/IdleToSleeping", false);
             catSkeleton.AnimationState.AddAnimation(0, "Raising_Cat/Sleep", false, 0);
             catSkeleton.AnimationState.AddAnimation(0, "Raising_Cat/SleepingToIdle", false, 0);
@@ -321,6 +330,7 @@ public class Controller_Cultive : ControllerBehavior
 
         if (item.id == "ICP00004")
         {
+            App.system.soundEffect.Play("ED00019");
             catSkeleton.AnimationState.SetAnimation(0, "Raising_Cat/IdleToSpeak", false);
             catSkeleton.AnimationState.AddAnimation(0, "Raising_Cat/Speak", false, 0);
             catSkeleton.AnimationState.AddAnimation(0, "Raising_Cat/SpeakToIdle", false, 0);
@@ -351,7 +361,7 @@ public class Controller_Cultive : ControllerBehavior
         if (entry.Animation.Name.Equals("AI_Main/IDLE_Ordinary01"))
         {
             entry.Start -= SetEndSensor;
-            
+
             #region Callback
 
             var item = App.model.cultive.DragItem;
@@ -403,9 +413,8 @@ public class Controller_Cultive : ControllerBehavior
         InvokeRepeating(nameof(CountDownTimer), 1f, 1f);
 
         App.view.cultive.RefreshTimeUI();
-
         SetCleanLitterData();
-        
+
         if (!App.system.tutorial.isTutorial)
             item.Count--;
 
@@ -421,22 +430,21 @@ public class Controller_Cultive : ControllerBehavior
         var cloudCatData = App.model.cultive.SelectedCat.cloudCatData;
         cloudCatData.CatDiaryData.DiaryLitterScore++;
         AddFun(40);
-        
         funEffects.Play();
         funPop.Pop(40);
 
         bool isAdult = cloudCatData.CatData.CatAge > 3;
         string animName = isAdult ? "Rearing_Cat/Rearing_Smile_IDLE" : "Rearing_Cat/Rearing_Smile_Sit";
-        
+
         var t = catSkeleton.AnimationState.SetAnimation(0, animName, false);
-        
+
         DOVirtual.DelayedCall(t.Animation.Duration, () =>
         {
             RefreshCatStatus();
             SelectType(App.model.cultive.SelectedType);
             catSkeleton.AnimationState.SetAnimation(0, "AI_Main/IDLE_Ordinary01", true);
         });
-        
+
         OnChangeLitter?.Invoke();
     }
 
@@ -445,7 +453,7 @@ public class Controller_Cultive : ControllerBehavior
         if (App.model.cultive.CleanLitterCount <= 0) return;
 
         App.system.soundEffect.Play("Button");
-        
+
         App.model.cultive.CleanLitterCount--;
 
         App.model.cultive.NextCleanDateTime = App.model.cultive.NextCleanDateTime;
@@ -498,8 +506,8 @@ public class Controller_Cultive : ControllerBehavior
             return;
         }
 
-        App.system.soundEffect.Play("Button");
-        
+        App.system.soundEffect.PlayCatMeow();
+
         isCanDrag = false;
 
         CloudCatData cloudCatData = App.model.cultive.SelectedCat.cloudCatData;
@@ -553,7 +561,7 @@ public class Controller_Cultive : ControllerBehavior
         int usingIndex = App.model.cultive.UsingLitterIndex;
         int likeIndex = App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.LikeLitterIndex;
         int hateIndex = App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.HateLitterindex;
-        
+
         if (usingIndex == likeIndex)
             App.model.cultive.CleanLitterCount = 7;
         else if (usingIndex == hateIndex)
@@ -588,7 +596,7 @@ public class Controller_Cultive : ControllerBehavior
         App.model.cultive.CleanLitterCount = catSurviveData.CleanLitterCount;
         App.model.cultive.NextCleanDateTime = catSurviveData.CleanLitterTimestamp.ToDateTime().ToLocalTime();
         App.model.cultive.UsingLitterIndex = catSurviveData.UsingLitter;
-        
+
         if (App.model.cultive.NextCleanDateTime > App.system.myTime.MyTimeNow)
             InvokeRepeating(nameof(CountDownTimer), 1f, 1f);
     }
@@ -605,11 +613,11 @@ public class Controller_Cultive : ControllerBehavior
     #endregion
 
     #region CatReject
-    
+
     public void Reject()
     {
         isCanDrag = false;
-        
+
         var cat = App.model.cultive.SelectedCat;
         if (cat.cloudCatData.CatData.CatAge > 3)
         {
@@ -624,7 +632,7 @@ public class Controller_Cultive : ControllerBehavior
     {
         isCanDrag = true;
         catSkeleton.AnimationState.Complete -= WaitReject;
-
+        
         if (App.model.cultive.SelectedCat.cloudCatData.CatData.CatAge > 3)
         {
             var catSkin = App.view.cultive.catSkin;
@@ -642,9 +650,9 @@ public class Controller_Cultive : ControllerBehavior
     {
         if (isDragging)
             return;
-        
+
         App.system.soundEffect.Play("Button");
-        
+
         App.system.screenshot.OnScreenshotComplete += CloseScreenshot;
         App.system.screenshot.OnScreenshotCancel += CloseScreenshot;
         App.view.cultive.TweenOut();
@@ -655,7 +663,7 @@ public class Controller_Cultive : ControllerBehavior
     private void CloseScreenshot()
     {
         App.system.soundEffect.Play("Button");
-        
+
         App.view.cultive.TweenIn();
         App.system.screenshot.OnScreenshotComplete -= CloseScreenshot;
         App.system.screenshot.OnScreenshotCancel -= CloseScreenshot;
@@ -671,7 +679,7 @@ public class Controller_Cultive : ControllerBehavior
             return;
         if (isDragging)
             return;
-        
+
         App.system.soundEffect.Play("Button");
         App.view.cultive.cultiveInfo.Open();
         SelectTab(0);
@@ -692,7 +700,7 @@ public class Controller_Cultive : ControllerBehavior
             return;
         if (!string.IsNullOrEmpty(App.model.cultive.SelectedCat.cloudCatData.CatHealthData.SickId))
             return;
-        
+
         App.system.soundEffect.Play("Button");
         App.view.cultive.cultiveInfo.Open();
         SelectTab(1);
@@ -702,7 +710,7 @@ public class Controller_Cultive : ControllerBehavior
     {
         App.system.soundEffect.Play("Button");
         App.model.cultive.SelectedTab = index;
-        
+
         if (index == 0)
         {
             OpenStatus();
@@ -749,17 +757,15 @@ public class Controller_Cultive : ControllerBehavior
 
     public void RenameCat()
     {
-        App.system.catRename.Active(App.model.cultive.SelectedCat.cloudCatData, "Shelter", () =>
-        {
-            RefreshCatStatus();
-        });
+        App.system.catRename.Active(App.model.cultive.SelectedCat.cloudCatData, "Shelter",
+            () => { RefreshCatStatus(); });
     }
 
     public void ChooseSkin(int index)
     {
         App.system.soundEffect.Play("Button");
         App.model.cultive.SelectedSkinIndex = index;
-        
+
         if (!isRecordSkin)
         {
             var cat = App.model.cultive.SelectedCat;
@@ -782,7 +788,7 @@ public class Controller_Cultive : ControllerBehavior
         }
         else
             cat.cloudCatData.CatSkinData.UseSkinId = String.Empty;
-        
+
         App.model.cultive.SelectedCat = cat;
     }
 
@@ -790,9 +796,9 @@ public class Controller_Cultive : ControllerBehavior
     {
         if (!isRecordSkin)
             return;
-        
+
         var cat = App.model.information.SelectedCat;
-        
+
         if (skinBeforePreview.IsNullOrEmpty() && cat.cloudCatData.CatSkinData.UseSkinId.IsNullOrEmpty())
             return;
 
@@ -804,10 +810,10 @@ public class Controller_Cultive : ControllerBehavior
     public void ConfirmChooseSkin()
     {
         App.system.soundEffect.Play("Button");
-        
+
         int index = App.model.cultive.SelectedSkinIndex;
         var cat = App.model.cultive.SelectedCat;
-        
+
         isRecordSkin = false;
 
         SpineSetSkinHappy();
@@ -818,7 +824,7 @@ public class Controller_Cultive : ControllerBehavior
             lastSkinItem.Count++;
             skinBeforePreview = String.Empty;
         }
-        
+
         if (index == -1)
         {
             // 脫
@@ -835,14 +841,17 @@ public class Controller_Cultive : ControllerBehavior
 
     private void SpineSetSkinHappy()
     {
-        TrackEntry t = App.view.cultive.cultiveInfo.catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "Rearing_Cat/Rearing_Look_IDLE", false);
+        TrackEntry t =
+            App.view.cultive.cultiveInfo.catSkin.skeletonGraphic.AnimationState.SetAnimation(0,
+                "Rearing_Cat/Rearing_Look_IDLE", false);
         t.Complete += WaitSpineSetSkinHappy;
     }
 
     private void WaitSpineSetSkinHappy(TrackEntry trackEntry)
     {
         trackEntry.Complete -= WaitSpineSetSkinHappy;
-        App.view.cultive.cultiveInfo.catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "AI_Main/IDLE_Ordinary01", true);
+        App.view.cultive.cultiveInfo.catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "AI_Main/IDLE_Ordinary01",
+            true);
     }
 
     #endregion
@@ -856,7 +865,7 @@ public class Controller_Cultive : ControllerBehavior
         OnAddSatiety?.Invoke(value);
         return App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.Satiety;
     }
-    
+
     private float AddMoisture(float value)
     {
         App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.Moisture =
@@ -864,7 +873,7 @@ public class Controller_Cultive : ControllerBehavior
         OnAddMoisture?.Invoke(value);
         return App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.Moisture;
     }
-    
+
     private float AddFun(float value)
     {
         App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.Favourbility =
@@ -883,7 +892,7 @@ public class Controller_Cultive : ControllerBehavior
     }
 
     #endregion
-    
+
     //TODO Debug
     public void DebugSick()
     {
@@ -905,5 +914,6 @@ public class Controller_Cultive : ControllerBehavior
         App.model.cultive.SelectedCat.cloudCatData.CatHealthData.IsBug = true;
         App.view.cultive.catSkin.ChangeSkin(App.model.cultive.SelectedCat.cloudCatData);
         App.model.cultive.SelectedCat.ChangeSkin();
+
     }
 }

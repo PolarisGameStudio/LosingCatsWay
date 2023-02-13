@@ -130,6 +130,7 @@ public class Controller_DailyQuest : ControllerBehavior
     
     public void GetReward()
     {
+        App.system.soundEffect.Play("ED00011");
         CloseWatchAd();
         OnGetReward?.Invoke();
 

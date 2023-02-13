@@ -93,8 +93,13 @@ public class CatTeeth : MvcBehaviour
 
         if (IsClean())
         {
+            App.system.soundEffect.Play("ED00036");
             Close();
             DOVirtual.DelayedCall(0.5f, bigGame_Teeth.BackToOrigin);
+        }
+        else
+        {
+            App.system.soundEffect.Play("ED00037");
         }
     }
 }

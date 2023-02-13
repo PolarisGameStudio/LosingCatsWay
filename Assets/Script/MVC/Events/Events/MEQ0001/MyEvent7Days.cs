@@ -42,6 +42,8 @@ public class MyEvent7Days : MyEvent
 
         if (nowTotalDay - lastTotalDay > 0)
         {
+            App.system.soundEffect.Play("ED00011");
+
             App.system.quest.QuestReceivedStatusData[id] = receivedStatus + 1;
             App.system.quest.QuestProgressData[id] = nowTotalDay;
 

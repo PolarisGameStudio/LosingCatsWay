@@ -110,6 +110,7 @@ public class Controller_Hospital : ControllerBehavior
 
     public void OpenInvoice()
     {
+        App.system.soundEffect.Play("ED00025");
         App.model.hospital.InvoiceMoney = GetInvoiceMoney();
         App.view.hospital.OpenInvoice();
     }
@@ -188,6 +189,8 @@ public class Controller_Hospital : ControllerBehavior
         Cat cat = App.model.hospital.SelectedCat;
         int index = App.model.hospital.FunctionIndex;
 
+        App.system.soundEffect.Play("ED00024");
+        
         if (index == 0)
         {
             // 看診

@@ -29,8 +29,6 @@ public class LittleGame_SmellCat : LittleGame
         cam.orthographicSize -= zoomSpeed;
         fillCircle.fillAmount += fillSpeed;
         
-        App.system.soundEffect.PlayUntilEnd("Button");
-
         if (fillCircle.fillAmount >= 1)
         {
             Close();
