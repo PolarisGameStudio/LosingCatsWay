@@ -151,14 +151,14 @@ public class BigGame_Teaser : BigGameBehaviour
         curveBar.gameObject.SetActive(true);
         curveBar.transform.DOScale(Vector2.one, 0.5f).SetEase(Ease.OutBack).From(Vector2.zero);
 
-        curveBar.ResetPointer(clockwise: false);
+        curveBar.ResetPointer(false);
         curveBar.SetFillSize(fillSize, true);
 
         returnButton.gameObject.SetActive(true);
         returnButton.interactable = true;
         returnButton.transform.DOScale(Vector2.one, 0.5f).SetEase(Ease.OutBack).From(Vector2.zero).SetDelay(0.25f);
 
-        curveBar.Rotate(autobreak: true);
+        curveBar.Rotate(autoBreak: true);
         InvokeRepeating(nameof(CheckPointerReach), 0f, 0.1f);
     }
 
@@ -272,7 +272,7 @@ public class BigGame_Teaser : BigGameBehaviour
 
     private void CheckPointerReach()
     {
-        if (!curveBar.CheckPointerReachStartPoint())
+        if (!curveBar.CheckPointerReachLeft())
             return;
         returnButton.interactable = false;
         returnButton.transform.DOScale(Vector2.zero, 0.15f).SetEase(Ease.InOutSine).SetDelay(0.1f);

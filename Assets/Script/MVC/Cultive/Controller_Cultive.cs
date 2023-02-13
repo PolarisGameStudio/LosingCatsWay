@@ -38,7 +38,6 @@ public class Controller_Cultive : ControllerBehavior
     [SerializeField] private Button[] tabButtons;
 
     private bool isRecordSkin;
-    private bool isOpen;
 
     [Title("Sensor")]
     [ReadOnly] public bool isCanDrag = true;
@@ -68,10 +67,8 @@ public class Controller_Cultive : ControllerBehavior
         App.system.bgm.FadeIn().Play("Cultive");
         App.view.cultive.Open();
 
-        isOpen = true;
-        
         CloseDropSensor();
-        LoadCleanLitterData();
+        GetCleanLitterData();
         App.view.cultive.RefreshTimeUI();
 
         DOVirtual.DelayedCall(0.3f, () => SelectType(1));
@@ -89,8 +86,7 @@ public class Controller_Cultive : ControllerBehavior
         
         CancelInvoke(nameof(RefreshCatStatus));
         CancelInvoke(nameof(CountDownTimer));
-        SaveCleanLitterData();
-        isOpen = false;
+        SetCleanLitterData();
         
         App.system.soundEffect.Play("Button");
 
@@ -158,7 +154,7 @@ public class Controller_Cultive : ControllerBehavior
     {
         isCanDrag = false;
         int randomIndex = Random.Range(1, 3);
-        bool isChildCat = CatExtension.GetCatAgeLevel(App.model.cultive.SelectedCat.cloudCatData.CatData.SurviveDays) == 0;
+        bool isChildCat = App.model.cultive.SelectedCat.cloudCatData.CatData.CatAge <= 3;
         var dragItem = App.model.cultive.DragItem;
 
         if (isChildCat)
@@ -271,10 +267,6 @@ public class Controller_Cultive : ControllerBehavior
         if (!App.system.tutorial.isTutorial)
             item.Count--;
 
-        App.system.cloudSave.UpdateCloudItemData();
-        App.system.cloudSave.UpdateCloudCatSurviveData(cat.cloudCatData);
-        App.system.cloudSave.UpdateCloudCatDiaryData(cat.cloudCatData);
-
         if (satietyValue > 0)
             satietyEffect.Play();
         if (moistureValue > 0)
@@ -350,9 +342,6 @@ public class Controller_Cultive : ControllerBehavior
         if (lastFavourbility < 96f && newFavourbility >= 96f)
             App.model.cultive.SelectedCat.cloudCatData.CatDiaryData.DiaryFavourbilityScore++;
 
-        App.system.cloudSave.UpdateCloudCatDiaryData(App.model.cultive.SelectedCat.cloudCatData);
-        App.system.cloudSave.UpdateCloudCatSurviveData(App.model.cultive.SelectedCat.cloudCatData);
-
         funEffects.Play();
         funPop.Pop(20);
     }
@@ -415,7 +404,7 @@ public class Controller_Cultive : ControllerBehavior
 
         App.view.cultive.RefreshTimeUI();
 
-        SaveCleanLitterData();
+        SetCleanLitterData();
         
         if (!App.system.tutorial.isTutorial)
             item.Count--;
@@ -433,14 +422,10 @@ public class Controller_Cultive : ControllerBehavior
         cloudCatData.CatDiaryData.DiaryLitterScore++;
         AddFun(40);
         
-        App.system.cloudSave.UpdateCloudItemData();
-        App.system.cloudSave.UpdateCloudCatDiaryData(cloudCatData);
-        App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
-        
         funEffects.Play();
         funPop.Pop(40);
 
-        bool isAdult = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) != 0;
+        bool isAdult = cloudCatData.CatData.CatAge > 3;
         string animName = isAdult ? "Rearing_Cat/Rearing_Smile_IDLE" : "Rearing_Cat/Rearing_Smile_Sit";
         
         var t = catSkeleton.AnimationState.SetAnimation(0, animName, false);
@@ -597,7 +582,7 @@ public class Controller_Cultive : ControllerBehavior
 
     #region CleanTime
 
-    private void LoadCleanLitterData()
+    private void GetCleanLitterData()
     {
         CloudSave_CatSurviveData catSurviveData = App.model.cultive.SelectedCat.cloudCatData.CatSurviveData;
         App.model.cultive.CleanLitterCount = catSurviveData.CleanLitterCount;
@@ -608,16 +593,13 @@ public class Controller_Cultive : ControllerBehavior
             InvokeRepeating(nameof(CountDownTimer), 1f, 1f);
     }
 
-    public void SaveCleanLitterData()
+    private void SetCleanLitterData()
     {
-        if (!isOpen)
-            return;
         CloudSave_CatSurviveData catSurviveData = App.model.cultive.SelectedCat.cloudCatData.CatSurviveData;
         catSurviveData.CleanLitterTimestamp = Timestamp.FromDateTime(App.model.cultive.NextCleanDateTime);
         catSurviveData.UsingLitter = App.model.cultive.UsingLitterIndex;
         catSurviveData.CleanLitterCount = App.model.cultive.CleanLitterCount;
         App.model.cultive.SelectedCat.cloudCatData.CatSurviveData = catSurviveData;
-        App.system.cloudSave.UpdateCloudCatSurviveData(App.model.cultive.SelectedCat.cloudCatData);
     }
 
     #endregion
@@ -629,7 +611,7 @@ public class Controller_Cultive : ControllerBehavior
         isCanDrag = false;
         
         var cat = App.model.cultive.SelectedCat;
-        if (CatExtension.GetCatAgeLevel(cat.cloudCatData.CatData.SurviveDays) != 0)
+        if (cat.cloudCatData.CatData.CatAge > 3)
         {
             var catSkin = App.view.cultive.catSkin;
             catSkin.SetCold();
@@ -642,9 +624,12 @@ public class Controller_Cultive : ControllerBehavior
     {
         isCanDrag = true;
         catSkeleton.AnimationState.Complete -= WaitReject;
-        
-        var catSkin = App.view.cultive.catSkin;
-        catSkin.OpenFace();
+
+        if (App.model.cultive.SelectedCat.cloudCatData.CatData.CatAge > 3)
+        {
+            var catSkin = App.view.cultive.catSkin;
+            catSkin.OpenFace();
+        }
 
         catSkeleton.AnimationState.AddAnimation(0, "AI_Main/IDLE_Ordinary01", true, 0);
     }
@@ -822,7 +807,6 @@ public class Controller_Cultive : ControllerBehavior
         
         int index = App.model.cultive.SelectedSkinIndex;
         var cat = App.model.cultive.SelectedCat;
-        App.system.cloudSave.UpdateCloudCatSkinData(cat.cloudCatData);
         
         isRecordSkin = false;
 
@@ -838,7 +822,6 @@ public class Controller_Cultive : ControllerBehavior
         if (index == -1)
         {
             // 脫
-            App.system.cloudSave.UpdateCloudItemData();
             OpenChooseSkin();
             App.system.cat.RefreshCatSkin();
             return;
@@ -846,7 +829,6 @@ public class Controller_Cultive : ControllerBehavior
 
         Item skinItem = App.model.cultive.SkinItems[index];
         skinItem.Count--;
-        App.system.cloudSave.UpdateCloudItemData();
         OpenChooseSkin();
         App.system.cat.RefreshCatSkin();
     }
@@ -910,21 +892,18 @@ public class Controller_Cultive : ControllerBehavior
             App.factory.sickFactory.GetMetCount(App.model.cultive.SelectedCat.cloudCatData.CatHealthData.SickId);
         App.model.cultive.SelectedCat.ChangeSkin();
         App.view.cultive.catSkin.ChangeSkin(App.model.cultive.SelectedCat.cloudCatData);
-        App.system.cloudSave.UpdateCloudCatHealthData(App.model.cultive.SelectedCat.cloudCatData);
     }
 
     public void DebugDead()
     {
         App.model.cultive.SelectedCat.cloudCatData.CatServerData.IsDead = true;
         App.view.cultive.catSkin.ChangeSkin(App.model.cultive.SelectedCat.cloudCatData);
-        App.system.cloudSave.UpdateCloudCatServerData(App.model.cultive.SelectedCat.cloudCatData);
     }
 
     public void DebugBug()
     {
         App.model.cultive.SelectedCat.cloudCatData.CatHealthData.IsBug = true;
         App.view.cultive.catSkin.ChangeSkin(App.model.cultive.SelectedCat.cloudCatData);
-        App.system.cloudSave.UpdateCloudCatHealthData(App.model.cultive.SelectedCat.cloudCatData);
-        
+        App.model.cultive.SelectedCat.ChangeSkin();
     }
 }

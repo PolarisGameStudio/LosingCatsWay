@@ -28,7 +28,7 @@ public class FriendRoom_CatSystem : MonoBehaviour
     public void CreateCatObject(CloudCatData cloudCatData)
     {
         Cat tmp = catObject;
-        if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) == 0)
+        if (cloudCatData.CatData.CatAge <= 3)
             tmp = kittyObject;
         
         Cat cat = Instantiate(tmp, catsTransform);

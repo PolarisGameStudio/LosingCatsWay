@@ -4,24 +4,22 @@ using UnityEngine;
 
 public class Model_Lobby : ModelBehavior
 {
-    private int tmpExp;
-    private int tmpLevel;
-    private int tmpMoney;
-    private int tmpDiamond;
+    private int tmpExp = -1;
+    private int tmpLevel = -1;
+    private int tmpMoney = -1;
+    private int tmpDiamond = -1;
 
-    private int expBuffer;
-    private int levelBuffer;
-    private int moneyBuffer;
-    private int diamondBuffer;
+    private int expBuffer = -1;
+    private int levelBuffer = -1;
+    private int moneyBuffer = -1;
+    private int diamondBuffer = -1;
+
+    private int nextExpBuffer = -1;
 
     public int TmpExp
     {
         get => tmpExp;
-        set
-        {
-            OnTmpExpChange?.Invoke(tmpExp, value);
-            tmpExp = value;
-        }
+        set => tmpExp = value;
     }
 
     public int TmpLevel
@@ -79,7 +77,12 @@ public class Model_Lobby : ModelBehavior
         set => diamondBuffer = value;
     }
 
-    public ValueFromToChange OnTmpExpChange;
+    public int NextExpBuffer
+    {
+        get => nextExpBuffer;
+        set => nextExpBuffer = value;
+    }
+
     public ValueFromToChange OnTmpLevelChange;
     public ValueFromToChange OnTmpMoneyChange;
     public ValueFromToChange OnTmpDiamondChange;

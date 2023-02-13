@@ -83,7 +83,7 @@ public class UnlockGridSystem : MvcBehaviour
         }
 
         App.system.cloudSave.SaveCloudSaveData();
-        await App.system.cloudSave.UpdateAllCatSurviveData();
+        App.system.cloudSave.SaveCloudCatDatas();
 
         App.system.transition.OnlyOpen(() =>
         {

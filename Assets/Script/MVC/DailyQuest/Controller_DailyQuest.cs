@@ -153,8 +153,6 @@ public class Controller_DailyQuest : ControllerBehavior
         
         App.system.player.AddExp(App.model.dailyQuest.RewardExp);
         App.model.dailyQuest.RewardExp = 0;
-        
-        App.system.cloudSave.UpdateCloudMissionData();
     }
 
     public void GetAdsReward()
@@ -182,8 +180,6 @@ public class Controller_DailyQuest : ControllerBehavior
         
         App.system.player.AddExp(App.model.dailyQuest.RewardExp);
         App.model.dailyQuest.RewardExp = 0;
-        
-        App.system.cloudSave.UpdateCloudMissionData();
     }
     
     public void GetTotalDailyReward()
@@ -206,8 +202,6 @@ public class Controller_DailyQuest : ControllerBehavior
         
         App.system.player.AddExp(App.model.dailyQuest.RewardExp);
         App.model.dailyQuest.RewardExp = 0;
-        
-        App.system.cloudSave.UpdateCloudMissionData();
         
         totalGetTween.Play();
     }
@@ -246,8 +240,6 @@ public class Controller_DailyQuest : ControllerBehavior
         App.model.dailyQuest.RewardExp = 0;
         
         App.system.reward.Open(tmp.ToArray());
-        
-        App.system.cloudSave.UpdateCloudMissionData();
     }
 
     #endregion

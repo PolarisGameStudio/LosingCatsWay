@@ -91,7 +91,7 @@ public class View_Lobby : ViewBehaviour
         base.Init();
         App.system.player.OnPlayerNameChange += OnPlayerNameChange;
         App.system.player.OnLevelChange += OnLevelChange;
-        App.system.player.OnExpChange += OnExpChange;
+        // App.system.player.OnExpChange += OnExpChange;
         App.system.player.OnCoinChange += OnCoinChange;
         App.system.player.OnDiamondChange += OnDiamondChange;
         App.system.player.OnUsingIconChange += OnUsingIconChange;
@@ -105,7 +105,7 @@ public class View_Lobby : ViewBehaviour
         App.model.dailyQuest.OnQuestsChange += OnQuestsChange;
         App.model.catGuide.OnCurrentLevelBestRewardChange += OnCurrentLevelBestRewardChange;
         
-        App.model.lobby.OnTmpExpChange += OnTmpExpChange;
+        // App.model.lobby.OnTmpExpChange += OnTmpExpChange;
         App.model.lobby.OnTmpMoneyChange += OnTmpMoneyChange;
         App.model.lobby.OnTmpDiamondChange += OnTmpDiamondChange;
         App.model.lobby.OnTmpLevelChange += OnTmpLevelChange;
@@ -126,8 +126,6 @@ public class View_Lobby : ViewBehaviour
         int lastLevel = (int)from;
         int nextLevel = (int)to;
         
-        print($"Level from {from} to {to}");
-
         DOVirtual.DelayedCall(2f, () =>
         {
             levelText.text = nextLevel.ToString("00");
@@ -156,22 +154,22 @@ public class View_Lobby : ViewBehaviour
             coinText.text = money.ToString();
         });
     }
-
-    private void OnTmpExpChange(object from, object to)
-    {
-        int beforeExp = (int)from;
-        int afterExp = (int)to;
-        int nextLevelExp = App.system.player.NextLevelExp; // todo bug: 升級的話會抓到下個等級的經驗
-
-        expFill.DOKill();
-        expFill.fillAmount = 1f / nextLevelExp * beforeExp;
-        expFill.DOFillAmount(1f / nextLevelExp * afterExp, 0.3f).SetDelay(1.75f).SetEase(Ease.OutExpo)
-            .OnComplete(() =>
-            {
-                if (expFill.fillAmount >= 1)
-                    expFill.DOFillAmount(0, 0).SetDelay(0.05f);
-            });
-    }
+    
+    // private void OnTmpExpChange(object from, object to)
+    // {
+    //     int beforeExp = (int)from;
+    //     int afterExp = (int)to;
+    //     int nextLevelExp = App.system.player.NextLevelExp; // todo bug: 升級的話會抓到下個等級的經驗
+    //
+    //     expFill.DOKill();
+    //     expFill.fillAmount = 1f / nextLevelExp * beforeExp;
+    //     expFill.DOFillAmount(1f / nextLevelExp * afterExp, 0.3f).SetDelay(1.75f).SetEase(Ease.OutExpo)
+    //         .OnComplete(() =>
+    //         {
+    //             if (expFill.fillAmount >= 1)
+    //                 expFill.DOFillAmount(0, 0).SetDelay(0.05f);
+    //         });
+    // }
 
     private void OnReduceDiamondChange(object value)
     {
@@ -256,18 +254,19 @@ public class View_Lobby : ViewBehaviour
         nextRewardLevelText.text = (level + 1).ToString();
     }
 
-    private void OnExpChange(object from, object to)
-    {
-        // 只要上線SetData用
-        App.system.player.OnExpChange -= OnExpChange;
-        
-        int lastExp = Convert.ToInt32(from);
-        int newExp = Convert.ToInt32(to);
-        int fullExp = App.system.player.NextLevelExp;
-
-        expFill.fillAmount = 1f / fullExp * lastExp;
-        expFill.DOFillAmount(1f / fullExp * newExp, .3f);
-    }
+    // private void OnExpChange(object from, object to)
+    // {
+    //     // 只要上線SetData用
+    //     App.system.player.OnExpChange -= OnExpChange;
+    //
+    //     int lastExp = Convert.ToInt32(from);
+    //     int newExp = Convert.ToInt32(to);
+    //     int fullExp = App.system.player.NextLevelExp;
+    //     
+    //     print($"last:{lastExp}, new:{newExp}, full:{fullExp}");
+    //     
+    //     expFill.fillAmount = 1f / fullExp * lastExp;
+    // }
 
     private void OnCoinChange(object value)
     {
@@ -283,5 +282,16 @@ public class View_Lobby : ViewBehaviour
         App.system.player.OnDiamondChange -= OnDiamondChange;
         int diamond = Convert.ToInt32(value);
         diamondText.text = diamond.ToString();
+    }
+
+    public void SetExpFill(int nowExp, int nextExp)
+    {
+        if (nowExp >= nextExp)
+        {
+            expFill.fillAmount = 0;
+            expFill.DOFillAmount(1f / nextExp * nowExp, 0.25f).SetEase(Ease.OutExpo).SetDelay(2f);
+            return;
+        }
+        expFill.DOFillAmount(1f / nextExp * nowExp, 0.25f).SetEase(Ease.OutExpo).SetDelay(1.75f);
     }
 }

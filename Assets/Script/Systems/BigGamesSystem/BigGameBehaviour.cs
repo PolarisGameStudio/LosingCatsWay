@@ -21,21 +21,22 @@ public class BigGameBehaviour : MvcBehaviour
     [SerializeField] private UIView uIView;
     public GameObject[] hearts;
 
-    protected int score = 0;
-    protected int exp = 0;
     protected int chance;
     
+    private int score;
+    private int exp;
     private int coins;
 
     [Button(30)]
     public virtual void Init()
     {
+        score = 0;
+        exp = 0;
+        coins = 0;
     }
 
-    [Button(30)]
     public virtual void Open()
     {
-        App.system.bigGames.Open();
         uIView.Show();
         
         string country = App.factory.stringFactory.GetCountryByLocaleIndex();
@@ -50,17 +51,14 @@ public class BigGameBehaviour : MvcBehaviour
         if (App.system.tutorial.isTutorial)
             return;
         App.system.howToPlay.Open(false);
-        //TODO Pause every game
     }
 
     public virtual void OpenPause()
     {
-        //TODO Pause every game
     }
 
     public virtual void ClosePause()
     {
-        //TODO Unpause every game
     }
 
     public virtual void Close()

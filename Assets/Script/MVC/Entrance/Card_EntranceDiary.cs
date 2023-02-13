@@ -17,7 +17,7 @@ public class Card_EntranceDiary : MvcBehaviour
         SetActive(true);
         catSkin.ChangeSkin(losingCatData);
 
-        if (CatExtension.GetCatAgeLevel(losingCatData.CatData.SurviveDays) == 0)
+        if (losingCatData.CatData.CatAge <= 3)
             return;
 
         catSkin.transform.localPosition = catSkinStartPosition;

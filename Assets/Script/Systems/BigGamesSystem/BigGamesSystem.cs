@@ -93,8 +93,10 @@ public class BigGamesSystem : MvcBehaviour
 
         for (int i = 0; i < rooms.Count; i++)
         {
-            if (rooms[i].roomData.roomType != RoomType.Game) continue;
-            if (rooms[i].roomData.roomGamesType != roomGameType) continue;
+            if (rooms[i].roomData.roomType != RoomType.Game)
+                continue;
+            if (rooms[i].roomData.roomGamesType != roomGameType)
+                continue;
             result++;
         }
 
@@ -104,10 +106,12 @@ public class BigGamesSystem : MvcBehaviour
     [Button]
     public void OpenRandomGame()
     {
-        if (GetBigGames().Count <= 0) return;
+        if (GetBigGames().Count <= 0) 
+            return;
 
         App.system.transition.Active(0, () => 
         {
+            Open();
             GetRandomGame().Open();
         });
     }
@@ -116,12 +120,13 @@ public class BigGamesSystem : MvcBehaviour
     {
         App.system.transition.Active(0.5f, () =>
         {
+            Open();
             bigGameBehaviour.Open();
             App.system.room.CloseRooms();
         });
     }
 
-    public void Open()
+    private void Open()
     {
         App.system.cat.PauseCatsGame(true);
         view.InstantShow();
@@ -136,5 +141,11 @@ public class BigGamesSystem : MvcBehaviour
         
         if (App.system.tutorial.isTutorial)
             App.system.tutorial.Next();
+    }
+
+    [Button]
+    private void TestOpen(int index)
+    {
+        OpenGame(bigGames[index]);
     }
 }

@@ -265,7 +265,6 @@ public class Controller_Information : ControllerBehavior
         
         int index = App.model.information.SelectedSkinIndex;
         var cat = App.model.information.SelectedCat;
-        App.system.cloudSave.UpdateCloudCatSkinData(cat.cloudCatData);
 
         isRecordSkin = false;
         
@@ -281,7 +280,6 @@ public class Controller_Information : ControllerBehavior
         if (index == -1)
         {
             // 脫
-            App.system.cloudSave.UpdateCloudItemData();
             OpenChooseSkin();
             App.system.cat.RefreshCatSkin();
             return;
@@ -289,7 +287,6 @@ public class Controller_Information : ControllerBehavior
 
         Item skinItem = App.model.information.SkinItems[index];
         skinItem.Count--;
-        App.system.cloudSave.UpdateCloudItemData();
         OpenChooseSkin();
         App.system.cat.RefreshCatSkin();
     }

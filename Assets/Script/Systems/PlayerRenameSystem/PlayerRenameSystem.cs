@@ -82,9 +82,6 @@ public class PlayerRenameSystem : MvcBehaviour
             App.system.player.PlayerName = inputField.text;
             renameItem.Count -= 1;
             OnRenameComplete?.Invoke();
-            
-            App.system.cloudSave.UpdateCloudItemData(); //RenameItem
-            App.system.cloudSave.UpdateCloudPlayerData(); //Name
         }, uIView.Show);
     }
 }

@@ -111,7 +111,7 @@ public class CatSkin : MvcBehaviour
         if (catGuiPosition == Vector2.zero)
             catGuiPosition = transform.localPosition;
 
-        if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) != 0)
+        if (cloudCatData.CatData.CatAge > 3)
         {
             ChangeCatSkin(cloudCatData);
 
@@ -157,7 +157,7 @@ public class CatSkin : MvcBehaviour
 
     private void ChangeLosingCatSkin(CloudCatData cloudCatData)
     {
-        if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) != 0)
+        if (cloudCatData.CatData.CatAge > 3)
         {
             SetSkeletonDataAsset(false);
 
@@ -294,7 +294,7 @@ public class CatSkin : MvcBehaviour
     {
         Skeleton catSkeleton = GetCatSkeleton();
 
-        if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) == 0)
+        if (cloudCatData.CatData.CatAge <= 3)
         {
             catSkeleton.SetAttachment("Eye_Left", "Eye_Left");
             catSkeleton.SetAttachment("Eye_Right", "Eye_Right");
@@ -404,8 +404,8 @@ public class CatSkin : MvcBehaviour
             catSkeleton.SetAttachment(sick_Expression_Eye, sick_Expression_Eye);
             catSkeleton.SetAttachment(sick_Expression_Flush, sick_Expression_Flush);
 
-            // if (catSickId == "SK011")
-            //     catSkeleton.SetAttachment(ringworm_1, ringworm_1);
+            if (catSickId == "SK011" || cloudCatData.CatHealthData.IsBug)
+                catSkeleton.SetAttachment(ringworm_1, "Ringworm");
         }
         else
         {

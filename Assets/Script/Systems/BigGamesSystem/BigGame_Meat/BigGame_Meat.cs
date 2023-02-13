@@ -62,7 +62,7 @@ public class BigGame_Meat : BigGameBehaviour
         curveBar.SetFillSize(fillSize);
         curveBar.ResetPointer();
         direction = true;
-        curveBar.Rotate(clockwise: true, autobreak: true, endToStart: true);
+        curveBar.Rotate(toLeft: true, autoBreak: true, autoRestart: true);
         isPointerPause = false;
 
         percentText.text = "0%";
@@ -94,7 +94,7 @@ public class BigGame_Meat : BigGameBehaviour
         App.system.soundEffect.Play("Button");
         VibrateExtension.Vibrate(VibrateType.Nope);
 
-        curveBar.Rotate(clockwise: true, autobreak: true, endToStart: true, resetPointer: false);
+        curveBar.Rotate(toLeft: true, autoBreak: true, autoRestart: true, resetPointer: false);
     }
 
     public void ToRight()
@@ -109,7 +109,7 @@ public class BigGame_Meat : BigGameBehaviour
         App.system.soundEffect.Play("Button");
         VibrateExtension.Vibrate(VibrateType.Nope);
 
-        curveBar.Rotate(clockwise: false, autobreak: true, endToStart: true, resetPointer: false);
+        curveBar.Rotate(toLeft: false, autoBreak: true, autoRestart: true, resetPointer: false);
     }
 
     void CheckStatus()
@@ -264,7 +264,7 @@ public class BigGame_Meat : BigGameBehaviour
         isPointerPause = false;
         ResetPercent();
         direction = true;
-        curveBar.Rotate(clockwise: true, autobreak: true, endToStart: true);
+        curveBar.Rotate(toLeft: true, autoBreak: true, autoRestart: true);
     }
 
     #endregion

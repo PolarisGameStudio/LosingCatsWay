@@ -142,10 +142,10 @@ public class MyApplication : MonoBehaviour
     private void SaveData()
     {
         controller.settings.SaveSettings();
-        controller.cultive.SaveCleanLitterData();
 
         system.myTime.SetDateTime();
         system.cloudSave.SaveCloudSaveData();
+        system.cloudSave.SaveCloudCatDatas();
     }
 
     #endregion

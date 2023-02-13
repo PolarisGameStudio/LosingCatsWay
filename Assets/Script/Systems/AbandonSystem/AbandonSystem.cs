@@ -149,21 +149,19 @@ public class AbandonSystem : MvcBehaviour
             App.system.cat.Remove(selectedCat);
 
             selectedCat.cloudCatData.CatData.Owner = AbandonLocation;
-            App.system.cloudSave.UpdateCloudCatData(selectedCat.cloudCatData);
             
             selectedCat.cloudCatData.CatSurviveData.CleanLitterTimestamp = new Timestamp();
             selectedCat.cloudCatData.CatSurviveData.CleanLitterCount = 0;
             selectedCat.cloudCatData.CatSurviveData.UsingLitter = -1;
-            App.system.cloudSave.UpdateCloudCatSurviveData(selectedCat.cloudCatData);
 
             if (!string.IsNullOrEmpty(selectedCat.cloudCatData.CatSkinData.UseSkinId))
             {
                 Item skinItem = App.factory.itemFactory.GetItem(selectedCat.cloudCatData.CatSkinData.UseSkinId);
                 skinItem.Count++;
                 selectedCat.cloudCatData.CatSkinData.UseSkinId = string.Empty;
-                App.system.cloudSave.UpdateCloudCatSkinData(selectedCat.cloudCatData);
             }
             
+            App.system.cloudSave.SaveCloudCatData(selectedCat.cloudCatData);
             item.Count -= 1;
             
             CloseFinalConfirm();

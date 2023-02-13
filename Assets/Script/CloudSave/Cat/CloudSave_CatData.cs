@@ -20,6 +20,7 @@ public class CloudSave_CatData
     [FirestoreProperty] public Timestamp DeathTime { get; set; }
     [FirestoreProperty] public string ChipId { get; set; } //晶片主人ID
     [FirestoreProperty] public bool IsFavorite { get; set; }
+    
     public int SurviveDays {
         get
         {

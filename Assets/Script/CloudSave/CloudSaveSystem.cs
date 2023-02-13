@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -24,17 +25,6 @@ public class CloudSaveSystem : MvcBehaviour
         return cloudSaveData;
     }
 
-    // public async Task<CloudCatData> LoadCloudCatData(string catId)
-    // {
-    //     FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-    //     DocumentReference docRef = db.Collection("Cats").Document(catId);
-    //
-    //     DocumentSnapshot result = await docRef.GetSnapshotAsync();
-    //     CloudCatData cloudCatData = result.ConvertTo<CloudCatData>();
-    //
-    //     return cloudCatData;
-    // }
-
     public async void SaveCloudSaveData()
     {
         Dictionary<string, object> saveData = new PlayerDataHelper(App).GetSaveData();
@@ -44,146 +34,45 @@ public class CloudSaveSystem : MvcBehaviour
         await docRef.UpdateAsync(saveData);
     }
 
-    public async void UpdateCloudPlayerData()
-    {
-        CloudSave_PlayerData playerData = new PlayerDataHelper(App).GetPlayerData();
-        
-        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
-        Dictionary<string, object> updates = new Dictionary<string, object>
-        {
-            { "PlayerData", playerData }
-        };
-        await docRef.UpdateAsync(updates);
-    }
-
-    public async void UpdateCloudItemData()
-    {
-        CloudSave_ItemData itemData = new PlayerDataHelper(App).GetItemData();
-
-        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
-        Dictionary<string, object> updates = new Dictionary<string, object>
-        {
-            { "ItemData", itemData }
-        };
-        await docRef.UpdateAsync(updates);
-    }
-
-    // public async void UpdateCloudTimeData()
-    // {
-    //     CloudSave_TimeData timeData = new PlayerDataHelper(App).GetTimeData();
-    //    
-    //     FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-    //     DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
-    //     Dictionary<string, object> updates = new Dictionary<string, object>
-    //     {
-    //         { "TimeData", timeData }
-    //     };
-    //     await docRef.UpdateAsync(updates);
-    // }
-
-    public async void UpdateCloudMissionData()
-    {
-        CloudSave_MissionData missionData = new PlayerDataHelper(App).GetMissionData();
-
-        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
-        Dictionary<string, object> updates = new Dictionary<string, object>
-        {
-            { "MissionData", missionData }
-        };
-        await docRef.UpdateAsync(updates);
-    }
-    
-    public async void UpdateCloudSignData()
-    {
-        CloudSave_SignData signData = new PlayerDataHelper(App).GetSignData();
-        
-        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
-        Dictionary<string, object> updates = new Dictionary<string, object>
-        {
-            { "SignData", signData }
-        };
-        await docRef.UpdateAsync(updates);
-    }
-
     #endregion
 
     #region Cats
 
-    public async void UpdateCloudCatData(CloudCatData cloudCatData)
+    public async void SaveCloudCatDatas()
     {
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        DocumentReference docRef = db.Collection("Cats").Document(cloudCatData.CatData.CatId);
-        Dictionary<string, object> updates = new Dictionary<string, object>
-        {
-            { "CatData", cloudCatData.CatData }
-        };
-        await docRef.UpdateAsync(updates);
-    }
-
-    public async Task UpdateAllCatSurviveData()
-    {
+        List<Task> updateTasks = new List<Task>();
+        
         var cats = App.system.cat.GetCats();
+        CatDatasHelper catDatasHelper = new CatDatasHelper();
 
-        for (int i = 0; i < cats.Count; i++)
-            await UpdateCloudCatSurviveData(cats[i].cloudCatData);
-    }
-    
-    public async Task UpdateCloudCatSurviveData(CloudCatData cloudCatData)
-    {
-        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        DocumentReference docRef = db.Collection("Cats").Document(cloudCatData.CatData.CatId);
-        Dictionary<string, object> updates = new Dictionary<string, object>
+        foreach (var cat in cats)
         {
-            { "CatSurviveData", cloudCatData.CatSurviveData }
-        };
-        await docRef.UpdateAsync(updates);
-    }
+            string catId = cat.cloudCatData.CatData.CatId;
+            Dictionary<string, object> updates = catDatasHelper.GetCloudCatUpdate(cat.cloudCatData);
+            DocumentReference docRef = db.Collection("Cats").Document(catId);
 
-    public async void UpdateCloudCatHealthData(CloudCatData cloudCatData)
-    {
-        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        DocumentReference docRef = db.Collection("Cats").Document(cloudCatData.CatData.CatId);
-        Dictionary<string, object> updates = new Dictionary<string, object>
+            updateTasks.Add(docRef.UpdateAsync(updates));
+        }
+        
+        // Wait for all tasks to complete
+        try
         {
-            { "CatHealthData", cloudCatData.CatHealthData }
-        };
-        await docRef.UpdateAsync(updates);
+            await Task.WhenAll(updateTasks);
+        }
+        catch (Exception e)
+        {
+            print("An error occurred while updating cat data: " + e.Message);
+        }
     }
 
-    public async void UpdateCloudCatDiaryData(CloudCatData cloudCatData)
+    public async void SaveCloudCatData(CloudCatData cloudCatData)
     {
+        CatDatasHelper catDatasHelper = new CatDatasHelper();
+        var updates = catDatasHelper.GetCloudCatUpdate(cloudCatData);
+        
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("Cats").Document(cloudCatData.CatData.CatId);
-        Dictionary<string, object> updates = new Dictionary<string, object>
-        {
-            { "CatDiaryData", cloudCatData.CatDiaryData }
-        };
-        await docRef.UpdateAsync(updates);
-    }
-
-    public async void UpdateCloudCatSkinData(CloudCatData cloudCatData)
-    {
-        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        DocumentReference docRef = db.Collection("Cats").Document(cloudCatData.CatData.CatId);
-        Dictionary<string, object> updates = new Dictionary<string, object>
-        {
-            { "CatSkinData", cloudCatData.CatSkinData }
-        };
-        await docRef.UpdateAsync(updates);
-    }
-    
-    public async void UpdateCloudCatServerData(CloudCatData cloudCatData)
-    {
-        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        DocumentReference docRef = db.Collection("Cats").Document(cloudCatData.CatData.CatId);
-        Dictionary<string, object> updates = new Dictionary<string, object>
-        {
-            { "CatServerData", cloudCatData.CatServerData }
-        };
         await docRef.UpdateAsync(updates);
     }
 
@@ -224,7 +113,8 @@ public class CloudSaveSystem : MvcBehaviour
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         var catsRef = db.Collection("Cats").Document(catId);
         var result = await catsRef.GetSnapshotAsync();
-        if (!result.Exists) return null;
+        if (!result.Exists)
+            return null;
         return result.ConvertTo<CloudCatData>();
     }
 

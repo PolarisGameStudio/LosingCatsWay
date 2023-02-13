@@ -104,7 +104,7 @@ public class FriendRoom_FollowCat : MonoBehaviour
 
         varietyText.text = factory.stringFactory.GetCatVariety(cloudCatData.CatData.Variety);
 
-        bool isKitty = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) == 0;
+        bool isKitty = cloudCatData.CatData.CatAge <= 3;
         varietyText.text = isKitty ? factory.stringFactory.GetKittyName() : factory.stringFactory.GetCatVariety(cloudCatData.CatData.Variety);
 
         catSkin.ChangeSkin(cloudCatData);

@@ -415,7 +415,7 @@ public class Cat : MvcBehaviour
         
         CancelGame();
 
-        if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) != 0)
+        if (cloudCatData.CatData.CatAge > 3)
         {
             catSkin.SetUsingSkinNull();
         }
@@ -480,13 +480,8 @@ public class Cat : MvcBehaviour
     {
         // 顯 好感數值
         float value = App.factory.catFactory.catDataSetting.FunByLevel(CatExtension.CatFunLevel(cloudCatData));
-
-        if (string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId) || !cloudCatData.CatHealthData.IsBug) //沒病 沒蟲
-            cloudCatData.CatSurviveData.Favourbility =
+        cloudCatData.CatSurviveData.Favourbility =
                 Mathf.Clamp(cloudCatData.CatSurviveData.Favourbility - value, 0, 100);
-        else //有病
-            cloudCatData.CatSurviveData.Favourbility =
-                Mathf.Clamp(cloudCatData.CatSurviveData.Favourbility - value, 0, 60);
 
         // 深 好感數值
         int ageLevel = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays);
@@ -519,7 +514,6 @@ public class Cat : MvcBehaviour
             return false;
         
         cloudCatData.CatServerData.IsDead = true;
-        App.system.cloudSave.UpdateCloudCatServerData(cloudCatData);
         return true;
     }
 
@@ -538,7 +532,6 @@ public class Cat : MvcBehaviour
             return false;
         
         cloudCatData.CatServerData.IsDead = true;
-        App.system.cloudSave.UpdateCloudCatServerData(cloudCatData);
         return true;
     }
     
@@ -552,7 +545,6 @@ public class Cat : MvcBehaviour
         if (Random.value <= 0.15f)
         {
             cloudCatData.CatHealthData.IsBug = true;
-            App.system.cloudSave.UpdateCloudCatHealthData(cloudCatData);
             ChangeSkin();
         }
     }
@@ -567,7 +559,7 @@ public class Cat : MvcBehaviour
             App.factory.itemFactory.GetItem(cloudCatData.CatSkinData.UseSkinId).Count += 1;
 
         cloudCatData.CatData.DeathTime = Timestamp.GetCurrentTimestamp();
-        cloudCatData.CatDiaryData.DiaryDatas = App.factory.diaryFactory.GetDiaryDatas(cloudCatData);
+        cloudCatData.CatDiaryData.DiaryDatas = App.factory.diaryFactory.GetDiaryDatas(cloudCatData); // todo 病死
     }
 
     #endregion
@@ -750,8 +742,6 @@ public class Cat : MvcBehaviour
             SetFavorability();
         }
 
-        App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
-
         // 載入今日最愛零食
         LoadLikeSnackIndex();
         LoadLikeSoupIndex();
@@ -778,6 +768,5 @@ public class Cat : MvcBehaviour
         
         cloudCatData.CatHealthData.SickId = sickId;
         ChangeSkin();
-        App.system.cloudSave.UpdateCloudCatHealthData(cloudCatData);
     }
 }

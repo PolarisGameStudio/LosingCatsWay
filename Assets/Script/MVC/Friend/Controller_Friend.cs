@@ -120,12 +120,12 @@ public class Controller_Friend : ControllerBehavior
         {
             var prevFavoriteCat = App.system.cat.GetCats()[prevFavoriteIndex];
             prevFavoriteCat.cloudCatData.CatData.IsFavorite = false;
-            App.system.cloudSave.UpdateCloudCatData(prevFavoriteCat.cloudCatData);
+            // App.system.cloudSave.SaveCloudCatData(prevFavoriteCat.cloudCatData);
         }
 
         // 改現在的
         nowFavoriteCat.cloudCatData.CatData.IsFavorite = true;
-        App.system.cloudSave.UpdateCloudCatData(nowFavoriteCat.cloudCatData);
+        // App.system.cloudSave.SaveCloudCatData(nowFavoriteCat.cloudCatData);
 
         App.view.friend.CloseChooseCat();
 

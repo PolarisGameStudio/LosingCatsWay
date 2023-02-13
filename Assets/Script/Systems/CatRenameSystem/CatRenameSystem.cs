@@ -66,8 +66,6 @@ public class CatRenameSystem : MvcBehaviour
         App.system.confirm.Active(ConfirmTable.RenameConfirm, () =>
         {
             cloudCatData.CatData.CatName = inputField.text;
-            App.system.cloudSave.UpdateCloudCatData(cloudCatData);
-
             onConfirm?.Invoke();
             view.Hide();
             catSkin.SetActive(false);

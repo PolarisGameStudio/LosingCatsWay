@@ -77,7 +77,7 @@ public class CatLosingSystem : MvcBehaviour
             int randomLocationIndex = Random.Range(0, 2);
             removeCat.cloudCatData.CatData.Owner = "Location" + randomLocationIndex;
             
-            App.system.cloudSave.UpdateCloudCatData(removeCat.cloudCatData);
+            App.system.cloudSave.SaveCloudCatData(removeCat.cloudCatData);
             App.system.cat.Remove(removeCat);
 
             _uiView.InstantHide();

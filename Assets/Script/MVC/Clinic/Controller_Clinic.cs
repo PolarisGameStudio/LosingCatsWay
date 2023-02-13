@@ -284,10 +284,6 @@ public class Controller_Clinic : ControllerBehavior
             cat.cloudCatData.CatHealthData.IsLigation = true;
         }
 
-        App.system.cloudSave.UpdateCloudItemData(); //Common:Money
-        App.system.cloudSave.UpdateCloudCatData(cat.cloudCatData);
-        App.system.cloudSave.UpdateCloudCatHealthData(cat.cloudCatData);
-
         App.model.clinic.SelectedCat = cat;
         App.model.clinic.MetCount = cat.cloudCatData.CatHealthData.MetDoctorCount;
     }
@@ -343,8 +339,6 @@ public class Controller_Clinic : ControllerBehavior
             App.model.clinic.SelectedCat.isPauseGame = false;
         }
         
-        App.system.cloudSave.UpdateCloudCatHealthData(cloudCatData);
-        _ = App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
         App.model.clinic.SelectedCat.ChangeSkin();
     }
 

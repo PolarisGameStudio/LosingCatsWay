@@ -91,7 +91,7 @@ public class Controller_FollowCat : ControllerBehavior
         _leanPinchCamera.enabled = false;
 
         float zoom = _mainCamera.orthographicSize;
-        nextZoom = CatExtension.GetCatAgeLevel(cat.cloudCatData.CatData.SurviveDays) == 0
+        nextZoom = cat.cloudCatData.CatData.CatAge <= 3
             ? kittyZoom
             : normalZoom;
         DOTween.To(() => zoom, x => zoom = x, nextZoom, 0.5f).OnUpdate(() => { _mainCamera.orthographicSize = zoom; });

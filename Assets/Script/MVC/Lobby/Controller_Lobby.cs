@@ -7,8 +7,9 @@ public class Controller_Lobby : ControllerBehavior
 {
     public void Init()
     {
-        App.model.lobby.TmpExp = App.system.player.Exp;
-        App.model.lobby.TmpLevel = App.system.player.Level;
+        App.model.lobby.ExpBuffer = App.system.player.Exp;
+        App.model.lobby.NextExpBuffer = App.system.player.NextLevelExp;
+        App.model.lobby.LevelBuffer = App.system.player.Level;
         App.model.lobby.TmpMoney = App.system.player.Coin;
         App.model.lobby.TmpDiamond = App.system.player.Diamond;
     }
@@ -142,9 +143,12 @@ public class Controller_Lobby : ControllerBehavior
         App.controller.events.Open();
     }
 
-    public void AddExpBuffer(int value)
+    #region Buffer
+
+    public void AddExpBuffer(int expBuffer, int nextExpBuffer)
     {
-        App.model.lobby.ExpBuffer += value;
+        App.model.lobby.ExpBuffer = expBuffer;
+        App.model.lobby.NextExpBuffer = nextExpBuffer;
     }
 
     public void AddLevelBuffer(int value)
@@ -164,18 +168,23 @@ public class Controller_Lobby : ControllerBehavior
 
     public void SetBuffer()
     {
-        if (App.model.lobby.ExpBuffer > 0)
+        int levelBuffer = App.model.lobby.LevelBuffer; // 未顯示等級
+        int tmpLevel = App.model.lobby.TmpLevel; // 已顯示等級
+        int expBuffer = App.model.lobby.ExpBuffer; // 未顯示經驗
+        int tmpExp = App.model.lobby.TmpExp; // 已顯示經驗
+        
+        if (levelBuffer > tmpLevel)
         {
-            App.model.lobby.TmpExp += App.model.lobby.ExpBuffer;
-            App.view.lobby.expParticle.Play();
-            App.model.lobby.ExpBuffer = 0;
+            if (tmpLevel != -1)
+                App.view.lobby.expParticle.Play();
+            App.model.lobby.TmpLevel = levelBuffer;
         }
         
-        if (App.model.lobby.LevelBuffer > App.model.lobby.TmpLevel)
-        {
-            App.model.lobby.TmpLevel = App.model.lobby.LevelBuffer;
-        }
-
+        if (expBuffer != tmpExp && tmpExp != -1)
+            App.view.lobby.expParticle.Play();
+        App.view.lobby.SetExpFill(App.model.lobby.ExpBuffer, App.model.lobby.NextExpBuffer);
+        App.model.lobby.TmpExp = App.model.lobby.ExpBuffer;
+        
         if (App.model.lobby.MoneyBuffer > 0)
         {
             App.model.lobby.TmpMoney += App.model.lobby.MoneyBuffer;
@@ -190,4 +199,6 @@ public class Controller_Lobby : ControllerBehavior
             App.model.lobby.DiamondBuffer = 0;
         }
     }
+    
+    #endregion
 }

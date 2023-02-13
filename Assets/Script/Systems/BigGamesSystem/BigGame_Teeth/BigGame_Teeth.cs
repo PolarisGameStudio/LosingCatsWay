@@ -110,7 +110,7 @@ public class BigGame_Teeth : BigGameBehaviour
         TweenIn();
 
         curveBar.SetFillSize(fillSize);
-        curveBar.Rotate();
+        curveBar.Rotate(randomizeSpeed: true);
         
         //Bar
         barRect.anchoredPosition = curveBarOffset;
@@ -132,10 +132,7 @@ public class BigGame_Teeth : BigGameBehaviour
         bubbleBgParticle.gameObject.SetActive(false);
         bubbleParticle.gameObject.SetActive(false);
         
-        DOVirtual.DelayedCall(1, () =>
-        {
-            OpenSettle();
-        });
+        DOVirtual.DelayedCall(1, OpenSettle);
     }
 
     public void Failed()
@@ -148,10 +145,7 @@ public class BigGame_Teeth : BigGameBehaviour
         bubbleBgParticle.gameObject.SetActive(false);
         bubbleParticle.gameObject.SetActive(false);
         
-        DOVirtual.DelayedCall(1, () =>
-        {
-            OpenSettle();
-        });
+        DOVirtual.DelayedCall(1, OpenSettle);
     }
 
     #endregion

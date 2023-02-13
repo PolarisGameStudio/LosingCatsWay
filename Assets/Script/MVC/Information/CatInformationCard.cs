@@ -41,8 +41,8 @@ public class CatInformationCard : MvcBehaviour
         emptySlotMask.SetActive(false);
         
         catNameText.text = cloudCatData.CatData.CatName;
-
-        bool isKitty = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) == 0;
+        
+        bool isKitty = cloudCatData.CatData.CatAge <= 3;
         catVarietyText.text = isKitty ? App.factory.stringFactory.GetKittyName() : App.factory.stringFactory.GetCatVariety(cloudCatData.CatData.Variety);
         
         catAgeText.text = cloudCatData.CatData.CatAge.ToString();

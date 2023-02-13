@@ -20,12 +20,14 @@ public class CurveBar : MonoBehaviour
     [SerializeField] private Ease thunderEase;
     [SerializeField] private RectTransform rotateRect;
     [SerializeField] private float targetAngle;
+    
+    [Title("Speed")]
     [SerializeField] private float pointerSpeed;
+    
+    private Sequence clockwiseSeq;
+    private Sequence unclockwiseSeq;
 
-    Sequence clockwiseSeq;
-    Sequence unclockwiseSeq;
-
-    float startPercent, endPercent;
+    private float startPercent, endPercent;
 
     #region Basic
 
@@ -63,7 +65,7 @@ public class CurveBar : MonoBehaviour
         endPercent = startPercent + fillSize; //右
     }
 
-    public void SetFillSize(float fillSize, bool toLeft)
+    public void SetFillSize(float fillSize, bool toLeft) // 安全區偏左
     {
         //FillAmount
         float size = Mathf.Abs(targetAngle * 2) / 360 * fillSize;
@@ -97,9 +99,10 @@ public class CurveBar : MonoBehaviour
     }
 
     //Pointer
-    public void Rotate(bool clockwise = true, bool autobreak = false, bool endToStart = false, bool resetPointer = true)
+    public void Rotate(bool toLeft = true, bool autoBreak = false, bool autoRestart = false, bool resetPointer = true, bool randomizeSpeed = false)
     {
-        if (resetPointer) ResetPointer(clockwise: !clockwise);
+        if (resetPointer)
+            ResetPointer(!toLeft);
 
         if (clockwiseSeq != null && clockwiseSeq.IsPlaying())
         {
@@ -115,18 +118,40 @@ public class CurveBar : MonoBehaviour
         clockwiseSeq = DOTween.Sequence();
         unclockwiseSeq = DOTween.Sequence();
 
-        clockwiseSeq.timeScale = 0;
-        unclockwiseSeq.timeScale = 0;
-
-        float speedMultiply = clockwise ? GetPointerPercentByAngle() : (1f - GetPointerPercentByAngle());
+        float speedMultiply = toLeft ? GetPointerPercentByAngle() : 1f - GetPointerPercentByAngle();
 
         clockwiseSeq
-            .Append(rotateRect.DORotate(new Vector3(0, 0, -targetAngle), pointerSpeed * speedMultiply).SetEase(Ease.Linear)).SetSpeedBased();
+            .Append(rotateRect.DORotate(new Vector3(0, 0, -targetAngle), pointerSpeed * speedMultiply)
+                .SetEase(Ease.Linear))
+            .SetSpeedBased()
+            .OnStepComplete(() =>
+            {
+                clockwiseSeq.timeScale = 1;
+                if (randomizeSpeed)
+                    if (Random.value <= 0.3f)
+                        clockwiseSeq.timeScale = 0.75f;
+                    else if (Random.value <= 0.6f)
+                        clockwiseSeq.timeScale = 1.5f;
+            });
 
         unclockwiseSeq
-            .Append(rotateRect.DORotate(new Vector3(0, 0, targetAngle), pointerSpeed * speedMultiply).SetEase(Ease.Linear)).SetSpeedBased();
+            .Append(rotateRect.DORotate(new Vector3(0, 0, targetAngle), pointerSpeed * speedMultiply)
+                .SetEase(Ease.Linear))
+            .SetSpeedBased()
+            .OnStepComplete(() =>
+            {
+                unclockwiseSeq.timeScale = 1;
+                if (randomizeSpeed)
+                    if (Random.value <= 0.3f)
+                        unclockwiseSeq.timeScale = 0.75f;
+                    else if (Random.value <= 0.6f)
+                        unclockwiseSeq.timeScale = 1.5f;
+            });
 
-        if (!autobreak)
+        clockwiseSeq.Pause();
+        unclockwiseSeq.Pause();
+        
+        if (!autoBreak)
         {
             clockwiseSeq.OnComplete(() => unclockwiseSeq.Play());
             unclockwiseSeq.OnComplete(() => clockwiseSeq.Play());
@@ -136,72 +161,38 @@ public class CurveBar : MonoBehaviour
         }
         else
         {
-            if (endToStart)
+            if (autoRestart)
             {
                 clockwiseSeq.OnComplete(() =>
                 {
-                    ResetPointer(clockwise: false);
-                    Rotate(clockwise: true, autobreak: true, endToStart: true);
+                    ResetPointer(false);
+                    Rotate(toLeft: true, autoBreak: true, autoRestart: true);
                 });
                 unclockwiseSeq.OnComplete(() =>
                 {
-                    ResetPointer(clockwise: true);
-                    Rotate(clockwise: false, autobreak: true, endToStart: true);
+                    ResetPointer(true);
+                    Rotate(toLeft: false, autoBreak: true, autoRestart: true);
                 });
             }
         }
 
-        if (clockwise)
-        {
-            clockwiseSeq.timeScale = 1;
+        if (toLeft)
             clockwiseSeq.Play();
-        }
         else
-        {
-            unclockwiseSeq.timeScale = 1;
             unclockwiseSeq.Play();
-        }
     }
 
     /// Reset pointer rotation to center.
-    public void ResetPointer(bool killSequence = true)
+    public void ResetPointer()
     {
-        if (killSequence)
-        {
-            if (clockwiseSeq != null && clockwiseSeq.IsPlaying())
-            {
-                clockwiseSeq.Kill();
-                clockwiseSeq = null;
-            }
-            if (unclockwiseSeq != null && unclockwiseSeq.IsPlaying())
-            {
-                unclockwiseSeq.Kill();
-                unclockwiseSeq = null;
-            }
-        }
-
         Quaternion resetAngle = Quaternion.Euler(0, 0, 0);
         rotateRect.localRotation = resetAngle;
     }
 
     /// Reset pointer rotation to target angle.
-    public void ResetPointer(bool clockwise, bool killSequence = true)
+    public void ResetPointer(bool isLeft)
     {
-        if (killSequence)
-        {
-            if (clockwiseSeq != null && clockwiseSeq.IsPlaying())
-            {
-                clockwiseSeq.Kill();
-                clockwiseSeq = null;
-            }
-            if (unclockwiseSeq != null && unclockwiseSeq.IsPlaying())
-            {
-                unclockwiseSeq.Kill();
-                unclockwiseSeq = null;
-            }    
-        }
-
-        if (clockwise)
+        if (isLeft)
         {
             Quaternion resetAngle = Quaternion.Euler(0, 0, -targetAngle);
             rotateRect.localRotation = resetAngle;
@@ -231,25 +222,6 @@ public class CurveBar : MonoBehaviour
             unclockwiseSeq.Play();
     }
 
-    [Button(30)]
-    public void PointerHit(bool pause = false, bool autoResume = true)
-    {
-        if (pause)
-            clockwiseSeq.timeScale = 0;
-        if (pause)
-            unclockwiseSeq.timeScale = 0;
-
-        if (!autoResume)
-            return;
-
-        DOVirtual.DelayedCall(.1f, () =>
-        {
-            clockwiseSeq.timeScale = 1;
-            unclockwiseSeq.timeScale = 1;
-        });
-    }
-
-    [Button(30)]
     public void PointerMiss()
     {
         missObject.SetActive(true);
@@ -268,13 +240,10 @@ public class CurveBar : MonoBehaviour
 
     #region Get
 
-    /// <summary>
     /// Get pointer position by percent.Based on 0 to 1.
-    /// </summary>
-    /// <returns></returns>
     public float GetPointerPercentByAngle()
     {
-        float result = 0;
+        float result;
 
         //Calc result from -angle to angle
         //0.包括負數的部分所以乘以二
@@ -289,33 +258,27 @@ public class CurveBar : MonoBehaviour
         return result;
     }
 
-    /// <summary>
-    /// Pointer enter area.
-    /// </summary>
-    /// <returns></returns>
+    /// Pointer enter area.=
     public bool CheckPointerInArea()
     {
-        if (GetPointerPercentByAngle() >= startPercent && GetPointerPercentByAngle() <= endPercent) return true;
-        else return false;
-    }
-
-    /// <summary>
-    /// Pointer reach left.
-    /// </summary>
-    /// <returns></returns>
-    public bool CheckPointerReachStartPoint()
-    {
-        if (GetPointerPercentByAngle() < 0.01) return true;
+        if (GetPointerPercentByAngle() >= startPercent && GetPointerPercentByAngle() <= endPercent) 
+            return true;
         return false;
     }
 
-    /// <summary>
-    /// Pointer reach right.
-    /// </summary>
-    /// <returns></returns>
-    public bool CheckPointerReachEndPoint()
+    /// Pointer reach left.
+    public bool CheckPointerReachLeft()
     {
-        if (GetPointerPercentByAngle() > 0.99) return true;
+        if (GetPointerPercentByAngle() < 0.01) 
+            return true;
+        return false;
+    }
+
+    /// Pointer reach right.
+    public bool CheckPointerReachRight()
+    {
+        if (GetPointerPercentByAngle() > 0.99) 
+            return true;
         return false;
     }
 

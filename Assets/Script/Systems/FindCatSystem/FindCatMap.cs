@@ -234,7 +234,7 @@ public class FindCatMap : MvcBehaviour
         if (cloudCatData == null)
             return;
         cloudCatData.CatSurviveData.IsUseToFind = value;
-        App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
+        App.system.cloudSave.SaveCloudCatData(cloudCatData);
     }
 
     private bool IsAnyCatShowing()

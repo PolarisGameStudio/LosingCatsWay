@@ -67,7 +67,7 @@ public class View_SubInformation : ViewBehaviour
         catSkin.ChangeSkin(cat.cloudCatData);
 
         chooseSkinButton.interactable = false;
-        if (CatExtension.GetCatAgeLevel(cat.cloudCatData.CatData.SurviveDays) == 0)
+        if (cat.cloudCatData.CatData.CatAge <= 3)
             return;
         if (!string.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId) || cat.cloudCatData.CatHealthData.IsBug)
             return;

@@ -18,7 +18,6 @@ public class TutorialActor_AdoptCat : TutorialActor
         App.system.catRename.CantCancel().Active(cloudCatData, "Shelter", () =>
         {
             cloudCatData.CatData.Owner = App.system.player.PlayerId;
-            App.system.cloudSave.UpdateCloudCatData(cloudCatData);
             App.system.cat.CreateCatObject(cloudCatData);
             Exit();
         });

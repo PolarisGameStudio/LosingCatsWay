@@ -211,6 +211,17 @@ public class View_Cultive : ViewBehaviour
         int index = Convert.ToInt32(value);
         _count = index;
         cleanCountText.text = index.ToString();
+
+        if (!cleanLitterButton.gameObject.activeSelf)
+            return;
+        
+        cleanLitterButton.gameObject.SetActive(index > 0);
+
+        if (index <= 0)
+        {
+            litterImage.sprite = emptyLitterSprite;
+            noLitterObject.SetActive(true);
+        }
     }
 
     #endregion
@@ -317,7 +328,7 @@ public class View_Cultive : ViewBehaviour
 
         openChooseSkinButton.interactable = false;
         openChooseSkinMask.SetActive(true);
-        if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) == 0)
+        if (cloudCatData.CatData.CatAge <= 3)
             return;
         if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId) || cloudCatData.CatHealthData.IsBug)
             return;

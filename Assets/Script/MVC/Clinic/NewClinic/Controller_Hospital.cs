@@ -201,6 +201,10 @@ public class Controller_Hospital : ControllerBehavior
                 metCount = 0;
                 cat.cloudCatData.CatHealthData.SickId = string.Empty;
                 cat.cloudCatData.CatHealthData.IsMetDoctor = false;
+
+                cat.cloudCatData.CatSurviveData.ChangeRealSatiety(50);
+                cat.cloudCatData.CatSurviveData.ChangeRealMoisture(50);
+                cat.cloudCatData.CatSurviveData.ChangeRealFavourbility(50);
             }
             
             cat.cloudCatData.CatHealthData.MetDoctorCount = metCount;
@@ -233,7 +237,6 @@ public class Controller_Hospital : ControllerBehavior
             cat.cloudCatData.CatHealthData.IsLigation = true;
         }
         
-        App.system.cloudSave.UpdateCloudCatHealthData(cat.cloudCatData);
         App.model.hospital.SelectedCat = cat;
     }
 
@@ -259,6 +262,7 @@ public class Controller_Hospital : ControllerBehavior
 
     public void CloseDoctorResult()
     {
+        App.model.hospital.SelectedCat.ChangeSkin();
         App.view.hospital.CloseDoctorResult();
     }
 

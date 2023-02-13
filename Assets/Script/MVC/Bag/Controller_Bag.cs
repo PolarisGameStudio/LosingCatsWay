@@ -123,7 +123,6 @@ public class Controller_Bag : ControllerBehavior
         if (item.id == "ITL00021")
         {
             item.Count--;
-            App.system.cloudSave.UpdateCloudItemData();
 
             List<Reward> rewards = new List<Reward>();
             rewards.Add(new Reward
@@ -155,7 +154,6 @@ public class Controller_Bag : ControllerBehavior
         if (item.id == "ITL00022")
         {
             item.Count--;
-            App.system.cloudSave.UpdateCloudItemData();
             
             List<Reward> rewards = new List<Reward>();
             rewards.Add(new Reward
@@ -187,7 +185,6 @@ public class Controller_Bag : ControllerBehavior
         if (item.id == "ITL00023")
         {
             item.Count--;
-            App.system.cloudSave.UpdateCloudItemData();
             
             List<Reward> rewards = new List<Reward>();
             rewards.Add(new Reward

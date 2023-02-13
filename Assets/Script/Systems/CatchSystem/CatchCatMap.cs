@@ -604,7 +604,7 @@ public class CatchCatMap : MvcBehaviour
         if (cloudCatData == null)
             return;
         cloudCatData.CatSurviveData.IsUseToFind = value;
-        App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
+        App.system.cloudSave.SaveCloudCatData(cloudCatData);
     }
 
     #endregion
@@ -804,7 +804,7 @@ public class CatchCatMap : MvcBehaviour
 
     private void SpineCatHappy()
     {
-        string animationName = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) == 0
+        string animationName = cloudCatData.CatData.CatAge <= 3
             ? "Catch_Cat/Catch_Win"
             : "Rearing_Cat/Rearing_Rub_IDLE";
         TrackEntry t = catSkin.skeletonGraphic.AnimationState.SetAnimation(0, animationName, false);
@@ -813,7 +813,7 @@ public class CatchCatMap : MvcBehaviour
 
     private void SpineCatAngry()
     {
-        if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) != 0)
+        if (cloudCatData.CatData.CatAge > 3)
             catSkin.SetAngry();
         
         TrackEntry t = catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "Catch_Cat/Catch_Lose", false);
@@ -822,7 +822,7 @@ public class CatchCatMap : MvcBehaviour
 
     private void WaitSpineIdle(TrackEntry trackEntry)
     {
-        if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) != 0)
+        if (cloudCatData.CatData.CatAge > 3)
             catSkin.ChangeSkin(cloudCatData);
         
         trackEntry.Complete -= WaitSpineIdle;
@@ -837,7 +837,7 @@ public class CatchCatMap : MvcBehaviour
 
     private void SpineCatCatchFail()
     {
-        if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) != 0)
+        if (cloudCatData.CatData.CatAge > 3)
             catSkin.SetAngry();
         
         TrackEntry t = catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "Catch_Cat/Catch_Lose", false);
@@ -849,14 +849,15 @@ public class CatchCatMap : MvcBehaviour
         TrackEntry t = catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "Catch_Cat/Catch_Win", false);
         t.Complete += WaitSpineCatCatchWin;
         
-        catSkin.SetLove();
+        if (cloudCatData.CatData.CatAge > 3)
+            catSkin.SetLove();
     }
 
     private void WaitSpineCatCatchFail(TrackEntry trackEntry)
     {
         trackEntry.Complete -= WaitSpineCatCatchFail;
         
-        if (CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) != 0)
+        if (cloudCatData.CatData.CatAge > 3)
             catSkin.ChangeSkin(cloudCatData);
         
         //檢查貓是否逃跑，若否開始下回合

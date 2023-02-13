@@ -118,10 +118,8 @@ public class TnrSystem : MvcBehaviour
             App.system.catRename.CantCancel().Active(cloudCatData, _location, () =>
             {
                 cloudCatData.CatData.Owner = App.system.player.PlayerId;
-                App.system.cloudSave.UpdateCloudCatData(cloudCatData);
 
                 cloudCatData.CatSurviveData.IsUseToFind = false;
-                App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
 
                 cloudCatData.CatSurviveData.Satiety = Random.Range(50f, 69f);
                 cloudCatData.CatSurviveData.Moisture = Random.Range(50f, 69f);
@@ -129,14 +127,14 @@ public class TnrSystem : MvcBehaviour
                 cloudCatData.CatSurviveData.RealSatiety = 100f;
                 cloudCatData.CatSurviveData.RealMoisture = 100f;
                 cloudCatData.CatSurviveData.RealFavourbility = 100f;
-                App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
 
                 cloudCatData.CatDiaryData.AdoptLocation = "OutSide";
-                App.system.cloudSave.UpdateCloudCatDiaryData(cloudCatData);
 
                 Cat cat = App.system.cat.CreateCatObject(cloudCatData);
                 cat.GetLikeSnack();
                 cat.GetLikeSoup();
+                
+                App.system.cloudSave.SaveCloudCatData(cloudCatData);
 
                 DOVirtual.DelayedCall(0.1f, () =>
                     App.system.confirm.OnlyConfirm().Active(ConfirmTable.HasNewCat, () =>
@@ -153,7 +151,7 @@ public class TnrSystem : MvcBehaviour
         App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
             cloudCatData.CatSurviveData.IsUseToFind = false;
-            App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
+            App.system.cloudSave.SaveCloudCatData(cloudCatData);
 
             DOVirtual.DelayedCall(0.1f, () =>
                 App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix, () =>
@@ -169,10 +167,8 @@ public class TnrSystem : MvcBehaviour
         App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
             cloudCatData.CatData.Owner = "Shelter";
-            App.system.cloudSave.UpdateCloudCatData(cloudCatData);
-
             cloudCatData.CatSurviveData.IsUseToFind = false;
-            App.system.cloudSave.UpdateCloudCatSurviveData(cloudCatData);
+            App.system.cloudSave.SaveCloudCatData(cloudCatData);
 
             DOVirtual.DelayedCall(0.1f, () =>
                 App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix, () =>
@@ -199,7 +195,7 @@ public class TnrSystem : MvcBehaviour
             TweenOut();
 
             cloudCatData.CatHealthData.IsLigation = true;
-            App.system.cloudSave.UpdateCloudCatHealthData(cloudCatData);
+            App.system.cloudSave.SaveCloudCatData(cloudCatData);
 
             functionGraphic.gameObject.SetActive(true);
             functionGraphic.AnimationState.SetAnimation(0, "Hospital_Tool/Operation", false);

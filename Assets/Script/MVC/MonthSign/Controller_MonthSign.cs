@@ -34,7 +34,7 @@ public class Controller_MonthSign : ControllerBehavior
     public void Close()
     {
         App.view.monthSign.Close();
-        App.system.cloudSave.UpdateCloudSignData();
+        // App.system.cloudSave.UpdateCloudSignData();
         
         if (!App.system.openFlow.isEnd)
             App.system.openFlow.NextAction();

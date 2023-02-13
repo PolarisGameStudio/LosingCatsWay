@@ -56,7 +56,7 @@ public class View_SubShelter : ViewBehaviour
 
         catNameText.text = cloudCatData.CatData.CatName;
         
-        bool isKitty = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays) == 0;
+        bool isKitty = cloudCatData.CatData.CatAge <= 3;
         catSizeText.text = isKitty ? "25cm" : $"{CatExtension.GetCatRealSize(cloudCatData.CatData.BodyScale):0.00}cm";
         catVarietyText.text = isKitty ? App.factory.stringFactory.GetKittyName() : App.factory.stringFactory.GetCatVariety(cloudCatData.CatData.Variety);
 

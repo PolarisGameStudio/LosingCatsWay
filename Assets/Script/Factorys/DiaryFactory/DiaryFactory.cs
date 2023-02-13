@@ -15,8 +15,8 @@ public class DiaryFactory : SerializedMonoBehaviour
     {
         int result = 0;
 
-        var adoptTime = cloudCatData.CatDiaryData.AdoptTimestamp.ToDateTime();
-        var deathTime = cloudCatData.CatData.DeathTime.ToDateTime();
+        var adoptTime = cloudCatData.CatDiaryData.AdoptTimestamp.ToDateTime().ToLocalTime();
+        var deathTime = cloudCatData.CatData.DeathTime.ToDateTime().ToLocalTime();
         result = (deathTime - adoptTime).Days + 1;
 
         return result;
@@ -107,7 +107,7 @@ public class DiaryFactory : SerializedMonoBehaviour
         int ageLevel = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays);
 
         string adoptLocation = cloudCatData.CatDiaryData.AdoptLocation;
-        result.DiaryDate = Timestamp.FromDateTime(cloudCatData.CatDiaryData.AdoptTimestamp.ToDateTime());
+        result.DiaryDate = Timestamp.FromDateTime(cloudCatData.CatDiaryData.AdoptTimestamp.ToDateTime().ToLocalTime());
 
         if (ageLevel == 0)
         {
@@ -147,7 +147,7 @@ public class DiaryFactory : SerializedMonoBehaviour
     {
         CloudSave_DiaryData result = new CloudSave_DiaryData();
         int ageLevel = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays);
-        DateTime adoptDate = cloudCatData.CatDiaryData.AdoptTimestamp.ToDateTime();
+        DateTime adoptDate = cloudCatData.CatDiaryData.AdoptTimestamp.ToDateTime().ToLocalTime();
 
         result.DiaryDate = Timestamp.FromDateTime(GetRandomDate(adoptDate, GetAdoptDays(cloudCatData), 0.15f, 0.37f));
 
@@ -165,7 +165,7 @@ public class DiaryFactory : SerializedMonoBehaviour
     private CloudSave_DiaryData GetDiaryPersonal(CloudCatData cloudCatData)
     {
         CloudSave_DiaryData result = new CloudSave_DiaryData();
-        DateTime adoptDate = cloudCatData.CatDiaryData.AdoptTimestamp.ToDateTime();
+        DateTime adoptDate = cloudCatData.CatDiaryData.AdoptTimestamp.ToDateTime().ToLocalTime();
 
         var types = cloudCatData.CatData.PersonalityTypes;
         var levels = cloudCatData.CatData.PersonalityLevels;
@@ -209,7 +209,7 @@ public class DiaryFactory : SerializedMonoBehaviour
     private CloudSave_DiaryData GetDiaryInteract(CloudCatData cloudCatData)
     {
         CloudSave_DiaryData result = new CloudSave_DiaryData();
-        DateTime adoptDate = cloudCatData.CatDiaryData.AdoptTimestamp.ToDateTime();
+        DateTime adoptDate = cloudCatData.CatDiaryData.AdoptTimestamp.ToDateTime().ToLocalTime();
 
         result.DiaryDate = Timestamp.FromDateTime(GetRandomDate(adoptDate, GetAdoptDays(cloudCatData), 0.63f, 0.72f));
         result.DiaryId = (400 + Random.Range(1, 6)).ToString();
@@ -223,7 +223,7 @@ public class DiaryFactory : SerializedMonoBehaviour
     private CloudSave_DiaryData GetDiaryRecord(CloudCatData cloudCatData)
     {
         CloudSave_DiaryData result = new CloudSave_DiaryData();
-        DateTime adoptDate = cloudCatData.CatDiaryData.AdoptTimestamp.ToDateTime();
+        DateTime adoptDate = cloudCatData.CatDiaryData.AdoptTimestamp.ToDateTime().ToLocalTime();
 
         int scoreBased = GetAdoptDays(cloudCatData) * 2 / 5;
         List<string> tmp = new List<string>();
@@ -250,14 +250,16 @@ public class DiaryFactory : SerializedMonoBehaviour
     //生病
     private CloudSave_DiaryData GetDiarySick(CloudCatData cloudCatData)
     {
-        if (cloudCatData.CatHealthData.SickId.IsNullOrEmpty())
-            return null;
         
         CloudSave_DiaryData result = new CloudSave_DiaryData();
-        DateTime adoptDate = cloudCatData.CatDiaryData.AdoptTimestamp.ToDateTime();
+        DateTime adoptDate = cloudCatData.CatDiaryData.AdoptTimestamp.ToDateTime().ToLocalTime();
 
         result.DiaryDate = Timestamp.FromDateTime(GetRandomDate(adoptDate, GetAdoptDays(cloudCatData), 0.84f, 0.87f));
-        result.DiaryId = (600 + Random.Range(1, 3)).ToString();
+
+        if (cloudCatData.CatHealthData.SickId.IsNullOrEmpty()) // 沒病 老死
+            result.DiaryId = (600 + Random.Range(3, 5)).ToString();
+        else // 有病 病死
+            result.DiaryId = (600 + Random.Range(1, 3)).ToString();
 
         result.DiaryId = GetDiaryTone(cloudCatData, result.DiaryId);
 
@@ -269,7 +271,7 @@ public class DiaryFactory : SerializedMonoBehaviour
     {
         CloudSave_DiaryData result = new CloudSave_DiaryData();
         int ageLevel = CatExtension.GetCatAgeLevel(cloudCatData.CatData.SurviveDays);
-        result.DiaryDate = Timestamp.FromDateTime(cloudCatData.CatData.DeathTime.ToDateTime());
+        result.DiaryDate = Timestamp.FromDateTime(cloudCatData.CatData.DeathTime.ToDateTime().ToLocalTime());
 
         if (ageLevel == 2)
             result.DiaryId = (703 + Random.Range(1, 4)).ToString();
