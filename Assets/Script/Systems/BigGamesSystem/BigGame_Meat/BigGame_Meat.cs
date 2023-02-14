@@ -52,7 +52,7 @@ public class BigGame_Meat : BigGameBehaviour
         base.Open();
     }
 
-    public override void Init()
+    protected override void Init()
     {
         base.Init();
 

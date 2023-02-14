@@ -273,4 +273,9 @@ public class Controller_Hospital : ControllerBehavior
     {
         App.view.hospital.NextDoctorResult();
     }
+
+    public void ToggleChooseCatQuest()
+    {
+        App.view.hospital.ToggleChooseCatQuest();
+    }
 }

@@ -227,7 +227,8 @@ public class Controller_DailyQuest : ControllerBehavior
 
             hasReward = true;
 
-            App.model.dailyQuest.RewardExp += quest.exp;
+            // App.model.dailyQuest.RewardExp += quest.exp;
+            App.system.player.AddExp(quest.exp);
         
             tmp.AddRange(quest.Rewards);
 
@@ -240,7 +241,7 @@ public class Controller_DailyQuest : ControllerBehavior
         if (!hasReward)
             return;
         
-        App.system.player.AddExp(App.model.dailyQuest.RewardExp);
+        // App.system.player.AddExp(App.model.dailyQuest.RewardExp);
         App.model.dailyQuest.RewardExp = 0;
         
         App.system.reward.Open(tmp.ToArray());

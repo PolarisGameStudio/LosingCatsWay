@@ -139,7 +139,7 @@ public class MyApplication : MonoBehaviour
         SaveData();
     }
 
-    private void SaveData()
+    public void SaveData()
     {
         controller.settings.SaveSettings();
 

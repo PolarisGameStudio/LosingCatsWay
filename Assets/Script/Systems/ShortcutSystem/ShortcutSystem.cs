@@ -21,6 +21,7 @@ public class ShortcutSystem : MvcBehaviour
     
     public void ToLobby()
     {
+        App.system.cat.PauseCatsGame(false);
         App.system.bgm.FadeOut();
         App.system.transition.Active(0, () =>
         {

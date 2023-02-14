@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,8 @@ public class Model_Lobby : ModelBehavior
 
     private int nextExpBuffer = -1;
 
+    private DateTime lastOpenLobbyTime;
+
     public int TmpExp
     {
         get => tmpExp;
@@ -27,7 +30,7 @@ public class Model_Lobby : ModelBehavior
         get => tmpLevel;
         set
         {
-            if (value - tmpLevel == 1 && tmpLevel > 0)
+            if (tmpLevel > 0)
                 OnTmpLevelChange?.Invoke(tmpLevel, value);
             tmpLevel = value;
         }
@@ -81,6 +84,12 @@ public class Model_Lobby : ModelBehavior
     {
         get => nextExpBuffer;
         set => nextExpBuffer = value;
+    }
+
+    public DateTime LastOpenLobbyTime
+    {
+        get => lastOpenLobbyTime;
+        set => lastOpenLobbyTime = value;
     }
 
     public ValueFromToChange OnTmpLevelChange;

@@ -70,6 +70,8 @@ public class CatchCatMap : MvcBehaviour
     private int exp;
     private int money;
 
+    private string gameName;
+
     #endregion
 
     #region 基本開關+暫停離開
@@ -82,6 +84,11 @@ public class CatchCatMap : MvcBehaviour
         this.cloudCatData = cloudCatData;
         catSkin.ChangeSkin(cloudCatData);
 
+        if (cloudCatData.CatData.CatAge <= 3)
+            bubble.transform.localScale = new Vector2(2f, 2f);
+        else
+            bubble.transform.localScale = Vector2.one;
+
         bubble.Init(cloudCatData.CatData.PersonalityTypes, cloudCatData.CatData.PersonalityLevels);
         healthBar.Init();
 
@@ -92,10 +99,10 @@ public class CatchCatMap : MvcBehaviour
     public void ShowHowToPlay()
     {
         string country = App.factory.stringFactory.GetCountryByLocaleIndex();
-        string title = howToPlayData.titleData[country];
+        gameName = howToPlayData.titleData[country];
         string[] descripts = howToPlayData.descriptData[country];
         Sprite[] sprites = howToPlayData.sprites;
-        App.system.howToPlay.SetData(title, descripts, sprites).Open(true, null, Init);
+        App.system.howToPlay.SetData(gameName, descripts, sprites).Open(true, null, Init);
     }
 
     private void Close()
@@ -517,7 +524,8 @@ public class CatchCatMap : MvcBehaviour
             OnGotcha?.Invoke();
             exp = App.system.player.playerDataSetting.CatchCatExp;
             money = App.system.player.playerDataSetting.CatchCatCoin;
-            App.system.settle.Active(exp, money, 100, () =>
+            
+            App.system.settle.Active(gameName, cloudCatData, exp, money, 0, 100, null, () =>
             {
                 App.system.tnr.OnDoAdopt += CloseToLobby;
                 App.system.tnr.OnDoRelease += CloseToLobby;
@@ -559,7 +567,7 @@ public class CatchCatMap : MvcBehaviour
                     money = App.system.player.playerDataSetting.CatchCatCoin;
                 }
 
-                App.system.settle.Active(exp, money, 0, () =>
+                App.system.settle.Active(gameName, cloudCatData, exp, money, 0, 0, null, () =>
                 {
                     OnGameEnd?.Invoke();
                     CloseToMap();
@@ -583,7 +591,7 @@ public class CatchCatMap : MvcBehaviour
                     money = App.system.player.playerDataSetting.CatchCatCoin;
                 }
 
-                App.system.settle.Active(exp, money, 0, () =>
+                App.system.settle.Active(gameName, cloudCatData, exp, money, 0, 0, null, () =>
                 {
                     OnGameEnd?.Invoke();
                     CloseToMap();

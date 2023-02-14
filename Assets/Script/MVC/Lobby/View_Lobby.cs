@@ -123,17 +123,17 @@ public class View_Lobby : ViewBehaviour
 
     private void OnTmpLevelChange(object from, object to)
     {
-        int lastLevel = (int)from;
-        int nextLevel = (int)to;
+        int beforeLevel = (int)from;
+        int afterLevel = (int)to;
         
         DOVirtual.DelayedCall(2f, () =>
         {
-            levelText.text = nextLevel.ToString("00");
+            levelText.text = afterLevel.ToString("00");
         });
         
         DOVirtual.DelayedCall(2.5f, () =>
         {
-            App.system.levelUp.Open(lastLevel);
+            App.system.levelUp.Open(beforeLevel, afterLevel);
         });
     }
 

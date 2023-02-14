@@ -61,7 +61,7 @@ public class Cat : MvcBehaviour
             catHeartEffect.Stop();
 
         DrawDontLikeId();
-        
+
         //隨機開始時間
         int randTimer = Random.Range(10, 15);
         DrawGameTimer = randTimer;
@@ -281,6 +281,9 @@ public class Cat : MvcBehaviour
         if (isPauseGame)
             return;
         
+        if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
+            return;
+        
         if (DrawGameTimer < 30)
         {
             DrawGameTimer++;
@@ -294,10 +297,10 @@ public class Cat : MvcBehaviour
     public void DrawGame()
     {
         if (isPauseGame)
-        {
-            Debug.LogWarning("生病不能玩");
             return;
-        }
+        
+        if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
+            return;
         
         CancelInvoke(nameof(CountTimerDrawGame));
         if (App.system.bigGames.GetBigGames().Count > 0)
@@ -438,7 +441,7 @@ public class Cat : MvcBehaviour
 
         App.controller.followCat.CloseByOpenLobby();
         App.controller.lobby.Open();
-        App.system.bigGames.OpenGame(bigGameBehaviour);
+        App.system.bigGames.OpenGame(bigGameBehaviour, cloudCatData);
 
         App.system.catNotify.Remove(this);
         catNotifyId = string.Empty;
@@ -759,7 +762,7 @@ public class Cat : MvcBehaviour
 
     private void UpdateSick(string sickId)
     {
-        if (!string.IsNullOrEmpty(sickId) && !string.IsNullOrEmpty(cloudCatData.CatSkinData.UseSkinId))
+        if (!string.IsNullOrEmpty(cloudCatData.CatSkinData.UseSkinId))
         {
             var skinItem = App.factory.itemFactory.GetItem(cloudCatData.CatSkinData.UseSkinId);
             skinItem.Count++;

@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,8 @@ public class Controller_Lobby : ControllerBehavior
         App.model.lobby.LevelBuffer = App.system.player.Level;
         App.model.lobby.TmpMoney = App.system.player.Coin;
         App.model.lobby.TmpDiamond = App.system.player.Diamond;
+
+        App.model.lobby.LastOpenLobbyTime = App.system.myTime.MyTimeNow;
     }
     
     public void Open()
@@ -21,6 +24,8 @@ public class Controller_Lobby : ControllerBehavior
         App.system.room.OpenRooms();
         
         SetBuffer();
+        
+        CheckPerDayRefresh();
     }
 
     public void Close()
@@ -207,6 +212,31 @@ public class Controller_Lobby : ControllerBehavior
             App.model.lobby.TmpDiamond += App.model.lobby.DiamondBuffer;
             App.view.lobby.diamondParticle.Play();
             App.model.lobby.DiamondBuffer = 0;
+        }
+    }
+    
+    #endregion
+
+    #region Refresh
+
+    private void CheckPerDayRefresh()
+    {
+        DateTime nowTime = App.system.myTime.MyTimeNow;
+        DateTime lastOpenLobbyTime = App.model.lobby.LastOpenLobbyTime;
+
+        if (nowTime.Year > lastOpenLobbyTime.Year || nowTime.Month > lastOpenLobbyTime.Month ||
+            nowTime.Day > lastOpenLobbyTime.Day)
+        {
+            print("進行刷新");
+            App.SaveData();
+            App.system.myTime.Init();
+            App.system.openFlow.Init();
+            App.model.lobby.LastOpenLobbyTime = nowTime;
+        }
+        else
+        {
+            print("不用刷新");
+            App.model.lobby.LastOpenLobbyTime = nowTime;
         }
     }
     

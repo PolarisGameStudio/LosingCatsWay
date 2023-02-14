@@ -133,4 +133,9 @@ public class View_Hospital : ViewBehaviour
     {
         DoctorResult.NextDoctorResult();
     }
+
+    public void ToggleChooseCatQuest()
+    {
+        ChooseCat.ToggleChooseCatQuest();
+    }
 }

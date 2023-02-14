@@ -44,9 +44,6 @@ public class MyTimeSystem : MvcBehaviour
         if (nowTime.Day != PerDayLoginDateTime.Day)
             return false;
         
-        // if ((nowTime - PerDayLoginDateTime).Days >= 1)
-        //     return false;
-
         return true;
     }
 

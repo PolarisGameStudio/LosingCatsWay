@@ -103,24 +103,12 @@ public class BigGamesSystem : MvcBehaviour
         return result;
     }
 
-    [Button]
-    public void OpenRandomGame()
-    {
-        if (GetBigGames().Count <= 0) 
-            return;
-
-        App.system.transition.Active(0, () => 
-        {
-            Open();
-            GetRandomGame().Open();
-        });
-    }
-
-    public void OpenGame(BigGameBehaviour bigGameBehaviour)
+    public void OpenGame(BigGameBehaviour bigGameBehaviour, CloudCatData cloudCatData)
     {
         App.system.transition.Active(0.5f, () =>
         {
             Open();
+            bigGameBehaviour.SetCloudCatData(cloudCatData);
             bigGameBehaviour.Open();
             App.system.room.CloseRooms();
         });
@@ -141,11 +129,5 @@ public class BigGamesSystem : MvcBehaviour
         
         if (App.system.tutorial.isTutorial)
             App.system.tutorial.Next();
-    }
-
-    [Button]
-    private void TestOpen(int index)
-    {
-        OpenGame(bigGames[index]);
     }
 }

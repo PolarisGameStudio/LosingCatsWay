@@ -65,7 +65,7 @@ public class BigGame_CutNails : BigGameBehaviour, IBeginDragHandler, IDragHandle
         base.Open();
     }
 
-    public override void Init()
+    protected override void Init()
     {
         base.Init();
         chance = hearts.Length;

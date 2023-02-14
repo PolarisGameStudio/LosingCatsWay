@@ -17,7 +17,7 @@ public class FlowTask_E43_StartBigGame : FlowTask
         //App.system.transition.FadeLoadScene(App.system.bigGame.RandomGame().ToString());
         
         App.system.bigGames.OnClose += Exit;
-        App.system.bigGames.OpenRandomGame();
+        // App.system.bigGames.OpenRandomGame();
         // App.system.cat.CloseCatsGame();
 
         //var cat = App.system.cat.GetCats()[0];

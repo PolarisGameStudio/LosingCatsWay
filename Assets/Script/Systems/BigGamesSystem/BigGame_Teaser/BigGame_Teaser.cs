@@ -67,7 +67,7 @@ public class BigGame_Teaser : BigGameBehaviour
         base.Open();
     }
 
-    public override void Init()
+    protected override void Init()
     {
         base.Init();
 

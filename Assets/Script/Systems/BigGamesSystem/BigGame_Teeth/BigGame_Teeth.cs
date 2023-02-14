@@ -77,7 +77,7 @@ public class BigGame_Teeth : BigGameBehaviour
         bubbleParticle.Stop();
     }
 
-    public override void Init()
+    protected override void Init()
     {
         base.Init();
         

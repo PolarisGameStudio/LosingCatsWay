@@ -8,14 +8,20 @@ public class View_HospitalChooseCat : ViewBehaviour
 {
     [SerializeField] private Card_HospitalChooseCat[] cards;
     [SerializeField] private GameObject[] titles;
+    [SerializeField] private GameObject[] questTitles;
 
     [Title("Tween")]
     [SerializeField] private RectTransform panelTransform;
     [SerializeField] private Transform okButtonTransform;
+    [SerializeField] private RectTransform questTransform;
+
+    private bool isQuestShow;
     
     public override void Open()
     {
         base.Open();
+        isQuestShow = false;
+        questTransform.localScale = new Vector2(0, 1);
         panelTransform.DOScale(Vector2.one, 0.4f).From(Vector2.zero).SetEase(Ease.OutExpo);
         okButtonTransform.localScale = Vector2.zero;
     }
@@ -74,5 +80,16 @@ public class View_HospitalChooseCat : ViewBehaviour
             cards[i].functionIndex = index;
         for (int i = 0; i < titles.Length; i++)
             titles[i].SetActive(i == index);
+        for (int i = 0; i < questTitles.Length; i++)
+            questTitles[i].SetActive(i == index);
+    }
+
+    public void ToggleChooseCatQuest()
+    {
+        isQuestShow = !isQuestShow;
+        if (isQuestShow)
+            questTransform.DOScaleX(1, 0.25f).SetEase(Ease.OutBack);
+        else
+            questTransform.DOScaleX(0, 0.25f).SetEase(Ease.InQuint);
     }
 }

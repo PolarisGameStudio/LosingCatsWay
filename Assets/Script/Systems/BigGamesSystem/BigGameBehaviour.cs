@@ -3,15 +3,14 @@ using Doozy.Runtime.UIManager.Containers;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(UIView))]
 public class BigGameBehaviour : MvcBehaviour
 {
-    [EnumToggleButtons, HideLabel, Title("GameType")] public RoomGameType gameType;
+    [EnumToggleButtons, HideLabel, Title("GameType")]
+    public RoomGameType gameType;
 
     [Title("Config")]
     public string notifyId;
@@ -23,16 +22,22 @@ public class BigGameBehaviour : MvcBehaviour
 
     protected int chance;
     
-    private int score;
-    private int exp;
-    private int coins;
+    private int _score;
+    private int _exp;
+    private int _coins;
 
-    [Button(30)]
-    public virtual void Init()
+    private CloudCatData _cloudCatData;
+
+    protected virtual void Init()
     {
-        score = 0;
-        exp = 0;
-        coins = 0;
+        _score = 0;
+        _exp = 0;
+        _coins = 0;
+    }
+
+    public void SetCloudCatData(CloudCatData cloudCatData)
+    {
+        _cloudCatData = cloudCatData;
     }
 
     public virtual void Open()
@@ -43,6 +48,7 @@ public class BigGameBehaviour : MvcBehaviour
         string title = howToPlayData.titleData[country];
         string[] descripts = howToPlayData.descriptData[country];
         Sprite[] sprites = howToPlayData.sprites;
+        
         App.system.howToPlay.SetData(title, descripts, sprites).Open(true, null, Init);
     }
 
@@ -63,6 +69,8 @@ public class BigGameBehaviour : MvcBehaviour
 
     public virtual void Close()
     {
+        App.system.reward.OnClose -= Close;
+        
         App.system.transition.Active(0, () =>
         {
             uIView.InstantHide();
@@ -74,10 +82,49 @@ public class BigGameBehaviour : MvcBehaviour
 
     protected void OpenSettle()
     {
-        exp = App.system.player.playerDataSetting.GetBigGameExpByChance(chance);
-        coins = App.system.player.playerDataSetting.GetBigGameCoinsByChance(App.system.player.Level, chance);
-        score = Convert.ToInt32(100f / hearts.Length * chance);
-        App.system.settle.Active(exp, coins, score, Close);
+        _exp = App.system.player.playerDataSetting.GetBigGameExpByChance(chance);
+        _coins = App.system.player.playerDataSetting.GetBigGameCoinsByChance(App.system.player.Level, chance);
+        _score = Convert.ToInt32(100f / hearts.Length * chance);
+        string country = App.factory.stringFactory.GetCountryByLocaleIndex();
+        string gameName = howToPlayData.titleData[country];
+        App.system.settle.Active(gameName, _cloudCatData, _exp, _coins, 0, _score, null, CheckKnowledgeCard);
+    }
+    
+    private void CheckKnowledgeCard()
+    {
+        if (App.system.tutorial.isTutorial)
+        {
+            Close();
+            return;
+        }
+
+        if (_score < 30)
+        {
+            Close();
+            return;
+        }
+
+        int knowledgeCard = PlayerPrefs.GetInt("KnowledgeCard");
+
+        if (knowledgeCard >= 7)
+        {
+            Close();
+            return;
+        }
+
+        if (Random.value > 0.5f)
+        {
+            Close();
+            return;
+        }
+        
+        Reward[] rewards = new Reward[1];
+        rewards[0] = new Reward(App.factory.itemFactory.GetItem("KLC0001"), 1);
+        
+        App.system.reward.Open(rewards);
+        App.system.reward.OnClose += Close;
+        
+        PlayerPrefs.SetInt("KnowledgeCard", knowledgeCard);
     }
 
     private void GameEndAction()
@@ -85,9 +132,9 @@ public class BigGameBehaviour : MvcBehaviour
         if (App.system.tutorial.isTutorial)
             return;
         
-        if (exp > 0)
-            App.system.player.AddExp(exp);
-        if (coins > 0)
-            App.system.player.AddMoney(coins);
+        if (_exp > 0)
+            App.system.player.AddExp(_exp);
+        if (_coins > 0)
+            App.system.player.AddMoney(_coins);
     }
 }
