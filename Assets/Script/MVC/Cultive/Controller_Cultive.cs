@@ -499,6 +499,14 @@ public class Controller_Cultive : ControllerBehavior
 
     public void ClickCat()
     {
+        var cat = App.model.cultive.SelectedCat;
+
+        if (!String.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId))
+        {
+            Reject();
+            return;
+        }
+
         if (!isCanDrag)
         {
             var track = catSkeleton.AnimationState.GetCurrent(0);
@@ -617,15 +625,20 @@ public class Controller_Cultive : ControllerBehavior
     public void Reject()
     {
         isCanDrag = false;
-
+        
         var cat = App.model.cultive.SelectedCat;
-        if (cat.cloudCatData.CatData.CatAge > 3)
-        {
-            var catSkin = App.view.cultive.catSkin;
-            catSkin.SetCold();
-        }
 
-        catSkeleton.AnimationState.SetAnimation(0, "Rearing_Cat/Rearing_Reject", false).Complete += WaitReject;
+        if (String.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId))
+        {
+            if (cat.cloudCatData.CatData.CatAge > 3)
+            {
+                var catSkin = App.view.cultive.catSkin;
+                catSkin.SetCold();
+            }
+            catSkeleton.AnimationState.SetAnimation(0, "Rearing_Cat/Rearing_Reject", false).Complete += WaitReject;
+        }
+        else
+            catSkeleton.AnimationState.SetAnimation(0, "Rearing_Cat/Rearing_Reject(Only_For_Sick)", false).Complete += WaitReject;
     }
 
     private void WaitReject(TrackEntry entry)
@@ -633,12 +646,17 @@ public class Controller_Cultive : ControllerBehavior
         isCanDrag = true;
         catSkeleton.AnimationState.Complete -= WaitReject;
         
-        if (App.model.cultive.SelectedCat.cloudCatData.CatData.CatAge > 3)
-        {
-            var catSkin = App.view.cultive.catSkin;
-            catSkin.OpenFace();
-        }
+        var cat = App.model.cultive.SelectedCat;
 
+        if (String.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId))
+        {
+            if (App.model.cultive.SelectedCat.cloudCatData.CatData.CatAge > 3)
+            {
+                var catSkin = App.view.cultive.catSkin;
+                catSkin.OpenFace();
+            }
+        }
+        
         catSkeleton.AnimationState.AddAnimation(0, "AI_Main/IDLE_Ordinary01", true, 0);
     }
 
