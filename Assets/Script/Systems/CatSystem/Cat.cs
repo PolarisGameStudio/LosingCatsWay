@@ -310,6 +310,9 @@ public class Cat : MvcBehaviour
             }
         }
 
+        if (!String.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
+            return;
+        
         App.system.littleGame.SetLittleGame(this);
         OpenLittleGame();
         StartCountCancelGame();
