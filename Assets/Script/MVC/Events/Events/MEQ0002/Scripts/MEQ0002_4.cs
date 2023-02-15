@@ -7,7 +7,10 @@ public class MEQ0002_4 : Quest
 {
     public override void Init()
     {
+        base.Init();
         App.system.player.OnReduceCoinChange += Bind;
+        
+        Debug.Log("測試1");
     }
 
     public void Bind(object value)
@@ -15,6 +18,8 @@ public class MEQ0002_4 : Quest
         int addValue = (int)value;
 
         Progress += addValue;
+
+        Debug.Log("測試2");
 
         if (Progress >= TargetCount)
         {

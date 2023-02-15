@@ -94,7 +94,8 @@ public class Quest : SerializedScriptableObject
     
     public virtual void Init()
     {
-        //
+        if (IsReach)
+            return;
     }
     
     public virtual void CancelBind()

@@ -7,6 +7,7 @@ public class MEQ0002_5 : Quest
 {
     public override void Init()
     {
+        base.Init();
         App.system.tnr.OnAdoptCat += Bind;
         App.controller.shelter.OnAdoptCat += Bind;
     }

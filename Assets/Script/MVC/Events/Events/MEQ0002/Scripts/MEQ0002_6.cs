@@ -7,6 +7,7 @@ public class MEQ0002_6 : Quest
 {
     public override void Init()
     {
+        base.Init();
         App.controller.dailyQuest.OnGetReward += Bind;
         App.controller.dailyQuest.OnGetAdsReward += Bind;
     }

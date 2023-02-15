@@ -7,6 +7,8 @@ public class MEQ0002_1 : Quest
 {
     public override void Init()
     {
+        base.Init();
+        
         App.system.catchCat.map.OnGotcha += Bind;
     }
 
