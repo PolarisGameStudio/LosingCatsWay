@@ -35,15 +35,16 @@ public class CardLevelReward : MvcBehaviour
     [SerializeField] private Image[] receiveIcons; // 文字旁邊的icon
     [SerializeField] private GameObject[] receivePreviewObjects;
     [SerializeField] private Image[] receivePreviews; // 預覽
+    [SerializeField] private TextMeshProUGUI[] receiveCountTexts; // 預覽數量
     
     public void SetData(int level)
     {
-        Reward[] unlocks = App.factory.itemFactory.GetUnlocksByLevel(level);
+        Item[] unlocks = App.factory.itemFactory.GetUnlocksByLevel(level);
         Reward[] receives = App.factory.itemFactory.GetRewardsByLevel(level);
 
         unlockParent.SetActive(unlocks.Length > 0);
         receiveParent.SetActive(receives.Length > 0);
-
+        
         for (int i = 0; i < unlockObjects.Length; i++)
         {
             if (i >= unlocks.Length)
@@ -53,7 +54,7 @@ public class CardLevelReward : MvcBehaviour
             }
 
             unlockObjects[i].SetActive(true);
-            unlockTexts[i].text = unlocks[i].item.Name;
+            unlockTexts[i].text = unlocks[i].Name;
         }
 
         for (int i = 0; i < receiveObjects.Length; i++)
@@ -70,15 +71,16 @@ public class CardLevelReward : MvcBehaviour
             
             receivePreviewObjects[i].SetActive(receives[i].item.id.Contains("IRM"));
             receivePreviews[i].sprite = receives[i].item.icon;
+            receiveCountTexts[i].text = receives[i].count.ToString();
         }
         
         levelText.text = $"LV.{level:00}";
         int currentLevel = App.system.player.Level;
-        
-        receiveMask.SetActive(currentLevel == level);
-        SetSelect(currentLevel == level);
 
-        scrollbar.value = 0;
+        receiveMask.SetActive(level <= currentLevel);
+        SetSelect(level == currentLevel + 1);
+
+        scrollbar.value = 1;
     }
 
     private void SetSelect(bool value)

@@ -7,7 +7,7 @@ public class ItemFactory : SerializedMonoBehaviour
 {
     [Searchable, SerializeField] private List<Item> items;
     public Dictionary<int, Reward[]> LevelRewards = new();
-    public Dictionary<int, Reward[]> LevelUnlocks = new();
+    public Dictionary<int, Item[]> LevelUnlocks = new();
     public Dictionary<string, GameObject> avatarEffects;
 
     #region MVC
@@ -113,7 +113,7 @@ public class ItemFactory : SerializedMonoBehaviour
         return LevelRewards.ContainsKey(level) ? LevelRewards[level] : null;
     }
 
-    public Reward[] GetUnlocksByLevel(int level)
+    public Item[] GetUnlocksByLevel(int level)
     {
         return LevelUnlocks.ContainsKey(level) ? LevelUnlocks[level] : null;
     }
