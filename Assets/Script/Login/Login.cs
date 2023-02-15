@@ -209,7 +209,7 @@ public class Login : MyApplication
 
         Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
         var result = await auth.SignInAnonymouslyAsync();
-
+        
         if (result == null)
         {
             print("登入失敗");

@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Controller_Lobby : ControllerBehavior
 {
+    public Callback OnLobbyOpen;
+    
     public void Init()
     {
         App.model.lobby.ExpBuffer = App.system.player.Exp;
@@ -24,8 +26,9 @@ public class Controller_Lobby : ControllerBehavior
         App.system.room.OpenRooms();
         
         SetBuffer();
-        
         CheckPerDayRefresh();
+        
+        OnLobbyOpen?.Invoke();
     }
 
     public void Close()

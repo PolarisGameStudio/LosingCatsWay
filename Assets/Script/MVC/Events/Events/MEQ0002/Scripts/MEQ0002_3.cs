@@ -7,6 +7,7 @@ public class MEQ0002_3 : Quest
 {
     public override void Init()
     {
+        base.Init();
         App.system.myTime.OnFirstLogin += Bind;
     }
 

@@ -26,10 +26,10 @@ public class UnlockGridSystem : MvcBehaviour
 
     public void Active()
     {
-        // if (!IsCanUnlock())
-        //     return;
+        if (!IsCanUnlock())
+            return;
 
-        int gridLevel = App.system.player.GridSizeLevel - 1;
+        int gridLevel = App.system.player.GridSizeLevel;
         Item item = unlockItems[gridLevel].item;
 
         int count = App.system.player.Diamond;
@@ -101,10 +101,10 @@ public class UnlockGridSystem : MvcBehaviour
     {
         int gridLevel = App.system.player.GridSizeLevel;
 
-        if (gridLevel == 11)
+        if (gridLevel == 13)
             return false;
 
-        int unlockLevel = unlockLevels[gridLevel - 1];
+        int unlockLevel = unlockLevels[gridLevel];
         int level = App.system.player.Level;
 
         return level >= unlockLevel;

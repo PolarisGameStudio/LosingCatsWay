@@ -44,9 +44,6 @@ public class MyGridSystem : MvcBehaviour
 
     private void CreateFloor() //TODO Floor pattern
     {
-        // width = App.system.player.GridSize;
-        // height = App.system.player.GridSize;
-
         viewGridArray = new MyGrid[width, height];
         buildGridArray = new SpriteRenderer[width, height];
 
@@ -555,7 +552,7 @@ public class MyGridSystem : MvcBehaviour
     private int GetGridSize()
     {
         int level = Math.Clamp(App.system.player.GridSizeLevel, 1, 11);
-        int result = 5 + (level - 1) * 2;
+        int result = 5 + level * 2;
 
         return result;
     }

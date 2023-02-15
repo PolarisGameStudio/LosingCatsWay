@@ -141,7 +141,6 @@ public class Controller_Shop : ControllerBehavior
                     OnBuyComplete?.Invoke(item);
                     OnBuyByValue?.Invoke(item, App.model.shop.BuyCount);
                 }
-
                 return;
             }
 

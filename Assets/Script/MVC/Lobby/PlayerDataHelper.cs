@@ -51,7 +51,7 @@ public class PlayerDataHelper
         player.Level = playerData.Level == 0 ? 1 : playerData.Level;
         player.Exp = playerData.Exp;
         player.DiamondCatSlot = playerData.DiamondCatSlot;
-        player.GridSizeLevel = playerData.GridSizeLevel == 0 ? 1 : playerData.GridSizeLevel;
+        player.GridSizeLevel = playerData.GridSizeLevel == 0 ? 0 : playerData.GridSizeLevel;
         player.PlayerGender = playerData.StartTutorialEnd == false ? -1 : playerData.PlayerGender;
         player.UsingIcon = string.IsNullOrEmpty(playerData.UsingIcon) ? string.Empty : playerData.UsingIcon;
         player.UsingAvatar = string.IsNullOrEmpty(playerData.UsingAvatar) ? "PAT001" : playerData.UsingAvatar;
