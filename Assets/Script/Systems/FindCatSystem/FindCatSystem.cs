@@ -15,8 +15,11 @@ public class FindCatSystem : MvcBehaviour
     [SerializeField] private Sprite[] backgrounds;
     [SerializeField] private TextMeshProUGUI gateName;
     [SerializeField] private TextMeshProUGUI gateContent;
+    [SerializeField] private Image light;
+    [SerializeField] private Sprite[] lightSprites;
 
-    [Title("NoFindCats")] [SerializeField] private int findCountLimit;
+    [Title("NoFindCats")]
+    [SerializeField] private int findCountLimit;
     [SerializeField, ReadOnly] private int alreadyFindCount;
 
     [SerializeField, ReadOnly] private FindCatMap activeMap;
@@ -97,6 +100,7 @@ public class FindCatSystem : MvcBehaviour
     {
         mapIndex = index;
         gateBg.sprite = backgrounds[index];
+        light.sprite = lightSprites[index];
         alreadyFindCount = 0;
 
         App.system.bgm.FadeOut();

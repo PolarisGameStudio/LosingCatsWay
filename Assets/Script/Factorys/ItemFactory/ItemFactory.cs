@@ -6,7 +6,8 @@ using Sirenix.OdinInspector;
 public class ItemFactory : SerializedMonoBehaviour
 {
     [Searchable, SerializeField] private List<Item> items;
-    public Dictionary<int, Reward[]> LevelRewards = new Dictionary<int, Reward[]>();
+    public Dictionary<int, Reward[]> LevelRewards = new();
+    public Dictionary<int, Reward[]> LevelUnlocks = new();
     public Dictionary<string, GameObject> avatarEffects;
 
     #region MVC
@@ -110,6 +111,11 @@ public class ItemFactory : SerializedMonoBehaviour
     public Reward[] GetRewardsByLevel(int level)
     {
         return LevelRewards.ContainsKey(level) ? LevelRewards[level] : null;
+    }
+
+    public Reward[] GetUnlocksByLevel(int level)
+    {
+        return LevelUnlocks.ContainsKey(level) ? LevelUnlocks[level] : null;
     }
 
     public List<Item> GetUnlockItemsByLevel(int level) // 取等級解鎖的Items // todo LevelUpSystem, CatGuideCard的解鎖項

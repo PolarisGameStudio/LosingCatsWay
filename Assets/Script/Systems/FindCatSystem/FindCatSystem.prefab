@@ -65,7 +65,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2104176936286472889}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}
@@ -1669,6 +1669,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: bcb3b31335003424f80b57269c64b507, type: 3}
   gateName: {fileID: 6738904787608294648}
   gateContent: {fileID: 6738904787070804549}
+  light: {fileID: 6738904787315345152}
+  lightSprites:
+  - {fileID: 21300000, guid: 706f764ff1548c141bf7802b555a4e72, type: 3}
+  - {fileID: 21300000, guid: 0b89e85925bcc564dbffe567b769b60e, type: 3}
   findCountLimit: 15
   alreadyFindCount: 0
   activeMap: {fileID: 0}
@@ -10541,7 +10545,7 @@ GameObject:
   - component: {fileID: 6738904787315345153}
   - component: {fileID: 6738904787315345152}
   m_Layer: 5
-  m_Name: White
+  m_Name: RightLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10588,14 +10592,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.69803923}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 42ff3e85abb20184480571632d865e47, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 706f764ff1548c141bf7802b555a4e72, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
