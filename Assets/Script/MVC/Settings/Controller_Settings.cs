@@ -62,7 +62,7 @@ public class Controller_Settings : ControllerBehavior
             FirebaseAuth auth = FirebaseAuth.DefaultInstance;
             auth.SignOut();
             
-            App.system.confirm.Active(ConfirmTable.Fix, () =>
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix, () =>
             {
                 var tmp = FindObjectOfType<LoadScene>(); 
                 if (tmp != null)

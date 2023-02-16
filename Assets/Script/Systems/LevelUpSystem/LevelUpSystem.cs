@@ -35,10 +35,11 @@ public class LevelUpSystem : MvcBehaviour
         levelUpText.text = afterLevel.ToString();
         levelDownText.text = beforeLevel.ToString();
 
-        var unlockItems = App.factory.itemFactory.GetUnlockItemsByLevel(afterLevel);
-        var levelRewards = App.factory.itemFactory.GetRewardsByLevel(afterLevel);
+        var unlockArray = App.factory.itemFactory.GetUnlocksByLevel(afterLevel);
+        var unlockItems = new List<Item>(unlockArray);
+        // var levelRewards = App.factory.itemFactory.GetRewardsByLevel(afterLevel);
         
-        App.system.reward.SetDatas(levelRewards);
+        // App.system.reward.SetDatas(levelRewards);
 
         if (unlockItems.Count <= 0)
         {
@@ -53,7 +54,10 @@ public class LevelUpSystem : MvcBehaviour
                     unlocks[i].SetActive(true);
                     
                     var unlock = unlockItems[i];
-                    unlockContents[i].text = unlock.Name;
+                    string key = unlock.id.Contains("IRM") ? "ULK003" : unlock.id;
+                    string unlockHead = App.factory.stringFactory.GetUnlockHead(key);
+                    unlockContents[i].text = unlockHead + unlock.Name;
+                    
                     continue;
                 }
                 
@@ -120,7 +124,7 @@ public class LevelUpSystem : MvcBehaviour
     {
         ResetSibling();
         view.InstantHide();
-        App.system.reward.Open(App.factory.itemFactory.LevelRewards[App.system.player.Level], false);
+        // App.system.reward.Open(App.factory.itemFactory.LevelRewards[App.system.player.Level], false);
     }
 
     private void SetLastSibling()

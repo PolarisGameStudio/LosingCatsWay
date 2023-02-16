@@ -144,7 +144,7 @@ public class Controller_Pedia : ControllerBehavior
 
         if (klc0001.Count < 10)
         {
-            App.system.confirm.Active(ConfirmTable.Fix);
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
             return;
         }
 
@@ -422,11 +422,8 @@ public class Controller_Pedia : ControllerBehavior
         if (count < 1)
             return;
 
-        App.system.confirm.Active(ConfirmTable.Fix, () =>
-        {
-            App.system.quest.KnowledgeCardStatus[variety]++;
-            RefreshCatItems();
-        });
+        App.system.quest.KnowledgeCardStatus[variety]++;
+        RefreshCatItems();
     }
 
     #endregion

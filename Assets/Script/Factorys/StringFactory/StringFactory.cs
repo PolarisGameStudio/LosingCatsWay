@@ -11,57 +11,57 @@ public class StringFactory : SerializedMonoBehaviour
     [Title("Item")] 
     [SerializeField] private Dictionary<string, StringData> ItemName;
     [SerializeField] private Dictionary<string, StringData> ItemDescription;
-    [SerializeField] private Dictionary<string, StringData> UseItemTitle = new Dictionary<string, StringData>();
+    [SerializeField] private Dictionary<string, StringData> UseItemTitle;
     [SerializeField] private Dictionary<string, StringData> ItemType;
 
     [Title("Character")] 
     [SerializeField] private Dictionary<string, StringData> CharacterName;
 
     [Title("CatNotify")]
-    [SerializeField] private Dictionary<string, StringData> CatNotifyData = new Dictionary<string, StringData>();
+    [SerializeField] private Dictionary<string, StringData> CatNotifyData;
 
     [Title("Confirm")] 
-    [SerializeField] private Dictionary<string, StringData> ConfirmTitleData = new Dictionary<string, StringData>();
-    [SerializeField] private Dictionary<string, StringData> ConfirmContentData = new Dictionary<string, StringData>();
+    [SerializeField] private Dictionary<string, StringData> ConfirmTitleData;
+    [SerializeField] private Dictionary<string, StringData> ConfirmContentData;
 
     [Title("Npc")] 
-    [SerializeField] private Dictionary<string, StringData> NpcData = new Dictionary<string, StringData>();
+    [SerializeField] private Dictionary<string, StringData> NpcData;
 
     [Title("Quest")] 
-    [SerializeField] private Dictionary<string, StringData> QuestData = new Dictionary<string, StringData>();
-    [SerializeField] private Dictionary<string, StringData> QuestTitleData = new Dictionary<string, StringData>();
+    [SerializeField] private Dictionary<string, StringData> QuestData;
+    [SerializeField] private Dictionary<string, StringData> QuestTitleData;
 
     [Title("Cat")] 
-    [SerializeField] private Dictionary<string, string> KittyNames = new Dictionary<string, string>();
-    [SerializeField] private Dictionary<string, StringData> CatVarietyData = new Dictionary<string, StringData>();
-    [SerializeField] private Dictionary<string, StringData> PersonalityData = new Dictionary<string, StringData>();
-    [SerializeField] private Dictionary<string, StringData> TraitData = new Dictionary<string, StringData>();
+    [SerializeField] private Dictionary<string, string> KittyNames;
+    [SerializeField] private Dictionary<string, StringData> CatVarietyData;
+    [SerializeField] private Dictionary<string, StringData> PersonalityData;
+    [SerializeField] private Dictionary<string, StringData> TraitData;
 
     [Title("Unlock")] 
-    [SerializeField] private Dictionary<string, StringData> UnlockData = new Dictionary<string, StringData>();
+    [SerializeField] private Dictionary<string, StringData> UnlockHead;
 
     [Title("Diary")]
-    [SerializeField] private Dictionary<string, StringData> DiaryTitle_A = new Dictionary<string, StringData>();
-    [SerializeField] private Dictionary<string, StringData> DiaryTitle_B = new Dictionary<string, StringData>();
-    [SerializeField] private Dictionary<string, StringData> DiaryTitle_C = new Dictionary<string, StringData>();
-    [SerializeField] private Dictionary<string, StringData> DiaryTitle_D = new Dictionary<string, StringData>();
-    [SerializeField] private Dictionary<string, StringData> DiaryTitle_E = new Dictionary<string, StringData>();
-    [SerializeField] private Dictionary<string, StringData> DiaryContent_A = new Dictionary<string, StringData>();
-    [SerializeField] private Dictionary<string, StringData> DiaryContent_B = new Dictionary<string, StringData>();
-    [SerializeField] private Dictionary<string, StringData> DiaryContent_C = new Dictionary<string, StringData>();
-    [SerializeField] private Dictionary<string, StringData> DiaryContent_D = new Dictionary<string, StringData>();
-    [SerializeField] private Dictionary<string, StringData> DiaryContent_E = new Dictionary<string, StringData>();
+    [SerializeField] private Dictionary<string, StringData> DiaryTitle_A;
+    [SerializeField] private Dictionary<string, StringData> DiaryTitle_B;
+    [SerializeField] private Dictionary<string, StringData> DiaryTitle_C;
+    [SerializeField] private Dictionary<string, StringData> DiaryTitle_D;
+    [SerializeField] private Dictionary<string, StringData> DiaryTitle_E;
+    [SerializeField] private Dictionary<string, StringData> DiaryContent_A;
+    [SerializeField] private Dictionary<string, StringData> DiaryContent_B;
+    [SerializeField] private Dictionary<string, StringData> DiaryContent_C;
+    [SerializeField] private Dictionary<string, StringData> DiaryContent_D;
+    [SerializeField] private Dictionary<string, StringData> DiaryContent_E;
     
     [Title("Pedia")]
-    [SerializeField] private Dictionary<string, StringData> PediaTitle = new Dictionary<string, StringData>();
-    [SerializeField] private Dictionary<string, StringData> PediaContent = new Dictionary<string, StringData>();
+    [SerializeField] private Dictionary<string, StringData> PediaTitle;
+    [SerializeField] private Dictionary<string, StringData> PediaContent;
 
     [Title("Game")]
-    [SerializeField] private Dictionary<string, StringData> GameString = new Dictionary<string, StringData>();
+    [SerializeField] private Dictionary<string, StringData> GameString;
 
     [Title("Gender")]
-    [SerializeField] private Dictionary<string, string> boyString = new Dictionary<string, string>();
-    [SerializeField] private Dictionary<string, string> girlString = new Dictionary<string, string>();
+    [SerializeField] private Dictionary<string, string> boyString;
+    [SerializeField] private Dictionary<string, string> girlString;
 
     [Title("Health")]
     [SerializeField] private Dictionary<string, StringData> sickName;
@@ -73,8 +73,8 @@ public class StringFactory : SerializedMonoBehaviour
     [SerializeField] private Dictionary<string, StringData> ageLevelStringDatas;
 
     [Title("FindCat")]
-    [SerializeField] private Dictionary<string, StringData> MapNameData = new Dictionary<string, StringData>();
-    [SerializeField] private Dictionary<string, StringData> MapContentData = new Dictionary<string, StringData>();
+    [SerializeField] private Dictionary<string, StringData> MapNameData;
+    [SerializeField] private Dictionary<string, StringData> MapContentData;
 
     [Title("Clinic")]
     [SerializeField] private Dictionary<string, StringData> paymentName;
@@ -275,10 +275,10 @@ public class StringFactory : SerializedMonoBehaviour
 
     #endregion
 
-    public string GetUnlock(string id)
+    public string GetUnlockHead(string id)
     {
-        string result = UnlockData[CountryId].Contents.ContainsKey(id)
-            ? UnlockData[CountryId].Contents[id]
+        string result = UnlockHead[CountryId].Contents.ContainsKey(id)
+            ? UnlockHead[CountryId].Contents[id]
             : "要叫阿邦上";
         return result;
     }

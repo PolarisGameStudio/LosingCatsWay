@@ -88,7 +88,7 @@ public class Controller_Information : ControllerBehavior
     public void DiamondUnlockCatSlot()
     {
         int price = App.model.information.NextDiamondSlotPrice;
-        App.system.confirm.ActiveByInsert(ConfirmTable.BuyConfirm, "", App.factory.stringFactory.GetUnlock("ULK001"),() =>
+        App.system.confirm.ActiveByInsert(ConfirmTable.BuyConfirm, "", App.factory.stringFactory.GetItemName("ULK001"),() =>
         {
             if (!App.system.player.ReduceDiamond(price))
             {
