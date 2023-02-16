@@ -27,8 +27,6 @@ public class LoadScene : MonoBehaviour
 
     private void Start()
     {
-        DontDestroyOnLoad(this);
-
         var rect = transform.GetComponent<RectTransform>();
 
         var localScaleX = rect.localScale.x;
@@ -57,7 +55,7 @@ public class LoadScene : MonoBehaviour
     {
         loadSceneBg.DOFade(0, 0.5f).SetEase(Ease.OutExpo).From(1).OnComplete(() =>
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }).SetDelay(2);
     }
 

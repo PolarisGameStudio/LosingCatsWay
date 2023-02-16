@@ -154,7 +154,7 @@ public class View_MonthSign : ViewBehaviour
             dateObjects[i].SetDouble(false);
         }
 
-        // todo if不是月卡return
+        // todo vip
 
         List<int> vipDays = new List<int> { 4, 7, 11, 14, 18, 21, 25, 28 };
         for (int i = 0; i < dateObjects.Length; i++)

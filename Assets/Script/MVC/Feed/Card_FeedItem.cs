@@ -30,7 +30,8 @@ public class Card_FeedItem : MvcBehaviour
     public void SetData(Cat cat)
     {
         catSkin.ChangeSkin(cat.cloudCatData);
-        catSkin.SetStatusFace(cat.cloudCatData);
+        if (cat.cloudCatData.CatData.CatAge > 3)
+            catSkin.SetStatusFace(cat.cloudCatData);
         chipInfo.SetData(cat.cloudCatData);
 
         int mood = CatExtension.GetCatMood(cat.cloudCatData);

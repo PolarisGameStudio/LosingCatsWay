@@ -56,7 +56,8 @@ public class CatInformationCard : MvcBehaviour
         moodImage.sprite = App.factory.catFactory.GetMoodSprite(mood);
 
         catSkin.ChangeSkin(cloudCatData);
-        catSkin.SetStatusFace(cloudCatData);
+        if (cloudCatData.CatData.CatAge > 3)
+            catSkin.SetStatusFace(cloudCatData);
     }
 
     public void SetActive(bool active)

@@ -18,6 +18,12 @@ public class View_Archive : ViewBehaviour
     public override void Open()
     {
         base.Open();
+
+        for (int i = 0; i < cardArchives.Length; i++)
+        {
+            int index = i;
+            DOVirtual.DelayedCall(0.4f, () => cardArchives[index].CheckRedActivate());
+        }
         
         for (int i = 0; i < cardCanvasGroups.Length; i++)
         {

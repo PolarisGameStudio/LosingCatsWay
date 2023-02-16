@@ -31,15 +31,6 @@ public class View_DailyQuest : ViewBehaviour
 
     [Title("View")] public View_DailyQuestWatchAd watchAd;
     
-    public override void Init()
-    {
-        base.Init();
-        App.model.dailyQuest.OnQuestsChange += OnQuestsChange;
-        App.model.dailyQuest.OnTotalQuestsChange += OnTotalQuestsChange;
-        
-        _lobbyDailyQuestRed = App.view.lobby.lobbyDailyQuestRed;
-    }
-
     public override void Open()
     {
         UIView.InstantShow();
@@ -55,8 +46,19 @@ public class View_DailyQuest : ViewBehaviour
             rt.DOAnchorPos(end, 0.25f).SetEase(Ease.OutSine).SetEase(Ease.OutBack).SetDelay(0.1f * i);
             cardCanvasGroups[i].DOFade(1, 0.25f).SetEase(Ease.InCubic).SetDelay(0.1f * i);
         }
+        
+        CheckRedActivate();
     }
 
+    public override void Init()
+    {
+        base.Init();
+        App.model.dailyQuest.OnQuestsChange += OnQuestsChange;
+        App.model.dailyQuest.OnTotalQuestsChange += OnTotalQuestsChange;
+        
+        _lobbyDailyQuestRed = App.view.lobby.lobbyDailyQuestRed;
+    }
+    
     public void OnQuestsChange(object value)
     {
         var quests = (List<Quest>)value;
@@ -131,6 +133,21 @@ public class View_DailyQuest : ViewBehaviour
             totalReceiveEffects.gameObject.SetActive(false);
             if (totalReceiveEffects.isPlaying)
                 totalReceiveEffects.Stop();
+        }
+    }
+
+    private void CheckRedActivate()
+    {
+        if (totalQuestRed.activeSelf)
+        {
+            totalQuestRed.SetActive(false);
+            DOVirtual.DelayedCall(0.4f, () => totalQuestRed.SetActive(true));
+        }
+
+        for (int i = 0; i < card_DailyQuests.Length; i++)
+        {
+            var card = card_DailyQuests[i];
+            card.CheckRedActivate();
         }
     }
 }

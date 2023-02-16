@@ -241,6 +241,11 @@ public class Login : MyApplication
         post.Open();
     }
 
+    public void OpenSettings()
+    {
+        controller.settings.Open();
+    }
+
     private string GenerateRandomString(int length)
     {
         if (length <= 0)

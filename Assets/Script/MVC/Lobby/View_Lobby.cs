@@ -270,43 +270,43 @@ public class View_Lobby : ViewBehaviour
         if (lobbyDailyQuestRed.activeSelf)
         {
             lobbyDailyQuestRed.SetActive(false);
-            DOVirtual.DelayedCall(0.5f, () => lobbyDailyQuestRed.SetActive(true));
+            DOVirtual.DelayedCall(0.35f, () => lobbyDailyQuestRed.SetActive(true));
         }
 
         if (archiveRedPoint.activeSelf)
         {
             archiveRedPoint.SetActive(false);
-            DOVirtual.DelayedCall(0.5f, () => archiveRedPoint.SetActive(true));
+            DOVirtual.DelayedCall(0.35f, () => archiveRedPoint.SetActive(true));
         }
 
         if (mailRedPoint.activeSelf)
         {
             mailRedPoint.SetActive(false);
-            DOVirtual.DelayedCall(0.5f, () => mailRedPoint.SetActive(true));
+            DOVirtual.DelayedCall(0.35f, () => mailRedPoint.SetActive(true));
         }
 
         if (mallRedPoint.activeSelf)
         {
             mallRedPoint.SetActive(false);
-            DOVirtual.DelayedCall(0.5f, () => mallRedPoint.SetActive(true));
+            DOVirtual.DelayedCall(0.35f, () => mallRedPoint.SetActive(true));
         }
         
         if (bagRedPoint.activeSelf)
         {
             bagRedPoint.SetActive(false);
-            DOVirtual.DelayedCall(0.5f, () => bagRedPoint.SetActive(true));
+            DOVirtual.DelayedCall(0.35f, () => bagRedPoint.SetActive(true));
         }
         
         if (catRedPoint.activeSelf)
         {
             catRedPoint.SetActive(false);
-            DOVirtual.DelayedCall(0.5f, () => catRedPoint.SetActive(true));
+            DOVirtual.DelayedCall(0.35f, () => catRedPoint.SetActive(true));
         }
         
         if (friendRedPoint.activeSelf)
         {
             friendRedPoint.SetActive(false);
-            DOVirtual.DelayedCall(0.5f, () => friendRedPoint.SetActive(true));
+            DOVirtual.DelayedCall(0.35f, () => friendRedPoint.SetActive(true));
         }
     }
 }

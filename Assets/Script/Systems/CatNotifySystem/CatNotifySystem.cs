@@ -71,4 +71,10 @@ public class CatNotifySystem : MvcBehaviour
 
         return null;
     }
+
+    public void CheckRedActivate()
+    {
+        for (int i = 0; i < displayedNotifies.Count; i++)
+            displayedNotifies[i].CheckRedActivate();
+    }
 }

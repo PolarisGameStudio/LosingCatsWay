@@ -46,4 +46,12 @@ public class Card_DailyQuest : Card_Quest
         getTween.delay = 0.2f;
         getTween.Play();
     }
+
+    public void CheckRedActivate()
+    {
+        if (!red.activeSelf)
+            return;
+        red.SetActive(false);
+        DOVirtual.DelayedCall(0.16f * transform.GetSiblingIndex(), () => red.SetActive(true));
+    }
 }

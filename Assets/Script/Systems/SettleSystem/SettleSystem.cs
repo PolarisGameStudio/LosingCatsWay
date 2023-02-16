@@ -6,7 +6,6 @@ using TMPro;
 using Sirenix.OdinInspector;
 using Doozy.Runtime.UIManager.Containers;
 using DG.Tweening;
-using Random = UnityEngine.Random;
 
 public class SettleSystem : MvcBehaviour
 {

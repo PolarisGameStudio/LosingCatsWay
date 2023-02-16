@@ -27,11 +27,11 @@ public class DebugTool_Cat
         catData.IsFavorite = false;
         
         if (isAdult)
-            catData.BornTime = Timestamp.FromDateTime(Timestamp.GetCurrentTimestamp().ToDateTime() - TimeSpan.FromDays(5));
+            catData.BornTime = Timestamp.FromDateTime(Timestamp.GetCurrentTimestamp().ToDateTime() - TimeSpan.FromDays(10));
         else
             catData.BornTime = Timestamp.GetCurrentTimestamp();
 
-        catData.ChipId = String.Empty;
+        catData.ChipId = string.Empty;
 
         CloudSave_CatSkinData catSkinData = new CloudSave_CatSkinData();
         if (IsPurebred(catData.Variety))

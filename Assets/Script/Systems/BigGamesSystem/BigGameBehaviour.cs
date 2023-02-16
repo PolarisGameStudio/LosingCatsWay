@@ -25,6 +25,7 @@ public class BigGameBehaviour : MvcBehaviour
     private int _score;
     private int _exp;
     private int _coins;
+    private Reward[] _rewards;
 
     private CloudCatData _cloudCatData;
 
@@ -85,44 +86,35 @@ public class BigGameBehaviour : MvcBehaviour
         _exp = App.system.player.playerDataSetting.GetBigGameExpByChance(chance);
         _coins = App.system.player.playerDataSetting.GetBigGameCoinsByChance(App.system.player.Level, chance);
         _score = Convert.ToInt32(100f / hearts.Length * chance);
+        
         string country = App.factory.stringFactory.GetCountryByLocaleIndex();
         string gameName = howToPlayData.titleData[country];
-        App.system.settle.Active(gameName, _cloudCatData, _exp, _coins, 0, _score, null, CheckKnowledgeCard);
+        
+        CheckKnowledgeCard();
+        
+        App.system.settle.Active(gameName, _cloudCatData, _exp, _coins, 0, _score, _rewards, Close);
     }
     
     private void CheckKnowledgeCard()
     {
+        _rewards = null;
+
         if (App.system.tutorial.isTutorial)
-        {
-            Close();
             return;
-        }
 
         if (_score < 30)
-        {
-            Close();
             return;
-        }
 
         int knowledgeCard = PlayerPrefs.GetInt("KnowledgeCard");
 
         if (knowledgeCard >= 7)
-        {
-            Close();
             return;
-        }
 
         if (Random.value > 0.5f)
-        {
-            Close();
             return;
-        }
         
-        Reward[] rewards = new Reward[1];
-        rewards[0] = new Reward(App.factory.itemFactory.GetItem("KLC0001"), 1);
-        
-        App.system.reward.Open(rewards);
-        App.system.reward.OnClose += Close;
+        _rewards = new Reward[1];
+        _rewards[0] = new Reward(App.factory.itemFactory.GetItem("KLC0001"), 1);
         
         PlayerPrefs.SetInt("KnowledgeCard", knowledgeCard);
     }

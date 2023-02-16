@@ -34,7 +34,8 @@ public class Cat_Entrance : MvcBehaviour
     public void SetCatData(CloudCatData cloudCatData)
     {
         catSkin.ChangeSkin(cloudCatData);
-        catSkin.SetStatusFace(cloudCatData);
+        if (cloudCatData.CatData.CatAge > 3)
+            catSkin.SetStatusFace(cloudCatData);
         startScale = catRect.localScale;
         CatIdle();
 

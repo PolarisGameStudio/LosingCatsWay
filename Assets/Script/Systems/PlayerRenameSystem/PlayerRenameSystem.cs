@@ -80,7 +80,8 @@ public class PlayerRenameSystem : MvcBehaviour
         App.system.confirm.Active(ConfirmTable.RenameConfirm, () => 
         {
             App.system.player.PlayerName = inputField.text;
-            renameItem.Count -= 1;
+            if (!IsFreeRename)
+                renameItem.Count -= 1;
             OnRenameComplete?.Invoke();
         }, uIView.Show);
     }

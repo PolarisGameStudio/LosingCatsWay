@@ -69,4 +69,12 @@ public class Card_CatNotify : MvcBehaviour
     {
         popSeq.Kill();
     }
+    
+    public void CheckRedActivate()
+    {
+        if (!redDot.activeSelf)
+            return;
+        redDot.SetActive(false);
+        DOVirtual.DelayedCall(0.45f, () => redDot.SetActive(true));
+    }
 }

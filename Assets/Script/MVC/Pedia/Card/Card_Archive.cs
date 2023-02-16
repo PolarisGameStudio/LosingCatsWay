@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -62,5 +63,13 @@ public class Card_Archive : Card_Quest
     {
         int index = transform.GetSiblingIndex();
         App.controller.pedia.GetArchiveReward(index);
+    }
+
+    public void CheckRedActivate()
+    {
+        if (!redDot.activeSelf)
+            return;
+        redDot.SetActive(false);
+        DOVirtual.DelayedCall(0.05f * transform.GetSiblingIndex(), () => redDot.SetActive(true));
     }
 }

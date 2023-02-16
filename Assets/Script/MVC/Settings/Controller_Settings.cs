@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Firebase.Auth;
 using Firebase.Firestore;
 using UnityEngine;
 using I2.Loc;
@@ -50,19 +51,22 @@ public class Controller_Settings : ControllerBehavior
 
     public void DeleteAccount()
     {
-        string playerId = App.system.player.PlayerId;
+        string userId = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
 
         App.system.confirm.Active(ConfirmTable.Fix, async () =>
         {
             FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-            DocumentReference cityRef = db.Collection("Players").Document(playerId);
+            DocumentReference cityRef = db.Collection("Players").Document(userId);
             await cityRef.DeleteAsync();
 
-            Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+            FirebaseAuth auth = FirebaseAuth.DefaultInstance;
             auth.SignOut();
             
             App.system.confirm.Active(ConfirmTable.Fix, () =>
             {
+                var tmp = FindObjectOfType<LoadScene>(); 
+                if (tmp != null)
+                    Destroy(tmp);
                 StartCoroutine(LoadLoginScene());
             });
         });

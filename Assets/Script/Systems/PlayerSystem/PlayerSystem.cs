@@ -275,6 +275,9 @@ public class PlayerSystem : SerializedMonoBehaviour
 
     public void AddExp(int value)
     {
+        if (Level >= 40)
+            return;
+        
         int result = Exp + value;
         int nextExp = NextLevelExp;
         

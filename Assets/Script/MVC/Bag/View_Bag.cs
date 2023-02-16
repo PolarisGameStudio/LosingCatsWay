@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
-using Doozy.Runtime.UIManager.Components;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -33,6 +32,12 @@ public class View_Bag : ViewBehaviour
     public GameObject[] redPoints;
 
     private List<Card_BagItem> cardBagItems = new List<Card_BagItem>();
+
+    public override void Open()
+    {
+        base.Open();
+        CheckRedActivate();
+    }
 
     public override void Close()
     {
@@ -179,5 +184,17 @@ public class View_Bag : ViewBehaviour
             cardBagItems[i].SetFocus(false);
 
         cardBagItems[index].SetFocus(true);
+    }
+
+    private void CheckRedActivate()
+    {
+        for (int i = 0; i < redPoints.Length; i++)
+        {
+            if (!redPoints[i].activeSelf)
+                continue;
+            var tmp = redPoints[i];
+            tmp.SetActive(false);
+            DOVirtual.DelayedCall(0.35f, () => tmp.gameObject.SetActive(true));
+        }
     }
 }
