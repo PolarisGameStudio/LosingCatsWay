@@ -19,6 +19,8 @@ public class LevelUpSystem : MvcBehaviour
 
     private int siblingIndex;
 
+    public Callback OnClose;
+
     [Button]
     public void Up()
     {
@@ -124,6 +126,7 @@ public class LevelUpSystem : MvcBehaviour
     {
         ResetSibling();
         view.InstantHide();
+        OnClose?.Invoke();
         // App.system.reward.Open(App.factory.itemFactory.LevelRewards[App.system.player.Level], false);
     }
 
