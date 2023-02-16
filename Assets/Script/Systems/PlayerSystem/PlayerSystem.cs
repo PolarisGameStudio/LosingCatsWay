@@ -267,6 +267,17 @@ public class PlayerSystem : SerializedMonoBehaviour
     // 升級所需經驗
     public int NextLevelExp => playerDataSetting.GetNextLevelUpExp(Level);
 
+    public bool Vip
+    {
+        get
+        {
+            if (!App.model.mall.PurchaseRecords.ContainsKey("IMP00001"))
+                return false;
+            
+            return App.model.mall.PurchaseRecords["IMP00001"].BuyCount > 0;
+        }
+    }
+
     #endregion
 
     #endregion
