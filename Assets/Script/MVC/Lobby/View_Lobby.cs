@@ -79,6 +79,8 @@ public class View_Lobby : ViewBehaviour
         tip.DOAnchorPosX(-34f, 0.25f).SetEase(Ease.OutBack).From(new Vector2(tip.sizeDelta.x * 2 + 34f, tip.anchoredPosition.y));
         nextQuestChat.transform.DOScale(Vector2.one, 0.4f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.1625f);
         nextRewardChat.transform.DOScale(Vector2.one, 0.4f).From(Vector2.zero).SetEase(Ease.OutBack).SetDelay(0.1625f);
+        
+        CheckRedActivate();
     }
 
     public override void Close()
@@ -91,7 +93,6 @@ public class View_Lobby : ViewBehaviour
         base.Init();
         App.system.player.OnPlayerNameChange += OnPlayerNameChange;
         App.system.player.OnLevelChange += OnLevelChange;
-        // App.system.player.OnExpChange += OnExpChange;
         App.system.player.OnCoinChange += OnCoinChange;
         App.system.player.OnDiamondChange += OnDiamondChange;
         App.system.player.OnUsingIconChange += OnUsingIconChange;
@@ -105,7 +106,6 @@ public class View_Lobby : ViewBehaviour
         App.model.dailyQuest.OnQuestsChange += OnQuestsChange;
         App.model.catGuide.OnCurrentLevelBestRewardChange += OnCurrentLevelBestRewardChange;
         
-        // App.model.lobby.OnTmpExpChange += OnTmpExpChange;
         App.model.lobby.OnTmpMoneyChange += OnTmpMoneyChange;
         App.model.lobby.OnTmpDiamondChange += OnTmpDiamondChange;
         App.model.lobby.OnTmpLevelChange += OnTmpLevelChange;
@@ -155,22 +155,6 @@ public class View_Lobby : ViewBehaviour
         });
     }
     
-    // private void OnTmpExpChange(object from, object to)
-    // {
-    //     int beforeExp = (int)from;
-    //     int afterExp = (int)to;
-    //     int nextLevelExp = App.system.player.NextLevelExp; // todo bug: 升級的話會抓到下個等級的經驗
-    //
-    //     expFill.DOKill();
-    //     expFill.fillAmount = 1f / nextLevelExp * beforeExp;
-    //     expFill.DOFillAmount(1f / nextLevelExp * afterExp, 0.3f).SetDelay(1.75f).SetEase(Ease.OutExpo)
-    //         .OnComplete(() =>
-    //         {
-    //             if (expFill.fillAmount >= 1)
-    //                 expFill.DOFillAmount(0, 0).SetDelay(0.05f);
-    //         });
-    // }
-
     private void OnReduceDiamondChange(object value)
     {
         diamondText.text = App.system.player.Diamond.ToString();
@@ -254,20 +238,6 @@ public class View_Lobby : ViewBehaviour
         nextRewardLevelText.text = (level + 1).ToString();
     }
 
-    // private void OnExpChange(object from, object to)
-    // {
-    //     // 只要上線SetData用
-    //     App.system.player.OnExpChange -= OnExpChange;
-    //
-    //     int lastExp = Convert.ToInt32(from);
-    //     int newExp = Convert.ToInt32(to);
-    //     int fullExp = App.system.player.NextLevelExp;
-    //     
-    //     print($"last:{lastExp}, new:{newExp}, full:{fullExp}");
-    //     
-    //     expFill.fillAmount = 1f / fullExp * lastExp;
-    // }
-
     private void OnCoinChange(object value)
     {
         // 只要上線SetData用
@@ -293,5 +263,50 @@ public class View_Lobby : ViewBehaviour
             return;
         }
         expFill.DOFillAmount(1f / nextExp * nowExp, 0.25f).SetEase(Ease.OutExpo).SetDelay(1.75f);
+    }
+
+    private void CheckRedActivate() // 檢查紅點有沒有在用
+    {
+        if (lobbyDailyQuestRed.activeSelf)
+        {
+            lobbyDailyQuestRed.SetActive(false);
+            DOVirtual.DelayedCall(0.5f, () => lobbyDailyQuestRed.SetActive(true));
+        }
+
+        if (archiveRedPoint.activeSelf)
+        {
+            archiveRedPoint.SetActive(false);
+            DOVirtual.DelayedCall(0.5f, () => archiveRedPoint.SetActive(true));
+        }
+
+        if (mailRedPoint.activeSelf)
+        {
+            mailRedPoint.SetActive(false);
+            DOVirtual.DelayedCall(0.5f, () => mailRedPoint.SetActive(true));
+        }
+
+        if (mallRedPoint.activeSelf)
+        {
+            mallRedPoint.SetActive(false);
+            DOVirtual.DelayedCall(0.5f, () => mallRedPoint.SetActive(true));
+        }
+        
+        if (bagRedPoint.activeSelf)
+        {
+            bagRedPoint.SetActive(false);
+            DOVirtual.DelayedCall(0.5f, () => bagRedPoint.SetActive(true));
+        }
+        
+        if (catRedPoint.activeSelf)
+        {
+            catRedPoint.SetActive(false);
+            DOVirtual.DelayedCall(0.5f, () => catRedPoint.SetActive(true));
+        }
+        
+        if (friendRedPoint.activeSelf)
+        {
+            friendRedPoint.SetActive(false);
+            DOVirtual.DelayedCall(0.5f, () => friendRedPoint.SetActive(true));
+        }
     }
 }

@@ -25,10 +25,10 @@ public class VersionChecker
         if (!isActive)
             return false;
 
-        if (!isVersionCheckActive)
+        if (!isVersionCheckActive) // 要不要確認版本
             return true;
 
-        if (clientVersion != serverVersion) // todo 是不是要先檢查版本才檢查isVersionCheckActive
+        if (clientVersion != serverVersion)
             return false;
 
         return false;

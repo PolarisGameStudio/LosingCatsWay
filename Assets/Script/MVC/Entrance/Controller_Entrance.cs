@@ -53,7 +53,7 @@ public class Controller_Entrance : ControllerBehavior
         App.view.entrance.OpenChooseDiary();
     }
 
-    public void CloseChooseDiary()
+    private void CloseChooseDiary()
     {
         App.view.entrance.CloseChooseDiary();
     }
