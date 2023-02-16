@@ -32,7 +32,7 @@ public class UnlockGridSystem : MvcBehaviour
         int gridLevel = App.system.player.GridSizeLevel;
         Item item = unlockItems[gridLevel].item;
 
-        int count = App.system.player.Diamond;
+        int count = App.system.player.CatMemory;
 
         if (item.id == "Money")
             count = App.system.player.Coin;
@@ -61,11 +61,11 @@ public class UnlockGridSystem : MvcBehaviour
                 return;
             }
         }
-        else
+        if (item.id == "CatMemory")
         {
-            if (!App.system.player.ReduceDiamond(needCount))
+            if (!App.system.player.ReduceCatMemory(needCount))
             {
-                App.system.confirm.Active(ConfirmTable.NotEnoughDiamond);
+                App.system.confirm.Active(ConfirmTable.Fix);
                 return;
             }
         }

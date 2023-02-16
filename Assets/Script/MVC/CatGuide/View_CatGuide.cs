@@ -72,12 +72,12 @@ public class View_CatGuide : ViewBehaviour
         List<int> levels = new List<int>();
         for (int i = start; i <= end; i++)
             levels.Add(i);
-        for (int i = 0; i < botCards.Length; i++)
-        {
-            botCards[i].SetData(levels[i]);
-            botCards[i].SetSelect(levels[i] == level + 1);
-            botCards[i].SetIsGet(level + 1 > levels[i]);
-            botCards[i].gameObject.SetActive(true);
-        }
+        // for (int i = 0; i < botCards.Length; i++)
+        // {
+        //     botCards[i].SetData(levels[i]);
+        //     botCards[i].SetSelect(levels[i] == level + 1);
+        //     botCards[i].SetIsGet(level + 1 > levels[i]);
+        //     botCards[i].gameObject.SetActive(true);
+        // }
     }
 }

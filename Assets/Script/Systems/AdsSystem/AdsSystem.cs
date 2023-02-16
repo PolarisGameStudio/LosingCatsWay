@@ -31,8 +31,6 @@ public class AdsSystem : MvcBehaviour
             return;
         }
         
-        AddEvent();
-
         string adUnitId;
         
 #if UNITY_IOS
@@ -51,6 +49,7 @@ public class AdsSystem : MvcBehaviour
             _failAction = failAction;
         
         rewardedAd = new RewardedAd(adUnitId);
+        AddEvent();
         AdRequest request = new AdRequest.Builder().Build();
         rewardedAd.LoadAd(request);
     }
