@@ -34,7 +34,7 @@ public class MallContainer_Tool : MallContainer
     public override void Init()
     {
         base.Init();
-        
+
         App.system.myTime.OnFirstLogin += () =>
         {
             PlayerPrefs.SetInt("adsDiamondCount", 0);
@@ -64,66 +64,54 @@ public class MallContainer_Tool : MallContainer
 
     public void BuyDiamond_Ads()
     {
-        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        App.system.ads.Active(AdsType.MallDiamond, () =>
         {
-            App.system.ads.Active(AdsType.MallDiamond, () =>
-            {
-                int adsDiamondCount = PlayerPrefs.GetInt("adsDiamondCount");
-                PlayerPrefs.SetInt("adsDiamondCount", adsDiamondCount + 1);
+            int adsDiamondCount = PlayerPrefs.GetInt("adsDiamondCount");
+            PlayerPrefs.SetInt("adsDiamondCount", adsDiamondCount + 1);
 
-                GetItem(adsDiamond);
-                Refresh();
-            });
+            GetItem(adsDiamond);
+            Refresh();
         });
     }
 
     public void BuyMoney_Ads()
     {
-        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        App.system.ads.Active(AdsType.MallCoin, () =>
         {
-            App.system.ads.Active(AdsType.MallCoin, () =>
-            {
-                int adsMoneyCount = PlayerPrefs.GetInt("adsMoneyCount");
-                PlayerPrefs.SetInt("adsMoneyCount", adsMoneyCount + 1);
+            int adsMoneyCount = PlayerPrefs.GetInt("adsMoneyCount");
+            PlayerPrefs.SetInt("adsMoneyCount", adsMoneyCount + 1);
 
-                GetItem(adsMoney);
-                Refresh();
-            });
+            GetItem(adsMoney);
+            Refresh();
         });
     }
 
     public void BuyTool_Ads()
     {
-        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        App.system.ads.Active(AdsType.MallTool, () =>
         {
-            App.system.ads.Active(AdsType.MallTool, () =>
-            {
-                var randomIndex = Random.Range(0, adsTool.Length);
+            var randomIndex = Random.Range(0, adsTool.Length);
 
-                var rewards = new Reward[1];
-                rewards[0] = adsTool[randomIndex];
+            var rewards = new Reward[1];
+            rewards[0] = adsTool[randomIndex];
 
-                int adsToolCount = PlayerPrefs.GetInt("adsToolCount");
-                PlayerPrefs.SetInt("adsToolCount", adsToolCount + 1);
+            int adsToolCount = PlayerPrefs.GetInt("adsToolCount");
+            PlayerPrefs.SetInt("adsToolCount", adsToolCount + 1);
 
-                GetItem(rewards);
-                Refresh();
-            });
+            GetItem(rewards);
+            Refresh();
         });
     }
 
     public void BuyFeed_Ads()
     {
-        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        App.system.ads.Active(AdsType.MallFeed, () =>
         {
-            App.system.ads.Active(AdsType.MallFeed, () =>
-            {
-                int adsFeedCount = PlayerPrefs.GetInt("adsFeedCount");
-                PlayerPrefs.SetInt("adsFeedCount", adsFeedCount + 1);
+            int adsFeedCount = PlayerPrefs.GetInt("adsFeedCount");
+            PlayerPrefs.SetInt("adsFeedCount", adsFeedCount + 1);
 
-                GetItem(adsFeed);
-                Refresh();
-            });
+            GetItem(adsFeed);
+            Refresh();
         });
     }
 

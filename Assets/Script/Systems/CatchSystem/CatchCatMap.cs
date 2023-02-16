@@ -600,7 +600,7 @@ public class CatchCatMap : MvcBehaviour
         };
 
         App.system.catchCat.runAway.Active(cloudCatData,
-            () => { App.system.ads.Active(AdsType.CatchCatRun, NextTurn, cancelEvent.Invoke); }, cancelEvent.Invoke);
+            () => { App.system.ads.Active(AdsType.CatchCatRun, NextTurn); }, cancelEvent.Invoke);
     }
 
     /// 把貓還回伺服器

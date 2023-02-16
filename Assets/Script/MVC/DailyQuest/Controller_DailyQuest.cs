@@ -125,7 +125,11 @@ public class Controller_DailyQuest : ControllerBehavior
     public void SelectReward(int index)
     {
         App.model.dailyQuest.GetRewardIndex = index;
-        OpenWatchAd();
+        
+        if (!App.system.player.Vip)
+            OpenWatchAd();
+        else
+            GetAdsReward();
     }
     
     public void GetReward()
@@ -173,8 +177,13 @@ public class Controller_DailyQuest : ControllerBehavior
                 return;
         
             App.model.dailyQuest.RewardExp += quest.exp;
-        
-            App.system.reward.Open(quest.Rewards);
+
+            var doubleRewards = quest.Rewards;
+            
+            for (int i = 0; i < doubleRewards.Length; i++)
+                doubleRewards[i].count *= 2;
+
+            App.system.reward.Open(doubleRewards);
 
             quest.IsReceived = true;
             App.model.dailyQuest.Quests[index] = quest;
@@ -229,12 +238,16 @@ public class Controller_DailyQuest : ControllerBehavior
 
             // App.model.dailyQuest.RewardExp += quest.exp;
             App.system.player.AddExp(quest.exp);
-        
-            tmp.AddRange(quest.Rewards);
+
+            var doubleReward = quest.Rewards;
+
+            for (int j = 0; j < doubleReward.Length; j++)
+                doubleReward[i].count *= 2;
+
+            tmp.AddRange(doubleReward);
 
             quest.IsReceived = true;
             App.model.dailyQuest.Quests[i] = quest;
-            
             App.model.dailyQuest.Quests = App.model.dailyQuest.Quests;
         }
 
