@@ -46,7 +46,10 @@ public class PlayerSystem : SerializedMonoBehaviour
     public ValueChange OnAddDiamondChange;
     public ValueChange OnReduceDiamondChange;
 
+
     public ValueChange OnCatMemoryChange;
+    public ValueChange OnAddCatMemoryChange;
+    public ValueChange OnReduceCatMemoryChange;
     
     public ValueChange OnDiamondCatSlotChange;
     public ValueChange OnPlayerGenderChange;
@@ -326,6 +329,22 @@ public class PlayerSystem : SerializedMonoBehaviour
 
         Diamond -= value;
         OnReduceDiamondChange?.Invoke(value);
+        return true;
+    }
+    
+    public void AddCatMemory(int value)
+    {
+        CatMemory += value;
+        OnAddCatMemoryChange?.Invoke(value);
+    }
+
+    public bool ReduceCatMemory(int value)
+    {
+        if (CatMemory - value < 0)
+            return false;
+
+        CatMemory -= value;
+        OnReduceCatMemoryChange?.Invoke(value);
         return true;
     }
 

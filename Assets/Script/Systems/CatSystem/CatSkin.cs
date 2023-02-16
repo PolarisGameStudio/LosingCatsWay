@@ -221,8 +221,12 @@ public class CatSkin : MvcBehaviour
 
         SetCatBodyScale(cloudCatData);
         
+    }
+
+    public void SetStatusFace(CloudCatData cloudCatData)
+    {
         CancelInvoke("WaitToChangeFace");
-        
+
         // GUI特例 要變表情
         int mood = CatExtension.GetCatMood(cloudCatData);
 

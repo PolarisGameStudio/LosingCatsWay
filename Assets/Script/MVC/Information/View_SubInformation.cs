@@ -65,6 +65,7 @@ public class View_SubInformation : ViewBehaviour
         string tmpID = "ID:" + cat.cloudCatData.CatData.CatId;
         catIdText.text = tmpID;
         catSkin.ChangeSkin(cat.cloudCatData);
+        catSkin.SetStatusFace(cat.cloudCatData);
 
         chooseSkinButton.interactable = false;
         if (cat.cloudCatData.CatData.CatAge <= 3)

@@ -122,6 +122,7 @@ public class View_Cultive : ViewBehaviour
         if (cat == null) return;
 
         catSkin.ChangeSkin(cat.cloudCatData);
+        catSkin.SetStatusFace(cat.cloudCatData);
         nameText.text = cat.cloudCatData.CatData.CatName;
         
         for (int i = 0; i < genderImages.Length; i++)
