@@ -13,25 +13,24 @@ public class Controller_Shelter : ControllerBehavior
     [SerializeField] private Card_ChipInfo info;
     [SerializeField] private Scrollbar scrollbar;
 
-    [Title("Quest")]
-    [SerializeField] private SHR001 freeRefresh;
+    [Title("Quest")] [SerializeField] private SHR001 freeRefresh;
     [SerializeField] private SHR002 adsRefresh;
 
     public CallbackValue OnAdoptCat;
-    
+
     #region Basic
 
     public void Init()
     {
         App.system.myTime.OnFirstLogin += ResetRefreshPerDay;
         App.system.myTime.OnAlreadyLogin += UpdateRefresh;
-        
+
         freeRefresh.Init();
         adsRefresh.Init();
-        
+
         GetCloudCatDatas();
     }
-    
+
     public void Open()
     {
         App.system.bgm.FadeIn().Play("Shelter");
@@ -78,25 +77,25 @@ public class Controller_Shelter : ControllerBehavior
         List<CloudCatData> cloudCatDatas = await App.system.cloudSave.LoadCloudCatDatasByOwner("Shelter", 12);
 
         App.model.shelter.CloudCatDatas = cloudCatDatas;
-        
+
         for (int i = 0; i < App.view.shelter.cages.Length; i++)
         {
             App.view.shelter.cages[i].button.interactable = true;
             App.view.shelter.cages[i].catSkin.SetActive(true);
         }
-        
+
         scrollbar.value = 0;
     }
 
     #endregion
-    
+
     #region Refresh
-    
+
     public void RefreshShelterCats()
     {
         if (!freeRefresh.IsReach)
         {
-            App.system.confirm.Active(ConfirmTable.RefreshConfirm, () => 
+            App.system.confirm.Active(ConfirmTable.RefreshConfirm, () =>
             {
                 GetCloudCatDatas();
                 freeRefresh.Progress++;
@@ -108,21 +107,18 @@ public class Controller_Shelter : ControllerBehavior
         if (!adsRefresh.IsReach)
         {
             //TODO Ads Refresh Confirm
-            App.system.confirm.Active(ConfirmTable.Fix, () => 
+            App.system.ads.Active(AdsType.ShelterRefresh, () =>
             {
-                App.system.ads.Active(AdsType.ShelterRefresh, () =>
-                {
-                    //TODO Ads
-                    GetCloudCatDatas();
-                    adsRefresh.Progress++;
-                    UpdateRefresh();
+                //TODO Ads
+                GetCloudCatDatas();
+                adsRefresh.Progress++;
+                UpdateRefresh();
 
-                    if (App.model.shelter.AdsRefresh <= 0)
-                        return;
+                if (App.model.shelter.AdsRefresh <= 0)
+                    return;
 
-                    App.model.shelter.Cooldown = App.system.myTime.MyTimeNow.AddMinutes(1);
-                    InvokeRepeating(nameof(CooldownCounter), 1f, 1f);
-                });
+                App.model.shelter.Cooldown = App.system.myTime.MyTimeNow.AddMinutes(1);
+                InvokeRepeating(nameof(CooldownCounter), 1f, 1f);
             });
         }
     }
@@ -140,10 +136,10 @@ public class Controller_Shelter : ControllerBehavior
 
         if (App.model.shelter.FreeRefresh > 0)
             return;
-        
+
         App.model.shelter.AdsRefresh = adsRefresh.TargetCount - adsRefresh.Progress;
     }
-    
+
     private void ResetRefreshPerDay()
     {
         freeRefresh.Progress = 0;
@@ -204,7 +200,7 @@ public class Controller_Shelter : ControllerBehavior
                 App.system.confirm.OnlyConfirm().Active(ConfirmTable.NeedMoreFeedRoom);
             else
                 App.system.confirm.OnlyConfirm().Active(ConfirmTable.NeedMoreCatSlot);
-            
+
             return;
         }
 
@@ -220,7 +216,7 @@ public class Controller_Shelter : ControllerBehavior
             var cloudCatData = App.model.shelter.SelectedAdoptCloudCatData;
 
             Cat cat = App.system.cat.CreateCatObject(cloudCatData);
-            
+
             cat.GetLikeSnack();
             cat.GetLikeSoup();
 
@@ -237,22 +233,23 @@ public class Controller_Shelter : ControllerBehavior
             cloudCatData.CatDiaryData.AdoptTimestamp = Timestamp.GetCurrentTimestamp();
 
             App.system.cloudSave.SaveCloudCatData(cloudCatData);
-            
+
             CloseCage(cloudCatData.CatData.CatId);
-            
+
             OnAdoptCat?.Invoke(cloudCatData);
-            
-            App.system.catRename.CantCancel().Active(cloudCatData, "Shelter", () =>
-            {
-                DOVirtual.DelayedCall(0.1f, () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.HasNewCat));
-            });
+
+            App.system.catRename.CantCancel().Active(cloudCatData, "Shelter",
+                () =>
+                {
+                    DOVirtual.DelayedCall(0.1f, () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.HasNewCat));
+                });
         });
     }
 
     private void CloseCage(string CatId)
     {
         App.view.shelter.cages[App.model.shelter.SelectedCageIndex].SetActive(false);
-        
+
         //ValueChange
         List<CloudCatData> cats = App.model.shelter.CloudCatDatas;
         for (int i = 0; i < cats.Count; i++)

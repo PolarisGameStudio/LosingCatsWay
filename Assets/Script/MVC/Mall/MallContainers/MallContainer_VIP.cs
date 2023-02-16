@@ -24,7 +24,7 @@ public class MallContainer_VIP : MallContainer
             if (!App.system.player.ReduceDiamond(360))
             {
                 Reward[] rewards = new Reward[1];
-                // rewards[0] = new Reward()
+                rewards[0] = new Reward(App.factory.itemFactory.GetItem("Ghost_Black"), 1);
                 App.system.reward.Open(rewards);
             }else
                 App.system.confirm.Active(ConfirmTable.NotEnoughDiamond);

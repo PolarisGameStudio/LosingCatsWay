@@ -12,7 +12,6 @@ public class AdsSystem : MvcBehaviour
 
     private RewardedAd rewardedAd;
     private UnityAction _endAction;
-    private UnityAction _failAction;
 
     public bool isEditorMode = false;
 
@@ -23,35 +22,38 @@ public class AdsSystem : MvcBehaviour
 #endif
     }
 
-    public void Active(AdsType adsType, UnityAction endAction, UnityAction failAction = null)
+    public void Active(AdsType adsType, UnityAction endAction)
     {
         if (isEditorMode)
         {
             endAction?.Invoke();
             return;
         }
-        
-        string adUnitId;
-        
-#if UNITY_IOS
-        adUnitId = GetAdUnitIdByIos(adsType);
-#else
-        adUnitId = GetAdUnitIdByAndroid(adsType);
-#endif
-        App.system.waiting.Open();
 
-        _endAction = null;
-        _failAction = null;
-        
-        _endAction = endAction;
-        
-        if (failAction != null)
-            _failAction = failAction;
-        
-        rewardedAd = new RewardedAd(adUnitId);
-        AddEvent();
-        AdRequest request = new AdRequest.Builder().Build();
-        rewardedAd.LoadAd(request);
+        UnityAction action = () =>
+        {
+            string adUnitId;
+
+#if UNITY_IOS
+            adUnitId = GetAdUnitIdByIos(adsType);
+#else
+            adUnitId = GetAdUnitIdByAndroid(adsType);
+#endif
+            App.system.waiting.Open();
+
+            _endAction = null;
+            _endAction = endAction;
+
+            rewardedAd = new RewardedAd(adUnitId);
+            AddEvent();
+            AdRequest request = new AdRequest.Builder().Build();
+            rewardedAd.LoadAd(request);
+        };
+
+        if (!App.system.player.Vip)
+            App.system.confirm.Active(ConfirmTable.Fix, action);
+        else
+            action.Invoke();
     }
 
     private void AddEvent()
@@ -87,10 +89,7 @@ public class AdsSystem : MvcBehaviour
     {
         print("Loaded Not Ok");
         App.system.waiting.Close();
-        App.system.confirm.Active(ConfirmTable.Fix, () =>
-        {
-            _failAction?.Invoke();
-        });
+        App.system.confirm.Active(ConfirmTable.Fix);
         ClearEvent();
     }
 
@@ -98,10 +97,7 @@ public class AdsSystem : MvcBehaviour
     {
         print("Play Faild");
         App.system.waiting.Close();
-        App.system.confirm.Active(ConfirmTable.Fix, () =>
-        {
-            _failAction?.Invoke();
-        });
+        App.system.confirm.Active(ConfirmTable.Fix);
         ClearEvent();
     }
 

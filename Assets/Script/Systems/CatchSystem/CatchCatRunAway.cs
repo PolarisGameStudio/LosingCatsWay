@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Doozy.Runtime.UIManager.Containers;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
@@ -13,6 +14,10 @@ public class CatchCatRunAway : MvcBehaviour
     [SerializeField] private TextMeshProUGUI idText;
     [SerializeField] private GameObject okMask;
 
+    [Title("VIP")] 
+    [SerializeField] private GameObject adsButton;
+    [SerializeField] private GameObject vipButton;
+    
     private Callback OkEvent, CancelEvent;
 
     public void Active(CloudCatData cloudCatData, Callback okEvent = null, Callback cancelEvent = null)
@@ -25,6 +30,10 @@ public class CatchCatRunAway : MvcBehaviour
 
         OkEvent = okEvent;
         CancelEvent = cancelEvent;
+
+        bool flag = App.system.player.Vip;
+        adsButton.SetActive(!flag);
+        vipButton.SetActive(flag);
         
         uiView.Show();
     }

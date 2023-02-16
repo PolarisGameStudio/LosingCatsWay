@@ -11,16 +11,15 @@ public class Controller_MonthSign : ControllerBehavior
     public Transform FrontTransform; // 圖層解決
     public Transform BackTransform;
 
-    [Title("Resign")]
-    [SerializeField] private MSR001 freeResign;
+    [Title("Resign")] [SerializeField] private MSR001 freeResign;
     [SerializeField] private MSR002 adsResign;
-    
+
     public async void Init()
     {
         int day = App.system.myTime.MyTimeNow.Day;
         if (App.model.monthSign.SignIndexs[day - 1] == 0)
             App.system.openFlow.AddAction(Open);
-        
+
         App.model.monthSign.MonthRewards = await LoadMonthRewardData(App.system.myTime.MyTimeNow.Month);
     }
 
@@ -35,7 +34,7 @@ public class Controller_MonthSign : ControllerBehavior
     {
         App.view.monthSign.Close();
         // App.system.cloudSave.UpdateCloudSignData();
-        
+
         if (!App.system.openFlow.isEnd)
             App.system.openFlow.NextAction();
         else
@@ -80,7 +79,7 @@ public class Controller_MonthSign : ControllerBehavior
     {
         int todayIndex = App.model.monthSign.TodayIndex;
         var signs = App.model.monthSign.SignIndexs;
-        
+
         if (!freeResign.IsReach)
         {
             for (int i = 0; i < signs.Count; i++)
@@ -103,25 +102,22 @@ public class Controller_MonthSign : ControllerBehavior
 
         if (!adsResign.IsReach)
         {
-            App.system.confirm.Active(ConfirmTable.Fix, () =>
+            App.system.ads.Active(AdsType.SignMonthlySign, () =>
             {
-                App.system.ads.Active(AdsType.SignMonthlySign, () =>
+                for (int i = 0; i < signs.Count; i++)
                 {
-                    for (int i = 0; i < signs.Count; i++)
-                    {
-                        if (i == todayIndex)
-                            break;
-                        if (signs[i] == 1)
-                            continue;
-
-                        ReceiveReward(i + 1);
-                        signs[i] = 1;
-                        adsResign.Progress++;
-                        CheckCanResign();
-                        App.model.monthSign.SignIndexs = signs;
+                    if (i == todayIndex)
                         break;
-                    }
-                });
+                    if (signs[i] == 1)
+                        continue;
+
+                    ReceiveReward(i + 1);
+                    signs[i] = 1;
+                    adsResign.Progress++;
+                    CheckCanResign();
+                    App.model.monthSign.SignIndexs = signs;
+                    break;
+                }
             });
         }
     }
