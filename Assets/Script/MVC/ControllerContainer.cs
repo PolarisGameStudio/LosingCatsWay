@@ -28,6 +28,7 @@
     public Controller_Information information;
 
     public Controller_Lobby lobby;
+    public Controller_LevelReward levelReward;
 
     public Controller_Mall mall;
     public Controller_Map map;

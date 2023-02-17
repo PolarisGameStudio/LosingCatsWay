@@ -95,5 +95,12 @@ public class Controller_Settings : ControllerBehavior
             SelectLanguage(0);
         else
             SelectLanguage(PlayerPrefs.GetInt("LanguageIndex"));
+        
+        SaveSettings();
+    }
+
+    public void OpenUrl(string url)
+    {
+        Application.OpenURL(url);
     }
 }

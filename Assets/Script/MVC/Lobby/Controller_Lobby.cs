@@ -121,9 +121,9 @@ public class Controller_Lobby : ControllerBehavior
         DOVirtual.DelayedCall(0.25f, () => App.controller.mall.SelectPage(6));
     }
 
-    public void OpenCatGuide()
+    public void OpenLevelReward()
     {
-        App.controller.catGuide.Open();
+        App.controller.levelReward.Open();
         App.system.soundEffect.Play("ED00004");
     }
 

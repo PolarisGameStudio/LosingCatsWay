@@ -19,7 +19,6 @@ public class CatDatasHelper
             {"CatData", cloudCatData.CatData},
             {"CatDiaryData", cloudCatData.CatDiaryData},
             {"CatHealthData", cloudCatData.CatHealthData},
-            {"CatServerData", cloudCatData.CatServerData},
             {"CatSkinData", cloudCatData.CatSkinData},
             {"CatSurviveData", cloudCatData.CatSurviveData},
         };

@@ -13,4 +13,6 @@ public class CloudSave_CatHealthData
     [FirestoreProperty] public Timestamp LastMetDoctorTimeStamp { get; set; }
     [FirestoreProperty] public int MetDoctorCount { get; set; }
     [FirestoreProperty] public Timestamp NoBugExpireTimestamp { get; set; }
+
+    public bool IsDead;
 }

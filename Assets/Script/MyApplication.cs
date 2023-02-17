@@ -87,6 +87,7 @@ public class MyApplication : MonoBehaviour
         controller.bag.Init();
         controller.settings.Init(); //BGM SE 之後
         controller.friend.Init();
+        controller.levelReward.Init();
         
         FindObjectOfType<LoadScene>()?.Close();
 

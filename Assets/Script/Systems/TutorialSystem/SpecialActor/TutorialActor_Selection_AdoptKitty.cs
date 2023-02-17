@@ -35,7 +35,7 @@ public class TutorialActor_Selection_AdoptKitty : TutorialActor_Selection
         base.Reject();
         if (!isShake)
         {
-            App.system.soundEffect.Play("Cat_Fail");
+            App.system.soundEffect.Play("ED00028");
             VibrateExtension.Vibrate(VibrateType.Nope);
             rejectRect.DOShakeAnchorPos(0.175f, strength, 10, 0)
                 .OnStart(() => isShake = true)

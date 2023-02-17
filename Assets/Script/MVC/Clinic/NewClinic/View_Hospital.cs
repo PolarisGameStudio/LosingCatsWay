@@ -7,7 +7,7 @@ using UnityEngine;
 public class View_Hospital : ViewBehaviour
 {
     [SerializeField] private GameObject bgMask;
-    [SerializeField] private GameObject npcObject;
+    public NPC npc;
     [SerializeField] private TextMeshProUGUI moneyText;
     [SerializeField] private TextMeshProUGUI diamondText;
 
@@ -43,13 +43,13 @@ public class View_Hospital : ViewBehaviour
     public override void Open()
     {
         base.Open();
-        npcObject.SetActive(true);
+        npc.gameObject.SetActive(true);
     }
 
     public override void Close()
     {
         base.Close();
-        npcObject.SetActive(false);
+        npc.gameObject.SetActive(false);
     }
     
     public void OpenChooseFunction()

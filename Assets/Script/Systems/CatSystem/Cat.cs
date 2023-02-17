@@ -519,7 +519,7 @@ public class Cat : MvcBehaviour
         if (Random.value > percent)
             return false;
         
-        cloudCatData.CatServerData.IsDead = true;
+        cloudCatData.CatHealthData.IsDead = true;
         return true;
     }
 
@@ -537,7 +537,7 @@ public class Cat : MvcBehaviour
         if (Random.value > percent)
             return false;
         
-        cloudCatData.CatServerData.IsDead = true;
+        cloudCatData.CatHealthData.IsDead = true;
         return true;
     }
     
@@ -642,9 +642,6 @@ public class Cat : MvcBehaviour
 
     public void CheckCatStatusPerDay()
     {
-        if (cloudCatData.CatServerData.IsDead) // 該死了
-            return;
-
         if (CheckNaturalDead()) // 要自然死了
             return;
 

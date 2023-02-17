@@ -46,8 +46,18 @@ public class Login : MyApplication
     private bool isRequest = false;
     private IAppleAuthManager appleAuthManager;
 
+    private void Init()
+    {
+        system.bgm.Init();
+        system.soundEffect.Init();
+        
+        system.bgm.Play("Login");
+    }
+    
     private async void Start()
     {
+        Init();
+        
         VersionChecker versionChecker = new VersionChecker();
         bool isActive = await versionChecker.Check();
 
@@ -238,11 +248,13 @@ public class Login : MyApplication
 
     public void OpenAnnouncement()
     {
+        system.soundEffect.Play("ED00004");
         post.Open();
     }
 
     public void OpenSettings()
     {
+        system.soundEffect.Play("ED00004");
         controller.settings.Open();
     }
 

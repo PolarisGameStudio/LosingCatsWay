@@ -923,7 +923,7 @@ public class Controller_Cultive : ControllerBehavior
 
     public void DebugDead()
     {
-        App.model.cultive.SelectedCat.cloudCatData.CatServerData.IsDead = true;
+        App.model.cultive.SelectedCat.cloudCatData.CatHealthData.IsDead = true;
         App.view.cultive.catSkin.ChangeSkin(App.model.cultive.SelectedCat.cloudCatData);
     }
 

@@ -15,7 +15,7 @@ public class Controller_Map : ControllerBehavior
     {
         App.system.soundEffect.Play("ED00004");
         App.system.bgm.FadeOut();
-        App.system.transition.Active(0.5f, () =>
+        App.system.transition.Active(0.15f, () =>
         {
             App.view.map.Close();
             App.controller.shelter.Open();

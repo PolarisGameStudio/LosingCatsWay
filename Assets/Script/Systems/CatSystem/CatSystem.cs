@@ -42,7 +42,7 @@ public class CatSystem : MvcBehaviour
             myCats[i].CheckCatStatusPerDay();
 
         for (int i = myCats.Count - 1; i >= 0; i--) // 如果要死就進入死亡流程
-            if (myCats[i].cloudCatData.CatServerData.IsDead)
+            if (myCats[i].cloudCatData.CatHealthData.IsDead)
             {
                 if (i == 0)
                     App.model.entrance.DeadCat = myCats[i];

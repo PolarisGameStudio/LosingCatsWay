@@ -7,8 +7,6 @@ using UnityEngine;
 
 public class Controller_Hospital : ControllerBehavior
 {
-    //todo tutorial接上
-
     public void CloseToMap()
     {
         App.system.bgm.FadeOut();
@@ -21,8 +19,13 @@ public class Controller_Hospital : ControllerBehavior
     
     public void Open()
     {
+        App.system.bgm.FadeIn().Play("Hospital");
         App.view.hospital.Open();
-        DOVirtual.DelayedCall(0.25f, OpenChooseFunction);
+        DOVirtual.DelayedCall(0.25f, () =>
+        {
+            OpenChooseFunction();
+            App.view.hospital.npc.Click();
+        });
     }
 
     public void Close()

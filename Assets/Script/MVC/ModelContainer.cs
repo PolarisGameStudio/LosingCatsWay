@@ -31,6 +31,7 @@ public class ModelContainer : MvcBehaviour
     public Model_Information information;
     
     public Model_Lobby lobby;
+    public Model_LevelReward levelReward;
     
     public Model_Mall mall;
     public Model_Map map;

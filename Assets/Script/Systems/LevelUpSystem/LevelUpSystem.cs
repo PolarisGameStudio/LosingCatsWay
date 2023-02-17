@@ -56,7 +56,7 @@ public class LevelUpSystem : MvcBehaviour
                     unlocks[i].SetActive(true);
                     
                     var unlock = unlockItems[i];
-                    string key = unlock.id.Contains("IRM") ? "ULK003" : unlock.id;
+                    string key = GetUnlockKey(unlock.id);
                     string unlockHead = App.factory.stringFactory.GetUnlockHead(key);
                     unlockContents[i].text = unlockHead + unlock.Name;
                     
@@ -71,47 +71,6 @@ public class LevelUpSystem : MvcBehaviour
 
         InvokeRepeating("WaitAnimationEnd", 0.25f, 0.1f);
     }
-    
-    // public void Open()
-    // {
-    //     SetLastSibling();
-    //     view.InstantShow();
-    //
-    //     int level = App.system.player.Level;
-    //
-    //     levelUpText.text = (level + 1).ToString();
-    //     levelDownText.text = level.ToString();
-    //
-    //     var unlockItems = App.factory.itemFactory.GetUnlockItemsByLevel(level + 1);
-    //     var levelRewards = App.factory.itemFactory.GetRewardsByLevel(level + 1);
-    //     
-    //     App.system.reward.SetDatas(levelRewards);
-    //
-    //     if (unlockItems.Count <= 0)
-    //     {
-    //         animator.Play("SwitchText(NoUnlock)", 0, 0);
-    //     }
-    //     else
-    //     {
-    //         for (int i = 0; i < 4; i++)
-    //         {
-    //             if (i < unlockItems.Count)
-    //             {
-    //                 unlocks[i].SetActive(true);
-    //                 
-    //                 var unlock = unlockItems[i];
-    //                 unlockContents[i].text = unlock.Name;
-    //                 continue;
-    //             }
-    //             
-    //             unlocks[i].SetActive(false);
-    //         }
-    //         
-    //         animator.Play("SwitchText", 0, 0);
-    //     }
-    //
-    //     InvokeRepeating("WaitAnimationEnd", 0.25f, 0.1f);
-    // }
 
     private void WaitAnimationEnd()
     {
@@ -142,5 +101,14 @@ public class LevelUpSystem : MvcBehaviour
             return;
         transform.SetSiblingIndex(siblingIndex);
         siblingIndex = -1;
+    }
+
+    private string GetUnlockKey(string id)
+    {
+        if (id.Contains("IRM"))
+            return "ULK003";
+        if (id.Contains("ICL"))
+            return "ULK005";
+        return id;
     }
 }

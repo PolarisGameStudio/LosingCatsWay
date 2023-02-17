@@ -28,6 +28,7 @@
     public View_Information information;
 
     public View_Lobby lobby;
+    public View_LevelReward levelReward;
 
     public View_Mall mall;
     public View_Map map;

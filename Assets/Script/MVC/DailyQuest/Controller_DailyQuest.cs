@@ -8,7 +8,6 @@ public class Controller_DailyQuest : ControllerBehavior
 {
     [SerializeField] private MyTween_Scale totalGetTween;
     
-    public Callback OnClose;
     public Callback OnGetReward;
     public Callback OnGetAdsReward;
 
@@ -93,19 +92,21 @@ public class Controller_DailyQuest : ControllerBehavior
     public void Close()
     {
         App.view.dailyQuest.Close();
-        OnClose?.Invoke();
-        OnClose = null;
         
         if (!App.system.openFlow.isEnd)
-            App.system.openFlow.NextAction();
-        else
-            App.controller.lobby.SetBuffer();
+            App.system.openFlow.NextAction(); // todo 每日任務後面有流程的話會因爲切到等階出BUG 但因爲要讓流程END所以要呼叫Next
     }
 
-    public void OpenCatGuide()
+    public void CloseBySetBuffer()
+    {
+        Close();
+        App.controller.lobby.SetBuffer();
+    }
+
+    public void OpenLevelReward()
     {
         App.view.dailyQuest.Close();
-        App.controller.catGuide.Open();
+        App.controller.levelReward.Open();
     }
 
     #endregion

@@ -43,9 +43,6 @@ public class View_CatGuide : ViewBehaviour
         for (int i = 0; i < cards.Length; i++)
             cards[i].transform.localScale = Vector2.zero;
 
-        for (int i = 0; i < cards.Length; i++)
-            cards[i].DoFlip(0.125f * (i + 1));
-        
         nowLevelGetTween.Play();
     }
 

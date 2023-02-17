@@ -27,13 +27,14 @@ public class View_Shelter : ViewBehaviour
     [SerializeField] private TextMeshProUGUI diamondText;
 
     [Title("Spine")] 
-    public GameObject npc;
+    public NPC npc;
 
     [Title("Refresh")] [SerializeField] private TextMeshProUGUI freeCount;
     [SerializeField] private TextMeshProUGUI adsCount;
     [SerializeField] private GameObject freeTitle;
     [SerializeField] private GameObject adsTitle;
     [SerializeField] private GameObject noCountTitle;
+    [SerializeField] private GameObject noRefreshMask;
     [SerializeField] private GameObject cooldownObject;
     [SerializeField] private TextMeshProUGUI cooldownText;
     [SerializeField] private GameObject refreshObject;
@@ -42,13 +43,13 @@ public class View_Shelter : ViewBehaviour
     {
         base.Open();
         shelterScrollBar.value = 0;
-        npc.SetActive(true);
+        npc.gameObject.SetActive(true);
     }
 
     public override void Close()
     {
         base.Close();
-        npc.SetActive(false);
+        npc.gameObject.SetActive(false);
     }
     
     public override void Init()
@@ -91,10 +92,12 @@ public class View_Shelter : ViewBehaviour
             adsTitle.SetActive(false);
             adsCount.gameObject.SetActive(false);
             noCountTitle.SetActive(true);
+            noRefreshMask.SetActive(true);
             return;
         }
 
         noCountTitle.SetActive(false);
+        noRefreshMask.SetActive(false);
         adsTitle.SetActive(true);
         adsCount.gameObject.SetActive(true);
         adsCount.text = $"({count}/5)";
@@ -111,6 +114,7 @@ public class View_Shelter : ViewBehaviour
         }
 
         noCountTitle.SetActive(false);
+        noRefreshMask.SetActive(false);
         freeTitle.SetActive(true);
         freeCount.gameObject.SetActive(true);
         freeCount.text = $"({count}/3)";

@@ -5669,7 +5669,7 @@ MonoBehaviour:
   - {fileID: 5467990673167058577}
   - {fileID: 5467990672921896672}
   tip: {fileID: 5467990672495854116}
-  nextRewardText: {fileID: 5467990672225897435}
+  nextLevelBestItemText: {fileID: 5467990672225897435}
   nextRewardLevelText: {fileID: 5467990672176534143}
   nextRewardChat: {fileID: 5467990672424144626}
   nextQuestText: {fileID: 5467990673157347933}
@@ -5685,6 +5685,7 @@ MonoBehaviour:
   bagRedPoint: {fileID: 5134222966266057604}
   catRedPoint: {fileID: 7810894737752458196}
   friendRedPoint: {fileID: 1027701990907919709}
+  lobbyLevelRewardRed: {fileID: 2160750336281719262}
 --- !u!114 &5467990671918205687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10000,7 +10001,7 @@ GameObject:
   - component: {fileID: 5467990672424144620}
   - component: {fileID: 5467990672424144621}
   m_Layer: 5
-  m_Name: Button - CatGuide
+  m_Name: Button - LevelReward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10116,7 +10117,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5467990671847018415}
         m_TargetAssemblyTypeName: Controller_Lobby, Assembly-CSharp
-        m_MethodName: OpenCatGuide
+        m_MethodName: OpenLevelReward
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -30753,6 +30754,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CatHouse_Effects
       objectReference: {fileID: 0}
+    - target: {fileID: 107837887681009362, guid: e2071663234621142bb649ebc76bcb50,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 107837887681009363, guid: e2071663234621142bb649ebc76bcb50,
         type: 3}
       propertyPath: m_Pivot.x
@@ -30797,6 +30803,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 107837887681009363, guid: e2071663234621142bb649ebc76bcb50,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 107837887681009363, guid: e2071663234621142bb649ebc76bcb50,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 107837887681009363, guid: e2071663234621142bb649ebc76bcb50,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 107837887681009363, guid: e2071663234621142bb649ebc76bcb50,
         type: 3}
@@ -30857,6 +30878,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 270034974725361618, guid: e2071663234621142bb649ebc76bcb50,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7096988665826857759, guid: e2071663234621142bb649ebc76bcb50,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7096988665826857759, guid: e2071663234621142bb649ebc76bcb50,
         type: 3}

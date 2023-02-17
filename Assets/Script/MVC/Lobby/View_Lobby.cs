@@ -32,7 +32,7 @@ public class View_Lobby : ViewBehaviour
     [Title("Tween-Right")] public RectTransform tip;
 
     [Title("TopRight")]
-    [SerializeField] private TextMeshProUGUI nextRewardText;
+    public TextMeshProUGUI nextLevelBestItemText;
     [SerializeField] private TextMeshProUGUI nextRewardLevelText;
     [SerializeField] private GameObject nextRewardChat;
     [SerializeField] private TextMeshProUGUI nextQuestText;
@@ -54,6 +54,7 @@ public class View_Lobby : ViewBehaviour
     public GameObject bagRedPoint;
     public GameObject catRedPoint;
     public GameObject friendRedPoint;
+    public GameObject lobbyLevelRewardRed;
 
     public override void Open()
     {
@@ -104,7 +105,6 @@ public class View_Lobby : ViewBehaviour
         App.system.room.OnRoomsChange += OnRoomsChange;
         
         App.model.dailyQuest.OnQuestsChange += OnQuestsChange;
-        App.model.catGuide.OnCurrentLevelBestRewardChange += OnCurrentLevelBestRewardChange;
         
         App.model.lobby.OnTmpMoneyChange += OnTmpMoneyChange;
         App.model.lobby.OnTmpDiamondChange += OnTmpDiamondChange;
@@ -181,12 +181,6 @@ public class View_Lobby : ViewBehaviour
     {
         string id = value.ToString();
         playerIcon.sprite = App.factory.itemFactory.GetItem(id).icon;
-    }
-
-    private void OnCurrentLevelBestRewardChange(object value)
-    {
-        var reward = (Reward)value;
-        nextRewardText.text = reward.item.Name;
     }
 
     private void OnQuestsChange(object value)
@@ -271,6 +265,12 @@ public class View_Lobby : ViewBehaviour
         {
             lobbyDailyQuestRed.SetActive(false);
             DOVirtual.DelayedCall(0.35f, () => lobbyDailyQuestRed.SetActive(true));
+        }
+
+        if (lobbyLevelRewardRed.activeSelf)
+        {
+            lobbyLevelRewardRed.SetActive(false);
+            DOVirtual.DelayedCall(0.35f, () => lobbyLevelRewardRed.SetActive(true));
         }
 
         if (archiveRedPoint.activeSelf)

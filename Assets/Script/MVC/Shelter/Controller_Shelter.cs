@@ -35,6 +35,10 @@ public class Controller_Shelter : ControllerBehavior
     {
         App.system.bgm.FadeIn().Play("Shelter");
         App.view.shelter.Open();
+        DOVirtual.DelayedCall(0.2f, () =>
+        {
+            App.view.shelter.npc.Click();
+        });
     }
 
     public void Close()

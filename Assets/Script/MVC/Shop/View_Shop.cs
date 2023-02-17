@@ -28,7 +28,7 @@ public class View_Shop : ViewBehaviour
     [SerializeField] private TextMeshProUGUI diamondText;
 
     [Title("Spine")] 
-    public GameObject npc;
+    public NPC npc;
 
     [Title("MoneyBar")]
     [SerializeField] private Transform shopMoneyBar;
@@ -57,7 +57,7 @@ public class View_Shop : ViewBehaviour
         // base.Open();
         UIView.InstantShow();
         
-        npc.SetActive(true);
+        npc.gameObject.SetActive(true);
         itemsScrollBar.value = 1;
 
         SetParallex(true);
@@ -66,7 +66,7 @@ public class View_Shop : ViewBehaviour
     public override void Close()
     {
         base.Close();
-        npc.SetActive(false);
+        npc.gameObject.SetActive(false);
 
         for (int i = 0; i < layerPool.Count; i++)
             if (layerPool[i].activeSelf)

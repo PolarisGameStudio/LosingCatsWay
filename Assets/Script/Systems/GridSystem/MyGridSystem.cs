@@ -19,11 +19,14 @@ public class MyGridSystem : MvcBehaviour
 
     public int maxHomeParticle;
 
-    [Title("Build")] public GameObject buildTmp;
+    [Title("Build")]
+    public GameObject buildTmp;
     public GameObject buildTmpCircle;
     public SpriteRenderer buildTmpMask;
-
     public Transform nonViewMap;
+
+    [Title("Effects")]
+    public Transform catHouseEffect;
 
     private MyGrid[,] viewGridArray;
     private SpriteRenderer[,] buildGridArray;
@@ -38,6 +41,8 @@ public class MyGridSystem : MvcBehaviour
         CreateFloor();
         SetCameraToOrigin();
         CreateOutSide();
+        
+        SetCatHouseEffectPosition();
     }
 
     #region Floor
@@ -555,5 +560,15 @@ public class MyGridSystem : MvcBehaviour
         int result = 5 + level * 2;
 
         return result;
+    }
+
+    private void SetCatHouseEffectPosition()
+    {
+        float size = height / 2;
+        catHouseEffect.localScale = new Vector3(size, size, size);
+
+        float x = 0 - cellSize * 2;
+        float y = height / 2 * cellSize + cellSize / 2;
+        catHouseEffect.position = new Vector3(x, y, -0.5f);
     }
 }

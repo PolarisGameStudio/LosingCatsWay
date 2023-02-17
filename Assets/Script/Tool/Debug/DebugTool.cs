@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using System;
+using Firebase.Firestore;
 using I2.Loc;
 using UnityEngine.SceneManagement;
 
@@ -59,5 +60,20 @@ public class DebugTool : MvcBehaviour
     {
         App.system.player.AddExp(200);
         App.controller.lobby.SetBuffer();
+    }
+    
+    [Button]
+    public async void Test()
+    {
+        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+        DocumentReference docRef = db.Collection("Test").Document("Test");
+
+        DocumentSnapshot result = await docRef.GetSnapshotAsync();
+        int value = Convert.ToInt32(result.ToDictionary()["Value"]);
+        Dictionary<string, object> datas = new Dictionary<string, object>
+        {
+            { "Value", value + 1 }
+        };
+        await docRef.UpdateAsync(datas);
     }
 }

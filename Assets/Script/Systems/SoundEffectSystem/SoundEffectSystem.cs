@@ -60,8 +60,8 @@ public class SoundEffectSystem : SerializedMonoBehaviour
 
     public void PlayCatMeow()
     {
-        int rand = Random.Range(1, 6);
-        App.system.soundEffect.Play($"CatMeow_{rand}");
+        int rand = Random.Range(47, 52);
+        App.system.soundEffect.Play($"ED000{rand}");
     }
 
     private void OnSetVolumeChange(object value)

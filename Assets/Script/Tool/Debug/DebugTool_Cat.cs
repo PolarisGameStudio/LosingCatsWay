@@ -67,6 +67,7 @@ public class DebugTool_Cat
         catHealthData.MetDoctorCount = 0;
         catHealthData.NoBugExpireTimestamp = new Timestamp();
         catHealthData.IsMetDoctor = false;
+        catHealthData.IsDead = false;
 
         CloudSave_CatDiaryData catDiaryData = new CloudSave_CatDiaryData();
         catDiaryData.DiaryDatas = new List<CloudSave_DiaryData>();
@@ -77,15 +78,11 @@ public class DebugTool_Cat
         catDiaryData.DiaryMoistureScore = 0;
         catDiaryData.DiaryFavourbilityScore = 0;
 
-        CloudSave_CatServerData catServerData = new CloudSave_CatServerData();
-        catServerData.IsDead = false;
-
         cloudCatData.CatData = catData;
         cloudCatData.CatSkinData = catSkinData;
         cloudCatData.CatSurviveData = catSurviveData;
         cloudCatData.CatHealthData = catHealthData;
         cloudCatData.CatDiaryData = catDiaryData;
-        cloudCatData.CatServerData = catServerData;
 
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("Cats").Document(catData.CatId);
@@ -152,6 +149,7 @@ public class DebugTool_Cat
         catHealthData.MetDoctorCount = 0;
         catHealthData.NoBugExpireTimestamp = new Timestamp();
         catHealthData.IsMetDoctor = false;
+        catHealthData.IsDead = false;
 
         CloudSave_CatDiaryData catDiaryData = new CloudSave_CatDiaryData();
         catDiaryData.DiaryDatas = new List<CloudSave_DiaryData>();
@@ -162,15 +160,11 @@ public class DebugTool_Cat
         catDiaryData.DiaryMoistureScore = 0;
         catDiaryData.DiaryFavourbilityScore = 0;
 
-        CloudSave_CatServerData catServerData = new CloudSave_CatServerData();
-        catServerData.IsDead = false;
-
         cloudCatData.CatData = catData;
         cloudCatData.CatSkinData = catSkinData;
         cloudCatData.CatSurviveData = catSurviveData;
         cloudCatData.CatHealthData = catHealthData;
         cloudCatData.CatDiaryData = catDiaryData;
-        cloudCatData.CatServerData = catServerData;
 
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("Cats").Document(catData.CatId);
