@@ -86,7 +86,7 @@ public class View_LevelReward : ViewBehaviour
             var card = cards[i];
             card.SetData(index);
             
-            bool isReceive = receiveProgress > i;
+            bool isReceive = i < receiveProgress;
             bool isReach = index <= level;
             
             card.SetCanReceive(isReach && !isReceive);
