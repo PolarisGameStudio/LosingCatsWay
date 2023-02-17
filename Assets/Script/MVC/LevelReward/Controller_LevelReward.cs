@@ -6,7 +6,6 @@ public class Controller_LevelReward : ControllerBehavior
 {
     public void Init()
     {
-        App.model.levelReward.MaxLevel = 40;
         App.view.levelReward.CheckLobbyRed();
     }
     

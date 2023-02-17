@@ -43,34 +43,15 @@ public class View_LevelReward : ViewBehaviour
         base.Init();
 
         App.system.player.OnLevelChange += OnLevelChange;
-        App.model.levelReward.OnMaxLevelChange += OnMaxLevelChange;
-    }
-
-    private void OnMaxLevelChange(object value)
-    {
-        int maxLevel = (int)value;
-        int nowLevel = App.system.player.Level;
-        int receiveProgress = App.system.quest.QuestReceivedStatusData["LR001"];
-        
-        for (int i = 0; i < maxLevel; i++)
-        {
-            int index = i + 1;
-            var card = cards[i];
-            card.SetData(index);
-            
-            bool isReceive = receiveProgress > i;
-            bool isReach = index <= nowLevel;
-            
-            card.SetCanReceive(isReach && !isReceive);
-            card.SetReceive(isReceive);
-        }
     }
 
     private void OnLevelChange(object value)
     {
         int level = (int)value;
-        Reward[] rewards = App.factory.itemFactory.GetRewardsByLevel(level);
-        
+        Reward[] rewards = App.factory.itemFactory.GetRewardsByLevel(level + 1);
+
+        #region 貓居顯示下等級獎勵
+
         Item bestItem = null;
         for (int i = 0; i < rewards.Length; i++)
             if (rewards[i].item.id.Contains("IRM"))
@@ -90,7 +71,29 @@ public class View_LevelReward : ViewBehaviour
         if (bestItem == null)
             bestItem = App.factory.itemFactory.GetItem("Money");
 
+        App.view.lobby.nextdLevelText.text = (level + 1).ToString();
         App.view.lobby.nextLevelBestItemText.text = bestItem.Name;
+
+        #endregion
+
+        #region 刷新可領取獎勵
+
+        int receiveProgress = App.system.quest.QuestReceivedStatusData["LR001"];
+        
+        for (int i = 0; i < 40; i++)
+        {
+            int index = i + 1;
+            var card = cards[i];
+            card.SetData(index);
+            
+            bool isReceive = receiveProgress > i;
+            bool isReach = index <= level;
+            
+            card.SetCanReceive(isReach && !isReceive);
+            card.SetReceive(isReceive);
+        }
+
+        #endregion
         
         CheckLobbyRed();
     }

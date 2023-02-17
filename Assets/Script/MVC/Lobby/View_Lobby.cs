@@ -6,6 +6,7 @@ using Coffee.UIExtensions;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class View_Lobby : ViewBehaviour
@@ -33,7 +34,7 @@ public class View_Lobby : ViewBehaviour
 
     [Title("TopRight")]
     public TextMeshProUGUI nextLevelBestItemText;
-    [SerializeField] private TextMeshProUGUI nextRewardLevelText;
+    [FormerlySerializedAs("nextRewardLevelText")] public TextMeshProUGUI nextdLevelText;
     [SerializeField] private GameObject nextRewardChat;
     [SerializeField] private TextMeshProUGUI nextQuestText;
     [SerializeField] private GameObject nextQuestChat;
@@ -125,6 +126,8 @@ public class View_Lobby : ViewBehaviour
     {
         int beforeLevel = (int)from;
         int afterLevel = (int)to;
+        
+        nextRewardChat.SetActive(afterLevel < 40);
         
         DOVirtual.DelayedCall(2f, () =>
         {
@@ -227,9 +230,6 @@ public class View_Lobby : ViewBehaviour
         
         int level = Convert.ToInt32(value);
         levelText.text = level.ToString("00");
-        
-        nextRewardChat.SetActive(level < 40);
-        nextRewardLevelText.text = (level + 1).ToString();
     }
 
     private void OnCoinChange(object value)
