@@ -111,7 +111,7 @@ public class CatSkin : MvcBehaviour
         if (catGuiPosition == Vector2.zero)
             catGuiPosition = transform.localPosition;
 
-        if (cloudCatData.CatData.CatAge > 3)
+        if (cloudCatData.CatData.SurviveDays > 3)
         {
             ChangeCatSkin(cloudCatData);
 
@@ -157,7 +157,7 @@ public class CatSkin : MvcBehaviour
 
     private void ChangeLosingCatSkin(CloudCatData cloudCatData)
     {
-        if (cloudCatData.CatData.CatAge > 3)
+        if (cloudCatData.CatData.SurviveDays > 3)
         {
             SetSkeletonDataAsset(false);
 
@@ -298,7 +298,7 @@ public class CatSkin : MvcBehaviour
     {
         Skeleton catSkeleton = GetCatSkeleton();
 
-        if (cloudCatData.CatData.CatAge <= 3)
+        if (cloudCatData.CatData.SurviveDays <= 3)
         {
             catSkeleton.SetAttachment("Eye_Left", "Eye_Left");
             catSkeleton.SetAttachment("Eye_Right", "Eye_Right");

@@ -99,7 +99,7 @@ public class CatPicker : MvcBehaviour
         if (isPicking)
             return;
 
-        int catAgeLevel = CatExtension.GetCatAgeLevel(cat.cloudCatData.CatData.CatAge);
+        int catAgeLevel = CatExtension.GetCatAgeLevel(cat.cloudCatData.CatData.SurviveDays);
         
         if (catAgeLevel == 0)
             App.system.soundEffect.Play("ED00013");

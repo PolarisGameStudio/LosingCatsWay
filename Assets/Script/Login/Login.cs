@@ -32,9 +32,6 @@ public class Login : MyApplication
     [Title("UI")] public GameObject startGameButton;
     [SerializeField] TextMeshProUGUI idText;
 
-    [FormerlySerializedAs("notice")] [Title("NoticeSystem")]
-    public PostSystem post;
-
     [Title("Login")] 
     public UIView loginView;
     public Image bgMask;
@@ -50,6 +47,7 @@ public class Login : MyApplication
     {
         system.bgm.Init();
         system.soundEffect.Init();
+        controller.settings.Init();
         
         system.bgm.Play("Login");
     }
@@ -111,7 +109,7 @@ public class Login : MyApplication
         {
             idText.text = $"UID: {auth.CurrentUser.UserId}";
             startGameButton.SetActive(true);
-            post.Open(true);
+            system.post.Open(true);
         }
         else
         {
@@ -169,7 +167,7 @@ public class Login : MyApplication
                         }
                         
                         idText.text = $"UID: {auth.CurrentUser.UserId}";
-                        post.Open();
+                        system.post.Open();
                         loginView.InstantHide();
                         startGameButton.SetActive(true);
                     });
@@ -205,7 +203,7 @@ public class Login : MyApplication
         }
 
         idText.text = $"UID: {auth.CurrentUser.UserId}";
-        post.Open();
+        system.post.Open();
         loginView.InstantHide();
         startGameButton.SetActive(true);
     }
@@ -228,7 +226,7 @@ public class Login : MyApplication
         }
 
         idText.text = $"UID: {auth.CurrentUser.UserId}";
-        post.Open();
+        system.post.Open();
         loginView.InstantHide();
         startGameButton.SetActive(true);
     }
@@ -249,7 +247,7 @@ public class Login : MyApplication
     public void OpenAnnouncement()
     {
         system.soundEffect.Play("ED00004");
-        post.Open();
+        system.post.Open();
     }
 
     public void OpenSettings()

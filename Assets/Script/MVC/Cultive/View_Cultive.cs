@@ -122,7 +122,7 @@ public class View_Cultive : ViewBehaviour
         if (cat == null) return;
 
         catSkin.ChangeSkin(cat.cloudCatData);
-        if (cat.cloudCatData.CatData.CatAge > 3)
+        if (cat.cloudCatData.CatData.SurviveDays > 3)
             catSkin.SetStatusFace(cat.cloudCatData);
         nameText.text = cat.cloudCatData.CatData.CatName;
         
@@ -142,17 +142,31 @@ public class View_Cultive : ViewBehaviour
         int index = Convert.ToInt32(value);
         index--;
 
-        #region TypeButton白圖切換
+        bool hasChange = false;
 
         for (int i = 0; i < buttonMasks.Length; i++)
         {
             if (i == index)
-                buttonMasks[i].SetActive(true);
+            {
+                if (!buttonMasks[i].activeSelf)
+                {
+                    buttonMasks[i].SetActive(true);
+                    hasChange = true;
+                }
+                else
+                {
+                    hasChange = false;
+                }
+            }
             else
                 buttonMasks[i].SetActive(false);
         }
 
-        #endregion
+        if (!hasChange)
+            return;
+        
+        for (int i = 1; i < itemContent.childCount; i++)
+            itemContent.GetChild(i).transform.DOScale(Vector2.one, 0.15f).From(Vector2.zero).SetDelay((i - 1) * 0.05f);
     }
 
     private void OnSelectedItemsChange(object value)
@@ -192,8 +206,8 @@ public class View_Cultive : ViewBehaviour
             card.SetData(items[i]);
             card.dragSensor.canvas = canvas;
 
-            card.transform.DOScale(0, 0);
-            card.transform.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetDelay(i * 0.09375f);
+            // card.transform.DOScale(0, 0);
+            // card.transform.DOScale(Vector2.one, 0.25f).From(Vector2.zero).SetDelay(i * 0.09375f);
         }
 
         #endregion
@@ -330,7 +344,7 @@ public class View_Cultive : ViewBehaviour
 
         openChooseSkinButton.interactable = false;
         openChooseSkinMask.SetActive(true);
-        if (cloudCatData.CatData.CatAge <= 3)
+        if (cloudCatData.CatData.SurviveDays <= 3)
             return;
         if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId) || cloudCatData.CatHealthData.IsBug)
             return;

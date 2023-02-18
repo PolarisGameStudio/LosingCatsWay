@@ -121,6 +121,8 @@ public class MyApplication : MonoBehaviour
     {
         if (!canSave)
             return;
+        if (system.tutorial.isTutorial)
+            return;
         if (!focus)
             SaveData();
     }
@@ -129,6 +131,8 @@ public class MyApplication : MonoBehaviour
     {
         if (!canSave)
             return;
+        if (system.tutorial.isTutorial)
+            return;
         if (pause)
             SaveData();
     }
@@ -136,6 +140,8 @@ public class MyApplication : MonoBehaviour
     private void OnApplicationQuit()
     {
         if (!canSave)
+            return;
+        if (system.tutorial.isTutorial)
             return;
         SaveData();
     }

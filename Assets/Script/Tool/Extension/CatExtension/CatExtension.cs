@@ -129,22 +129,13 @@ public static class CatExtension
     // 0幼年 1成年 2老年
     public static int GetCatAgeLevel(int surviveDays)
     {
-        if (MathfExtension.IsBetweenEqual(surviveDays, 1, 3))
-        {
+        if (surviveDays <= 3)
             return 0;
-        }
 
-        if (MathfExtension.IsBetweenEqual(surviveDays, 4, 23))
-        {
+        if (surviveDays <= 23)
             return 1;
-        }
 
-        if (surviveDays >= 24)
-        {
-            return 2;
-        }
-
-        return 0;
+        return 2;
     }
 
     public static float GetCatRealSize(float bodyScale)

@@ -68,7 +68,7 @@ public class View_CultiveInfo_Status : ViewBehaviour
 
         catNameText.text = cat.cloudCatData.CatData.CatName;
 
-        bool isKitty = cat.cloudCatData.CatData.CatAge <= 3;
+        bool isKitty = cat.cloudCatData.CatData.SurviveDays <= 3;
 
         catSizeText.text = isKitty ? "25cm" : $"{CatExtension.GetCatRealSize(cat.cloudCatData.CatData.BodyScale):0.00}cm";
         catVarietyText.text = isKitty ? App.factory.stringFactory.GetKittyName() : App.factory.stringFactory.GetCatVariety(cat.cloudCatData.CatData.Variety);

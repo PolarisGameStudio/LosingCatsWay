@@ -76,25 +76,7 @@ public class View_LevelReward : ViewBehaviour
 
         #endregion
 
-        #region 刷新可領取獎勵
-
-        int receiveProgress = App.system.quest.QuestReceivedStatusData["LR001"];
-        
-        for (int i = 0; i < 40; i++)
-        {
-            int index = i + 1;
-            var card = cards[i];
-            card.SetData(index);
-            
-            bool isReceive = i < receiveProgress;
-            bool isReach = index <= level;
-            
-            card.SetCanReceive(isReach && !isReceive);
-            card.SetReceive(isReceive);
-        }
-
-        #endregion
-        
+        CheckCardsReceive();
         CheckLobbyRed();
     }
     
@@ -103,5 +85,33 @@ public class View_LevelReward : ViewBehaviour
         int receiveIndex = App.system.quest.QuestReceivedStatusData["LR001"];
         int level = App.system.player.Level;
         App.view.lobby.lobbyLevelRewardRed.SetActive(receiveIndex < level);
+    }
+    
+    public void CheckCardsReceive()
+    {
+        int level = App.system.player.Level;
+        int receiveProgress = App.system.quest.QuestReceivedStatusData["LR001"];
+
+        for (int i = 0; i < App.view.levelReward.cards.Length; i++)
+        {
+            var card = App.view.levelReward.cards[i];
+            
+            if (i < receiveProgress)
+            {
+                card.SetReceive(true);
+                card.SetCanReceive(false);
+                continue;
+            }
+            
+            card.SetReceive(false);
+
+            if (i < level)
+            {
+                card.SetCanReceive(true);
+                continue;
+            }
+
+            card.SetCanReceive(false);
+        }
     }
 }

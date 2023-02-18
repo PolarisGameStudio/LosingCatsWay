@@ -65,11 +65,11 @@ public class View_SubInformation : ViewBehaviour
         string tmpID = "ID:" + cat.cloudCatData.CatData.CatId;
         catIdText.text = tmpID;
         catSkin.ChangeSkin(cat.cloudCatData);
-        if (cat.cloudCatData.CatData.CatAge > 3)
+        if (cat.cloudCatData.CatData.SurviveDays > 3)
             catSkin.SetStatusFace(cat.cloudCatData);
 
         chooseSkinButton.interactable = false;
-        if (cat.cloudCatData.CatData.CatAge <= 3)
+        if (cat.cloudCatData.CatData.SurviveDays <= 3)
             return;
         if (!string.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId) || cat.cloudCatData.CatHealthData.IsBug)
             return;

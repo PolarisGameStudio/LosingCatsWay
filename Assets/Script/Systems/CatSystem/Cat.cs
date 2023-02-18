@@ -421,7 +421,7 @@ public class Cat : MvcBehaviour
         
         CancelGame();
 
-        if (cloudCatData.CatData.CatAge > 3)
+        if (cloudCatData.CatData.SurviveDays > 3)
         {
             catSkin.SetUsingSkinNull();
         }

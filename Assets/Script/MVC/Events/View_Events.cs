@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -10,7 +11,13 @@ public class View_Events : ViewBehaviour
     [SerializeField] private GameObject[] sectionDots;
 
     [Title("Right")] [SerializeField] private GameObject[] eventObjects;
-    
+
+    public override void Open()
+    {
+        base.Open();
+        CheckRedActivate();
+    }
+
     public override void Init()
     {
         base.Init();
@@ -37,6 +44,18 @@ public class View_Events : ViewBehaviour
                 eventObjects[i].SetActive(true);
             else
                 eventObjects[i].SetActive(false);
+        }
+    }
+
+    private void CheckRedActivate()
+    {
+        for (int i = 0; i < sectionDots.Length; i++)
+        {
+            var tmp = sectionDots[i];
+            if (!tmp.activeSelf)
+                continue;
+            tmp.SetActive(false);
+            DOVirtual.DelayedCall(0.15f, () => tmp.SetActive(true));
         }
     }
 }

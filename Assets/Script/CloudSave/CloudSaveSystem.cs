@@ -49,10 +49,18 @@ public class CloudSaveSystem : MvcBehaviour
         foreach (var cat in cats)
         {
             string catId = cat.cloudCatData.CatData.CatId;
+            Task t;
+            
             Dictionary<string, object> updates = catDatasHelper.GetCloudCatUpdate(cat.cloudCatData);
             DocumentReference docRef = db.Collection("Cats").Document(catId);
-
-            updateTasks.Add(docRef.UpdateAsync(updates));
+            
+            var snapshot = await docRef.GetSnapshotAsync();
+            if (snapshot.Exists)
+                t = docRef.UpdateAsync(updates);
+            else
+                t = docRef.SetAsync(updates);
+            
+            updateTasks.Add(t);
         }
         
         // Wait for all tasks to complete

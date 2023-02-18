@@ -87,7 +87,7 @@ public class SettleSystem : MvcBehaviour
         else
         {
             catSkin.ChangeSkin(cloudCatData);
-            isKitty = cloudCatData.CatData.CatAge <= 3;
+            isKitty = cloudCatData.CatData.SurviveDays <= 3;
         }
 
         if (rewards != null)

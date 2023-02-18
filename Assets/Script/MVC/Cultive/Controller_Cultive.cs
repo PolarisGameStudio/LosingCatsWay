@@ -63,17 +63,17 @@ public class Controller_Cultive : ControllerBehavior
         for (int i = 0; i < tabButtons.Length; i++)
             tabButtons[i].interactable = !App.system.tutorial.isTutorial;
 
-        App.system.bgm.FadeIn().Play("Cultive");
-        App.view.cultive.Open();
-        
         CloseDropSensor();
         GetCleanLitterData();
         App.view.cultive.RefreshTimeUI();
 
-        DOVirtual.DelayedCall(0.3f, () => SelectType(1));
+        SelectType(1);
 
         // 即時刷新貓狀態
         InvokeRepeating(nameof(RefreshCatStatus), 1, 1);
+        
+        App.system.bgm.FadeIn().Play("Cultive");
+        App.view.cultive.Open();
     }
 
     public void Close()
@@ -110,14 +110,12 @@ public class Controller_Cultive : ControllerBehavior
 
     public void SelectType(int index)
     {
-        if (!isCanDrag)
-            return;
+        // if (!isCanDrag)
+        //     return;
         if (isDragging)
             return;
 
         App.system.soundEffect.Play("Button");
-
-        App.model.cultive.SelectedType = index;
         ItemType targetType = ItemType.Feed;
 
         switch (index)
@@ -140,6 +138,7 @@ public class Controller_Cultive : ControllerBehavior
         }
 
         App.model.cultive.SelectedItems = result;
+        App.model.cultive.SelectedType = index;
     }
 
     // 傳遞正在拖曳的Item
@@ -154,7 +153,7 @@ public class Controller_Cultive : ControllerBehavior
     {
         isCanDrag = false;
         int randomIndex = Random.Range(1, 3);
-        bool isChildCat = App.model.cultive.SelectedCat.cloudCatData.CatData.CatAge <= 3;
+        bool isChildCat = App.model.cultive.SelectedCat.cloudCatData.CatData.SurviveDays <= 3;
 
         var dragItem = App.model.cultive.DragItem;
 
@@ -380,7 +379,7 @@ public class Controller_Cultive : ControllerBehavior
                 RefreshCatStatus();
                 isCanDrag = true;
                 OpenClickCat();
-                SelectType(App.model.cultive.SelectedType);
+                App.model.cultive.SelectedItems = App.model.cultive.SelectedItems;
             });
         }
     }
@@ -433,7 +432,7 @@ public class Controller_Cultive : ControllerBehavior
         funEffects.Play();
         funPop.Pop(40);
 
-        bool isAdult = cloudCatData.CatData.CatAge > 3;
+        bool isAdult = cloudCatData.CatData.SurviveDays > 3;
         string animName = isAdult ? "Rearing_Cat/Rearing_Smile_IDLE" : "Rearing_Cat/Rearing_Smile_Sit";
 
         var t = catSkeleton.AnimationState.SetAnimation(0, animName, false);
@@ -441,7 +440,7 @@ public class Controller_Cultive : ControllerBehavior
         DOVirtual.DelayedCall(t.Animation.Duration, () =>
         {
             RefreshCatStatus();
-            SelectType(App.model.cultive.SelectedType);
+            App.model.cultive.SelectedItems = App.model.cultive.SelectedItems;
             catSkeleton.AnimationState.SetAnimation(0, "AI_Main/IDLE_Ordinary01", true);
         });
 
@@ -630,7 +629,7 @@ public class Controller_Cultive : ControllerBehavior
 
         if (String.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId))
         {
-            if (cat.cloudCatData.CatData.CatAge > 3)
+            if (cat.cloudCatData.CatData.SurviveDays > 3)
             {
                 var catSkin = App.view.cultive.catSkin;
                 catSkin.SetCold();
@@ -650,7 +649,7 @@ public class Controller_Cultive : ControllerBehavior
 
         if (String.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId))
         {
-            if (App.model.cultive.SelectedCat.cloudCatData.CatData.CatAge > 3)
+            if (App.model.cultive.SelectedCat.cloudCatData.CatData.SurviveDays > 3)
             {
                 var catSkin = App.view.cultive.catSkin;
                 catSkin.OpenFace();

@@ -7,6 +7,8 @@ public class Controller_LevelReward : ControllerBehavior
     public void Init()
     {
         App.view.levelReward.CheckLobbyRed();
+        App.view.levelReward.CheckCardsReceive();
+        SetCardsData();
     }
     
     public void Open()
@@ -45,4 +47,15 @@ public class Controller_LevelReward : ControllerBehavior
         Close();
         App.controller.dailyQuest.Open();
     }
+    
+    private void SetCardsData()
+    {
+        for (int i = 0; i < 40; i++)
+        {
+            int level = i + 1;
+            App.view.levelReward.cards[i].SetData(level);
+        }
+    }
+
+    
 }

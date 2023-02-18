@@ -55,6 +55,8 @@ public class Controller_Settings : ControllerBehavior
 
         App.system.confirm.Active(ConfirmTable.Fix, async () =>
         {
+            ReleaseCats();
+            
             FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
             DocumentReference cityRef = db.Collection("Players").Document(userId);
             await cityRef.DeleteAsync();
@@ -70,6 +72,14 @@ public class Controller_Settings : ControllerBehavior
                 StartCoroutine(LoadLoginScene());
             });
         });
+    }
+
+    private void ReleaseCats()
+    {
+        var cats = App.system.cat.GetCats();
+        for (int i = 0; i < cats.Count; i++)
+            App.system.abandon.AbandonCat(cats[i], $"Location_{Random.Range(0, 2)}"); // todo 更多Location
+        App.system.cloudSave.SaveCloudCatDatas();
     }
 
     IEnumerator LoadLoginScene()

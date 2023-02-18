@@ -73,7 +73,7 @@ public class View_FollowCat : ViewBehaviour
         int mood = CatExtension.GetCatMood(cloudCatData);
         moodImage.sprite = App.factory.catFactory.GetMoodSprite(mood);
 
-        bool isKitty = cloudCatData.CatData.CatAge <= 3;
+        bool isKitty = cloudCatData.CatData.SurviveDays <= 3;
         varietyText.text = isKitty ? App.factory.stringFactory.GetKittyName() : App.factory.stringFactory.GetCatVariety(cloudCatData.CatData.Variety);
 
         catSkin.ChangeSkin(cloudCatData);

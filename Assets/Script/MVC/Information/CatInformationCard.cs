@@ -42,7 +42,7 @@ public class CatInformationCard : MvcBehaviour
         
         catNameText.text = cloudCatData.CatData.CatName;
         
-        bool isKitty = cloudCatData.CatData.CatAge <= 3;
+        bool isKitty = cloudCatData.CatData.SurviveDays <= 3;
         catVarietyText.text = isKitty ? App.factory.stringFactory.GetKittyName() : App.factory.stringFactory.GetCatVariety(cloudCatData.CatData.Variety);
         
         catAgeText.text = cloudCatData.CatData.CatAge.ToString();
@@ -56,7 +56,7 @@ public class CatInformationCard : MvcBehaviour
         moodImage.sprite = App.factory.catFactory.GetMoodSprite(mood);
 
         catSkin.ChangeSkin(cloudCatData);
-        if (cloudCatData.CatData.CatAge > 3)
+        if (cloudCatData.CatData.SurviveDays > 3)
             catSkin.SetStatusFace(cloudCatData);
     }
 

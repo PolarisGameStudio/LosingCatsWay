@@ -90,7 +90,7 @@ public class View_ChooseBuild : ViewBehaviour
                 leftFronts[i].gameObject.SetActive(true);
                 
                 //Tween
-                leftFronts[i].DOScale(Vector2.one, 0.25f).From(Vector2.zero);
+                leftFronts[i].DOScaleX(1, 0.25f).From(0).SetEase(Ease.OutBack);
             }
             else
             {

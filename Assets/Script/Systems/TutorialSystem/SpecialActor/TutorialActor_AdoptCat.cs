@@ -13,7 +13,7 @@ public class TutorialActor_AdoptCat : TutorialActor
     private async void GetCat()
     {
         DebugTool_Cat debugToolCat = new DebugTool_Cat();
-        CloudCatData cloudCatData = await debugToolCat.GetCreateCat(App.system.player.PlayerId, false);
+        CloudCatData cloudCatData = debugToolCat.GetCloudCatData(App.system.player.PlayerId, false);
         
         App.system.catRename.CantCancel().Active(cloudCatData, "Shelter", () =>
         {

@@ -30,7 +30,7 @@ public class Card_FeedItem : MvcBehaviour
     public void SetData(Cat cat)
     {
         catSkin.ChangeSkin(cat.cloudCatData);
-        if (cat.cloudCatData.CatData.CatAge > 3)
+        if (cat.cloudCatData.CatData.SurviveDays > 3)
             catSkin.SetStatusFace(cat.cloudCatData);
         chipInfo.SetData(cat.cloudCatData);
 
@@ -40,7 +40,7 @@ public class Card_FeedItem : MvcBehaviour
         nameText.text = cat.cloudCatData.CatData.CatName;
         genderImage.sprite = App.factory.catFactory.GetCatSexSpriteWhite(cat.cloudCatData.CatData.Sex);
 
-        bool isKitty = cat.cloudCatData.CatData.CatAge <= 3;
+        bool isKitty = cat.cloudCatData.CatData.SurviveDays <= 3;
         varietyText.text = isKitty ? App.factory.stringFactory.GetKittyName() : App.factory.stringFactory.GetCatVariety(cat.cloudCatData.CatData.Variety);
 
         ageText.text = cat.cloudCatData.CatData.CatAge.ToString();

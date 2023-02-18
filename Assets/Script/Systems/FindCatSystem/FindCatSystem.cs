@@ -31,16 +31,15 @@ public class FindCatSystem : MvcBehaviour
         activeMap.SetCloudCatData(null);
         CloudCatData cloudCatData = null;
         
-        App.system.waiting.Open();
-        
         if (App.system.tutorial.isTutorial)
         {
-            App.system.waiting.Close();
             DebugTool_Cat debugToolCat = new DebugTool_Cat();
-            cloudCatData = await debugToolCat.GetCreateCat($"Location{mapIndex}", true);
+            cloudCatData = debugToolCat.GetCloudCatData($"Location{mapIndex}", true);
         }
         else
         {
+            App.system.waiting.Open();
+            
             var cloudCatDatas = await App.system.cloudSave.LoadCloudCatDatasByOwner($"Location{mapIndex}", 1);
             cloudCatData = cloudCatDatas.Count > 0 ? cloudCatDatas[0] : null;
         

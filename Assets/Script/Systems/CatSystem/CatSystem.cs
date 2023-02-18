@@ -107,7 +107,7 @@ public class CatSystem : MvcBehaviour
     {
         Cat tmp = catObject;
 
-        if (cloudCatData.CatData.CatAge <= 3)
+        if (cloudCatData.CatData.SurviveDays <= 3)
             tmp = kittyCatObject;
 
         Cat cat = Instantiate(tmp, transform);

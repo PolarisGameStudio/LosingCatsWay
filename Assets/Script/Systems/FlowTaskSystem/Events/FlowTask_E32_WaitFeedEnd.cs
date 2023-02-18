@@ -10,20 +10,20 @@ using UnityEngine.UI;
 
 public class FlowTask_E32_WaitFeedEnd : FlowTask
 {
-    public GameObject backButton;
-
-    public override void Enter()
-    {
-        base.Enter();
-        backButton.SetActive(false);
-        App.controller.cultive.OnFeedFood += Exit;
-        App.controller.cultive.SelectType(1);
-    }
-    
-    public override void Exit()
-    {
-        App.controller.cultive.OnFeedFood -= Exit;
-        base.Exit();
-    }
+    // public GameObject backButton;
+    //
+    // public override void Enter()
+    // {
+    //     base.Enter();
+    //     backButton.SetActive(false);
+    //     App.controller.cultive.OnFeedFood += Exit;
+    //     App.controller.cultive.SelectType(1);
+    // }
+    //
+    // public override void Exit()
+    // {
+    //     App.controller.cultive.OnFeedFood -= Exit;
+    //     base.Exit();
+    // }
 
 }

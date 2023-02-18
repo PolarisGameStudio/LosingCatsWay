@@ -148,26 +148,31 @@ public class AbandonSystem : MvcBehaviour
             App.system.catNotify.Remove(selectedCat);
             App.system.cat.Remove(selectedCat);
 
-            selectedCat.cloudCatData.CatData.Owner = AbandonLocation;
-            
-            selectedCat.cloudCatData.CatSurviveData.CleanLitterTimestamp = new Timestamp();
-            selectedCat.cloudCatData.CatSurviveData.CleanLitterCount = 0;
-            selectedCat.cloudCatData.CatSurviveData.UsingLitter = -1;
-
-            if (!string.IsNullOrEmpty(selectedCat.cloudCatData.CatSkinData.UseSkinId))
-            {
-                Item skinItem = App.factory.itemFactory.GetItem(selectedCat.cloudCatData.CatSkinData.UseSkinId);
-                skinItem.Count++;
-                selectedCat.cloudCatData.CatSkinData.UseSkinId = string.Empty;
-            }
-            
+            AbandonCat(selectedCat, AbandonLocation);
             App.system.cloudSave.SaveCloudCatData(selectedCat.cloudCatData);
+            
             item.Count -= 1;
             
             CloseFinalConfirm();
             CloseConfirm();
             Close();
         });
+    }
+
+    public void AbandonCat(Cat cat, string location)
+    {
+        cat.cloudCatData.CatData.Owner = location;
+            
+        cat.cloudCatData.CatSurviveData.CleanLitterTimestamp = new Timestamp();
+        cat.cloudCatData.CatSurviveData.CleanLitterCount = 0;
+        cat.cloudCatData.CatSurviveData.UsingLitter = -1;
+
+        if (!string.IsNullOrEmpty(cat.cloudCatData.CatSkinData.UseSkinId))
+        {
+            Item skinItem = App.factory.itemFactory.GetItem(cat.cloudCatData.CatSkinData.UseSkinId);
+            skinItem.Count++;
+            cat.cloudCatData.CatSkinData.UseSkinId = string.Empty;
+        }
     }
 
     public void CopyId()

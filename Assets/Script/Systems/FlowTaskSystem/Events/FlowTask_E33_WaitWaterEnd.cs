@@ -9,17 +9,17 @@ using UnityEngine.UI;
 
 public class FlowTask_E33_WaitWaterEnd : FlowTask
 {
-    public override void Enter()
-    {
-        base.Enter();
-        App.controller.cultive.OnFeedWater += Exit;
-        App.controller.cultive.SelectType(1);
-    }
-    
-    public override void Exit()
-    {
-        App.controller.cultive.OnFeedWater -= Exit;
-        base.Exit();
-    }
+    // public override void Enter()
+    // {
+    //     base.Enter();
+    //     App.controller.cultive.OnFeedWater += Exit;
+    //     App.controller.cultive.SelectType(1);
+    // }
+    //
+    // public override void Exit()
+    // {
+    //     App.controller.cultive.OnFeedWater -= Exit;
+    //     base.Exit();
+    // }
 
 }

@@ -44,7 +44,7 @@ public class View_CultiveInfo : ViewBehaviour
         idText.text = $"ID:{cat.cloudCatData.CatData.CatId}";
 
         chooseSkinButton.interactable = false;
-        if (cat.cloudCatData.CatData.CatAge <= 3)
+        if (cat.cloudCatData.CatData.SurviveDays <= 3)
             return;
         if (!string.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId) || cat.cloudCatData.CatHealthData.IsBug)
             return;

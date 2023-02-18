@@ -32,7 +32,7 @@ public static class MyAnimationTable
             "Rearing_Smile_Sit"
         };
         
-        if (cloudCatData.CatData.CatAge > 3)
+        if (cloudCatData.CatData.SurviveDays > 3)
             return result + catAnimationNames[Random.Range(0, catAnimationNames.Length)];
         return result + kittyCatAnimationNames[Random.Range(0, kittyCatAnimationNames.Length)];
     }
