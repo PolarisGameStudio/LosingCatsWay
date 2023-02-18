@@ -92,14 +92,14 @@ public class Controller_Information : ControllerBehavior
         {
             if (!App.system.player.ReduceDiamond(price))
             {
-                DOVirtual.DelayedCall(0.1f, () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.NotEnoughDiamond));
+                DOVirtual.DelayedCall(0.1f, () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NoDiamond));
                 return;
             }
             
             App.system.player.DiamondCatSlot += 1;
             App.model.information.MyCats = App.system.cat.GetCats();
             RefreshDiamondUnlockSlotPrice();
-            DOVirtual.DelayedCall(0.1f, () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix));
+            DOVirtual.DelayedCall(0.1f, () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_UnlockCatSlot));
         });
     }
 

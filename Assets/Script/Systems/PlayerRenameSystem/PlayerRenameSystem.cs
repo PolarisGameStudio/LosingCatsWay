@@ -58,26 +58,26 @@ public class PlayerRenameSystem : MvcBehaviour
         {
             if (renameItem.Count <= 0)
             {
-                App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
+                App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NoProps);
                 return;
             }
         }
 
         if (!CheckInputExtension.CheckInputNameCanUse(inputField.text))
         {
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.NotAllowBanWord);
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NullValue);
             return;
         }
 
         if (inputField.text == App.system.player.PlayerName)
         {
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.NotAllowBanWord);
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
             return;
         }
 
         Close();
         
-        App.system.confirm.Active(ConfirmTable.RenameConfirm, () => 
+        App.system.confirm.Active(ConfirmTable.Fix, () => 
         {
             App.system.player.PlayerName = inputField.text;
             if (!IsFreeRename)

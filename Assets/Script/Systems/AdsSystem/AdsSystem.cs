@@ -89,7 +89,7 @@ public class AdsSystem : MvcBehaviour
     {
         print("Loaded Not Ok");
         App.system.waiting.Close();
-        App.system.confirm.Active(ConfirmTable.Fix);
+        App.system.confirm.Active(ConfirmTable.Hints_AdFail);
         ClearEvent();
     }
 
@@ -97,7 +97,7 @@ public class AdsSystem : MvcBehaviour
     {
         print("Play Faild");
         App.system.waiting.Close();
-        App.system.confirm.Active(ConfirmTable.Fix);
+        App.system.confirm.Active(ConfirmTable.Hints_AdFail);
         ClearEvent();
     }
 

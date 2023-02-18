@@ -109,8 +109,6 @@ public enum ConfirmTable
     
     Fix,
 
-    #region Final
-
     BuyConfirm,
     MapNoCats,
     IsAddToBag,
@@ -125,6 +123,64 @@ public enum ConfirmTable
     CatchCatGameEnd,
     ConfirmFindCatWithoutAdopt, // 確定在無法收養下進入找貓
     ChooseGenderConfirm,
-
-    #endregion
+    
+    // 表定
+    Hints_Buy1,
+    Hints_Buy2, //todo 確認內容
+    Hints_Bug,
+    Hints_MapNoCats,
+    Hints_BuyComplete1,
+    Hints_BuyComplete2,
+    Hints_Adopt,
+    Hints_NoMoney,
+    Hints_NoDiamond,
+    Hints_HasNewCat,
+    Hints_NeedFeedRoom,
+    Hints_NeedCatSlot1,
+    Hints_NeedCatSlot2,
+    Hints_CatFindSuccess,
+    Hints_CatFindFail,
+    Hints_CatCatchSuccess,
+    Hints_CatCatchFail,
+    Hints_Pause,
+    Hints_Release1,
+    Hints_Release2,
+    Hints_Shelter1,
+    Hints_Shelter2,
+    Hints_Ligation,
+    Hints_Name,
+    Hints_Rename,
+    Hints_Claim,
+    Hints_PhotoTaken,
+    Hints_CantFindCat,
+    //todo Excel95 - Hints_CantFindCat
+    Hints_Refresh,
+    Hints_Space,
+    Hints_CantFindFriend,
+    Hints_Maintain,
+    Hints_Abandon1,
+    Hints_Abandon2,
+    Hints_NoProps,
+    Hints_Pay,
+    Hints_NullValue,
+    Hints_LogOut,
+    Hints_WatchTheAD,
+    Hints_AdFail,
+    // todo Excel111 - Hints_
+    Hints_NoMemory,
+    Hints_AlreadyUsePotion,
+    Hints_CantCheckYourself,
+    Hints_AlreadyFriends,
+    Hints_AlreadyInvited,
+    Hints_InviteReceived,
+    Hints_PutHere,
+    Hints_MoveOut,
+    Hints_UnlockCatSlot,
+    Hints_TradeFail,
+    Hints_UseCard,
+    Hints_NoCard,
+    Hints_DeleteAccount,
+    Hints_AlreadyDeleteAccount,
+    Hints_LateAdopt,
+    // todo Excel127 - Hints_
 }

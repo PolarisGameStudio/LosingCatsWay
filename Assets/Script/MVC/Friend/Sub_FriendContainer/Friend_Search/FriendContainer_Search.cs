@@ -28,7 +28,7 @@ public class FriendContainer_Search : ViewBehaviour
         
         if (String.IsNullOrEmpty(inputValue))
         {
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.NotAllowBlank);
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_Space);
             return;
         }
 
@@ -36,7 +36,7 @@ public class FriendContainer_Search : ViewBehaviour
         
         if (!isPlayerIdExist)
         {
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CantFindFriend);
             return;
         }
         
@@ -44,14 +44,14 @@ public class FriendContainer_Search : ViewBehaviour
 
         if (inputValue == myId)
         {
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CantCheckYourself);
             return;
         }
         
         // 是否已經有好友
         if (App.model.friend.Friends.Exists(x => x.PlayerId.Equals(inputValue)))
         {
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_AlreadyFriends);
             return;
         }
         
@@ -59,14 +59,14 @@ public class FriendContainer_Search : ViewBehaviour
 
         if (App.model.friend.myInvites.Contains(inputValue))
         {
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_AlreadyInvited);
             return;
         }
         
         // 對方是否有發Invite
         if (App.model.friend.Invites.Exists(x => x.PlayerId.Equals(inputValue)))
         {
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_InviteReceived);
             return;
         }
         

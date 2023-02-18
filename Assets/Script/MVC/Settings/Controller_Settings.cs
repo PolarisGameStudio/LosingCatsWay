@@ -53,7 +53,7 @@ public class Controller_Settings : ControllerBehavior
     {
         string userId = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
 
-        App.system.confirm.Active(ConfirmTable.Fix, async () =>
+        App.system.confirm.Active(ConfirmTable.Hints_DeleteAccount, async () =>
         {
             ReleaseCats();
             
@@ -64,7 +64,7 @@ public class Controller_Settings : ControllerBehavior
             FirebaseAuth auth = FirebaseAuth.DefaultInstance;
             auth.SignOut();
             
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix, () =>
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_AlreadyDeleteAccount, () =>
             {
                 var tmp = FindObjectOfType<LoadScene>(); 
                 if (tmp != null)

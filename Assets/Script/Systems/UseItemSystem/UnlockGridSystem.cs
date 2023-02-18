@@ -65,7 +65,7 @@ public class UnlockGridSystem : MvcBehaviour
         {
             if (!App.system.player.ReduceCatMemory(needCount))
             {
-                App.system.confirm.Active(ConfirmTable.Fix);
+                App.system.confirm.Active(ConfirmTable.Hints_NoMemory);
                 return;
             }
         }

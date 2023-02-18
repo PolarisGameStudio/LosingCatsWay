@@ -138,7 +138,7 @@ public class AbandonSystem : MvcBehaviour
         if (item.Count <= 0)
         {
             CloseFinalConfirm();
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NoProps);
             return;
         }
         

@@ -15,7 +15,7 @@ public class Model_Settings : ModelBehavior
         set
         {
             seVolume = value;
-            OnSeVolumeChange(value);
+            OnSeVolumeChange?.Invoke(value);
         }
     }
 
@@ -25,7 +25,7 @@ public class Model_Settings : ModelBehavior
         set
         {
             bgmVolume = value;
-            OnBgmVolumeChange(value);
+            OnBgmVolumeChange?.Invoke(value);
         }
     }
 
@@ -35,7 +35,7 @@ public class Model_Settings : ModelBehavior
         set
         {
             languageIndex = value;
-            OnLanguageIndexChange(value);
+            OnLanguageIndexChange?.Invoke(value);
         }
     }
 

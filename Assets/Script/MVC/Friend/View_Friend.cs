@@ -35,7 +35,6 @@ public class View_Friend : ViewBehaviour
     [SerializeField] private TextMeshProUGUI favouriteVarietyText;
     [SerializeField] private TextMeshProUGUI favouriteGenderText;
     [SerializeField] private TextMeshProUGUI favouriteAgeText;
-    [SerializeField] private TextMeshProUGUI favouriteTraitText;
 
     public override void Init()
     {
@@ -63,7 +62,6 @@ public class View_Friend : ViewBehaviour
             favouriteVarietyText.text = "-";
             favouriteGenderText.text = "-";
             favouriteAgeText.text = "-";
-            favouriteTraitText.text = "-";
             return;
         }
         
@@ -72,7 +70,6 @@ public class View_Friend : ViewBehaviour
         favouriteVarietyText.text = App.factory.stringFactory.GetCatVariety(cat.cloudCatData.CatData.Variety);
         favouriteGenderText.text = (cat.cloudCatData.CatData.Sex == 0) ? App.factory.stringFactory.GetBoyString() : App.factory.stringFactory.GetGirlString();
         favouriteAgeText.text = cat.cloudCatData.CatData.CatAge.ToString();
-        favouriteTraitText.text = cat.cloudCatData.CatData.Trait;
     }
 
     public void OnSelectedContainerChange(object value)

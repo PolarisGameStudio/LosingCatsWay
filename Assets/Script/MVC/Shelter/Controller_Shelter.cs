@@ -159,7 +159,11 @@ public class Controller_Shelter : ControllerBehavior
     {
         string searchCatId = App.view.shelter.inputField.text;
 
-        App.view.shelter.inputField.text = string.Empty;
+        if (string.IsNullOrEmpty(searchCatId))
+        {
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NullValue);
+            return;
+        }
 
         var cloudCatData = await App.system.cloudSave.LoadCloudCatDataById(searchCatId);
 
@@ -176,7 +180,7 @@ public class Controller_Shelter : ControllerBehavior
         }
         else
         {
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CantFindCat);
         }
     }
 
@@ -210,7 +214,7 @@ public class Controller_Shelter : ControllerBehavior
 
         if (await CheckIsAdopted())
         {
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_LateAdopt);
             CloseSubShelter();
             return;
         }

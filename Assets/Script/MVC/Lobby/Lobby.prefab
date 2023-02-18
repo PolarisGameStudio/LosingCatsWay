@@ -648,7 +648,6 @@ GameObject:
   - component: {fileID: 5467990671510985624}
   - component: {fileID: 5467990671510985625}
   - component: {fileID: 5467990671510985631}
-  - component: {fileID: 238331030839124139}
   m_Layer: 5
   m_Name: OpenBagButton
   m_TagString: Untagged
@@ -2208,7 +2207,19 @@ MonoBehaviour:
       Runners: []
       Event:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 5467990671847018415}
+            m_TargetAssemblyTypeName: Controller_Lobby, Assembly-CSharp
+            m_MethodName: OpenBag
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
   SelectedState:
     StateType: 3
     StateName: Selected
@@ -2230,58 +2241,12 @@ MonoBehaviour:
         m_PersistentCalls:
           m_Calls: []
   Behaviours:
-    Behaviours:
-    - Enabled: 1
-      EventName: PointerUp
-      Runners: []
-      Event:
-        m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 5467990671847018415}
-            m_TargetAssemblyTypeName: Controller_Lobby, Assembly-CSharp
-            m_MethodName: OpenBag
-            m_Mode: 1
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-      BehaviourName: 3
-      Receiver:
-        ConnectionMode: 1
-        SignalProviderId:
-          Type: 0
-          Category: Pointer
-          Name: Up
-        ProviderReference: {fileID: 238331030839124139}
-        StreamId:
-          Category: None
-          Name: None
-          Custom: 1
-      Cooldown: 0
+    Behaviours: []
     SignalSource: {fileID: 5467990671510985633}
   Id:
     Category: None
     Name: None
     Custom: 0
---- !u!114 &238331030839124139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5467990671510985633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6d2103f249f4f43ab16cb631d0f264f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ProviderCurrentState: 20
-  SignalCooldown: 0
-  SignalTimescale: 0
 --- !u!1 &5467990671544359206
 GameObject:
   m_ObjectHideFlags: 0
@@ -5670,7 +5635,7 @@ MonoBehaviour:
   - {fileID: 5467990672921896672}
   tip: {fileID: 5467990672495854116}
   nextLevelBestItemText: {fileID: 5467990672225897435}
-  nextRewardLevelText: {fileID: 5467990672176534143}
+  nextdLevelText: {fileID: 5467990672176534143}
   nextRewardChat: {fileID: 5467990672424144626}
   nextQuestText: {fileID: 5467990673157347933}
   nextQuestChat: {fileID: 5467990671972890023}

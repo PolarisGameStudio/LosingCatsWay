@@ -144,11 +144,11 @@ public class Controller_Pedia : ControllerBehavior
 
         if (klc0001.Count < 10)
         {
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NoCard);
             return;
         }
 
-        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        App.system.confirm.Active(ConfirmTable.Hints_UseCard, () =>
         {
             string pediaId = App.model.pedia.UsingPediaIds[index];
             App.system.quest.KnowledgeCardData[pediaId]++;

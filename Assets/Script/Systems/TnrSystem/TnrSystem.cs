@@ -148,13 +148,13 @@ public class TnrSystem : MvcBehaviour
 
     public void DoRelease() //原放
     {
-        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        App.system.confirm.Active(ConfirmTable.Hints_Release1, () =>
         {
             cloudCatData.CatSurviveData.IsUseToFind = false;
             App.system.cloudSave.SaveCloudCatData(cloudCatData);
 
             DOVirtual.DelayedCall(0.1f, () =>
-                App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix, () =>
+                App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_Release2, () =>
                 {
                     OnDoRelease?.Invoke();
                     Close();
@@ -164,14 +164,14 @@ public class TnrSystem : MvcBehaviour
 
     public void DoShelter() //送去收容所
     {
-        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        App.system.confirm.Active(ConfirmTable.Hints_Shelter1, () =>
         {
             cloudCatData.CatData.Owner = "Shelter";
             cloudCatData.CatSurviveData.IsUseToFind = false;
             App.system.cloudSave.SaveCloudCatData(cloudCatData);
 
             DOVirtual.DelayedCall(0.1f, () =>
-                App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix, () =>
+                App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_Shelter2, () =>
                 {
                     OnDoShelter?.Invoke();
                     Close();
@@ -182,12 +182,12 @@ public class TnrSystem : MvcBehaviour
     public void DoLigation() //送去結紮
     {
         //Close();
-        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        App.system.confirm.Active(ConfirmTable.Hints_Ligation, () =>
         {
             if (!App.system.player.ReduceMoney(200))
             {
                 DOVirtual.DelayedCall(0.1f,
-                    () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.NoMoney));
+                    () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NoMoney));
                 return;
             }
 

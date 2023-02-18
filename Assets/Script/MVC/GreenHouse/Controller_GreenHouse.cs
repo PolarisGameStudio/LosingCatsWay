@@ -82,7 +82,7 @@ public class Controller_GreenHouse : ControllerBehavior
 
         if (greenHouseData != null)
         {
-            App.system.confirm.Active(ConfirmTable.Fix, () =>
+            App.system.confirm.Active(ConfirmTable.Hints_MoveOut, () =>
             {
                 App.model.greenHouse.GreenHouseDatas.Remove(greenHouseData);
                 App.view.greenHouse.RefreshGreenHousePlace();
@@ -116,7 +116,7 @@ public class Controller_GreenHouse : ControllerBehavior
 
     public void ChooseFlower(int index)
     {
-        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        App.system.confirm.Active(ConfirmTable.Hints_PutHere, () =>
         {
             int flowerIndex = index;
             int positionIndex = App.model.greenHouse.selectPositionIndex;

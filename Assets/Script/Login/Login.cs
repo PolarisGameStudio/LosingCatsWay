@@ -61,6 +61,7 @@ public class Login : MyApplication
 
         if (!isActive)
         {
+            // todo 需要更新的話彈出句子不同
             system.confirm.ActiveByBlock(ConfirmTable.Fix);
             return;
         }
@@ -233,7 +234,7 @@ public class Login : MyApplication
 
     public void SignOut()
     {
-        system.confirm.Active(ConfirmTable.Fix, () =>
+        system.confirm.Active(ConfirmTable.Hints_LogOut, () =>
         {
             Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
             auth.SignOut();

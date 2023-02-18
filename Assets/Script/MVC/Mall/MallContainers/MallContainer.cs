@@ -187,6 +187,6 @@ public class MallContainer : ViewBehaviour
     public void OnPurchaseFailed(Product product, PurchaseFailureReason purchaseFailureReason)
     {
         App.system.waiting.Close();
-        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
+        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_TradeFail);
     }
 }

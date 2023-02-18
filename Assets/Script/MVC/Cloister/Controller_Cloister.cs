@@ -97,18 +97,18 @@ public class Controller_Cloister : ControllerBehavior
         var data = App.model.cloister.SelectedLosingCatData;
         if (data.LosingCatStatus.Contains("Flower"))
         {
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_AlreadyUsePotion);
             return;
         }
 
         var item = App.factory.itemFactory.GetItem("ISL00001");
         if (item.Count <= 0)
         {
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NoProps);
             return;
         }
 
-        App.system.confirm.Active(ConfirmTable.RefreshConfirm, () =>
+        App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
             item.Count -= 1;
             data.LosingCatStatus.Add("Flower");
