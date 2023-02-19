@@ -11,6 +11,8 @@ using Random = UnityEngine.Random;
 
 public class CatSystem : MvcBehaviour
 {
+    [SerializeField] private bool debugFirstCatDead;
+    
     [SerializeField] private Cat catObject;
     [SerializeField] private Cat kittyCatObject;
     [SerializeField] private AngelCat angelCatObject;
@@ -41,6 +43,11 @@ public class CatSystem : MvcBehaviour
         for (int i = 0; i < myCats.Count; i++) // 檢查會不會死亡 離家出走 生病 跳蚤
             myCats[i].CheckCatStatusPerDay();
 
+        if (debugFirstCatDead && myCats.Count > 0)
+        {
+            myCats[0].cloudCatData.CatHealthData.IsDead = true;
+        }
+        
         for (int i = myCats.Count - 1; i >= 0; i--) // 如果要死就進入死亡流程
             if (myCats[i].cloudCatData.CatHealthData.IsDead)
             {

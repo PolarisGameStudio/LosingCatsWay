@@ -7,10 +7,13 @@ using UnityEngine.UI;
 public class View_SubInfo_ChooseSkin : ViewBehaviour
 {
     [SerializeField] private Scrollbar _scrollbar;
-    [SerializeField] private Card_CatChooseSkin[] cards;
+    [SerializeField] private Transform content;
+    [SerializeField] private Card_CatChooseSkin card;
     [SerializeField] private GameObject confirmButton;
     [SerializeField] private GameObject noSkinSelectedObject;
     [SerializeField] private Transform noSkinBorderTransform;
+
+    private List<Card_CatChooseSkin> cards = new List<Card_CatChooseSkin>();
 
     public override void Open()
     {
@@ -38,7 +41,7 @@ public class View_SubInfo_ChooseSkin : ViewBehaviour
         else
             noSkinBorderTransform.DOKill();
         
-        for (int i = 0; i < cards.Length; i++)
+        for (int i = 0; i < cards.Count; i++)
         {
             if (i == index)
                 cards[i].SetSelect(true);
@@ -53,17 +56,19 @@ public class View_SubInfo_ChooseSkin : ViewBehaviour
     {
         var skinItems = (List<Item>)value;
 
-        for (int i = 0; i < cards.Length; i++)
+        for (int i = 1; i < content.childCount; i++) // 0 = 脫skin
         {
-            if (i >= skinItems.Count)
-            {
-                cards[i].gameObject.SetActive(false);
-                continue;
-            }
-
-            cards[i].SetData(skinItems[i]);
-            cards[i].SetSelect(false);
-            cards[i].gameObject.SetActive(true);
+            Destroy(content.GetChild(i).gameObject);
+        }
+        
+        cards.Clear();
+        
+        for (int i = 0; i < skinItems.Count; i++)
+        {
+            var tmp = Instantiate(card, content);
+            tmp.SetData(skinItems[i]);
+            tmp.SetSelect(false);
+            cards.Add(tmp);
         }
     }
 }

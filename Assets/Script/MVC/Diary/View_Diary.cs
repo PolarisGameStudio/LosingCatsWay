@@ -30,6 +30,7 @@ public class View_Diary : ViewBehaviour
     [TabGroup("Content")] [SerializeField] private Image moodImage;
     [TabGroup("Content")] [SerializeField] private TextMeshProUGUI contentText;
     [TabGroup("Content")] [SerializeField] private TextMeshProUGUI byeText;
+    [TabGroup("Content")] [SerializeField] private Image diaryImage;
     
     public override void Init()
     {
@@ -130,7 +131,7 @@ public class View_Diary : ViewBehaviour
             
             //DateUI
             dayText.text = diaryDate.Day.ToString("00");
-            monthText.text = diaryDate.Month.ToString();
+            monthText.text = diaryDate.Month.ToString("00");
             yearText.text = diaryDate.Year.ToString();
         
             //Tone
@@ -142,6 +143,8 @@ public class View_Diary : ViewBehaviour
             titleText.text = App.factory.stringFactory.GetDiaryTitleByTone(id, tone);
             //Content
             contentText.text = App.factory.stringFactory.GetDiaryContentByTone(id, tone);
+            //Image
+            diaryImage.sprite = App.factory.diaryFactory.GetDiarySprite(id, tone);
 
             contentPage.Show();
         }

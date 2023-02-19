@@ -115,12 +115,12 @@ public class Controller_FollowCat : ControllerBehavior
         var skinId = followCat.cloudCatData.CatSkinData.UseSkinId;
         int traitIndex = 0;
         float duration = 0f; // 從若丞Spine看
-        if (skinId == "Flyfish")
+        if (skinId == "Flyfish_Cat")
         {
             traitIndex = 1;
             duration = 8f;
         }
-        if (skinId == "Robot")
+        if (skinId == "Robot_Cat")
         {
             traitIndex = 2;
             duration = 17.45f;

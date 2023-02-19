@@ -299,16 +299,16 @@ public class PlayerSystem : SerializedMonoBehaviour
             Exp = nextExp;
             
             Level++;
-            app.controller.lobby.AddLevelBuffer(Level);
+            app.controller.lobby.SetLevelBuffer(Level);
             
             Exp = 0;
             Exp = end;
-            app.controller.lobby.AddExpBuffer(end, NextLevelExp);
+            app.controller.lobby.SetExpBuffer(end, NextLevelExp);
         }
         else
         {
             Exp = result;
-            app.controller.lobby.AddExpBuffer(result, nextExp);
+            app.controller.lobby.SetExpBuffer(result, nextExp);
         }
     }
 
@@ -316,7 +316,7 @@ public class PlayerSystem : SerializedMonoBehaviour
     {
         Coin += value;
         OnAddCoinChange?.Invoke(value);
-        app.controller.lobby.AddMoneyBuffer(value);
+        app.controller.lobby.SetMoneyBuffer(Coin);
     }
     
     public bool ReduceMoney(int value)
@@ -333,7 +333,7 @@ public class PlayerSystem : SerializedMonoBehaviour
     {
         Diamond += value;
         OnAddDiamondChange?.Invoke(value);
-        app.controller.lobby.AddDiamondBuffer(value);
+        app.controller.lobby.SetDiamondBuffer(Diamond);
     }
 
     public bool ReduceDiamond(int value)

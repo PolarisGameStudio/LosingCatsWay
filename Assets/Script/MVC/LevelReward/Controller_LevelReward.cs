@@ -24,7 +24,7 @@ public class Controller_LevelReward : ControllerBehavior
     public void CloseBySetBuffer()
     {
         Close();
-        App.controller.lobby.SetBuffer();
+        App.controller.lobby.ActiveBuffer();
     }
 
     public void ReceiveReward()

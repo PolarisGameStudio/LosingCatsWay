@@ -57,9 +57,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 5b8f8b486b086f8418e9b362c811f3af, type: 2}
     - {fileID: 11400000, guid: 2d08b9c48db0e1b449a49cde59ef8525, type: 2}
     - {fileID: 11400000, guid: 86f4cec25f89ba74ca8efe8c041c7773, type: 2}
-    - {fileID: 11400000, guid: 8a33b3c52ca573a4c8fc8c6226291cdb, type: 2}
-    - {fileID: 11400000, guid: bd44a20bf663a474db3a553372e42cd8, type: 2}
-    - {fileID: 11400000, guid: 185a29e5d9f073247a6c6291c06a02ef, type: 2}
     - {fileID: 11400000, guid: f08b8180fbed01541b0e57a3df9c6384, type: 2}
     - {fileID: 11400000, guid: f4d7d49b1a9bede459b675ec83fb2d2e, type: 2}
     - {fileID: 11400000, guid: 2f0ad464e8a734f448e73451c104573c, type: 2}
@@ -87,6 +84,9 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 6b4e2ed0b4e2d624ba8a0c43b6f97d28, type: 2}
     - {fileID: 11400000, guid: b5e0b804ab481da42978c6b3e0a7fc64, type: 2}
     - {fileID: 11400000, guid: b05f1b8f45679f749be0607d65946b38, type: 2}
+    - {fileID: 11400000, guid: 556f7ccfeec77584fbdaf2001a0da82e, type: 2}
+    - {fileID: 11400000, guid: 4367d9102bac7d44eb91ab6558637a67, type: 2}
+    - {fileID: 11400000, guid: f8a576a70d8553a499b46f3bcf856955, type: 2}
     - {fileID: 11400000, guid: 55b6291a404f96e4d87e551c3a780b36, type: 2}
     - {fileID: 11400000, guid: acd7134e24b98d44db2cd6829ee4345f, type: 2}
     - {fileID: 11400000, guid: 7e74eff4296a999458348201b9cd6362, type: 2}
@@ -156,18 +156,15 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 791cf5ebe63625b42a333824cb7d0f23, type: 2}
     - {fileID: 11400000, guid: 48292ebd4a0a96241b9933f5b0392903, type: 2}
     - {fileID: 11400000, guid: f5b6edcf140ba2841a46cd2b2cd43c4b, type: 2}
-    - {fileID: 11400000, guid: 4d38e7c248093cd4e9e4f62fbae77852, type: 2}
-    - {fileID: 11400000, guid: 30728fba7f134ac4cb5749ca47e0da83, type: 2}
-    - {fileID: 11400000, guid: b5ba93b1241b9ae429a375b65c2064d2, type: 2}
-    - {fileID: 11400000, guid: 9007acc207b1c30418a3436867569cab, type: 2}
-    - {fileID: 11400000, guid: 6c4c19ff5d311cd43b1d8e23cc4fb159, type: 2}
-    - {fileID: 11400000, guid: 259e047cae26a8643a13a651fd663453, type: 2}
     - {fileID: 11400000, guid: 5d303939b50d0254dbeceeb7d87b4301, type: 2}
     - {fileID: 11400000, guid: 0b6d8ce30e356714581847dfd47011df, type: 2}
     - {fileID: 11400000, guid: d8cc7bcefbd77884589fff2d5f00ae3b, type: 2}
     - {fileID: 11400000, guid: b3cee78799612204b8dabcee0bf21fc4, type: 2}
     - {fileID: 11400000, guid: f2f99b1cd913a90419420d0668e27016, type: 2}
     - {fileID: 11400000, guid: a600c0e03827de3409183e8b899f76ae, type: 2}
+    - {fileID: 11400000, guid: ca2f2b32c79dc6342af0aa1b7a1a399a, type: 2}
+    - {fileID: 11400000, guid: 43c15f8beff79ef4b8bcb819842a4bd1, type: 2}
+    - {fileID: 11400000, guid: eff259376b8e8da4cba4095e339d06eb, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -341,7 +338,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: UseItemTitle
+    - Name: ItemType
       Entry: 7
       Data: 6|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
         Assembly-CSharp]], mscorlib
@@ -397,7 +394,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: ItemType
+    - Name: CharacterName
       Entry: 7
       Data: 8|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
         Assembly-CSharp]], mscorlib
@@ -416,7 +413,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: tw
+      Data: us
     - Name: $v
       Entry: 10
       Data: 12
@@ -428,7 +425,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: cn
+      Data: tw
     - Name: $v
       Entry: 10
       Data: 13
@@ -440,7 +437,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: us
+      Data: cn
     - Name: $v
       Entry: 10
       Data: 14
@@ -453,7 +450,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: CharacterName
+    - Name: CatNotifyData
       Entry: 7
       Data: 10|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
         Assembly-CSharp]], mscorlib
@@ -472,7 +469,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: us
+      Data: cn
     - Name: $v
       Entry: 10
       Data: 15
@@ -496,7 +493,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: cn
+      Data: us
     - Name: $v
       Entry: 10
       Data: 17
@@ -509,7 +506,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: CatNotifyData
+    - Name: ConfirmTitleData
       Entry: 7
       Data: 12|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
         Assembly-CSharp]], mscorlib
@@ -528,7 +525,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: cn
+      Data: tw
     - Name: $v
       Entry: 10
       Data: 18
@@ -540,7 +537,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: tw
+      Data: cn
     - Name: $v
       Entry: 10
       Data: 19
@@ -565,17 +562,13 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: ConfirmTitleData
+    - Name: ConfirmContentData
       Entry: 7
       Data: 14|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
         Assembly-CSharp]], mscorlib
     - Name: comparer
-      Entry: 7
-      Data: 15|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 9
+      Data: 13
     - Name: 
       Entry: 12
       Data: 3
@@ -584,7 +577,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: tw
+      Data: cn
     - Name: $v
       Entry: 10
       Data: 21
@@ -596,7 +589,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: cn
+      Data: tw
     - Name: $v
       Entry: 10
       Data: 22
@@ -621,13 +614,17 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: ConfirmContentData
+    - Name: NpcData
       Entry: 7
-      Data: 16|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
+      Data: 15|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
         Assembly-CSharp]], mscorlib
     - Name: comparer
-      Entry: 9
-      Data: 15
+      Entry: 7
+      Data: 16|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 12
       Data: 3
@@ -648,7 +645,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: tw
+      Data: us
     - Name: $v
       Entry: 10
       Data: 25
@@ -660,7 +657,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: us
+      Data: tw
     - Name: $v
       Entry: 10
       Data: 26
@@ -673,7 +670,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: NpcData
+    - Name: QuestData
       Entry: 7
       Data: 17|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
         Assembly-CSharp]], mscorlib
@@ -704,7 +701,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: us
+      Data: tw
     - Name: $v
       Entry: 10
       Data: 28
@@ -716,7 +713,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: tw
+      Data: us
     - Name: $v
       Entry: 10
       Data: 29
@@ -729,7 +726,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: QuestData
+    - Name: QuestTitleData
       Entry: 7
       Data: 19|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
         Assembly-CSharp]], mscorlib
@@ -748,7 +745,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: cn
+      Data: tw
     - Name: $v
       Entry: 10
       Data: 30
@@ -760,7 +757,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: tw
+      Data: cn
     - Name: $v
       Entry: 10
       Data: 31
@@ -785,69 +782,13 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: QuestTitleData
+    - Name: KittyNames
       Entry: 7
-      Data: 21|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
-        Assembly-CSharp]], mscorlib
+      Data: 21|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.String,
+        mscorlib]], mscorlib
     - Name: comparer
       Entry: 7
       Data: 22|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 3
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: tw
-    - Name: $v
-      Entry: 10
-      Data: 33
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: cn
-    - Name: $v
-      Entry: 10
-      Data: 34
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: us
-    - Name: $v
-      Entry: 10
-      Data: 35
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: KittyNames
-      Entry: 7
-      Data: 23|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.String,
-        mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 24|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -899,6 +840,62 @@ MonoBehaviour:
       Data: 
     - Name: CatVarietyData
       Entry: 7
+      Data: 23|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 24|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: cn
+    - Name: $v
+      Entry: 10
+      Data: 33
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: tw
+    - Name: $v
+      Entry: 10
+      Data: 34
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: us
+    - Name: $v
+      Entry: 10
+      Data: 35
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CatInformationData
+      Entry: 7
       Data: 25|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
         Assembly-CSharp]], mscorlib
     - Name: comparer
@@ -916,7 +913,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: cn
+      Data: tw
     - Name: $v
       Entry: 10
       Data: 36
@@ -928,7 +925,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: tw
+      Data: cn
     - Name: $v
       Entry: 10
       Data: 37
@@ -2305,7 +2302,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: paymentName
+    - Name: CatchCatHints
       Entry: 7
       Data: 65|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
         Assembly-CSharp]], mscorlib
@@ -2324,7 +2321,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: cn
+      Data: tw
     - Name: $v
       Entry: 10
       Data: 108
@@ -2336,7 +2333,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: tw
+      Data: cn
     - Name: $v
       Entry: 10
       Data: 109
@@ -2361,13 +2358,17 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: paymentInfo
+    - Name: MallItemName
       Entry: 7
       Data: 67|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
         Assembly-CSharp]], mscorlib
     - Name: comparer
-      Entry: 9
-      Data: 66
+      Entry: 7
+      Data: 68|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 12
       Data: 3
@@ -2376,7 +2377,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: cn
+      Data: tw
     - Name: $v
       Entry: 10
       Data: 111
@@ -2388,7 +2389,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: tw
+      Data: cn
     - Name: $v
       Entry: 10
       Data: 112
@@ -2413,13 +2414,13 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: CatchCatHints
+    - Name: mailFromDevContent
       Entry: 7
-      Data: 68|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
+      Data: 69|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 69|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 70|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -2460,62 +2461,6 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 116
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: MallItemName
-      Entry: 7
-      Data: 70|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[StringData,
-        Assembly-CSharp]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 71|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 3
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: tw
-    - Name: $v
-      Entry: 10
-      Data: 117
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: cn
-    - Name: $v
-      Entry: 10
-      Data: 118
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: us
-    - Name: $v
-      Entry: 10
-      Data: 119
     - Name: 
       Entry: 8
       Data: 

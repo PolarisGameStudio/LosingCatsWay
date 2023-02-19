@@ -57,13 +57,17 @@ public class CatRenameSystem : MvcBehaviour
         if (!CheckInputExtension.CheckInputNameCanUse(inputField.text)) //檢查名字
         {
             //不可用
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.NotAllowBanWord);
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NullValue);
             return;
         }
         
         // TODO 價錢
+        
+        ConfirmTable confirmTable = ConfirmTable.Hints_Rename;
+        if (App.system.tutorial.isTutorial)
+            confirmTable = ConfirmTable.Hints_Name;
 
-        App.system.confirm.Active(ConfirmTable.RenameConfirm, () =>
+        App.system.confirm.Active(confirmTable, () =>
         {
             cloudCatData.CatData.CatName = inputField.text;
             onConfirm?.Invoke();

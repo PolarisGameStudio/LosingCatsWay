@@ -107,13 +107,13 @@ public class TnrSystem : MvcBehaviour
     {
         string catId = cloudCatData.CatData.CatId;
         catId.CopyToClipboard();
-        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Copied);
+        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_Copy);
     }
 
-    public void DoAdopt()
+    public void DoAdopt() // todo 檢查有沒有被搶先收養
     {
         Close();
-        App.system.confirm.Active(ConfirmTable.AdoptConfirm, () =>
+        App.system.confirm.Active(ConfirmTable.Hints_Adopt, () =>
         {
             App.system.catRename.CantCancel().Active(cloudCatData, _location, () =>
             {
@@ -131,13 +131,13 @@ public class TnrSystem : MvcBehaviour
                 cloudCatData.CatDiaryData.AdoptLocation = "OutSide";
 
                 Cat cat = App.system.cat.CreateCatObject(cloudCatData);
-                cat.GetLikeSnack();
+                cat.GetHateSnack();
                 cat.GetLikeSoup();
                 
                 App.system.cloudSave.SaveCloudCatData(cloudCatData);
 
                 DOVirtual.DelayedCall(0.1f, () =>
-                    App.system.confirm.OnlyConfirm().Active(ConfirmTable.HasNewCat, () =>
+                    App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_HasNewCat, () =>
                     {
                         OnAdoptCat?.Invoke(cloudCatData);
                         OnDoAdopt?.Invoke();

@@ -64,8 +64,8 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
                     return;
                 }
                 
-                // 飽足大等於91不接受
-                if (cat.cloudCatData.CatSurviveData.Satiety >= 91f)
+                // 飽足大等於100不接受
+                if (cat.cloudCatData.CatSurviveData.Satiety >= 100f)
                 {
                     App.controller.cultive.Reject();
                     return;
@@ -88,8 +88,8 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
                     return;
                 }
                 
-                // 水分大等於91不接受
-                if (cat.cloudCatData.CatSurviveData.Moisture >= 91f)
+                // 水分大等於100不接受
+                if (cat.cloudCatData.CatSurviveData.Moisture >= 100f)
                 {
                     App.controller.cultive.Reject();
                     return;
@@ -107,7 +107,7 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
             if (item.itemType == ItemType.Feed && item.itemFeedType == ItemFeedType.Snack)
             {
                 // 不喜歡零食
-                if ((int)item.snackType != cat.cloudCatData.CatSurviveData.LikeSnackIndex)
+                if ((int)item.snackType == cat.cloudCatData.CatSurviveData.HateSnackIndex)
                 {
                     App.controller.cultive.Reject();
                     return;
@@ -117,8 +117,8 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
             // 罐頭拒絕
             if (item.itemType == ItemType.Feed && item.itemFeedType == ItemFeedType.Can)
             {
-                // 飽足大等於91不接受
-                if (cat.cloudCatData.CatSurviveData.Satiety >= 91f)
+                // 飽足大等於100不接受
+                if (cat.cloudCatData.CatSurviveData.Satiety >= 100f)
                 {
                     App.controller.cultive.Reject();
                     return;

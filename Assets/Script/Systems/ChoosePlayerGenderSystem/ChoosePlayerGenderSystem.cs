@@ -69,7 +69,7 @@ public class ChoosePlayerGenderSystem : MvcBehaviour
                 break;
         }
         
-        App.system.confirm.ActiveByInsert(ConfirmTable.ChooseGenderConfirm, null, genderString, () =>
+        App.system.confirm.ActiveByInsert(ConfirmTable.Hints_ChooseSex, null, genderString, () =>
         {
             App.system.player.PlayerGender = genderIndex;
             RefreshPlayerIcon(genderIndex);

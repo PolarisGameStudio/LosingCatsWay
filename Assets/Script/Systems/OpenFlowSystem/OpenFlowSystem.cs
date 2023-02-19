@@ -39,7 +39,7 @@ public class OpenFlowSystem : MvcBehaviour
         if (flowIndex >= openFlowActions.Count)
         {
             isEnd = true;
-            App.controller.lobby.SetBuffer();
+            App.controller.lobby.ActiveBuffer();
             return;
         }
 

@@ -45,36 +45,32 @@ public class Cat_Entrance : MvcBehaviour
         bubbleObject.SetActive(hasBubble);
         if (!hasBubble) return;
         
-        //Status
-        CloudSave_CatSurviveData catSurviveData = cloudCatData.CatSurviveData;
-        if (catSurviveData.Satiety >= 70f && catSurviveData.Moisture >= 70f && catSurviveData.Favourbility >= 70f)
-        {
-            statusImage.sprite = heartSprite;
-            return;
-        }
-        if (catSurviveData.Satiety < 30f && catSurviveData.Moisture < 30f && catSurviveData.Favourbility < 30f)
-        {
-            statusImage.sprite = brokenHeartSprite;
-            return;
-        }
-
-        List<float> status = new List<float>();
-        status.Add(catSurviveData.Moisture);
-        status.Add(catSurviveData.Favourbility);
-        status.Add(catSurviveData.Satiety);
-        float result = status.Min();
+        int status = CatExtension.GetCatMood(cloudCatData);
+        Sprite statusSprite = null;
         
-        if (catSurviveData.Moisture.Equals(result))
+        if (status == 0)
+            statusSprite = heartSprite;
+        if (status == 1)
+            statusSprite = heartSprite;
+        if (status == 2)
         {
-            statusImage.sprite = waterSprite;
-            return;
+            List<float> values = new List<float>();
+            values.Add(cloudCatData.CatSurviveData.Satiety);
+            values.Add(cloudCatData.CatSurviveData.Moisture);
+            values.Add(cloudCatData.CatSurviveData.Favourbility);
+            float min = values.Min();
+
+            if (min.Equals(cloudCatData.CatSurviveData.Satiety))
+                statusSprite = angrySprite;
+            if (min.Equals(cloudCatData.CatSurviveData.Moisture))
+                statusSprite = waterSprite;
+            if (min.Equals(cloudCatData.CatSurviveData.Favourbility))
+                statusSprite = sadSprite;
         }
-        if (catSurviveData.Favourbility.Equals(result))
-        {
-            statusImage.sprite = sadSprite;
-            return;
-        }
-        statusImage.sprite = angrySprite;
+        if (status == 3)
+            statusSprite = brokenHeartSprite;
+
+        statusImage.sprite = statusSprite;
     }
 
     public void SetActive(bool active)

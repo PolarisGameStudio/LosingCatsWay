@@ -65,7 +65,7 @@ public abstract class LittleGame : MvcBehaviour
 
     private void Failed()
     {
-        int exp = App.system.player.playerDataSetting.LittleGameExp;
+        int exp = 10;
         App.system.player.AddExp(exp);
         cat.catCanvas.ActiveExp(exp);
     }

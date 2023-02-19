@@ -107,7 +107,7 @@ public class Controller_Pedia : ControllerBehavior
         CloseArchive();
         App.view.pedia.Close();
         
-        App.controller.lobby.SetBuffer();
+        App.controller.lobby.ActiveBuffer();
     }
 
     public void SelectPediaType(int index)
@@ -307,7 +307,7 @@ public class Controller_Pedia : ControllerBehavior
         return result;
     }
 
-    private void RefreshRedPoint()
+    public void RefreshRedPoint()
     {
         bool hasRed = false;
         App.view.pedia.archiveRedPoint.SetActive(false);

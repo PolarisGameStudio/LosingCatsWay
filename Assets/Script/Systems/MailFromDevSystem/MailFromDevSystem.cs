@@ -32,9 +32,18 @@ public class MailFromDevSystem : MvcBehaviour
         if (firstLosingCat == null)
             return;
 
-        titleText.text = titleText.text.Replace("<playerName>", App.system.player.PlayerName);
-        int catTotalCount = 123456;
-        contentText.text = contentText.text.Replace("<catName>", firstLosingCat.CatData.CatName).Replace("<catTotalCount>", catTotalCount.ToString("N0"));
+        string adoptLocationKey = firstLosingCat.CatDiaryData.AdoptLocation;
+        string title = App.factory.stringFactory.GetMailFromDevContent("Title");
+        string content = App.factory.stringFactory.GetMailFromDevContent("Content");
+        string catByAdoptLocation = App.factory.stringFactory.GetMailFromDevContent(adoptLocationKey);
+
+        string finalTitle = title.Replace("<PlayerName>", App.system.player.PlayerName);
+        string finalContent = content.Replace("<CatName>", firstLosingCat.CatData.CatName)
+            .Replace("<CatByAdoptLocation>", catByAdoptLocation)
+            .Replace("<TotalCatCount>", GetTotalCatNumber().ToString("N0"));
+
+        titleText.text = finalTitle;
+        contentText.text = finalContent;
     }
     
     public void OpenUrl(string url)
@@ -65,5 +74,22 @@ public class MailFromDevSystem : MvcBehaviour
         SetMailContent();
 
         isGetFirstDeadCat = true;
+    }
+
+    private int GetTotalCatNumber()
+    {
+        int result;
+        
+        if (!PlayerPrefs.HasKey("TotalCatNumber"))
+        {
+            result = Random.Range(100000, 1000001);
+            PlayerPrefs.SetInt("TotalCatNumber", result);
+        }
+        else
+        {
+            result = PlayerPrefs.GetInt("TotalCatNumber");
+        }
+
+        return result;
     }
 }

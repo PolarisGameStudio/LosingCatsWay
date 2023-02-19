@@ -58,11 +58,21 @@ public class Login : MyApplication
         
         VersionChecker versionChecker = new VersionChecker();
         bool isActive = await versionChecker.Check();
+        int status = await versionChecker.CheckStatus();
 
         if (!isActive)
         {
-            // todo 需要更新的話彈出句子不同
-            system.confirm.ActiveByBlock(ConfirmTable.Fix);
+            ConfirmTable confirmTable = ConfirmTable.Hints_Maintain;
+
+            if (status == 0)
+                confirmTable = ConfirmTable.Hints_Maintain;
+            else if (status == 1)
+                confirmTable = ConfirmTable.Hints_Maintain;
+            else if (status == 2)
+                confirmTable = ConfirmTable.Hints_VersionNotSame;
+            
+            system.confirm.ActiveByBlock(confirmTable);
+            
             return;
         }
 

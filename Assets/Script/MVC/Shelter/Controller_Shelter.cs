@@ -99,7 +99,7 @@ public class Controller_Shelter : ControllerBehavior
     {
         if (!freeRefresh.IsReach)
         {
-            App.system.confirm.Active(ConfirmTable.RefreshConfirm, () =>
+            App.system.confirm.Active(ConfirmTable.Hints_Refresh, () =>
             {
                 GetCloudCatDatas();
                 freeRefresh.Progress++;
@@ -171,7 +171,7 @@ public class Controller_Shelter : ControllerBehavior
         {
             if (cloudCatData.CatData.Owner != "Shelter")
             {
-                App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
+                App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CantFindCat);
                 return;
             }
 
@@ -205,9 +205,9 @@ public class Controller_Shelter : ControllerBehavior
             int count = App.system.room.FeatureRoomsCount;
 
             if (App.system.player.CatSlot >= count)
-                App.system.confirm.OnlyConfirm().Active(ConfirmTable.NeedMoreFeedRoom);
+                App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NeedFeedRoom);
             else
-                App.system.confirm.OnlyConfirm().Active(ConfirmTable.NeedMoreCatSlot);
+                App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NeedCatSlot1);
 
             return;
         }
@@ -219,13 +219,13 @@ public class Controller_Shelter : ControllerBehavior
             return;
         }
 
-        App.system.confirm.Active(ConfirmTable.AdoptConfirm, okEvent: () =>
+        App.system.confirm.Active(ConfirmTable.Hints_Adopt, okEvent: () =>
         {
             var cloudCatData = App.model.shelter.SelectedAdoptCloudCatData;
 
             Cat cat = App.system.cat.CreateCatObject(cloudCatData);
 
-            cat.GetLikeSnack();
+            cat.GetHateSnack();
             cat.GetLikeSoup();
 
             cloudCatData.CatData.Owner = App.system.player.PlayerId;
@@ -249,7 +249,7 @@ public class Controller_Shelter : ControllerBehavior
             App.system.catRename.CantCancel().Active(cloudCatData, "Shelter",
                 () =>
                 {
-                    DOVirtual.DelayedCall(0.1f, () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.HasNewCat));
+                    DOVirtual.DelayedCall(0.1f, () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_HasNewCat));
                 });
         });
     }
@@ -300,7 +300,7 @@ public class Controller_Shelter : ControllerBehavior
     {
         string CatId = App.model.shelter.SelectedAdoptCloudCatData.CatData.CatId;
         CatId.CopyToClipboard();
-        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Copied);
+        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_Copy);
     }
 
     #endregion

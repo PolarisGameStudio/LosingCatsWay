@@ -39,8 +39,6 @@ public class SettleSystem : MvcBehaviour
 
     private Callback _onClose;
 
-    private float _score;
-
     public void Init()
     {
         App.system.myTime.OnFirstLogin += () =>
@@ -67,7 +65,7 @@ public class SettleSystem : MvcBehaviour
         // CheckKnowledgeCard();
     }
 
-    public void Active(string gameName, CloudCatData cloudCatData, int exp, int money, int diamond, int score, Reward[] rewards, Callback onClose, bool isCatchGame = false)
+    public void Active(string gameName, CloudCatData cloudCatData, int exp, int money, int diamond, int chance, Reward[] rewards, Callback onClose, bool isCatchGame = false)
     {
         App.system.soundEffect.Play("ED00044");
         float beforeExp = App.system.player.Exp;
@@ -77,7 +75,6 @@ public class SettleSystem : MvcBehaviour
         bool isKitty = false;
 
         _onClose += onClose;
-        _score = score;
 
         closeButton.SetActive(false);
         levelUpObject.SetActive(false);
@@ -108,28 +105,28 @@ public class SettleSystem : MvcBehaviour
 
         topTransform.DOScaleX(1, 0.25f).From(0.3f).SetEase(Ease.OutBack).SetDelay(0.2f);
 
-        if (score < 40)
+        if (chance < 1)
         {
             if (isCatchGame)
                 SetCatRunAway(isKitty);
             else
                 SetCatBad(isKitty);
         }
-        if (score >= 40)
+        if (chance >= 1)
         {
             SetCatGood(isKitty);
             
             hearts[0].SetActive(true);
             hearts[0].transform.DOScale(Vector2.one, 0.15f).From(Vector2.zero).SetDelay(0.5f);
         }
-        if (score >= 70)
+        if (chance >= 2)
         {
             SetCatGood(isKitty);
             
             hearts[1].SetActive(true);
             hearts[1].transform.DOScale(Vector2.one, 0.15f).From(Vector2.zero).SetDelay(0.7f);
         }
-        if (score >= 100)
+        if (chance >= 3)
         {
             if (isCatchGame)
                 SetCatGotcha(isKitty);

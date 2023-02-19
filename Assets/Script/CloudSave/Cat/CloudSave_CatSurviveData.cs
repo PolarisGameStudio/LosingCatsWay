@@ -25,7 +25,7 @@ public class CloudSave_CatSurviveData
     
     [FirestoreProperty] public bool IsLikeDrink { get; set; }
 
-    public int LikeSnackIndex;
+    public int HateSnackIndex;
     public int LikeSoupIndex;
 
     public void ChangeRealSatiety(float value)

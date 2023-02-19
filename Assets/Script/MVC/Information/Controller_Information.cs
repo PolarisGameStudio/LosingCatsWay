@@ -55,7 +55,7 @@ public class Controller_Information : ControllerBehavior
         App.system.soundEffect.Play("Button");
         string playerId = App.system.player.PlayerId;
         playerId.CopyToClipboard();
-        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Copied);
+        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_Copy);
     }
 
     public void SelectCat(int index)
@@ -82,13 +82,13 @@ public class Controller_Information : ControllerBehavior
         CloudCatData cloudCatData = App.model.information.SelectedCat.cloudCatData;
         string catId = cloudCatData.CatData.CatId;
         catId.CopyToClipboard();
-        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Copied);
+        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_Copy);
     }
 
     public void DiamondUnlockCatSlot()
     {
         int price = App.model.information.NextDiamondSlotPrice;
-        App.system.confirm.ActiveByInsert(ConfirmTable.BuyConfirm, "", App.factory.stringFactory.GetItemName("ULK001"),() =>
+        App.system.confirm.ActiveByInsert(ConfirmTable.Hints_Buy1, "", App.factory.stringFactory.GetItemName("ULK001"),() =>
         {
             if (!App.system.player.ReduceDiamond(price))
             {

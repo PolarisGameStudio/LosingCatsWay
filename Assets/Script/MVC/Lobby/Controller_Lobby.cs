@@ -21,13 +21,17 @@ public class Controller_Lobby : ControllerBehavior
     
     public void Open()
     {
+        App.controller.pedia.RefreshRedPoint();
+        App.controller.dailyQuest.RefreshRedPoint();
+        App.system.catNotify.CheckRedActivate();
+        
+        ActiveBuffer();
+        CheckPerDayRefresh();
+        
+        // 紅點檢查之後再開
         App.system.bgm.FadeIn().Play("Lobby");
         App.view.lobby.Open();
         App.system.room.OpenRooms();
-        App.system.catNotify.CheckRedActivate();
-        
-        SetBuffer();
-        CheckPerDayRefresh();
         
         OnLobbyOpen?.Invoke();
     }
@@ -164,28 +168,28 @@ public class Controller_Lobby : ControllerBehavior
 
     #region Buffer
 
-    public void AddExpBuffer(int expBuffer, int nextExpBuffer)
+    public void SetExpBuffer(int expBuffer, int nextExpBuffer)
     {
         App.model.lobby.ExpBuffer = expBuffer;
         App.model.lobby.NextExpBuffer = nextExpBuffer;
     }
 
-    public void AddLevelBuffer(int value)
+    public void SetLevelBuffer(int value)
     {
         App.model.lobby.LevelBuffer = value;
     }
 
-    public void AddMoneyBuffer(int value)
+    public void SetMoneyBuffer(int value)
     {
-        App.model.lobby.MoneyBuffer += value;
+        App.model.lobby.MoneyBuffer = value;
     }
 
-    public void AddDiamondBuffer(int value)
+    public void SetDiamondBuffer(int value)
     {
-        App.model.lobby.DiamondBuffer += value;
+        App.model.lobby.DiamondBuffer = value;
     }
 
-    public void SetBuffer()
+    public void ActiveBuffer()
     {
         int levelBuffer = App.model.lobby.LevelBuffer; // 未顯示等級
         int tmpLevel = App.model.lobby.TmpLevel; // 已顯示等級
@@ -206,14 +210,14 @@ public class Controller_Lobby : ControllerBehavior
         
         if (App.model.lobby.MoneyBuffer > 0)
         {
-            App.model.lobby.TmpMoney += App.model.lobby.MoneyBuffer;
+            App.model.lobby.TmpMoney = App.model.lobby.MoneyBuffer;
             App.view.lobby.moneyParticle.Play();
             App.model.lobby.MoneyBuffer = 0;
         }
         
         if (App.model.lobby.DiamondBuffer > 0)
         {
-            App.model.lobby.TmpDiamond += App.model.lobby.DiamondBuffer;
+            App.model.lobby.TmpDiamond = App.model.lobby.DiamondBuffer;
             App.view.lobby.diamondParticle.Play();
             App.model.lobby.DiamondBuffer = 0;
         }

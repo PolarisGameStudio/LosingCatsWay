@@ -159,7 +159,7 @@ public class FindCatMap : MvcBehaviour
 
     void Success()
     {
-        App.system.confirm.OnlyConfirm().Active(ConfirmTable.FindGameSuccess, () =>
+        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CatFindSuccess, () =>
         {
             App.system.bgm.FadeOut();
             App.system.transition.Active(0, () =>
@@ -178,7 +178,7 @@ public class FindCatMap : MvcBehaviour
 
     void Failed()
     {
-        App.system.confirm.OnlyConfirm().Active(ConfirmTable.FindGameFailed, () =>
+        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CatFindFail, () =>
         {
             if (App.system.tutorial.isTutorial)
             {
@@ -226,7 +226,7 @@ public class FindCatMap : MvcBehaviour
     public void Exit()
     {
         Stop();
-        App.system.confirm.Active(ConfirmTable.ExitComfirm, okEvent: Close, cancelEvent: Play);
+        App.system.confirm.Active(ConfirmTable.Hints_Leave, okEvent: Close, cancelEvent: Play);
     }
 
     private void SetCloudCatDataToUse(bool value)

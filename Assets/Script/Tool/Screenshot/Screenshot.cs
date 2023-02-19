@@ -42,6 +42,6 @@ public class Screenshot : MvcBehaviour
         //todo 電腦版存自拍
 #endif
 
-        App.system.confirm.OnlyConfirm().Active(ConfirmTable.CaptureScreenshotSuccess);
+        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_PhotoTaken);
     }
 }

@@ -127,7 +127,7 @@ public class Controller_Shop : ControllerBehavior
 
         App.system.confirm.SetBuyMode();
 
-        App.system.confirm.ActiveByInsert(ConfirmTable.BuyConfirm, "", item.Name, () =>
+        App.system.confirm.ActiveByInsert(ConfirmTable.Hints_Buy1, "", item.Name, () =>
         {
             if (item.itemBoughtType == ItemBoughtType.Coin)
             {
@@ -135,7 +135,7 @@ public class Controller_Shop : ControllerBehavior
                 {
                     App.system.confirm.ClearBuyMode();
                     DOVirtual.DelayedCall(0.1f,
-                        () => App.system.confirm.Active(ConfirmTable.NoMoney, OpenTopUp));   
+                        () => App.system.confirm.Active(ConfirmTable.Hints_NoMoney, OpenTopUp));   
                 }
                 else
                 {
@@ -153,7 +153,7 @@ public class Controller_Shop : ControllerBehavior
                 if (!App.system.player.ReduceDiamond(App.model.shop.TotalAmount))
                 {
                     App.system.confirm.ClearBuyMode();
-                    DOVirtual.DelayedCall(0.1f, () => App.system.confirm.Active(ConfirmTable.NoDiamond, OpenTopUp));
+                    DOVirtual.DelayedCall(0.1f, () => App.system.confirm.Active(ConfirmTable.Hints_NoDiamond, OpenTopUp));
                 }
                 else
                 {

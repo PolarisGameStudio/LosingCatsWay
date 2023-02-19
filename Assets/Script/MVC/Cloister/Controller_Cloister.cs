@@ -108,7 +108,7 @@ public class Controller_Cloister : ControllerBehavior
             return;
         }
 
-        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        App.system.confirm.Active(ConfirmTable.Hints_UsePotion, () =>
         {
             item.Count -= 1;
             data.LosingCatStatus.Add("Flower");

@@ -25,7 +25,7 @@ public class BigGameBehaviour : MvcBehaviour
     private int _score;
     private int _exp;
     private int _coins;
-    private Reward[] _rewards;
+    private List<Reward> _rewards;
 
     private CloudCatData _cloudCatData;
 
@@ -86,19 +86,20 @@ public class BigGameBehaviour : MvcBehaviour
         _exp = App.system.player.playerDataSetting.GetBigGameExpByChance(chance);
         _coins = App.system.player.playerDataSetting.GetBigGameCoinsByChance(App.system.player.Level, chance);
         _score = Convert.ToInt32(100f / hearts.Length * chance);
+        int diamond = Random.value < 0.05f ? 2 : 0;
         
         string country = App.factory.stringFactory.GetCountryByLocaleIndex();
         string gameName = howToPlayData.titleData[country];
-        
+
+        _rewards = new List<Reward>();
         CheckKnowledgeCard();
+        CheckSnack();
         
-        App.system.settle.Active(gameName, _cloudCatData, _exp, _coins, 0, _score, _rewards, Close);
+        App.system.settle.Active(gameName, _cloudCatData, _exp, _coins, diamond, chance, _rewards.ToArray(), Close);
     }
     
     private void CheckKnowledgeCard()
     {
-        _rewards = null;
-
         if (App.system.tutorial.isTutorial)
             return;
 
@@ -113,12 +114,28 @@ public class BigGameBehaviour : MvcBehaviour
         if (Random.value > 0.5f)
             return;
         
-        _rewards = new Reward[1];
-        _rewards[0] = new Reward(App.factory.itemFactory.GetItem("KLC0001"), 1);
+        var reward = new Reward(App.factory.itemFactory.GetItem("KLC0001"), 1);
+        _rewards.Add(reward);
         
         PlayerPrefs.SetInt("KnowledgeCard", knowledgeCard);
     }
 
+    private void CheckSnack()
+    {
+        if (App.system.tutorial.isTutorial)
+            return;
+        
+        if (_score < 30)
+            return;
+        
+        if (Random.value > 0.2f)
+            return;
+
+        string id = "ISK0000" + Random.Range(1, 4);
+        var reward = new Reward(App.factory.itemFactory.GetItem(id), 3);
+        _rewards.Add(reward);
+    }
+    
     private void GameEndAction()
     {
         if (App.system.tutorial.isTutorial)

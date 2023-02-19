@@ -68,7 +68,7 @@ public class Controller_Friend : ControllerBehavior
     {
         string id = App.system.player.PlayerId;
         id.CopyToClipboard();
-        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Copied);
+        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_Copy);
     }
 
     public void SelectFriend(int index)

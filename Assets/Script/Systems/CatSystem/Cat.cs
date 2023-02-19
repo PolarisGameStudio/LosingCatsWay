@@ -572,23 +572,23 @@ public class Cat : MvcBehaviour
 
     #region Snack/Soup
 
-    public void GetLikeSnack()
+    public void GetHateSnack()
     {
-        cloudCatData.CatSurviveData.LikeSnackIndex = Random.Range(0, 3);
-        SaveLikeSnackIndex();
+        cloudCatData.CatSurviveData.HateSnackIndex = Random.Range(0, 3);
+        SaveHateSnackIndex();
     }
 
-    private void SaveLikeSnackIndex()
+    private void SaveHateSnackIndex()
     {
-        PlayerPrefs.SetInt($"{cloudCatData.CatData.CatId}_LikeSnackIndex", cloudCatData.CatSurviveData.LikeSnackIndex);
+        PlayerPrefs.SetInt($"{cloudCatData.CatData.CatId}_HateSnackIndex", cloudCatData.CatSurviveData.HateSnackIndex);
     }
 
-    private void LoadLikeSnackIndex()
+    private void LoadHateSnackIndex()
     {
-        cloudCatData.CatSurviveData.LikeSnackIndex =
-            PlayerPrefs.GetInt($"{cloudCatData.CatData.CatId}_LikeSnackIndex", -1);
-        if (cloudCatData.CatSurviveData.LikeSnackIndex == -1)
-            GetLikeSnack();
+        cloudCatData.CatSurviveData.HateSnackIndex =
+            PlayerPrefs.GetInt($"{cloudCatData.CatData.CatId}_HateSnackIndex", -1);
+        if (cloudCatData.CatSurviveData.HateSnackIndex == -1)
+            GetHateSnack();
     }
 
     public void GetLikeSoup()
@@ -617,7 +617,7 @@ public class Cat : MvcBehaviour
     [Button]
     private void DebugPrint()
     {
-        print($"LikeSnack: {cloudCatData.CatSurviveData.LikeSnackIndex}");
+        print($"LikeSnack: {cloudCatData.CatSurviveData.HateSnackIndex}");
         print($"LikeSoup:{cloudCatData.CatSurviveData.LikeSoupIndex}");
     }
 
@@ -746,7 +746,7 @@ public class Cat : MvcBehaviour
         }
 
         // 載入今日最愛零食
-        LoadLikeSnackIndex();
+        LoadHateSnackIndex();
         LoadLikeSoupIndex();
     }
 

@@ -72,7 +72,7 @@ public class CatLosingSystem : MvcBehaviour
     {
         App.system.ads.Active(AdsType.LobbyCatLosing, () =>
         {
-            removeCat.cloudCatData.CatSurviveData.Favourbility += 50;
+            removeCat.cloudCatData.CatSurviveData.ChangeRealFavourbility(50);
             _uiView.InstantHide();
         });
     }
@@ -80,7 +80,7 @@ public class CatLosingSystem : MvcBehaviour
     [Button]
     public void Close()
     {
-        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        App.system.confirm.Active(ConfirmTable.Hints_GiveUp, () =>
         {
             int randomLocationIndex = Random.Range(0, 2);
             removeCat.cloudCatData.CatData.Owner = "Location" + randomLocationIndex;

@@ -57,27 +57,27 @@ public static class CatExtension
         if (ageLevel is 0 or 1)
         {
             if (value >= 90)
-                return 0.2f;
+                return 1.2f;
             if (value >= 70)
-                return 0.1f;
+                return 1f;
             if (value >= 50)
-                return 0f;
+                return 0.4f;
             if (value >= 25)
-                return -0.05f;
+                return -0.04f;
 
-            return -0.06f;
+            return -0.05f;
         }
         
         if (value >= 90)
-            return 0.2f;
+            return 1.2f;
         if (value >= 70)
-            return 0.1f;
+            return 1f;
         if (value >= 50)
-            return 0f;
+            return 0.4f;
         if (value >= 25)
-            return -0.1f;
+            return -0.06f;
 
-        return -0.15f;
+        return -0.08f;
     }
 
     /// 0: Happy
@@ -94,12 +94,13 @@ public static class CatExtension
         float moisture = cloudCatData.CatSurviveData.Moisture;
 
         float[] status = { satiety, favourability, moisture };
-        float balance = status.Min();
+        float min = status.Min();
 
-        if (balance > 60) return 0;
-        if (balance > 40) return 1;
-
-        return 2;
+        if (min < 50)
+            return 2;
+        if (min < 85)
+            return 1;
+        return 0;
     }
 
     /// 吃個性等級

@@ -61,7 +61,7 @@ public class ScreenshotSystem : MvcBehaviour
 
         NativeGallery.SaveImageToGallery(_byte, "Screenshots", fileName);
 
-        App.system.confirm.OnlyConfirm().Active(ConfirmTable.CaptureScreenshotSuccess);
+        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_PhotoTaken);
 
         isShot = false;
         OnScreenshotComplete?.Invoke();

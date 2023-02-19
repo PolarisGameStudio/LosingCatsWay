@@ -117,45 +117,45 @@ public class MallContainer_Tool : MallContainer
 
     public void BuyFeed_Diamond()
     {
-        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        App.system.confirm.Active(ConfirmTable.Hints_Buy2, () =>
         {
             if (App.system.player.ReduceDiamond(60))
                 GetItem(diamondFeed);
             else
-                App.system.confirm.Active(ConfirmTable.NotEnoughDiamond);
+                App.system.confirm.Active(ConfirmTable.Hints_NoDiamond);
         });
     }
 
     public void BuyLosingCat_Diamond()
     {
-        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        App.system.confirm.Active(ConfirmTable.Hints_Buy2, () =>
         {
             if (App.system.player.ReduceDiamond(300))
                 GetItem(diamondLosingCat);
             else
-                App.system.confirm.Active(ConfirmTable.NotEnoughDiamond);
+                App.system.confirm.Active(ConfirmTable.Hints_NoDiamond);
         });
     }
 
     public void BuyChangeName_Diamond()
     {
-        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        App.system.confirm.Active(ConfirmTable.Hints_Buy2, () =>
         {
             if (App.system.player.ReduceDiamond(120))
                 GetItem(diamondChangeName);
             else
-                App.system.confirm.Active(ConfirmTable.NotEnoughDiamond);
+                App.system.confirm.Active(ConfirmTable.Hints_NoDiamond);
         });
     }
 
     public void BuyFlower_Diamond()
     {
-        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        App.system.confirm.Active(ConfirmTable.Hints_Buy2, () =>
         {
             if (App.system.player.ReduceDiamond(900))
                 GetItem(diamondFlower);
             else
-                App.system.confirm.Active(ConfirmTable.NotEnoughDiamond);
+                App.system.confirm.Active(ConfirmTable.Hints_NoDiamond);
         });
     }
 }

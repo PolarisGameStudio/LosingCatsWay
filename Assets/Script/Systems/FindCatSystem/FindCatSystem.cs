@@ -48,7 +48,7 @@ public class FindCatSystem : MvcBehaviour
                 if (IsFindLimit())
                 {
                     App.system.waiting.Close();
-                    App.system.confirm.OnlyConfirm().Active(ConfirmTable.MapNoCats, () =>
+                    App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_MapNoCats, () =>
                     {
                         App.system.findCat.ActiveGate(mapIndex);
                         DOVirtual.DelayedCall(1f, App.system.transition.OnlyClose);
@@ -117,7 +117,7 @@ public class FindCatSystem : MvcBehaviour
         
         if (App.system.player.CanAdoptCatCount <= 0)
         {
-            App.system.confirm.Active(ConfirmTable.ConfirmFindCatWithoutAdopt, () =>
+            App.system.confirm.Active(ConfirmTable.Hints_NeedCatSlot2, () =>
             {
                 App.system.transition.OnlyOpen();
                 DOVirtual.DelayedCall(1f, () =>

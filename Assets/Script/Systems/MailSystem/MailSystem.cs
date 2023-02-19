@@ -79,7 +79,7 @@ public class MailSystem : MvcBehaviour
     public void Close()
     {
         view.InstantHide();
-        App.controller.lobby.SetBuffer();
+        App.controller.lobby.ActiveBuffer();
     }
 
     public void Select(int index)

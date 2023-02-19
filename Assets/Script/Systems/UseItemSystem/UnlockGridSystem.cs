@@ -57,7 +57,7 @@ public class UnlockGridSystem : MvcBehaviour
         {
             if (!App.system.player.ReduceMoney(needCount))
             {
-                App.system.confirm.Active(ConfirmTable.NotEnoughCoin);
+                App.system.confirm.Active(ConfirmTable.Hints_NoMoney);
                 return;
             }
         }

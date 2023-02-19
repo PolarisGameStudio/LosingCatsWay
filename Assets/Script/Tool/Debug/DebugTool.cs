@@ -59,7 +59,7 @@ public class DebugTool : MvcBehaviour
     private void DebugAddExp()
     {
         App.system.player.AddExp(200);
-        App.controller.lobby.SetBuffer();
+        App.controller.lobby.ActiveBuffer();
     }
     
     [Button]

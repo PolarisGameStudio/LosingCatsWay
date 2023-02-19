@@ -71,13 +71,17 @@ public class PlayerRenameSystem : MvcBehaviour
 
         if (inputField.text == App.system.player.PlayerName)
         {
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NoSameName);
             return;
         }
 
         Close();
+
+        ConfirmTable confirmTable = ConfirmTable.Hints_Rename;
+        if (App.system.tutorial.isTutorial)
+            confirmTable = ConfirmTable.Hints_Name;
         
-        App.system.confirm.Active(ConfirmTable.Fix, () => 
+        App.system.confirm.Active(confirmTable, () => 
         {
             App.system.player.PlayerName = inputField.text;
             if (!IsFreeRename)

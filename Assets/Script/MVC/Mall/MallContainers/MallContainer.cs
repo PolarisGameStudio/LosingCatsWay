@@ -148,7 +148,7 @@ public class MallContainer : ViewBehaviour
     {
         var itemMall = mallItems[index];
 
-        App.system.confirm.ActiveByInsert(ConfirmTable.BuyConfirm, string.Empty, itemMall.Name, () =>
+        App.system.confirm.ActiveByInsert(ConfirmTable.Hints_Buy1, string.Empty, itemMall.Name, () =>
         {
             // var itemMall = mallItems[index];
 
@@ -160,12 +160,12 @@ public class MallContainer : ViewBehaviour
 
             int price = itemMall.price;
             int myCount = App.system.player.Coin; // todo ReduceMoney(PlayerSystem)
-            ConfirmTable confirmTable = ConfirmTable.NoMoney;
+            ConfirmTable confirmTable = ConfirmTable.Hints_NoMoney;
 
             if (itemMall.itemBoughtType == ItemBoughtType.Diamond) // todo ReduceDiamond(PlayerSystem)
             {
                 myCount = App.system.player.Diamond;
-                confirmTable = ConfirmTable.NoDiamond;
+                confirmTable = ConfirmTable.Hints_NoDiamond;
             }
 
             if (myCount < price)

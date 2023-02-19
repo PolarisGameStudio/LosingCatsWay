@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using GoogleMobileAds.Api;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -12,9 +13,10 @@ public class AdsSystem : MvcBehaviour
 
     private RewardedAd rewardedAd;
     private UnityAction _endAction;
-
+    
     public bool isEditorMode = false;
-
+    private bool _isEarnedReward = false;
+    
     private void Start()
     {
 #if UNITY_EDITOR
@@ -44,6 +46,8 @@ public class AdsSystem : MvcBehaviour
             _endAction = null;
             _endAction = endAction;
 
+            _isEarnedReward = false;
+            
             rewardedAd = new RewardedAd(adUnitId);
             AddEvent();
             AdRequest request = new AdRequest.Builder().Build();
@@ -89,7 +93,7 @@ public class AdsSystem : MvcBehaviour
     {
         print("Loaded Not Ok");
         App.system.waiting.Close();
-        App.system.confirm.Active(ConfirmTable.Hints_AdFail);
+        App.system.confirm.Active(ConfirmTable.Fix);
         ClearEvent();
     }
 
@@ -97,7 +101,7 @@ public class AdsSystem : MvcBehaviour
     {
         print("Play Faild");
         App.system.waiting.Close();
-        App.system.confirm.Active(ConfirmTable.Hints_AdFail);
+        App.system.confirm.Active(ConfirmTable.Fix);
         ClearEvent();
     }
 
@@ -105,12 +109,15 @@ public class AdsSystem : MvcBehaviour
     {
         print("Play End");
         ClearEvent();
-        _endAction?.Invoke();
+        
+        if (_isEarnedReward)
+            DOVirtual.DelayedCall(0.25f, () => { _endAction?.Invoke(); });
     }
 
     private void HandleUserEarnedReward(object sender, GoogleMobileAds.Api.Reward args)
     {
         print("Get Reward");
+        _isEarnedReward = true;
     }
 
     private string GetAdUnitIdByAndroid(AdsType adsType)

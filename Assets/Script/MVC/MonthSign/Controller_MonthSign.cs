@@ -38,7 +38,7 @@ public class Controller_MonthSign : ControllerBehavior
         if (!App.system.openFlow.isEnd)
             App.system.openFlow.NextAction();
         else
-            App.controller.lobby.SetBuffer();
+            App.controller.lobby.ActiveBuffer();
     }
 
     /// 檢查並創建calender

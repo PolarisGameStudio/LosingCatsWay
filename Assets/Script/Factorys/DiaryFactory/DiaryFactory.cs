@@ -9,6 +9,54 @@ using Random = UnityEngine.Random;
 
 public class DiaryFactory : SerializedMonoBehaviour
 {
+    public Dictionary<string, Sprite> DiarySprites_A;
+    public Dictionary<string, Sprite> DiarySprites_B;
+    public Dictionary<string, Sprite> DiarySprites_C;
+    public Dictionary<string, Sprite> DiarySprites_D;
+    public Dictionary<string, Sprite> DiarySprites_E;
+
+    public Sprite GetDiarySprite(string id, string tone)
+    {
+        Sprite result = null;
+        
+        if (tone == "A")
+        {
+            result = DiarySprites_A.ContainsKey(id)
+                ? DiarySprites_A[id]
+                : null;
+            return result;
+        }
+
+        if (tone == "B")
+        {
+            result = DiarySprites_B.ContainsKey(id)
+                ? DiarySprites_B[id]
+                : null;
+            return result;
+        }
+
+        if (tone == "C")
+        {
+            result = DiarySprites_C.ContainsKey(id)
+                ? DiarySprites_C[id]
+                : null;
+            return result;
+        }
+
+        if (tone == "D")
+        {
+            result = DiarySprites_D.ContainsKey(id)
+                ? DiarySprites_D[id]
+                : null;
+            return result;
+        }
+
+        result = DiarySprites_E.ContainsKey(id)
+            ? DiarySprites_E[id]
+            : null;
+        return result;
+    }
+    
     #region Get
 
     private int GetAdoptDays(CloudCatData cloudCatData)

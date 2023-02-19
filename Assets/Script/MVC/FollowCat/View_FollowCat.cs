@@ -78,7 +78,7 @@ public class View_FollowCat : ViewBehaviour
 
         catSkin.ChangeSkin(cloudCatData);
         
-        traitButton.interactable = cloudCatData.CatSkinData.UseSkinId is "Robot" or "Flyfish" or "Magic_Hat";
+        traitButton.interactable = cloudCatData.CatSkinData.UseSkinId is "Robot_Cat" or "Flyfish_Cat" or "Magic_Hat";
         traitMask.SetActive(!traitButton.interactable);
     }
 }

@@ -19,15 +19,16 @@ public class MallContainer_VIP : MallContainer
 
     public void BuyGhostBlack()
     {
-        App.system.confirm.Active(ConfirmTable.BuyConfirm, () =>
+        Item item = App.factory.itemFactory.GetItem("Ghost_Black");
+        App.system.confirm.ActiveByInsert(ConfirmTable.Hints_Buy1, string.Empty, item.Name, () =>
         {
             if (!App.system.player.ReduceDiamond(360))
             {
                 Reward[] rewards = new Reward[1];
-                rewards[0] = new Reward(App.factory.itemFactory.GetItem("Ghost_Black"), 1);
+                rewards[0] = new Reward(item, 1);
                 App.system.reward.Open(rewards);
             }else
-                App.system.confirm.Active(ConfirmTable.NotEnoughDiamond);
+                App.system.confirm.Active(ConfirmTable.Hints_NoDiamond);
         });
     }
 

@@ -591,10 +591,10 @@ public class CatSkin : MvcBehaviour
             case "SantaHat":
                 catSkeleton.SetAttachment("SantaHat", "SantaHat");
                 break;
-            case "Flyfish":
+            case "Flyfish_Cat":
                 catSkeleton.SetAttachment("Flyfish", "Flyfish");
                 break;
-            case "Robot":
+            case "Robot_Cat":
                 catSkeleton.SetAttachment("Robot_Card", "Robot_Card");
                 catSkeleton.SetAttachment("Robot_Wire", "Robot_Wire");
                 break;

@@ -31,7 +31,7 @@ public class Controller_Events : ControllerBehavior
         if (!App.system.openFlow.isEnd)
             App.system.openFlow.NextAction();
         else
-            App.controller.lobby.SetBuffer();
+            App.controller.lobby.ActiveBuffer();
     }
 
     public void Select(int index)

@@ -142,7 +142,7 @@ public class AbandonSystem : MvcBehaviour
             return;
         }
         
-        App.system.confirm.Active(ConfirmTable.AbandonCatConfirm, okEvent: () => 
+        App.system.confirm.Active(ConfirmTable.Hints_Abandon1, okEvent: () => 
         {
             //Notify
             App.system.catNotify.Remove(selectedCat);
@@ -178,6 +178,6 @@ public class AbandonSystem : MvcBehaviour
     public void CopyId()
     {
         selectedCat.cloudCatData.CatData.CatId.CopyToClipboard();
-        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Copied);
+        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_Copy);
     }
 }

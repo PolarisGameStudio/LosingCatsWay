@@ -11,7 +11,6 @@ public class StringFactory : SerializedMonoBehaviour
     [Title("Item")] 
     [SerializeField] private Dictionary<string, StringData> ItemName;
     [SerializeField] private Dictionary<string, StringData> ItemDescription;
-    [SerializeField] private Dictionary<string, StringData> UseItemTitle;
     [SerializeField] private Dictionary<string, StringData> ItemType;
 
     [Title("Character")] 
@@ -34,6 +33,7 @@ public class StringFactory : SerializedMonoBehaviour
     [Title("Cat")] 
     [SerializeField] private Dictionary<string, string> KittyNames;
     [SerializeField] private Dictionary<string, StringData> CatVarietyData;
+    [SerializeField] private Dictionary<string, StringData> CatInformationData;
     [SerializeField] private Dictionary<string, StringData> PersonalityData;
     [SerializeField] private Dictionary<string, StringData> TraitData;
 
@@ -76,15 +76,14 @@ public class StringFactory : SerializedMonoBehaviour
     [SerializeField] private Dictionary<string, StringData> MapNameData;
     [SerializeField] private Dictionary<string, StringData> MapContentData;
 
-    [Title("Clinic")]
-    [SerializeField] private Dictionary<string, StringData> paymentName;
-    [SerializeField] private Dictionary<string, StringData> paymentInfo;
-
     [Title("CatchCat")]
     [SerializeField] private Dictionary<string, StringData> CatchCatHints;
 
     [Title("Mall")]
     [SerializeField] private Dictionary<string, StringData> MallItemName;
+
+    [Title("MailFromDev")]
+    [SerializeField] private Dictionary<string, StringData> mailFromDevContent;
 
     private string countryId = "tw";
 
@@ -159,14 +158,6 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = ItemDescription[CountryId].Contents.ContainsKey(itemId)
             ? ItemDescription[CountryId].Contents[itemId]
-            : "要叫阿邦上";
-        return result;
-    }
-
-    public string GetUseItemTitle(string itemId)
-    {
-        string result = UseItemTitle[CountryId].Contents.ContainsKey(itemId)
-            ? UseItemTitle[CountryId].Contents[itemId]
             : "要叫阿邦上";
         return result;
     }
@@ -253,6 +244,14 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = (CatVarietyData[CountryId].Contents.ContainsKey(id))
             ? CatVarietyData[CountryId].Contents[id]
+            : "要叫阿邦上";
+        return result;
+    }
+    
+    public string GetCatInformation(string id)
+    {
+        string result = CatInformationData[CountryId].Contents.ContainsKey(id)
+            ? CatInformationData[CountryId].Contents[id]
             : "要叫阿邦上";
         return result;
     }
@@ -446,22 +445,6 @@ public class StringFactory : SerializedMonoBehaviour
         return result;
     }
 
-    public string GetPaymentName(string id)
-    {
-        string result = paymentName[CountryId].Contents.ContainsKey(id)
-            ? paymentName[CountryId].Contents[id]
-            : "要叫阿邦上";
-        return result;
-    }
-    
-    public string GetPaymentInfo(string id)
-    {
-        string result = paymentInfo[CountryId].Contents.ContainsKey(id)
-            ? paymentInfo[CountryId].Contents[id]
-            : "要叫阿邦上";
-        return result;
-    }
-
     public string GetCatchCatHint(string id)
     {
         string result = CatchCatHints[CountryId].Contents.ContainsKey(id)
@@ -490,6 +473,14 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = HospitalFunctionInfo[CountryId].Contents.ContainsKey(id)
             ? HospitalFunctionInfo[CountryId].Contents[id]
+            : "要叫阿邦上";
+        return result;
+    }
+    
+    public string GetMailFromDevContent(string id)
+    {
+        string result = mailFromDevContent[CountryId].Contents.ContainsKey(id)
+            ? mailFromDevContent[CountryId].Contents[id]
             : "要叫阿邦上";
         return result;
     }

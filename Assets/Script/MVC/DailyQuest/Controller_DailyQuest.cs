@@ -100,7 +100,7 @@ public class Controller_DailyQuest : ControllerBehavior
     public void CloseBySetBuffer()
     {
         Close();
-        App.controller.lobby.SetBuffer();
+        App.controller.lobby.ActiveBuffer();
     }
 
     public void OpenLevelReward()
@@ -159,6 +159,8 @@ public class Controller_DailyQuest : ControllerBehavior
         
         App.system.player.AddExp(App.model.dailyQuest.RewardExp);
         App.model.dailyQuest.RewardExp = 0;
+        
+        RefreshRedPoint();
     }
 
     public void GetAdsReward()
@@ -193,6 +195,8 @@ public class Controller_DailyQuest : ControllerBehavior
         
             App.system.player.AddExp(App.model.dailyQuest.RewardExp);
             App.model.dailyQuest.RewardExp = 0;
+        
+            RefreshRedPoint();
         });
     }
     
@@ -218,6 +222,8 @@ public class Controller_DailyQuest : ControllerBehavior
         App.model.dailyQuest.RewardExp = 0;
         
         totalGetTween.Play();
+        
+        RefreshRedPoint();
     }
 
     public void GetAllAdsReward()
@@ -243,7 +249,7 @@ public class Controller_DailyQuest : ControllerBehavior
             var doubleReward = quest.Rewards;
 
             for (int j = 0; j < doubleReward.Length; j++)
-                doubleReward[i].count *= 2;
+                doubleReward[j].count *= 2;
 
             tmp.AddRange(doubleReward);
 
@@ -259,7 +265,31 @@ public class Controller_DailyQuest : ControllerBehavior
         App.model.dailyQuest.RewardExp = 0;
         
         App.system.reward.Open(tmp.ToArray());
+        
+        RefreshRedPoint();
     }
 
     #endregion
+
+    public void RefreshRedPoint()
+    {
+        var quests = App.model.dailyQuest.Quests;
+        var totalQuest = App.model.dailyQuest.TotalQuest;
+
+        bool hasRed = false;
+        
+        for (int i = 0; i < quests.Count; i++)
+        {
+            if (quests[i].IsReach && !quests[i].IsReceived)
+            {
+                hasRed = true;
+                break;
+            }
+        }
+
+        if (totalQuest.IsReach && !totalQuest.IsReceived)
+            hasRed = true;
+
+        App.view.lobby.lobbyDailyQuestRed.SetActive(hasRed);
+    }
 }

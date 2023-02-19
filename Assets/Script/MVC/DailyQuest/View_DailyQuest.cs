@@ -21,7 +21,7 @@ public class View_DailyQuest : ViewBehaviour
 
     [Title("UI")] [SerializeField] private Transform bg;
     [SerializeField] private GameObject getAllMask;
-    private GameObject _lobbyDailyQuestRed;
+    // private GameObject _lobbyDailyQuestRed;
 
     [Title("Effects")] [SerializeField] private ParticleSystem totalReceiveEffects;
 
@@ -56,7 +56,7 @@ public class View_DailyQuest : ViewBehaviour
         App.model.dailyQuest.OnQuestsChange += OnQuestsChange;
         App.model.dailyQuest.OnTotalQuestsChange += OnTotalQuestsChange;
         
-        _lobbyDailyQuestRed = App.view.lobby.lobbyDailyQuestRed;
+        // _lobbyDailyQuestRed = App.view.lobby.lobbyDailyQuestRed;
     }
     
     public void OnQuestsChange(object value)
@@ -75,14 +75,14 @@ public class View_DailyQuest : ViewBehaviour
 
             if (quest.IsReach && !quest.IsReceived)
             {
-                _lobbyDailyQuestRed.SetActive(true);
+                // _lobbyDailyQuestRed.SetActive(true);
                 continue;
             }
 
             if (quest.IsReceived)
             {
                 receiveCount++;
-                _lobbyDailyQuestRed.SetActive(false);
+                // _lobbyDailyQuestRed.SetActive(false);
             }
         }
         

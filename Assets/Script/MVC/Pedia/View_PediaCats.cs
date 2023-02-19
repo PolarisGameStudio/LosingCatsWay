@@ -18,6 +18,7 @@ public class View_PediaCats : ViewBehaviour
     public Image[] starStatusImages;
     public TextMeshProUGUI[] levelCountTexts;
     public TextMeshProUGUI catTypeText;
+    public TextMeshProUGUI catInformationText;
     public CatSkin catSkin;
 
     #endregion
@@ -107,6 +108,7 @@ public class View_PediaCats : ViewBehaviour
         levelCountTexts[1].text = "(" + Math.Clamp(count, 0, 10) + "/10)";
 
         catTypeText.text = App.factory.stringFactory.GetCatVariety(variety);
+        catInformationText.text = App.factory.stringFactory.GetCatInformation(variety);
         catSkin.ChangeSkin(variety);
     }
 }

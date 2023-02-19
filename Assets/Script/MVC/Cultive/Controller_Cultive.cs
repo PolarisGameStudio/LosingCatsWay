@@ -379,7 +379,8 @@ public class Controller_Cultive : ControllerBehavior
                 RefreshCatStatus();
                 isCanDrag = true;
                 OpenClickCat();
-                App.model.cultive.SelectedItems = App.model.cultive.SelectedItems;
+                App.system.soundEffect.Stop();
+                SelectType(App.model.cultive.SelectedType);
             });
         }
     }
@@ -440,7 +441,7 @@ public class Controller_Cultive : ControllerBehavior
         DOVirtual.DelayedCall(t.Animation.Duration, () =>
         {
             RefreshCatStatus();
-            App.model.cultive.SelectedItems = App.model.cultive.SelectedItems;
+            SelectType(App.model.cultive.SelectedType);
             catSkeleton.AnimationState.SetAnimation(0, "AI_Main/IDLE_Ordinary01", true);
         });
 
@@ -769,7 +770,7 @@ public class Controller_Cultive : ControllerBehavior
     public void CopyCatId()
     {
         App.model.cultive.SelectedCat.cloudCatData.CatData.CatId.CopyToClipboard();
-        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Copied);
+        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_Copy);
     }
 
     public void RenameCat()

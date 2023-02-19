@@ -58,6 +58,33 @@ public class SoundEffectSystem : SerializedMonoBehaviour
         }
     }
 
+    public void Stop()
+    {
+        for (int i = 0; i < _audioSources.Length; i++)
+        {
+            AudioSource audioSource = _audioSources[i];
+
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
+        }
+    }
+
+    public void Stop(string audioName)
+    {
+        AudioClip clip = audioDatas[audioName];
+        for (int i = 0; i < _audioSources.Length; i++)
+        {
+            var source = _audioSources[i];
+            if (source.clip == null)
+                continue;
+            if (source.clip != clip)
+                continue;
+            source.Stop();
+        }
+    }
+
     public void PlayCatMeow()
     {
         int rand = Random.Range(47, 52);

@@ -192,8 +192,6 @@ public class View_ClinicResult : ViewBehaviour
             return;
         }
 
-        sickNameText.text = App.factory.stringFactory.GetPaymentName(id);
-        sickInfoText.text = App.factory.stringFactory.GetPaymentInfo(id);
         metCountText.text = "-";
         sickInfoImage.sprite = App.factory.sickFactory.GetHospitalFunctionSprite(id);
         

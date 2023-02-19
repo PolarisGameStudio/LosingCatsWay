@@ -146,7 +146,7 @@ public class CatchCatMap : MvcBehaviour
     {
         if (App.system.tutorial.isTutorial)
             return;
-        App.system.confirm.Active(ConfirmTable.ExitComfirm, () =>
+        App.system.confirm.Active(ConfirmTable.Hints_Leave, () =>
         {
             SetCloudCatDataToUse(false);
             CloseToMap();
@@ -518,14 +518,14 @@ public class CatchCatMap : MvcBehaviour
 
         SetCloudCatDataToUse(false);
 
-        App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchGameSuccess, () =>
+        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CatCatchSuccess, () =>
         {
             OnGameEnd?.Invoke();
             OnGotcha?.Invoke();
             exp = App.system.player.playerDataSetting.CatchCatExp;
             money = App.system.player.playerDataSetting.CatchCatCoin;
             
-            App.system.settle.Active(gameName, cloudCatData, exp, money, 0, 100, null, () =>
+            App.system.settle.Active(gameName, cloudCatData, exp, money, 0, 3, null, () =>
             {
                 App.system.tnr.OnDoAdopt += CloseToLobby;
                 App.system.tnr.OnDoRelease += CloseToLobby;
@@ -545,7 +545,7 @@ public class CatchCatMap : MvcBehaviour
             App.system.cloudSave.DeleteCloudCatData(cloudCatData);
             cloudCatData = null;
 
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchCatGameEnd, () =>
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CatCatchFail, () =>
             {
                 // CloseToMap();
                 App.system.tutorial.Next();
@@ -559,7 +559,7 @@ public class CatchCatMap : MvcBehaviour
             bubble.Close();
             SetCloudCatDataToUse(false);
 
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchCatGameEnd, () =>
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CatCatchFail, () =>
             {
                 if (hp <= 51)
                 {
@@ -583,7 +583,7 @@ public class CatchCatMap : MvcBehaviour
             bubble.Close();
             SetCloudCatDataToUse(false);
 
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.CatchGameFailed, () =>
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CatCatchFail, () =>
             {
                 if (hp <= 51)
                 {

@@ -223,7 +223,7 @@ public class Controller_Clinic : ControllerBehavior
         {
             if (!App.system.player.ReduceMoney(totalCost))
             {
-                App.system.confirm.OnlyConfirm().Active(ConfirmTable.NotEnoughCoin);
+                App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NoMoney);
                 return;
             }
         }
@@ -234,14 +234,14 @@ public class Controller_Clinic : ControllerBehavior
         OpenFunction();
     }
 
-    public void CancelPay()
-    {
-        App.system.confirm.Active(ConfirmTable.BackConfirm, () => 
-        {
-            App.view.clinic.invoice.Close();
-            OpenChooseFunction();
-        });
-    }
+    // public void CancelPay()
+    // {
+    //     App.system.confirm.Active(ConfirmTable.Fix, () => 
+    //     {
+    //         App.view.clinic.invoice.Close();
+    //         OpenChooseFunction();
+    //     });
+    // }
 
     #endregion
 

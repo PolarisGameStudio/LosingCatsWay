@@ -26,8 +26,13 @@ public class PlayerDataSetting : SerializedScriptableObject
     //遊戲剩餘愛心換經驗
     public int GetBigGameExpByChance(int chance)
     {
-        float f = (BigGameExp / 3f * chance) / 10f;
-        return Convert.ToInt32(Mathf.Round(f) * 10);
+        if (chance == 3)
+            return 100;
+        if (chance == 2)
+            return 70;
+        if (chance == 1)
+            return 40;
+        return 20;
     }
 
     ///遊戲剩餘愛心換金幣 全額
