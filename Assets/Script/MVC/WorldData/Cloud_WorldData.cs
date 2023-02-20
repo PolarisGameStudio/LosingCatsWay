@@ -11,4 +11,7 @@ public class Cloud_WorldData
     [FirestoreProperty] public int OldCount { get; set; }
     [FirestoreProperty] public int OutdoorCount { get; set; }
     [FirestoreProperty] public int ShelterCount { get; set; }
+    [FirestoreProperty] public int BuyCatCount { get; set; }
+    [FirestoreProperty] public int DeleteCatCount { get; set; }
+    [FirestoreProperty] public int AddCatCount { get; set; }
 }

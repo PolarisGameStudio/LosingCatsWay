@@ -8,11 +8,6 @@ using UnityEngine;
 
 public class Controller_Friend : ControllerBehavior
 {
-    public async void Init()
-    {
-        await RefreshData();
-    }
-
     public async void Open()
     {
         await RefreshData();

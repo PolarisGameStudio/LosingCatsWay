@@ -12,12 +12,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class FriendRoom : MonoBehaviour
+public class FriendRoom : MyApplication
 {
     private FriendRoom_GridSystem gridSystem;
     private FriendRoom_RoomSystem roomSystem;
     private FriendRoom_CatSystem catSystem;
-    private TransitionsSystem transitionsSystem;
 
     [Title("UI")] 
     public UIView mainView;
@@ -30,28 +29,37 @@ public class FriendRoom : MonoBehaviour
         gridSystem = GetComponent<FriendRoom_GridSystem>();
         roomSystem = GetComponent<FriendRoom_RoomSystem>();
         catSystem = GetComponent<FriendRoom_CatSystem>();
-        transitionsSystem = FindObjectOfType<TransitionsSystem>();
-
-        transitionsSystem.InstantShow();
+        
+        system.transition.InstantShow();
 
         // 拿取好友資料
         var friendId = PlayerPrefs.GetString("FriendRoomId");
         CloudSaveData playerData = await LoadFriendData(friendId); // todo Helper設定地板之類的 好了才Transition打開
 
         // 生地板
-        gridSystem.Init(31, 31, 5.12f); // todo 朋友的GridSize
+        int gridSizeLevel = playerData.PlayerData.GridSizeLevel;
+
+        if (gridSizeLevel > 0)
+            FindObjectOfType<LeanPinchCamera>().ClampMax = 15;
+        
+        gridSystem.Init(gridSizeLevel, 5.12f); // todo 朋友的GridSize
         gridSystem.CreateGrid();
 
         // 生房間
         roomSystem.CreateRoom(playerData.ExistRoomDatas);
-
+        FindObjectOfType<MapSystem>().GenerateMap(true);
+        
         // 生貓
         var cats = await LoadCloudCatDatas(friendId);
         catSystem.CreateCat(cats);
 
         SetUI(playerData, cats.Count);
 
-        DOVirtual.DelayedCall(0.5f, () => { transitionsSystem.OnlyClose(); });
+        DOVirtual.DelayedCall(1, () =>
+        {
+            system.transition.OnlyClose();
+            system.bgm.Play("Lobby");
+        });
     }
 
     public void Open()
@@ -66,11 +74,15 @@ public class FriendRoom : MonoBehaviour
 
     public void BackLobby()
     {
-        transitionsSystem.OnlyOpen(() => { SceneManager.LoadSceneAsync("SampleScene", LoadSceneMode.Single); });
+        system.confirm.Active(ConfirmTable.Fix, () =>
+        {
+            system.transition.OnlyOpen(() => { SceneManager.LoadSceneAsync("SampleScene", LoadSceneMode.Single); });
+        });
     }
 
     public void ScreenShot()
     {
+        system.screenshot.Open();
     }
 
     private void SetUI(CloudSaveData playerData, int catCount)

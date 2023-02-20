@@ -38,12 +38,12 @@ public class FriendCard_List : MvcBehaviour
         
         iconImage.sprite = App.factory.itemFactory.GetItem(friendData.UsingIcon).icon;
         avatarImage.sprite = App.factory.itemFactory.GetItem(friendData.UsingAvatar).icon;
-        
-        if (!App.factory.itemFactory.avatarEffects.ContainsKey(friendData.UsingAvatar))
-            return;
-        
-        GameObject effectObject = App.factory.itemFactory.avatarEffects[friendData.UsingAvatar];
-        Instantiate(effectObject, avatarImage.transform);
+
+        if (App.factory.itemFactory.avatarEffects.ContainsKey(friendData.UsingAvatar))
+        {
+            GameObject effectObject = App.factory.itemFactory.avatarEffects[friendData.UsingAvatar];
+            Instantiate(effectObject, avatarImage.transform);
+        }
         
         if (selectFriendAction != null)
             selectFriendButton.onClick.AddListener(selectFriendAction);

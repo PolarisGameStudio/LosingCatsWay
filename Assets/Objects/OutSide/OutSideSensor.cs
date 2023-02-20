@@ -7,17 +7,9 @@ using UnityEngine.Serialization;
 
 public class OutSideSensor : MvcBehaviour
 {
-    public bool isFriendMode;
-
-    private void Start()
-    {
-        string sceneName = SceneManager.GetActiveScene().name;
-        isFriendMode = sceneName == "FriendRoom";
-    }
-
     public void OpenUnlockGrid()
     {
-        if (isFriendMode)
+        if (SceneManager.GetActiveScene().name.Equals("FriendRoom"))
             return;
         
         App.system.unlockGrid.Active();

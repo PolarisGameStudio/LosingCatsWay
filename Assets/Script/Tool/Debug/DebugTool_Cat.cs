@@ -110,9 +110,10 @@ public class DebugTool_Cat
         catData.Trait = GetRandomTrait();
         catData.DeathTime = new Timestamp();
         catData.IsFavorite = false;
-        
+
         if (isAdult)
-            catData.BornTime = Timestamp.FromDateTime(Timestamp.GetCurrentTimestamp().ToDateTime() - TimeSpan.FromDays(10));
+            catData.BornTime =
+                Timestamp.FromDateTime(Timestamp.GetCurrentTimestamp().ToDateTime() - TimeSpan.FromDays(10));
         else
             catData.BornTime = Timestamp.GetCurrentTimestamp();
 
@@ -156,7 +157,7 @@ public class DebugTool_Cat
 
         CloudSave_CatDiaryData catDiaryData = new CloudSave_CatDiaryData();
         catDiaryData.DiaryDatas = new List<CloudSave_DiaryData>();
-        catDiaryData.AdoptTimestamp =Timestamp.GetCurrentTimestamp();
+        catDiaryData.AdoptTimestamp = Timestamp.GetCurrentTimestamp();
         catDiaryData.AdoptLocation = string.Empty;
         catDiaryData.DiarySatietyScore = 0;
         catDiaryData.DiaryLitterScore = 0;
@@ -171,8 +172,9 @@ public class DebugTool_Cat
 
         return cloudCatData;
     }
-    
-    public async void CreateCat(string owner, bool isAdult)
+
+    // varietyType 0:random 1:purebredCat 2:mixedCat
+    public async Task<CloudCatData> CreateCat(string owner, bool isAdult, int varietyType)
     {
         CloudCatData cloudCatData = new CloudCatData();
 
@@ -185,12 +187,20 @@ public class DebugTool_Cat
         catData.BodyScale = Random.Range(0.9f, 1.1f);
         catData.PersonalityTypes = new List<int>(GetRandomPersonality());
         catData.PersonalityLevels = new List<int>(GetPersonalityLevel(catData.PersonalityTypes));
-        catData.Trait = GetRandomTrait();
+
+        if (varietyType == 0)
+            catData.Trait = GetRandomTrait();
+        else if (varietyType == 1)
+            catData.Trait = GetPurebredCatVariety();
+        else
+            catData.Trait = GetMixedCatVariety();
+
         catData.DeathTime = new Timestamp();
         catData.IsFavorite = false;
-        
+
         if (isAdult)
-            catData.BornTime = Timestamp.FromDateTime(Timestamp.GetCurrentTimestamp().ToDateTime() - TimeSpan.FromDays(5));
+            catData.BornTime =
+                Timestamp.FromDateTime(Timestamp.GetCurrentTimestamp().ToDateTime() - TimeSpan.FromDays(5));
         else
             catData.BornTime = Timestamp.GetCurrentTimestamp();
 
@@ -234,7 +244,7 @@ public class DebugTool_Cat
 
         CloudSave_CatDiaryData catDiaryData = new CloudSave_CatDiaryData();
         catDiaryData.DiaryDatas = new List<CloudSave_DiaryData>();
-        catDiaryData.AdoptTimestamp =Timestamp.GetCurrentTimestamp();
+        catDiaryData.AdoptTimestamp = Timestamp.GetCurrentTimestamp();
         catDiaryData.AdoptLocation = string.Empty;
         catDiaryData.DiarySatietyScore = 0;
         catDiaryData.DiaryLitterScore = 0;
@@ -250,21 +260,31 @@ public class DebugTool_Cat
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("Cats").Document(catData.CatId);
         await docRef.SetAsync(cloudCatData);
+
+        return cloudCatData;
     }
 
     #region GetProperties
 
     private string GetRandomCatVariety()
     {
-        Array array = Enum.GetValues(typeof(MixedCatType));
-
         if (Random.value < 0.1)
-        {
-            array = Enum.GetValues(typeof(PurebredCatType));
-        }
+            return GetPurebredCatVariety();
 
+        return GetMixedCatVariety();
+    }
+
+    private string GetPurebredCatVariety()
+    {
+        Array array = Enum.GetValues(typeof(PurebredCatType));
         var result = array.GetValue(Random.Range(0, array.Length)).ToString();
+        return result;
+    }
 
+    private string GetMixedCatVariety()
+    {
+        Array array = Enum.GetValues(typeof(MixedCatType));
+        var result = array.GetValue(Random.Range(0, array.Length)).ToString();
         return result;
     }
 
