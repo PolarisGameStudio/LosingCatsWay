@@ -165,12 +165,12 @@ public class TutorialSystem : MvcBehaviour
     public void EndStartTutorial()
     {
         startTutorialEnd = true;
-        //todo save
+        App.SaveData();
     }
 
     public void EndShelterTutorial()
     {
         shelterTutorialEnd = true;
-        //todo save
+        App.SaveData();
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class View_HospitalChooseFunction : ViewBehaviour
 {
+    [SerializeField] private Transform potionTransform;
     [SerializeField] private RectTransform panelTransform;
     [SerializeField] private Button[] functionButtons;
 
@@ -19,6 +20,8 @@ public class View_HospitalChooseFunction : ViewBehaviour
         for (int i = 0; i < functionButtons.Length; i++)
             functionButtons[i].transform.localScale = Vector2.zero;
 
+        potionTransform.localScale = Vector2.zero;
+        
         panelOrigin = panelTransform.anchoredPosition;
         panelOffset.x = panelOrigin.x + panelTransform.sizeDelta.x * 2;
         panelOffset.y = panelOrigin.y;
@@ -33,6 +36,8 @@ public class View_HospitalChooseFunction : ViewBehaviour
                         .SetDelay(i * 0.1f)
                         .OnComplete(() => tmp.interactable = true);
                 }
+
+                potionTransform.DOScale(Vector2.one, 0.25f).SetEase(Ease.OutBack).SetDelay(0.4f);
             });
     }
 

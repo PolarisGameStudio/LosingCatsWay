@@ -18,6 +18,7 @@ public class View_Hospital : ViewBehaviour
     [SerializeField] private View_HospitalInvoice Invoice;
     [SerializeField] private View_HospitalDoctorFunction DoctorFunction;
     [SerializeField] private View_HospitalDoctorResult DoctorResult;
+    [SerializeField] private View_HospitalAboutPotion AboutPotion;
     
     // todo parallex
 
@@ -137,5 +138,15 @@ public class View_Hospital : ViewBehaviour
     public void ToggleChooseCatQuest()
     {
         ChooseCat.ToggleChooseCatQuest();
+    }
+
+    public void OpenAboutPotion()
+    {
+        AboutPotion.Open();
+    }
+
+    public void CloseAboutPotion()
+    {
+        AboutPotion.Close();
     }
 }

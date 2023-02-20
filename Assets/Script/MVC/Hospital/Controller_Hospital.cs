@@ -292,4 +292,14 @@ public class Controller_Hospital : ControllerBehavior
         App.system.soundEffect.Play("Button");
         App.view.hospital.ToggleChooseCatQuest();
     }
+
+    public void OpenAboutPotion()
+    {
+        App.view.hospital.OpenAboutPotion();
+    }
+
+    public void CloseAboutPotion()
+    {
+        App.view.hospital.CloseAboutPotion();
+    }
 }
