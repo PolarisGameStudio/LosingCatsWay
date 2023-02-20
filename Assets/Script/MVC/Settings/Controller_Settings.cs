@@ -1,16 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using AppleAuth;
+using AppleAuth.Enums;
+using AppleAuth.Extensions;
+using AppleAuth.Interfaces;
+using AppleAuth.Native;
 using Firebase.Auth;
 using Firebase.Firestore;
+using Google;
 using UnityEngine;
 using I2.Loc;
 using UnityEngine.SceneManagement;
 
 public class Controller_Settings : ControllerBehavior
 {
+    private IAppleAuthManager appleAuthManager;
+
     public void Init()
     {
         LoadSettings();
+        
+        if (AppleAuthManager.IsCurrentPlatformSupported)
+        {
+            // Creates a default JSON deserializer, to transform JSON Native responses to C# instances
+            var deserializer = new PayloadDeserializer();
+            // Creates an Apple Authentication manager with the deserializer
+            appleAuthManager = new AppleAuthManager(deserializer);
+        }
     }
 
     public void Open()
@@ -113,4 +130,81 @@ public class Controller_Settings : ControllerBehavior
     {
         Application.OpenURL(url);
     }
+
+    #region Link
+
+    public void LinkByApple()
+    {
+        Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+        var rawNonce = MathfExtension.GenerateRandomString(32);
+        var nonce = MathfExtension.GenerateSHA256NonceFromRawNonce(rawNonce);
+
+        var loginArgs = new AppleAuthLoginArgs(LoginOptions.IncludeEmail | LoginOptions.IncludeFullName, nonce);
+
+        this.appleAuthManager.LoginWithAppleId(
+            loginArgs,
+            credential =>
+            {
+                // Obtained credential, cast it to IAppleIDCredential
+                var appleIdCredential = credential as IAppleIDCredential;
+                if (appleIdCredential != null)
+                {
+                    var identityToken = Encoding.UTF8.GetString(appleIdCredential.IdentityToken);
+                    var authorizationCode = Encoding.UTF8.GetString(appleIdCredential.IdentityToken);
+
+                    // And now you have all the information to create/login a user in your system
+                    Firebase.Auth.Credential firebaseCredential =
+                        Firebase.Auth.OAuthProvider.GetCredential("apple.com", identityToken, rawNonce, authorizationCode);
+
+                    auth.CurrentUser.LinkWithCredentialAsync(firebaseCredential).ContinueWith(task =>
+                    {
+                        if (task.IsCanceled)
+                        {
+                            Debug.LogError("SignInWithCredentialAsync was canceled.");
+                            return;
+                        }
+
+                        if (task.IsFaulted)
+                        {
+                            Debug.LogError("SignInWithCredentialAsync encountered an error: " + task.Exception);
+                            return;
+                        }
+                    });
+                    
+                    //TODO 顯示
+                }
+            },
+            error =>
+            {
+                // Something went wrong
+                var authorizationErrorCode = error.GetAuthorizationErrorCode();
+                print(authorizationErrorCode);
+            });
+    }
+
+    public async void LinkByGoogle()
+    {
+        Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+
+        var googleSignInResult = await GoogleSignIn.DefaultInstance.SignIn();
+
+        if (googleSignInResult == null)
+        {
+            print("登入失敗");
+            return;
+        }
+
+        var credential = Firebase.Auth.GoogleAuthProvider.GetCredential(googleSignInResult.IdToken, null);
+        var result = auth.CurrentUser.LinkWithCredentialAsync(credential);
+
+        if (result == null)
+        {
+            print("登入失敗");
+            return;
+        }
+
+        //TODO 補上登入後
+    }
+
+    #endregion
 }

@@ -556,7 +556,7 @@ public class MyGridSystem : MvcBehaviour
 
     private int GetGridSize()
     {
-        int level = Math.Clamp(App.system.player.GridSizeLevel, 1, 11);
+        int level = Math.Clamp(App.system.player.GridSizeLevel, 0, 11);
         int result = 5 + level * 2;
 
         return result;
