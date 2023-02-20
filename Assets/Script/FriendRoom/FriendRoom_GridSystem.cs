@@ -5,7 +5,7 @@ using Lean.Touch;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class FriendRoom_GridSystem : MonoBehaviour
+public class FriendRoom_GridSystem : MvcBehaviour
 {
     [Title("Require")] 
     public FactoryContainer factory;
@@ -19,12 +19,16 @@ public class FriendRoom_GridSystem : MonoBehaviour
 
     private FriendRoom_RoomSystem roomSystem;
     
-    public void Init(int widthValue, int heightValue, float cellSizeValue)
+    public void Init(int gridLevel, float cellSizeValue)
     {
-        width = widthValue;
-        height = heightValue;
+        width = 5 + gridLevel * 2;
+        height = width;
+        
         cellSize = cellSizeValue;
 
+        App.globalLeanPlane.MaxX = cellSize * (width + 2);
+        App.globalLeanPlane.MaxY = cellSize * (height + 2);
+        
         roomSystem = GetComponent<FriendRoom_RoomSystem>();
     }
 

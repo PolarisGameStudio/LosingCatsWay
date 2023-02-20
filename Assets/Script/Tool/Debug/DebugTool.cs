@@ -15,33 +15,34 @@ public class DebugTool : MvcBehaviour
     [Button]
     public void CreateAdultCatAtShelter()
     {
-        cat.CreateCat("Shelter", true);
+        cat.CreateCat("Shelter", true, 0);
     }
 
     [Button]
     public void CreateAdultCatAtMap()
     {
         int index = Random.Range(0, 2);
-        cat.CreateCat($"Location{index}", true);
+        cat.CreateCat($"Location{index}", true, 0);
     }
-    
+
     [Button]
     public void CreateChildCatAtShelter()
     {
-        cat.CreateCat("Shelter", false);
+        cat.CreateCat("Shelter", false, 0);
     }
 
     [Button]
     public void CreateChildCatAtMap()
     {
         int index = Random.Range(0, 2);
-        cat.CreateCat($"Location{index}", false);
+        cat.CreateCat($"Location{index}", false, 0);
     }
 
     public void GetMonthLastTime()
     {
         DateTime notTime = DateTime.Now;
-        DateTime lastDay = notTime.AddMonths(1).AddDays(-DateTime.Now.AddMonths(1).Day).AddHours(-notTime.Hour + 23).AddMinutes(-notTime.Minute + 59).AddSeconds(-notTime.Second + 59);
+        DateTime lastDay = notTime.AddMonths(1).AddDays(-DateTime.Now.AddMonths(1).Day).AddHours(-notTime.Hour + 23)
+            .AddMinutes(-notTime.Minute + 59).AddSeconds(-notTime.Second + 59);
         print(lastDay);
     }
 
@@ -61,7 +62,7 @@ public class DebugTool : MvcBehaviour
         App.system.player.AddExp(200);
         App.controller.lobby.ActiveBuffer();
     }
-    
+
     [Button]
     public async void Test()
     {

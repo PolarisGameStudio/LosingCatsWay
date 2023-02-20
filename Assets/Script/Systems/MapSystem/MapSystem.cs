@@ -15,12 +15,17 @@ public class MapSystem : MvcBehaviour
         _polyNavMap = GetComponent<PolyNavMap>();
         _polygonCollider2D = GetComponent<PolygonCollider2D>();
     }
-
-    public void GenerateMap()
+    
+    public void GenerateMap(bool isFriendMode = false)
     {
         List<List<MyEdge>> allEdges = new List<List<MyEdge>>();
-        List<Room> rooms = App.system.room.MyRooms;
+        List<Room> rooms = new List<Room>();
 
+        if (!isFriendMode)
+            rooms = App.system.room.MyRooms;
+        else
+            rooms = FindObjectOfType<FriendRoom_RoomSystem>().myRooms;
+        
         for (int i = 0; i < rooms.Count; i++)
         {
             List<MyEdge> edges = CreateEdges(rooms[i]);

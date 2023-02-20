@@ -24,10 +24,13 @@ public class FriendContainer_List : ViewBehaviour
 
     public void GoFriendHome(int index)
     {
-        App.system.transition.OnlyOpen(() =>
+        App.system.confirm.Active(ConfirmTable.Fix, () =>
         {
-            PlayerPrefs.SetString("FriendRoomId", App.model.friend.Friends[index].PlayerId);
-            SceneManager.LoadSceneAsync("FriendRoom", LoadSceneMode.Single);
+            App.system.transition.OnlyOpen(() =>
+            {
+                PlayerPrefs.SetString("FriendRoomId", App.model.friend.Friends[index].PlayerId);
+                SceneManager.LoadSceneAsync("FriendRoom", LoadSceneMode.Single);
+            });
         });
     }
 
@@ -47,7 +50,7 @@ public class FriendContainer_List : ViewBehaviour
         for (int i = 0; i < friends.Count; i++)
         {
             var index = i;
-
+            
             FriendCard_List friendCardList = Instantiate(card, content).GetComponent<FriendCard_List>();
             friendCardList.SetData(friends[i], () => { App.controller.friend.SelectFriend(index); },
                 () => { GoFriendHome(index); });

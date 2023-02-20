@@ -47,5 +47,9 @@ public class View_WorldData : ViewBehaviour
         int nonLigationCount = totalCount - ligationCount;
         List<float> ligationBarValues = new List<float>() { ligationCount, nonLigationCount };
         visualBar_Ligation.SetData(ligationBarValues.ToArray());
+
+        bornCatsText.text = worldData.AddCatCount.ToString("N0");
+        deadCatsText.text = worldData.DeleteCatCount.ToString("N0");
+        sellCatsText.text = worldData.BuyCatCount.ToString("N0");
     }
 }

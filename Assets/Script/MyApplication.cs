@@ -6,6 +6,7 @@ using DG.Tweening;
 using Firebase.Auth;
 using Firebase.Firestore;
 using Lean.Common;
+using Lean.Touch;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -86,7 +87,6 @@ public class MyApplication : MonoBehaviour
 
         controller.bag.Init();
         controller.settings.Init(); //BGM SE 之後
-        controller.friend.Init();
         controller.levelReward.Init();
         
         FindObjectOfType<LoadScene>()?.Close();
@@ -112,6 +112,11 @@ public class MyApplication : MonoBehaviour
         
         system.cat.CheckAngelCat();
 
+        int gridSizeLevel = system.player.GridSizeLevel;
+
+        if (gridSizeLevel > 0)
+            FindObjectOfType<LeanPinchCamera>().ClampMax = 15;
+        
         DOVirtual.DelayedCall(0.35f, controller.lobby.Open);
     }
 

@@ -105,7 +105,12 @@ public class FriendRoom_RoomSystem : MonoBehaviour
             if (room.y == gridSystem.height - 1)
                 break;
 
-            if (gridSystem.GetGrid(room.x + i, room.y + (roomHeight - 1) + 1).Value == 1)
+            MyGrid upGrid = gridSystem.GetUpGrid(room.x + i, room.y + (roomHeight - 1));
+            
+            if (upGrid == null)
+                continue;
+
+            if (upGrid.Value == 1)
                 room.CloseUpWall(i);
             else
                 room.OpenUpWall(i);
@@ -118,12 +123,20 @@ public class FriendRoom_RoomSystem : MonoBehaviour
             if (room.y == 0)
                 break;
 
-            if (gridSystem.GetGrid(room.x + i, room.y - 1).Value == 1)
+            MyGrid downGrid = gridSystem.GetDownGrid(room.x + i, room.y);
+            
+            if (downGrid == null)
+                continue;
+
+            if (downGrid.Value == 1)
                 room.CloseDownWall(i);
             else
                 room.OpenDownWall(i);
         }
 
+        if (room.roomData.roomType != RoomType.Path)
+            return;
+        
         //左偵查
         
         for (int i = 0; i < roomHeight; i++)
@@ -131,7 +144,12 @@ public class FriendRoom_RoomSystem : MonoBehaviour
             if (room.x == 0)
                 break;
 
-            if (gridSystem.GetGrid(room.x - 1, room.y + i).Value == 1)
+            MyGrid leftGrid = gridSystem.GetLeftGrid(room.x, room.y + i);
+            
+            if (leftGrid == null)
+                continue;
+
+            if (leftGrid.Value == 1)
                 room.CloseLeftWall(i);
             else
                 room.OpenLeftWall(i);
@@ -144,7 +162,15 @@ public class FriendRoom_RoomSystem : MonoBehaviour
             if (room.x == gridSystem.width - 1)
                 break;
 
-            if (gridSystem.GetGrid(room.x + (roomWidth - 1) + 1, room.y + i).Value == 1)
+            if (room.x + (roomWidth - 1) + 1 >= gridSystem.width - 1)
+                break;
+
+            MyGrid rightGrid = gridSystem.GetRightGrid(room.x + (roomWidth - 1), room.y + i);
+            
+            if (rightGrid == null)
+                continue;
+            
+            if (rightGrid.Value == 1)
                 room.CloseRightWall(i);
             else
                 room.OpenRightWall(i);
