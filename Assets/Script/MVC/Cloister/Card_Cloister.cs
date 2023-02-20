@@ -37,6 +37,10 @@ public class Card_Cloister : MvcBehaviour
 
     [Title("Select")] [SerializeField] private GameObject selectObject;
 
+    [Title("Texts")]
+    [SerializeField] private TextMeshProUGUI[] timerTexts;
+    [SerializeField] private Material redTextMat;
+    
     private DateTime expiredDate;
     private CloudLosingCatData _losingCatData;
     
@@ -102,6 +106,9 @@ public class Card_Cloister : MvcBehaviour
             buttonImage.sprite = redButton;
             borderImage.sprite = redBorder;
             holeImage.sprite = redHole;
+
+            for (int i = 0; i < timerTexts.Length; i++)
+                timerTexts[i].material = redTextMat;
         }
     }
 

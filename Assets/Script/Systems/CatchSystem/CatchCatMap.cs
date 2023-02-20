@@ -51,9 +51,10 @@ public class CatchCatMap : MvcBehaviour
 
     [Title("Animator")] [SerializeField] private Animator catchFlowerAnimator;
 
-    [Title("UIParticle")] [SerializeField] private UIParticle hateEffect;
-    [SerializeField] private UIParticle loveEffect;
-    [SerializeField] private UIParticle bigLoveEffect;
+    [Title("UIParticle")]
+    [SerializeField] private GameObject hateEffect;
+    [SerializeField] private GameObject loveEffect;
+    [SerializeField] private GameObject bigLoveEffect;
 
     [Title("Module")] [SerializeField] private CatchCatBubble bubble;
     [SerializeField] private CatchCatHealthBar healthBar;
@@ -372,9 +373,13 @@ public class CatchCatMap : MvcBehaviour
                 break;
         }
 
+        hateEffect.SetActive(false);
+        loveEffect.SetActive(false);
+        bigLoveEffect.SetActive(false);
+        
         var personalitys = cloudCatData.CatData.PersonalityTypes;
         var levels = cloudCatData.CatData.PersonalityLevels;
-
+        
         itemImage.sprite = item.icon;
         DoItemTween(() =>
         {
@@ -394,7 +399,7 @@ public class CatchCatMap : MvcBehaviour
                             if (index == 4) //廣告道具 + 負面個性
                                 value *= 0.2f;
 
-                            hateEffect.Play();
+                            hateEffect.SetActive(true);
                             SpineCatAngry();
                             break;
                         case 1:
@@ -403,21 +408,21 @@ public class CatchCatMap : MvcBehaviour
                             if (index == 4) //廣告道具 + 負面個性
                                 value *= 0.2f;
 
-                            hateEffect.Play();
+                            hateEffect.SetActive(true);
                             SpineCatAngry();
                             break;
                         case 2:
                             value *= 1.5f;
-                            loveEffect.Play();
+                            loveEffect.SetActive(true);
                             SpineCatHappy();
                             break;
                         case 3:
                             value *= 2f;
-                            bigLoveEffect.Play();
+                            bigLoveEffect.SetActive(true);
                             SpineCatHappy();
                             break;
                         default:
-                            loveEffect.Play();
+                            loveEffect.SetActive(true);
                             SpineCatHappy();
                             break;
                     }
@@ -427,7 +432,7 @@ public class CatchCatMap : MvcBehaviour
             }
             else //該回合沒有匹配的個性
             {
-                loveEffect.Play();
+                loveEffect.SetActive(true);
                 SpineCatHappy();
             }
 

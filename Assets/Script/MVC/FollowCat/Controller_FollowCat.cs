@@ -139,13 +139,17 @@ public class Controller_FollowCat : ControllerBehavior
         animator.Play(CatAnimTable.ToTrait.ToString());
         CloseSensor();
         App.view.followCat.OpenTrait();
+
+        DOVirtual.DelayedCall(duration - 0.5f, () =>
+        {
+            App.view.followCat.CloseTrait();
+            App.system.screenshot.Close();
+        });
         
         DOVirtual.DelayedCall(duration, () =>
         {
             OpenSensor();
             App.system.cat.PauseCatsGame(false);
-            App.view.followCat.CloseTrait();
-            App.system.screenshot.Close();
         });
     }
 

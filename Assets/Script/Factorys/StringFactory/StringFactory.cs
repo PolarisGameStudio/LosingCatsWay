@@ -12,6 +12,7 @@ public class StringFactory : SerializedMonoBehaviour
     [SerializeField] private Dictionary<string, StringData> ItemName;
     [SerializeField] private Dictionary<string, StringData> ItemDescription;
     [SerializeField] private Dictionary<string, StringData> ItemType;
+    [SerializeField] private Dictionary<string, StringData> ItemUsage;
 
     [Title("Character")] 
     [SerializeField] private Dictionary<string, StringData> CharacterName;
@@ -166,6 +167,14 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = ItemType[CountryId].Contents.ContainsKey(id)
             ? ItemType[CountryId].Contents[id]
+            : "要叫阿邦上";
+        return result;
+    }
+
+    public string GetItemUsage(string id)
+    {
+        string result = ItemUsage[CountryId].Contents.ContainsKey(id)
+            ? ItemUsage[CountryId].Contents[id]
             : "要叫阿邦上";
         return result;
     }

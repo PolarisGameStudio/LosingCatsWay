@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -27,6 +28,13 @@ public class Card_FeedItem : MvcBehaviour
     [SerializeField] private Card_ChipInfo chipInfo;
     [SerializeField] private GameObject container;
 
+    [Title("ChangeColor")]
+    [SerializeField] private Image satietyFill;
+    [SerializeField] private Image moistureFill;
+    [SerializeField] private Image favourbilityFill;
+    [SerializeField] private Sprite yellowSprite;
+    [SerializeField] private Sprite redSprite;
+
     public void SetData(Cat cat)
     {
         catSkin.ChangeSkin(cat.cloudCatData);
@@ -48,6 +56,10 @@ public class Card_FeedItem : MvcBehaviour
         satietyBar.fillAmount = cat.cloudCatData.CatSurviveData.Satiety / 100;
         moistureBar.fillAmount = cat.cloudCatData.CatSurviveData.Moisture / 100;
         funBar.fillAmount = cat.cloudCatData.CatSurviveData.Favourbility / 100;
+
+        satietyFill.sprite = satietyBar.fillAmount > 0.2f ? yellowSprite : redSprite;
+        moistureFill.sprite = moistureBar.fillAmount > 0.2f ? yellowSprite : redSprite;
+        favourbilityFill.sprite = funBar.fillAmount > 0.2f ? yellowSprite : redSprite;
     }
 
     public void SetActiveContainer(bool active)

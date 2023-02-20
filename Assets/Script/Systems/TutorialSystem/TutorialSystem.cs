@@ -150,19 +150,6 @@ public class TutorialSystem : MvcBehaviour
         rect.anchoredPosition = Vector2.zero;
     }
     
-    // Debug
-    [Button]
-    private void RefreshDirectors()
-    {
-        directors.Clear();
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            TutorialDirector director = transform.GetChild(i).GetComponent<TutorialDirector>();
-            if (director != null)
-                directors.Add(director);
-        }
-    }
-
     private void ActionStartTutorial()
     {
         nextDirector = startDirector;

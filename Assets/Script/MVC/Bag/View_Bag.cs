@@ -19,6 +19,7 @@ public class View_Bag : ViewBehaviour
     [SerializeField] private TextMeshProUGUI itemCount;
     [SerializeField] private TextMeshProUGUI itemDescription;
     [SerializeField] private GameObject useButton;
+    [SerializeField] private Scrollbar _scrollbar;
 
     [Title("Nav")] 
     [SerializeField] private TextMeshProUGUI coinText;
@@ -118,11 +119,15 @@ public class View_Bag : ViewBehaviour
             return;
         }
 
+        _scrollbar.value = 1;
+        
         Item item = (Item) value;
 
         itemName.text = item.Name;
         itemCount.text = item.Count.ToString();
-        itemDescription.text = item.Description;
+
+        string descript = item.Description + "<br>" + App.factory.stringFactory.GetItemUsage(item.id);
+        itemDescription.text = descript;
 
         itemImage.enabled = true;
         itemImage.sprite = item.icon;

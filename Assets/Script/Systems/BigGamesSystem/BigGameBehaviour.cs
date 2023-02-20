@@ -25,6 +25,7 @@ public class BigGameBehaviour : MvcBehaviour
     private int _score;
     private int _exp;
     private int _coins;
+    private int _diamond;
     private List<Reward> _rewards;
 
     private CloudCatData _cloudCatData;
@@ -86,7 +87,7 @@ public class BigGameBehaviour : MvcBehaviour
         _exp = App.system.player.playerDataSetting.GetBigGameExpByChance(chance);
         _coins = App.system.player.playerDataSetting.GetBigGameCoinsByChance(App.system.player.Level, chance);
         _score = Convert.ToInt32(100f / hearts.Length * chance);
-        int diamond = Random.value < 0.05f ? 2 : 0;
+        _diamond = Random.value < 0.05f ? 2 : 0;
         
         string country = App.factory.stringFactory.GetCountryByLocaleIndex();
         string gameName = howToPlayData.titleData[country];
@@ -95,7 +96,7 @@ public class BigGameBehaviour : MvcBehaviour
         CheckKnowledgeCard();
         CheckSnack();
         
-        App.system.settle.Active(gameName, _cloudCatData, _exp, _coins, diamond, chance, _rewards.ToArray(), Close);
+        App.system.settle.Active(gameName, _cloudCatData, _exp, _coins, _diamond, chance, _rewards.ToArray(), Close);
     }
     
     private void CheckKnowledgeCard()
@@ -145,5 +146,7 @@ public class BigGameBehaviour : MvcBehaviour
             App.system.player.AddExp(_exp);
         if (_coins > 0)
             App.system.player.AddMoney(_coins);
+        if (_diamond > 0)
+            App.system.player.AddDiamond(_diamond);
     }
 }

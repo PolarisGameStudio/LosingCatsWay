@@ -17,7 +17,7 @@ public class View_DailyQuest : ViewBehaviour
     [SerializeField] private Image totalFill;
     [SerializeField] private GameObject totalQuestRed;
     [SerializeField] private GameObject totalMask;
-    [SerializeField] private GameObject receiveMask;
+    [SerializeField] private GameObject totalReceiveMask;
 
     [Title("UI")] [SerializeField] private Transform bg;
     [SerializeField] private GameObject getAllMask;
@@ -118,7 +118,7 @@ public class View_DailyQuest : ViewBehaviour
         totalRewardText.text = quest.Rewards[0].count.ToString();
         // totalFill.fillAmount = (float)quest.Progress / quest.TargetCount;
 
-        receiveMask.SetActive(!quest.IsReach);
+        totalReceiveMask.SetActive(!quest.IsReach);
         totalMask.SetActive(quest.IsReceived);
         totalQuestRed.SetActive(!quest.IsReach && quest.IsReceived);
 

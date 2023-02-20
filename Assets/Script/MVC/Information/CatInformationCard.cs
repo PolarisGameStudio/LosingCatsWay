@@ -24,6 +24,13 @@ public class CatInformationCard : MvcBehaviour
 
     [Title("Mask")] [SerializeField] private GameObject emptySlotMask;
 
+    [Title("ChangeColor")]
+    [SerializeField] private Image satietyInner;
+    [SerializeField] private Image moistureInner;
+    [SerializeField] private Image favourbilityInner;
+    [SerializeField] private Sprite yellowSprite;
+    [SerializeField] private Sprite redSprite;
+    
     public void Select()
     {
         int index = transform.GetSiblingIndex(); //取得自身順序
@@ -48,10 +55,14 @@ public class CatInformationCard : MvcBehaviour
         catAgeText.text = cloudCatData.CatData.CatAge.ToString();
         catSexImage.sprite = App.factory.catFactory.GetCatSexSpriteWhite(cloudCatData.CatData.Sex);
 
-        satietyValueImage.DOFillAmount((cloudCatData.CatSurviveData.Satiety / 100), 0.8f).From(0).SetEase(Ease.OutExpo).SetDelay(0.1875f);
-        moistureValueImage.DOFillAmount((cloudCatData.CatSurviveData.Moisture / 100), 0.8f).From(0).SetEase(Ease.OutExpo).SetDelay(0.1875f);
-        favorabilityValueImage.DOFillAmount((cloudCatData.CatSurviveData.Favourbility / 100), 0.8f).From(0).SetEase(Ease.OutExpo).SetDelay(0.1875f);
+        satietyValueImage.DOFillAmount(cloudCatData.CatSurviveData.Satiety / 100, 0.8f).From(0).SetEase(Ease.OutExpo).SetDelay(0.1875f);
+        moistureValueImage.DOFillAmount(cloudCatData.CatSurviveData.Moisture / 100, 0.8f).From(0).SetEase(Ease.OutExpo).SetDelay(0.1875f);
+        favorabilityValueImage.DOFillAmount(cloudCatData.CatSurviveData.Favourbility / 100, 0.8f).From(0).SetEase(Ease.OutExpo).SetDelay(0.1875f);
 
+        satietyInner.sprite = cloudCatData.CatSurviveData.Satiety / 100 > 0.2f ? yellowSprite : redSprite;
+        moistureInner.sprite = cloudCatData.CatSurviveData.Moisture / 100 > 0.2f ? yellowSprite : redSprite;
+        favourbilityInner.sprite = cloudCatData.CatSurviveData.Favourbility / 100 > 0.2f ? yellowSprite : redSprite;
+        
         int mood = CatExtension.GetCatMood(cloudCatData);
         moodImage.sprite = App.factory.catFactory.GetMoodSprite(mood);
 

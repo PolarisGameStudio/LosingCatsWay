@@ -39,6 +39,9 @@ public class Controller_Shelter : ControllerBehavior
         {
             App.view.shelter.npc.Click();
         });
+        
+        if (!App.system.tutorial.shelterTutorialEnd)
+            App.system.tutorial.ActionShelterTutorial();
     }
 
     public void Close()
