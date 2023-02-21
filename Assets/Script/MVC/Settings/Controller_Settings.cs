@@ -169,6 +169,11 @@ public class Controller_Settings : ControllerBehavior
                             Debug.LogError("SignInWithCredentialAsync encountered an error: " + task.Exception);
                             return;
                         }
+
+                        if (task.IsCompletedSuccessfully)
+                        {
+                            
+                        }
                     });
                     
                     //TODO 顯示
@@ -197,9 +202,13 @@ public class Controller_Settings : ControllerBehavior
         var credential = Firebase.Auth.GoogleAuthProvider.GetCredential(googleSignInResult.IdToken, null);
         var result = auth.CurrentUser.LinkWithCredentialAsync(credential);
 
-        if (result == null)
+        if (result.IsCanceled)
         {
-            print("登入失敗");
+            return;
+        }
+
+        if (result.IsFaulted)
+        {
             return;
         }
 

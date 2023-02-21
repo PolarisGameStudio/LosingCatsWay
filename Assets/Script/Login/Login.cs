@@ -177,10 +177,13 @@ public class Login : MyApplication
                             return;
                         }
                         
-                        idText.text = $"UID: {auth.CurrentUser.UserId}";
-                        system.post.Open();
-                        loginView.InstantHide();
-                        startGameButton.SetActive(true);
+                        if (task.IsCompletedSuccessfully)
+                        {
+                            idText.text = $"UID: {auth.CurrentUser.UserId}";
+                            system.post.Open();
+                            loginView.InstantHide();
+                            startGameButton.SetActive(true);
+                        }
                     });
                 }
             },
@@ -207,11 +210,16 @@ public class Login : MyApplication
         var credential = Firebase.Auth.GoogleAuthProvider.GetCredential(googleSignInResult.IdToken, null);
         var result = auth.SignInWithCredentialAsync(credential);
 
-        if (result == null)
+        if (result.IsCanceled)
         {
-            print("登入失敗");
             return;
         }
+
+        if (result.IsFaulted)
+        {
+            return;
+        }
+        
 
         idText.text = $"UID: {auth.CurrentUser.UserId}";
         system.post.Open();
