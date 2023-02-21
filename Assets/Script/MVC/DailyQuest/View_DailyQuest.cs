@@ -103,8 +103,7 @@ public class View_DailyQuest : ViewBehaviour
             count++;
         }
 
-        // TODO 月卡
-        getAllMask.SetActive(count <= 0);
+        getAllMask.SetActive(count <= 0 && App.system.player.Vip);
 
         totalCountText.text = $"{receiveCount}/{quests.Count}";
         totalFill.fillAmount = (float)receiveCount / quests.Count;

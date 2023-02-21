@@ -21,7 +21,8 @@ public class MyApplication : MonoBehaviour
     public LeanPlane leanPlane;
     public LeanPlane globalLeanPlane;
     
-    private bool canSave;
+    private bool _canSave;
+    private bool _isSaving;
 
     [Button]
     public void Week()
@@ -36,7 +37,7 @@ public class MyApplication : MonoBehaviour
         controller.lobby.Close();
         system.transition.InstantShow();
 
-        canSave = false;
+        _canSave = false;
 
         system.tnr.Init(); // 觸發ValueChange
 
@@ -91,7 +92,7 @@ public class MyApplication : MonoBehaviour
         
         FindObjectOfType<LoadScene>()?.Close();
 
-        canSave = true;
+        _canSave = true;
 
         system.transition.OnlyClose();
 
@@ -124,7 +125,7 @@ public class MyApplication : MonoBehaviour
 
     private void OnApplicationFocus(bool focus)
     {
-        if (!canSave)
+        if (!_canSave)
             return;
         if (system.tutorial.isTutorial)
             return;
@@ -134,7 +135,7 @@ public class MyApplication : MonoBehaviour
 
     private void OnApplicationPause(bool pause)
     {
-        if (!canSave)
+        if (!_canSave)
             return;
         if (system.tutorial.isTutorial)
             return;
@@ -144,7 +145,7 @@ public class MyApplication : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        if (!canSave)
+        if (!_canSave)
             return;
         if (system.tutorial.isTutorial)
             return;
@@ -153,11 +154,18 @@ public class MyApplication : MonoBehaviour
 
     public void SaveData()
     {
+        if (_isSaving)
+            return;
+        
+        _isSaving = true;
+        
         controller.settings.SaveSettings();
-
         system.myTime.SetDateTime();
+
         system.cloudSave.SaveCloudSaveData();
         system.cloudSave.SaveCloudCatDatas();
+
+        _isSaving = false;
     }
 
     #endregion

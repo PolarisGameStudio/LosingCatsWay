@@ -98,12 +98,7 @@ public class Card_HospitalChooseCat : MvcBehaviour
 
         if (functionIndex == 2) // 預防
         {
-            if (hasWorm)
-            {
-                noObject.SetActive(true);
-                blockMask.SetActive(true);
-                return;
-            }
+            blockMask.SetActive(hasWorm);
 
             DateTime expired = cloudCatData.CatHealthData.NoBugExpireTimestamp.ToDateTime().ToLocalTime();
             if (expired > App.system.myTime.MyTimeNow)

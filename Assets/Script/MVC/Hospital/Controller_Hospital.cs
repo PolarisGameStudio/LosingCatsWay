@@ -234,7 +234,7 @@ public class Controller_Hospital : ControllerBehavior
 
         if (index == 2)
         {
-            DateTime expired = App.system.myTime.MyTimeNow.AddDays(3);
+            DateTime expired = App.system.myTime.MyTimeNow.AddDays(5);
             cat.cloudCatData.CatHealthData.NoBugExpireTimestamp = Timestamp.FromDateTime(expired);
         }
 

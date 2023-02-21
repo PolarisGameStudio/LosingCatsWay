@@ -141,6 +141,9 @@ public class Controller_MonthSign : ControllerBehavior
     {
         var rewards = new List<Reward>();
         var reward = App.model.monthSign.MonthRewards[day - 1];
+        List<int> vipDays = new List<int> { 4, 7, 11, 14, 18, 21, 25, 28 };
+        if (vipDays.Contains(day))
+            reward.count *= 2;
         rewards.Add(reward);
         App.system.reward.Open(rewards.ToArray());
     }

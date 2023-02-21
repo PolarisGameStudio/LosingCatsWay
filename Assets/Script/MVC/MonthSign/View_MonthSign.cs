@@ -154,7 +154,8 @@ public class View_MonthSign : ViewBehaviour
             dateObjects[i].SetDouble(false);
         }
 
-        // todo vip
+        if (!App.system.player.Vip)
+            return;
 
         List<int> vipDays = new List<int> { 4, 7, 11, 14, 18, 21, 25, 28 };
         for (int i = 0; i < dateObjects.Length; i++)

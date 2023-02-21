@@ -39,6 +39,8 @@ public class DialogueSystem : MvcBehaviour
     private int checkpoint;
     private bool isComplete;
 
+    private int chooseInsertIndex;
+
     public void StartSentence(string content)
     {
         isComplete = true;
@@ -82,6 +84,7 @@ public class DialogueSystem : MvcBehaviour
             #endregion
 
             checkpoint++;
+            chooseInsertIndex = checkpoint;
 
             OpenChoose();
             isComplete = true; //對話結束
@@ -158,9 +161,9 @@ public class DialogueSystem : MvcBehaviour
         
         App.system.soundEffect.Play("Button");
         
-        sentences.Add("0:" + answers[index]);
+        // sentences.Add("0:" + answers[index]);
+        sentences.Insert(chooseInsertIndex, "0:" + answers[index]);
         chooseView.Hide();
-
         Invoke("NextSentence", 0.4f);
     }
 }

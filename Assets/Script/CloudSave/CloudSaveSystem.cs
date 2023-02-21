@@ -41,7 +41,7 @@ public class CloudSaveSystem : MvcBehaviour
     public async void SaveCloudCatDatas()
     {
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        List<Task> updateTasks = new List<Task>();
+        WriteBatch batch = db.StartBatch();
         
         var cats = App.system.cat.GetCats();
         CatDatasHelper catDatasHelper = new CatDatasHelper();
@@ -49,24 +49,15 @@ public class CloudSaveSystem : MvcBehaviour
         foreach (var cat in cats)
         {
             string catId = cat.cloudCatData.CatData.CatId;
-            Task t;
-            
             Dictionary<string, object> updates = catDatasHelper.GetCloudCatUpdate(cat.cloudCatData);
             DocumentReference docRef = db.Collection("Cats").Document(catId);
-            
-            var snapshot = await docRef.GetSnapshotAsync();
-            if (snapshot.Exists)
-                t = docRef.UpdateAsync(updates);
-            else
-                t = docRef.SetAsync(updates);
-            
-            updateTasks.Add(t);
+            batch.Set(docRef, updates, SetOptions.MergeAll);
         }
         
         // Wait for all tasks to complete
         try
         {
-            await Task.WhenAll(updateTasks);
+            await batch.CommitAsync();
         }
         catch (Exception e)
         {
