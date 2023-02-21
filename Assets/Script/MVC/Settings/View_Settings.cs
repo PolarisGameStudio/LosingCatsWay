@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,12 @@ public class View_Settings : ViewBehaviour
     [SerializeField] private Slider bgmSlider;
 
     [Title("Language")] [SerializeField] private GameObject[] langMasks;
+
+    [Title("BindAccount")]
+    [SerializeField] private GameObject googleMask;
+    [SerializeField] private GameObject appleMask;
+    [SerializeField] private TextMeshProUGUI googleText;
+    [SerializeField] private TextMeshProUGUI appleText;
 
     public override void Init()
     {
