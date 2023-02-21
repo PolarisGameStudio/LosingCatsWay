@@ -24,20 +24,20 @@ public class MallContainer_Cats : MallContainer
         if (CheckCatCount())
             App.system.confirm.Active(ConfirmTable.Hints_Buy2, BuyCat_DiamondOk);
         else
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NeedCatSlot1);
+            App.system.confirm.OnlyConfirm().Active(GetCatCountConfirmTable());
     }
 
     private async void BuyCat_DiamondOk()
     {
-        Item item = App.factory.itemFactory.GetItem("Diamond");
+        // Item item = App.factory.itemFactory.GetItem("Diamond");
 
-        if (item.Count < 300)
+        if (!App.system.player.ReduceDiamond(300))
         {
             App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NoDiamond);
             return;
         }
 
-        item.Count -= 300;
+        // item.Count -= 300; // reduceDiamond
         CloudCatData cloudCatData = await CreateCat();
         Refresh();
 
@@ -49,7 +49,7 @@ public class MallContainer_Cats : MallContainer
         if (CheckCatCount())
             App.system.confirm.Active(ConfirmTable.Hints_Buy2, BuyCat_BottleOk);
         else
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NeedCatSlot1);
+            App.system.confirm.OnlyConfirm().Active(GetCatCountConfirmTable());
     }
 
     private async void BuyCat_BottleOk()
@@ -68,6 +68,17 @@ public class MallContainer_Cats : MallContainer
     private bool CheckCatCount()
     {
         return App.system.player.CanAdoptCatCount > 0;
+    }
+
+    private ConfirmTable GetCatCountConfirmTable()
+    {
+        ConfirmTable table;
+        int count = App.system.room.FeatureRoomsCount;
+        if (App.system.player.CatSlot >= count)
+            table = ConfirmTable.Hints_NeedFeedRoom1;
+        else
+            table = ConfirmTable.Hints_NeedCatSlot1;
+        return table;
     }
 
     private async Task<CloudCatData> CreateCat()

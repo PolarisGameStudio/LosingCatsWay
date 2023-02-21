@@ -283,6 +283,9 @@ public class Cat : MvcBehaviour
         
         if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
             return;
+
+        if (cloudCatData.CatHealthData.IsBug)
+            return;
         
         if (DrawGameTimer < 30)
         {
@@ -302,6 +305,9 @@ public class Cat : MvcBehaviour
         if (!string.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
             return;
         
+        if (cloudCatData.CatHealthData.IsBug)
+            return;
+
         CancelInvoke(nameof(CountTimerDrawGame));
         if (App.system.bigGames.GetBigGames().Count > 0)
         {
@@ -313,9 +319,9 @@ public class Cat : MvcBehaviour
             }
         }
 
-        if (!String.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
-            return;
-        
+        // if (!String.IsNullOrEmpty(cloudCatData.CatHealthData.SickId))
+        //     return;
+
         App.system.littleGame.SetLittleGame(this);
         OpenLittleGame();
         StartCountCancelGame();

@@ -40,7 +40,8 @@ public enum ConfirmTable
     Hints_NoMoney,
     Hints_NoDiamond,
     Hints_HasNewCat,
-    Hints_NeedFeedRoom,
+    Hints_NeedFeedRoom1,
+    Hints_NeedFeedRoom2,
     Hints_NeedCatSlot1,
     Hints_NeedCatSlot2,
     Hints_CatFindSuccess,
@@ -94,4 +95,6 @@ public enum ConfirmTable
     Hints_ChooseSex,
     Hints_UsePotion,
     Hints_NoSameName,
+    Hints_GoFriendsHome,
+    Hints_GoHome,
 }

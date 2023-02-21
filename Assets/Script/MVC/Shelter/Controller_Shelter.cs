@@ -177,6 +177,12 @@ public class Controller_Shelter : ControllerBehavior
                 App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CantFindCat);
                 return;
             }
+            
+            if (!cloudCatData.CatHealthData.IsChip)
+            {
+                App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CantFindCat);
+                return;
+            }
 
             App.model.shelter.SelectedAdoptCloudCatData = cloudCatData;
             OpenSubShelter();
@@ -208,7 +214,7 @@ public class Controller_Shelter : ControllerBehavior
             int count = App.system.room.FeatureRoomsCount;
 
             if (App.system.player.CatSlot >= count)
-                App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NeedFeedRoom);
+                App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NeedFeedRoom1);
             else
                 App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NeedCatSlot1);
 

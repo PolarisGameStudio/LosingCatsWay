@@ -10,6 +10,7 @@ public class MEQ0002_6 : Quest
         base.Init();
         App.controller.dailyQuest.OnGetReward += Bind;
         App.controller.dailyQuest.OnGetAdsReward += Bind;
+        App.controller.dailyQuest.OnGetAllAdsReward += OnGetAllAdsReward;
     }
 
     public void Bind()
@@ -20,6 +21,19 @@ public class MEQ0002_6 : Quest
         {
             App.controller.dailyQuest.OnGetReward -= Bind;
             App.controller.dailyQuest.OnGetAdsReward -= Bind;
+            App.controller.dailyQuest.OnGetAllAdsReward -= OnGetAllAdsReward;
+        }
+    }
+
+    private void OnGetAllAdsReward(object value)
+    {
+        int count = (int)value;
+        Progress = Mathf.Clamp(Progress + count, 0, TargetCount);
+        if (Progress >= TargetCount)
+        {
+            App.controller.dailyQuest.OnGetReward -= Bind;
+            App.controller.dailyQuest.OnGetAdsReward -= Bind;
+            App.controller.dailyQuest.OnGetAllAdsReward -= OnGetAllAdsReward;
         }
     }
 }

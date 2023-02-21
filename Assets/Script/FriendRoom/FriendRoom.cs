@@ -74,7 +74,7 @@ public class FriendRoom : MyApplication
 
     public void BackLobby()
     {
-        system.confirm.Active(ConfirmTable.Fix, () =>
+        system.confirm.Active(ConfirmTable.Hints_GoHome, () =>
         {
             system.transition.OnlyOpen(() => { SceneManager.LoadSceneAsync("SampleScene", LoadSceneMode.Single); });
         });

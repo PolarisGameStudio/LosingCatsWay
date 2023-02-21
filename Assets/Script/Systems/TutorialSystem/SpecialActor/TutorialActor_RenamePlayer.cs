@@ -13,9 +13,7 @@ public class TutorialActor_RenamePlayer : TutorialActor
         siblingIndex = App.system.playerRename.transform.GetSiblingIndex();
         App.system.playerRename.transform.SetAsLastSibling();
         
-        App.system.playerRename.Open();
-        App.system.playerRename.CanCancel = false;
-        App.system.playerRename.IsFreeRename = true;
+        App.system.playerRename.Open(true, false);
         App.system.playerRename.OnRenameComplete += Exit;
     }
 

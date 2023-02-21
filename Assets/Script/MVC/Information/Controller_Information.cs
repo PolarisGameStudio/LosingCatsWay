@@ -92,7 +92,10 @@ public class Controller_Information : ControllerBehavior
         {
             if (!App.system.player.ReduceDiamond(price))
             {
-                DOVirtual.DelayedCall(0.1f, () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NoDiamond));
+                DOVirtual.DelayedCall(0.1f, () =>
+                {
+                    App.system.confirm.Active(ConfirmTable.Hints_NoDiamond, OpenTopUp);
+                });
                 return;
             }
             
@@ -304,4 +307,10 @@ public class Controller_Information : ControllerBehavior
     }
     
     #endregion
+    
+    private void OpenTopUp()
+    {
+        App.controller.mall.Open();
+        DOVirtual.DelayedCall(0.25f, () => App.controller.mall.SelectPage(6));
+    }
 }

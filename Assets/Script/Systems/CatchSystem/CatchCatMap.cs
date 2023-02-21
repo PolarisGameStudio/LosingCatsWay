@@ -48,7 +48,6 @@ public class CatchCatMap : MvcBehaviour
 
     [TabGroup("Bot")] [SerializeField] private CanvasGroup botDarkMask;
     [TabGroup("Bot")] [SerializeField] private GameObject lastTurnCatchButton;
-    [TabGroup("Bot")] [SerializeField] private GameObject lastTurnCatchEffect;
 
     [Title("Animator")] [SerializeField] private Animator catchFlowerAnimator;
 
@@ -214,7 +213,6 @@ public class CatchCatMap : MvcBehaviour
 
         lastTurnCatchButton.transform.DOKill();
         lastTurnCatchButton.SetActive(false);
-        lastTurnCatchEffect.SetActive(false);
 
         hp = 100f;
         healthBar.ChangeBarValue(hp / 100f);
@@ -260,7 +258,6 @@ public class CatchCatMap : MvcBehaviour
                 CloseAction();
 
                 lastTurnCatchButton.SetActive(true);
-                lastTurnCatchEffect.SetActive(true);
 
                 Vector2 endSize = new Vector2(1.1f, 1.1f);
                 lastTurnCatchButton.transform.DOScale(endSize, 0.1f).From(Vector2.one).SetEase(Ease.OutExpo)
@@ -460,7 +457,6 @@ public class CatchCatMap : MvcBehaviour
 
         CloseAction();
         lastTurnCatchButton.SetActive(false);
-        lastTurnCatchEffect.SetActive(false);
 
         catchFlowerAnimator.SetTrigger("Catch");
 

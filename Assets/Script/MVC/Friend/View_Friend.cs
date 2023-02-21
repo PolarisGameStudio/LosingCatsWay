@@ -67,7 +67,9 @@ public class View_Friend : ViewBehaviour
         
         Cat cat = (Cat)value;
         favouriteCatNameText.text = cat.cloudCatData.CatData.CatName;
-        favouriteVarietyText.text = App.factory.stringFactory.GetCatVariety(cat.cloudCatData.CatData.Variety);
+        favouriteVarietyText.text = cat.cloudCatData.CatData.SurviveDays <= 3
+            ? App.factory.stringFactory.GetKittyName()
+            : App.factory.stringFactory.GetCatVariety(cat.cloudCatData.CatData.Variety);
         favouriteGenderText.text = (cat.cloudCatData.CatData.Sex == 0) ? App.factory.stringFactory.GetBoyString() : App.factory.stringFactory.GetGirlString();
         favouriteAgeText.text = cat.cloudCatData.CatData.CatAge.ToString();
     }

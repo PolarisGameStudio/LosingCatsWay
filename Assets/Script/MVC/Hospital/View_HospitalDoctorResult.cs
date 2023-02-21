@@ -29,6 +29,7 @@ public class View_HospitalDoctorResult : ViewBehaviour
     [Title("BotLeft")]
     [SerializeField] private GameObject solutionObject; // 治療方法
     [SerializeField] private GameObject noSolutionObject; // 無法治療
+    [SerializeField] private GameObject noNeedSolutionObject; // 無需治療
 
     [Title("Stamp")]
     [SerializeField] private GameObject vetStamp;
@@ -217,6 +218,7 @@ public class View_HospitalDoctorResult : ViewBehaviour
             // 方法
             noSolutionObject.SetActive(isDead);
             solutionObject.SetActive(!isDead);
+            noNeedSolutionObject.SetActive(false);
         }
         else
         {
@@ -230,7 +232,8 @@ public class View_HospitalDoctorResult : ViewBehaviour
             deadStamp.SetActive(false);
             vetStamp.SetActive(true);
 
-            noSolutionObject.SetActive(true);
+            noNeedSolutionObject.SetActive(true);
+            noSolutionObject.SetActive(false);
             solutionObject.SetActive(false);
         }
     }

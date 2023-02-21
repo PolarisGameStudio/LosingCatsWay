@@ -22,6 +22,11 @@ public class View_FollowCat : ViewBehaviour
     [SerializeField] private Image satietyFill;
     [SerializeField] private Image moistureFill;
     [SerializeField] private Image favourabilityFill;
+    [SerializeField] private Image satietyFillInner;
+    [SerializeField] private Image moistureFillInner;
+    [SerializeField] private Image funFillInner;
+    [SerializeField] private Sprite lowValueSprite;
+    [SerializeField] private Sprite highValueSprite;
 
     [Title("Trait")]
     [SerializeField] private UIButton traitButton;
@@ -69,6 +74,10 @@ public class View_FollowCat : ViewBehaviour
         satietyFill.fillAmount = cloudCatData.CatSurviveData.Satiety / 100;
         favourabilityFill.fillAmount = cloudCatData.CatSurviveData.Favourbility / 100;
         moistureFill.fillAmount = cloudCatData.CatSurviveData.Moisture / 100;
+        
+        satietyFillInner.sprite = cloudCatData.CatSurviveData.Satiety > 20 ? highValueSprite : lowValueSprite;
+        moistureFillInner.sprite = cloudCatData.CatSurviveData.Moisture > 20 ? highValueSprite : lowValueSprite;
+        funFillInner.sprite = cloudCatData.CatSurviveData.Favourbility > 20 ? highValueSprite : lowValueSprite;
 
         int mood = CatExtension.GetCatMood(cloudCatData);
         moodImage.sprite = App.factory.catFactory.GetMoodSprite(mood);

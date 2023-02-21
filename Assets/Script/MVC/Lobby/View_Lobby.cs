@@ -133,8 +133,10 @@ public class View_Lobby : ViewBehaviour
         {
             levelText.text = afterLevel.ToString("00");
         });
+
+        float duration = App.system.tutorial.isTutorial ? 0 : 2.5f;
         
-        DOVirtual.DelayedCall(2.5f, () =>
+        DOVirtual.DelayedCall(duration, () =>
         {
             App.system.levelUp.Open(beforeLevel, afterLevel);
         });

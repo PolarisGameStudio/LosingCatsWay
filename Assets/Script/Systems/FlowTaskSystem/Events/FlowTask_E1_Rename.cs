@@ -10,8 +10,6 @@ public class FlowTask_E1_Rename : FlowTask
     {
         base.Enter();
         App.system.playerRename.Open();
-        App.system.playerRename.CanCancel = false;
-        App.system.playerRename.IsFreeRename = true;
         App.system.playerRename.OnRenameComplete += Exit;
     }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Doozy.Runtime.UIManager.Containers;
+using Sirenix.OdinInspector;
 
 public class PlayerRenameSystem : MvcBehaviour
 {
@@ -12,37 +13,26 @@ public class PlayerRenameSystem : MvcBehaviour
     public GameObject toolTipObject;
     public UIView uIView;
 
-    bool canCancel;
-    bool isFreeRename;
+    [Title("Title")]
+    [SerializeField] private GameObject normalTitle;
+    [SerializeField] private GameObject tutorialTitle;
+
+    private bool isFreeRename;
 
     public Callback OnRenameComplete;
 
-    public bool IsFreeRename
+    public void Open(bool isFree = false, bool canCancel = true)
     {
-        get => isFreeRename;
-        set
-        {
-            isFreeRename = value;
-            toolTipObject.SetActive(!isFreeRename);
-        }
-    }
-
-    public bool CanCancel
-    {
-        get => canCancel;
-        set
-        {
-            canCancel = value;
-            cancelButton.SetActive(value);
-        }
-    }
-
-    public void Open()
-    {
-        uIView.Show();
-        IsFreeRename = false;
-        CanCancel = true;
+        normalTitle.SetActive(!App.system.tutorial.isTutorial);
+        tutorialTitle.SetActive(App.system.tutorial.isTutorial);
+        
+        isFreeRename = isFree;
+        cancelButton.SetActive(canCancel);
+        toolTipObject.SetActive(!isFree);
+        
         inputField.text = App.system.player.PlayerName;
+        
+        uIView.Show();
     }
 
     public void Close()
@@ -54,7 +44,7 @@ public class PlayerRenameSystem : MvcBehaviour
     {
         Item renameItem = App.factory.itemFactory.GetItem("ISL00003");
         
-        if (!IsFreeRename)
+        if (!isFreeRename)
         {
             if (renameItem.Count <= 0)
             {
@@ -84,7 +74,7 @@ public class PlayerRenameSystem : MvcBehaviour
         App.system.confirm.Active(confirmTable, () => 
         {
             App.system.player.PlayerName = inputField.text;
-            if (!IsFreeRename)
+            if (!isFreeRename)
                 renameItem.Count -= 1;
             OnRenameComplete?.Invoke();
         }, uIView.Show);

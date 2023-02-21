@@ -10,6 +10,7 @@ public class Controller_DailyQuest : ControllerBehavior
     
     public Callback OnGetReward;
     public Callback OnGetAdsReward;
+    public CallbackValue OnGetAllAdsReward;
 
     #region Basic
 
@@ -229,7 +230,6 @@ public class Controller_DailyQuest : ControllerBehavior
     public void GetAllAdsReward()
     {
         List<Reward> tmp = new List<Reward>();
-        bool hasReward = false;
 
         for (int i = 0; i < 5; i++)
         {
@@ -240,8 +240,6 @@ public class Controller_DailyQuest : ControllerBehavior
 
             if (quest.IsReceived)
                 continue;
-
-            hasReward = true;
 
             // App.model.dailyQuest.RewardExp += quest.exp;
             App.system.player.AddExp(quest.exp);
@@ -258,8 +256,10 @@ public class Controller_DailyQuest : ControllerBehavior
             App.model.dailyQuest.Quests = App.model.dailyQuest.Quests;
         }
 
-        if (!hasReward)
+        if (tmp.Count <= 0)
             return;
+        
+        OnGetAllAdsReward?.Invoke(tmp.Count);
         
         // App.system.player.AddExp(App.model.dailyQuest.RewardExp);
         App.model.dailyQuest.RewardExp = 0;

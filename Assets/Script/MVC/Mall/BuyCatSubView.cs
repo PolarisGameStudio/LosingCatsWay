@@ -11,11 +11,13 @@ public class BuyCatSubView : ViewBehaviour
     public Animator animator;
     public GameObject sparklePaticle;
     public GameObject tipText;
+    public GameObject clickButton;
     private CloudCatData _cloudCatData;
     
     public void Open(CloudCatData cloudCatData)
     {
         skeletonGraphic.enabled = true;
+        clickButton.SetActive(true);
         
         sparklePaticle.SetActive(true);
         tipText.SetActive(true);
@@ -30,6 +32,7 @@ public class BuyCatSubView : ViewBehaviour
     public void Click()
     {
         animator.enabled = false;
+        clickButton.SetActive(false);
         sparklePaticle.SetActive(false);
         tipText.SetActive(false);
         
@@ -37,7 +40,7 @@ public class BuyCatSubView : ViewBehaviour
         DOVirtual.DelayedCall(7f, () =>
         {
             Close();
-            App.system.catRename.Active(_cloudCatData, "Location1");
+            App.system.catRename.CantCancel().Active(_cloudCatData, "Location1");
         });
     }
 

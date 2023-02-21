@@ -117,7 +117,14 @@ public class FindCatSystem : MvcBehaviour
         
         if (App.system.player.CanAdoptCatCount <= 0)
         {
-            App.system.confirm.Active(ConfirmTable.Hints_NeedCatSlot2, () =>
+            ConfirmTable table;
+            int count = App.system.room.FeatureRoomsCount;
+            if (App.system.player.CatSlot >= count)
+                table = ConfirmTable.Hints_NeedFeedRoom2;
+            else
+                table = ConfirmTable.Hints_NeedCatSlot2;
+            
+            App.system.confirm.Active(table, () =>
             {
                 App.system.transition.OnlyOpen();
                 DOVirtual.DelayedCall(1f, () =>

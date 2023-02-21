@@ -24,7 +24,7 @@ public class FriendContainer_List : ViewBehaviour
 
     public void GoFriendHome(int index)
     {
-        App.system.confirm.Active(ConfirmTable.Fix, () =>
+        App.system.confirm.Active(ConfirmTable.Hints_GoFriendsHome, () =>
         {
             App.system.transition.OnlyOpen(() =>
             {
