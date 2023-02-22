@@ -7,6 +7,7 @@ public class CDQ0005 : DailyQuest
 {
     public override void Init()
     {
+        base.Init();
         App.system.bigGames.OnClose += Bind;
     }
 

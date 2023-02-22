@@ -7,6 +7,8 @@ public class Model_Diary : ModelBehavior
     private int pageIndex;
     private CloudSave_DiaryData selectedDiaryData;
     private CloudLosingCatData losingCatData;
+    private int memoryCount;
+    private int memoryScore;
 
     public int PageIndex
     {
@@ -38,7 +40,29 @@ public class Model_Diary : ModelBehavior
         }
     }
 
+    public int MemoryCount
+    {
+        get => memoryCount;
+        set
+        {
+            memoryCount = value;
+            OnMemoryCountChange?.Invoke(value);
+        }
+    }
+
+    public int MemoryScore
+    {
+        get => memoryScore;
+        set
+        {
+            memoryScore = value;
+            OnMemoryScoreChange?.Invoke(value);
+        }
+    }
+
     public ValueChange OnPageIndexChange;
     public ValueChange OnSelectedDiaryDataChange;
     public ValueChange OnLosingCatDataChange;
+    public ValueChange OnMemoryCountChange;
+    public ValueChange OnMemoryScoreChange;
 }

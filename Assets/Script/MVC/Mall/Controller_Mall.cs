@@ -6,6 +6,7 @@ using UnityEngine;
 public class Controller_Mall : ControllerBehavior
 {
     public Callback OnBuyMallItem;
+    public CallbackValue OnBuyCat;
 
     public void Init()
     {
@@ -32,8 +33,9 @@ public class Controller_Mall : ControllerBehavior
         App.model.mall.SelectedPageIndex = index;
     }
 
-    public void OpenPreviewPackageView(Reward[] rewards)
+    public void OpenPreviewPackageView(string id, Reward[] rewards)
     {
+        App.model.mall.PreviewPackageId = id;
         App.model.mall.PreviewPackageRewards = rewards;
         App.view.mall.OpenPreviewPackageView();
     }

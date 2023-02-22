@@ -7,6 +7,7 @@ public class DDQ0001 : DailyQuest
 {
     public override void Init()
     {
+        base.Init();
         App.controller.cultive.OnChangeLitter += Bind;
 
     }

@@ -42,6 +42,8 @@ public class MallContainer_Cats : MallContainer
         Refresh();
 
         buyCatSubView.Open(cloudCatData);
+        
+        App.controller.mall.OnBuyCat?.Invoke(cloudCatData);
     }
 
     public void BuyCat_Bottle()
@@ -63,6 +65,8 @@ public class MallContainer_Cats : MallContainer
         Refresh();
 
         buyCatSubView.Open(cloudCatData);
+        
+        App.controller.mall.OnBuyCat?.Invoke(cloudCatData);
     }
 
     private bool CheckCatCount()
@@ -86,6 +90,7 @@ public class MallContainer_Cats : MallContainer
         DebugTool_Cat debugToolCat = new DebugTool_Cat();
 
         CloudCatData cloudCatData = await debugToolCat.CreateCat(App.system.player.PlayerId, false, 1);
+        cloudCatData.CatDiaryData.AdoptLocation = "Home";
         App.system.cat.CreateCatObject(cloudCatData);
 
         return cloudCatData;

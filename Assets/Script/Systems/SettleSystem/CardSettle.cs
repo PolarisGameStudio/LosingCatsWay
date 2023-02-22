@@ -12,6 +12,6 @@ public class CardSettle : MvcBehaviour
     public void SetData(Reward reward)
     {
         icon.sprite = reward.item.icon;
-        countText.text = reward.count.ToString();
+        countText.text = reward.count.ToString("00");
     }
 }

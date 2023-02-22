@@ -170,6 +170,9 @@ public class DiaryFactory : SerializedMonoBehaviour
                 case "Home":
                     result.DiaryId = "103";
                     break;
+                default:
+                    result.DiaryId = "103";
+                    break;
             }
         }
         else
@@ -181,6 +184,9 @@ public class DiaryFactory : SerializedMonoBehaviour
                     break;
                 case "OutSide":
                     result.DiaryId = "106";
+                    break;
+                default:
+                    result.DiaryId = "103";
                     break;
             }
         }

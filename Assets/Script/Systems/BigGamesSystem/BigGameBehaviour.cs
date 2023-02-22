@@ -58,11 +58,20 @@ public class BigGameBehaviour : MvcBehaviour
     {
         if (App.system.tutorial.isTutorial)
             return;
-        App.system.howToPlay.Open(false);
+        App.system.howToPlay.Open(false, Pause, Resume);
+    }
+
+    public virtual void Pause()
+    {
+    }
+
+    public virtual void Resume()
+    {
     }
 
     public virtual void OpenPause()
     {
+        Pause();
     }
 
     public virtual void ClosePause()

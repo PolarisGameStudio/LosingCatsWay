@@ -14,6 +14,9 @@ public class View_Diary : ViewBehaviour
     [SerializeField] private CatSkin catSkin;
     [SerializeField] private DiaryDots[] dots;
     [SerializeField] private TextMeshProUGUI catNameText;
+    [SerializeField] private TextMeshProUGUI memoryCountText;
+    [SerializeField] private TextMeshProUGUI memoryScoreText;
+    [SerializeField] private GameObject memoryGetMask;
 
     [SerializeField] private Image genderImage;
     [SerializeField] private GameObject[] tagObjects;
@@ -32,15 +35,6 @@ public class View_Diary : ViewBehaviour
     [TabGroup("Content")] [SerializeField] private TextMeshProUGUI byeText;
     [TabGroup("Content")] [SerializeField] private Image diaryImage;
     
-    public override void Init()
-    {
-        base.Init();
-        //App.model.cloister.OnSelectedLosingCatChange += OnSelectedLosingCatChange;
-        App.model.diary.OnLosingCatDataChange += OnSelectedLosingCatChange;
-        App.model.diary.OnPageIndexChange += OnPageIndexChange;
-        App.model.diary.OnSelectedDiaryDataChange += OnSelectedDiaryDataChange;
-    }
-
     public override void Open()
     {
         base.Open();
@@ -53,6 +47,28 @@ public class View_Diary : ViewBehaviour
         base.Close();
         catSkin.SetActive(false);
         catFlower.gameObject.SetActive(false);
+    }
+
+    public override void Init()
+    {
+        base.Init();
+        App.model.diary.OnLosingCatDataChange += OnSelectedLosingCatChange;
+        App.model.diary.OnPageIndexChange += OnPageIndexChange;
+        App.model.diary.OnSelectedDiaryDataChange += OnSelectedDiaryDataChange;
+        App.model.diary.OnMemoryCountChange += OnMemoryCountChange;
+        App.model.diary.OnMemoryScoreChange += OnMemoryScoreChange;
+    }
+
+    private void OnMemoryScoreChange(object value)
+    {
+        int count = (int)value;
+        memoryScoreText.text = count + "%";
+    }
+
+    private void OnMemoryCountChange(object value)
+    {
+        int count = (int)value;
+        memoryCountText.text = count.ToString();
     }
 
     private void OnPageIndexChange(object value)
@@ -115,6 +131,8 @@ public class View_Diary : ViewBehaviour
                 tagTexts[i].text = "#" + App.factory.stringFactory.GetPersonality(keys[i]);
             }
         }
+        
+        memoryGetMask.SetActive(data.IsGetMemory);
     }
 
     private void OnSelectedDiaryDataChange(object value)

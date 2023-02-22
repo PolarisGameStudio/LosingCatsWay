@@ -59,8 +59,14 @@ public class Controller_Shelter : ControllerBehavior
         });
     }
 
-    public void OpenAbandon()
+    public async void OpenAbandon()
     {
+        if (await CheckShelterLimit())
+        {
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_ShelterFull);
+            return;
+        }
+        
         App.system.abandon.Active("Shelter");
     }
 
@@ -313,4 +319,19 @@ public class Controller_Shelter : ControllerBehavior
     }
 
     #endregion
+
+    private async Task<bool> CheckShelterLimit()
+    {
+        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+        
+        int totalCats;
+        int shelterCats;
+        
+        DocumentReference docRef = db.Collection("WorldData").Document("Total");
+        var snapshot = await docRef.GetSnapshotAsync();
+        totalCats = snapshot.GetValue<int>("CatCount");
+        shelterCats = snapshot.GetValue<int>("ShelterCount");
+
+        return shelterCats >= totalCats;
+    }
 }

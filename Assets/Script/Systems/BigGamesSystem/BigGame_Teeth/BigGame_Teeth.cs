@@ -242,28 +242,44 @@ public class BigGame_Teeth : BigGameBehaviour
         Success();
     }
 
+    public override void Pause()
+    {
+        base.Pause();
+        curveBar.PointerPause();
+    }
+
+    public override void Resume()
+    {
+        base.Resume();
+        curveBar.PointerResume();
+    }
+
     public override void OpenPause()
     {
         if (App.system.tutorial.isTutorial)
             return;
         base.OpenPause();
-        curveBar.PointerPause();
+        
         pauseBg.DOFade(1, 0.45f).From(0).OnStart(() =>
         {
             pauseBg.raycastTarget = true;
         });
         pauseMenuRect.DOScale(Vector2.one, 0.35f).From(Vector2.zero).SetEase(Ease.OutBack);
+        
+        // Pause(); //base
     }
 
     public override void ClosePause()
     {
         base.ClosePause();
-        curveBar.PointerResume();
+        
         pauseBg.DOFade(0, 0.45f).From(1).OnComplete(() =>
         {
             pauseBg.raycastTarget = false;
         });
         pauseMenuRect.DOScale(Vector2.zero, 0.35f).From(Vector2.one).SetEase(Ease.InBack);
+        
+        // Resume();
     }
 
     public void Exit()

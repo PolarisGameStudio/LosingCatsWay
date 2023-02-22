@@ -81,15 +81,15 @@ public class BgmSystem : SerializedMonoBehaviour
         previousTime = 0f;
     }
 
-    public BgmSystem FadeOut()
+    public BgmSystem FadeOut(float duration = 1f)
     {
-        audioSource.DOFade(0, 1f);
+        audioSource.DOFade(0, duration);
         return this;
     }
 
-    public BgmSystem FadeIn()
+    public BgmSystem FadeIn(float duration = 1f)
     {
-        audioSource.DOFade(localVolume, 1f);
+        audioSource.DOFade(localVolume, duration);
         return this;
     }
 

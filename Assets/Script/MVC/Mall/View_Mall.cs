@@ -28,6 +28,7 @@ public class View_Mall : ViewBehaviour
     public Transform previewPackageContent;
     public Item_Mall_Preview previewPackageObject;
     public Scrollbar previewPackageScrollbar;
+    [SerializeField] private TextMeshProUGUI previewPackageName;
 
     [Title("Rules")]
     public UIView ruleView;
@@ -44,10 +45,18 @@ public class View_Mall : ViewBehaviour
         App.model.mall.onSelectedPageIndexChange += OnSelectedPageIndexChange;
         App.model.mall.onPreviewPackageRewardsChange += OnPreviewPackageRewardsChange;
         App.model.mall.OnRuleIndexChange += OnRuleIndexChange;
+        App.model.mall.OnPreviewPackageIdChange += OnPreviewPackageIdChange;
 
         App.system.player.OnCoinChange += OnCoinChange;
         App.system.player.OnDiamondChange += OnDiamondChange;
         App.system.player.OnCatMemoryChange += OnCatMemoryChange;
+    }
+
+    private void OnPreviewPackageIdChange(object value)
+    {
+        string id = value.ToString();
+        string packageName = App.factory.stringFactory.GetMallItemName(id);
+        previewPackageName.text = packageName;
     }
 
     public void OpenPreviewPackageView()

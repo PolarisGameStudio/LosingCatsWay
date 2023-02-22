@@ -7,6 +7,7 @@ public class CDQ0002 : DailyQuest
 {
     public override void Init()
     {
+        base.Init();
         App.controller.cultive.OnAddSatiety += BindWithValue;
     }
 

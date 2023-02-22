@@ -7,6 +7,7 @@ public class CDQ0003 : DailyQuest
 {
     public override void Init()
     {
+        base.Init();
         App.controller.cultive.OnAddMoisture += BindWithValue;
     }
 

@@ -10,6 +10,8 @@ public class Model_Mall : ModelBehavior
 
     private Reward[] previewPackageRewards;
 
+    private string previewPackageId;
+
     private int ruleIndex = -1;
 
     public int SelectedPageIndex
@@ -42,7 +44,18 @@ public class Model_Mall : ModelBehavior
         }
     }
 
+    public string PreviewPackageId
+    {
+        get => previewPackageId;
+        set
+        {
+            previewPackageId = value;
+            OnPreviewPackageIdChange?.Invoke(value);
+        }
+    }
+
     public ValueFromToChange onSelectedPageIndexChange;
     public ValueChange onPreviewPackageRewardsChange;
     public ValueChange OnRuleIndexChange;
+    public ValueChange OnPreviewPackageIdChange;
 }

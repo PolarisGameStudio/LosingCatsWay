@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Controller_Diary : ControllerBehavior
@@ -10,6 +11,8 @@ public class Controller_Diary : ControllerBehavior
     public void Open()
     {
         App.view.diary.Open();
+        App.model.diary.MemoryCount = GetCatMemoryValue();
+        App.model.diary.MemoryScore = GetMemoryScoreValue();
         ToPage(-1);
     }
 
@@ -59,5 +62,87 @@ public class Controller_Diary : ControllerBehavior
     {
         int index = App.model.diary.PageIndex - 1;
         ToPage(index);
+    }
+
+    public void GetCatMemory()
+    {
+        var data = App.model.diary.LosingCatData;
+        if (data.IsGetMemory)
+            return;
+
+        Item memoryItem = App.factory.itemFactory.GetItem("CatMemory");
+        int memoryCount = App.model.diary.MemoryCount;
+        
+        Reward reward = new Reward { count = memoryCount, item = memoryItem };
+        List<Reward> rewards = new List<Reward> { reward };
+        App.system.reward.Open(rewards.ToArray());
+        
+        data.IsGetMemory = true;
+        App.model.diary.LosingCatData = data;
+        App.system.cloudSave.UpdateLosingCatData(data);
+    }
+
+    private int GetCatMemoryValue()
+    {
+        int result;
+        var data = App.model.diary.LosingCatData;
+
+        int max = data.CatData.SurviveDays * 2;
+        max = max == 0 ? 1 : max;
+        
+        List<int> scores = new List<int>
+        {
+            data.CatDiaryData.DiarySatietyScore,
+            data.CatDiaryData.DiaryLitterScore,
+            data.CatDiaryData.DiaryMoistureScore,
+            data.CatDiaryData.DiaryFavourbilityScore
+        };
+        int min = scores.Min();
+        int range = min / max;
+
+        if (range < 25)
+            result = 1;
+        else if (range < 50)
+            result = 3;
+        else if (range < 75)
+            result = 8;
+        else if (range < 100)
+            result = 12;
+        else
+            result = 15;
+
+        return result;
+    }
+
+    private int GetMemoryScoreValue()
+    {
+        int result;
+        var data = App.model.diary.LosingCatData;
+
+        int max = data.CatData.SurviveDays * 2;
+        max = max == 0 ? 1 : max;
+        
+        List<int> scores = new List<int>
+        {
+            data.CatDiaryData.DiarySatietyScore,
+            data.CatDiaryData.DiaryLitterScore,
+            data.CatDiaryData.DiaryMoistureScore,
+            data.CatDiaryData.DiaryFavourbilityScore
+        };
+        int min = scores.Min();
+        int range = min / max;
+
+        if (range < 25)
+            result = 20;
+        else if (range < 50)
+            result = 40;
+        else if (range < 75)
+            result = 60;
+        else if (range < 100)
+            result = 80;
+        else
+            result = 100;
+
+        return result;
     }
 }

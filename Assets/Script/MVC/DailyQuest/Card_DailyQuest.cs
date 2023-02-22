@@ -21,6 +21,9 @@ public class Card_DailyQuest : Card_Quest
     [SerializeField] private GameObject receiveMask;
     [SerializeField] private MyTween_Scale getTween;
 
+    [Title("Effect")]
+    [SerializeField] private GameObject receiveEffect;
+
     public override void SetData(Quest quest)
     {
         base.SetData(quest);
@@ -32,6 +35,7 @@ public class Card_DailyQuest : Card_Quest
         receiveMask.SetActive(!quest.IsReach);
         mask.SetActive(quest.IsReceived);
         red.SetActive(!quest.IsReceived && quest.IsReach);
+        receiveEffect.SetActive(!quest.IsReceived && quest.IsReach);
     }
 
     public void GetReward(int index)
