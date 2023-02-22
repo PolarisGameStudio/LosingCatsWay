@@ -19,7 +19,7 @@ public class Item : ScriptableObject
     }
     
     public string id;
-    [Space(10)] [EnumPaging] public ItemType itemType;
+    [EnumPaging] public ItemType itemType;
     [EnumPaging] public ItemBoughtType itemBoughtType;
 
     #region Feed
@@ -64,6 +64,13 @@ public class Item : ScriptableObject
 
     [ShowIf("itemType", ItemType.Litter)] [EnumPaging]
     public ItemLitterType itemLitterType;
+
+    #endregion
+
+    #region Room
+
+    [ShowIf("itemType", ItemType.Room)] [EnumPaging]
+    public ItemRoomType itemRoomType;
 
     #endregion
 
@@ -183,9 +190,25 @@ public class Item : ScriptableObject
                 return true;
             if (unlockLevel > 0 && app.system.player.Level >= unlockLevel)
                 return true;
+            if (itemType == ItemType.Room && itemRoomType == ItemRoomType.Fund && CheckHasFundItem())
+                return true;
             return false;
         }
     }
 
     #endregion
+
+    // todo 確認SYB0001是不是就擁有所有募資房間
+    private bool CheckHasFundItem()
+    {
+        if (app.factory.itemFactory.GetItem("SYB0001").Count > 0)
+            return true;
+        if (app.factory.itemFactory.GetItem("SYB0002").Count > 0)
+            return true;
+        if (app.factory.itemFactory.GetItem("SYB0003").Count > 0)
+            return true;
+        if (app.factory.itemFactory.GetItem("SYB0004").Count > 0)
+            return true;
+        return false;
+    }
 }
