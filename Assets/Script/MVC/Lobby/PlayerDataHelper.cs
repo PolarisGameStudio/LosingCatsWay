@@ -208,20 +208,23 @@ public class PlayerDataHelper
             ? new List<CloudSave_RoomData>()
             : cloudSaveData.ExistRoomDatas;
 
-        // 之前有升級的話中心點調整
-        int targetX = 2 + app.system.player.GridSizeLevel;
-        CloudSave_RoomData centerRoom = existRoomDatas.Find(x => app.system.room.IsCenterRoom(x.Id));
-        
-        // 距離差
-        int diff = targetX - centerRoom.X;
-
-        if (diff != 0)
+        if (existRoomDatas.Count != 0)
         {
-            for (int i = 0; i < existRoomDatas.Count; i++)
+            // 之前有升級的話中心點調整
+            int targetX = 2 + app.system.player.GridSizeLevel;
+            CloudSave_RoomData centerRoom = existRoomDatas.Find(x => app.system.room.IsCenterRoom(x.Id));
+        
+            // 距離差
+            int diff = targetX - centerRoom.X;
+
+            if (diff != 0)
             {
-                existRoomDatas[i].X += diff;
-                existRoomDatas[i].Y += diff;
-            }
+                for (int i = 0; i < existRoomDatas.Count; i++)
+                {
+                    existRoomDatas[i].X += diff;
+                    existRoomDatas[i].Y += diff;
+                }
+            }   
         }
 
         for (int i = 0; i < existRoomDatas.Count; i++)
