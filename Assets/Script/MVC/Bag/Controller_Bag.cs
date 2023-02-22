@@ -227,7 +227,6 @@ public class Controller_Bag : ControllerBehavior
                 item.Count--;
                 ChooseType(0);
                 ChooseType(6);
-                
             };
         }
         

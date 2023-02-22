@@ -49,13 +49,21 @@ public class View_Lobby : ViewBehaviour
 
     [Title("Red")]
     public GameObject lobbyDailyQuestRed;
+    public Animator lobbyDailyQuestRedAnimator;
     public GameObject archiveRedPoint;
+    public Animator archiveRedPointAnimator;
     public GameObject mailRedPoint;
+    public Animator mailRedPointAnimator;
     public GameObject mallRedPoint;
+    public Animator mallRedPointAnimator;
     public GameObject bagRedPoint;
+    public Animator bagRedPointAnimator;
     public GameObject catRedPoint;
+    public Animator catRedPointAnimator;
     public GameObject friendRedPoint;
+    public Animator friendRedPointAnimator;
     public GameObject lobbyLevelRewardRed;
+    public Animator lobbyLevelRewardRedAnimator;
 
     public override void Open()
     {
@@ -263,52 +271,46 @@ public class View_Lobby : ViewBehaviour
 
     private void CheckRedActivate() // 檢查紅點有沒有在用
     {
+        string animationName = "Play";
+        
         if (lobbyDailyQuestRed.activeSelf)
         {
-            lobbyDailyQuestRed.SetActive(false);
-            DOVirtual.DelayedCall(0.35f, () => lobbyDailyQuestRed.SetActive(true));
+            DOVirtual.DelayedCall(0.35f, () => lobbyDailyQuestRedAnimator.Play(animationName));
         }
 
         if (lobbyLevelRewardRed.activeSelf)
         {
-            lobbyLevelRewardRed.SetActive(false);
-            DOVirtual.DelayedCall(0.35f, () => lobbyLevelRewardRed.SetActive(true));
+            DOVirtual.DelayedCall(0.35f, () => lobbyLevelRewardRedAnimator.Play(animationName));
         }
 
         if (archiveRedPoint.activeSelf)
         {
-            archiveRedPoint.SetActive(false);
-            DOVirtual.DelayedCall(0.35f, () => archiveRedPoint.SetActive(true));
+            DOVirtual.DelayedCall(0.35f, () => archiveRedPointAnimator.Play(animationName));
         }
 
         if (mailRedPoint.activeSelf)
         {
-            mailRedPoint.SetActive(false);
-            DOVirtual.DelayedCall(0.35f, () => mailRedPoint.SetActive(true));
+            DOVirtual.DelayedCall(0.35f, () => mailRedPointAnimator.Play(animationName));
         }
 
         if (mallRedPoint.activeSelf)
         {
-            mallRedPoint.SetActive(false);
-            DOVirtual.DelayedCall(0.35f, () => mallRedPoint.SetActive(true));
+            DOVirtual.DelayedCall(0.35f, () => mallRedPointAnimator.Play(animationName));
         }
         
         if (bagRedPoint.activeSelf)
         {
-            bagRedPoint.SetActive(false);
-            DOVirtual.DelayedCall(0.35f, () => bagRedPoint.SetActive(true));
+            DOVirtual.DelayedCall(0.35f, () => bagRedPointAnimator.Play(animationName));
         }
         
         if (catRedPoint.activeSelf)
         {
-            catRedPoint.SetActive(false);
-            DOVirtual.DelayedCall(0.35f, () => catRedPoint.SetActive(true));
+            DOVirtual.DelayedCall(0.35f, () => catRedPointAnimator.Play(animationName));
         }
         
         if (friendRedPoint.activeSelf)
         {
-            friendRedPoint.SetActive(false);
-            DOVirtual.DelayedCall(0.35f, () => friendRedPoint.SetActive(true));
+            DOVirtual.DelayedCall(0.35f, () => friendRedPointAnimator.Play(animationName));
         }
     }
 }

@@ -94,6 +94,9 @@ public class View_BagChooseCat : MvcBehaviour
                     var cat = cats[i];
                     if (cat.LosingCatStatus.Contains(key))
                         cats.Remove(cat);
+
+                    if (cat.CatData.SurviveDays <= 3)
+                        cats.Remove(cat);
                 }
             }
 
