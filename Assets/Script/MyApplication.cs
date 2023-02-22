@@ -115,7 +115,7 @@ public class MyApplication : MonoBehaviour
 
         int gridSizeLevel = system.player.GridSizeLevel;
 
-        if (gridSizeLevel > 0)
+        if (gridSizeLevel > 1)
             FindObjectOfType<LeanPinchCamera>().ClampMax = 15;
         
         DOVirtual.DelayedCall(0.35f, controller.lobby.Open);
