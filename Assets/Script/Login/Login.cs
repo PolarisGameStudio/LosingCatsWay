@@ -244,6 +244,8 @@ public class Login : MyApplication
             return;
         }
 
+        PlayerPrefs.SetInt("IsVisitor", 1);
+        
         idText.text = $"UID: {auth.CurrentUser.UserId}";
         system.post.Open();
         loginView.InstantHide();

@@ -78,6 +78,23 @@ public class RoomSystem : MvcBehaviour
         OnRoomsChange?.Invoke(myRooms);
     }
 
+    public bool IsCenterRoom(string roomId)
+    {
+        if (roomId == "IRM00010")
+            return true;
+
+        if (roomId == "IRM00029")
+            return true;
+
+        if (roomId == "IRM00048")
+            return true;
+        
+        if (roomId == "IRM00059")
+            return true;
+        
+        return false;
+    }
+
     private void RefreshRoomsWall()
     {
         for (int i = 0; i < myRooms.Count; i++)

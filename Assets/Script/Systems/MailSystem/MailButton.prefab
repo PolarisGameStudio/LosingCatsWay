@@ -120,7 +120,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4297485068233987719}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 276143297960402118}
+        m_TargetAssemblyTypeName: MailButton, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4577698924335776495
 GameObject:
   m_ObjectHideFlags: 0
@@ -1084,7 +1096,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a049c4e34fc9cb545a3241c19dd0f3b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 5449762972652097137}
   unSelected: {fileID: 4873199889805302077}
   selected: {fileID: 4577698924335776495}
   unReadBg: {fileID: 4577698924925414447}
