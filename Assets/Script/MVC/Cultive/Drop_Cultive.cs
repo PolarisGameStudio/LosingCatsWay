@@ -38,10 +38,12 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
                 // 未在倒數不可玩
                 if (App.model.cultive.NextCleanDateTime <= App.system.myTime.MyTimeNow)
                 {
-                    if (App.model.cultive.CleanLitterCount > 0)
-                        App.controller.cultive.NoLitterCatTalk();
-                    else
-                        App.controller.cultive.NoLitterPopUp();
+                    // if (App.model.cultive.CleanLitterCount > 0)
+                    //     App.controller.cultive.NoLitterCatTalk();
+                    // else
+                    //     App.controller.cultive.NoLitterPopUp();
+                    App.controller.cultive.NoLitterCatTalk();
+                    App.controller.cultive.NoLitterPopUp();
                 
                     App.controller.cultive.Reject();
                     return;

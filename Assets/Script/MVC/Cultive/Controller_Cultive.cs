@@ -32,7 +32,8 @@ public class Controller_Cultive : ControllerBehavior
     [SerializeField] private PopValue_Cultive moneyPop;
     [SerializeField] private PopValue_Cultive shitPop;
 
-    [Title("Tutorial")] [SerializeField] private Button closeButton;
+    [Title("Tutorial")]
+    [SerializeField] private Button closeButton;
     [SerializeField] private UIButton infoButton;
     [SerializeField] private UIButton screenshotButton;
     [SerializeField] private Button[] tabButtons;

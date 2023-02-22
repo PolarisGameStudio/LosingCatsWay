@@ -31,6 +31,9 @@ public class MallContainer_Tool : MallContainer
     public GameObject adsToolGetMask;
     public GameObject adsFeedGetMask;
 
+    [Title("Red")]
+    [SerializeField] private GameObject leftRed;
+
     public override void Init()
     {
         base.Init();
@@ -60,6 +63,18 @@ public class MallContainer_Tool : MallContainer
         adsMoneyCountText.text = adsMoneyCount + "/" + _adsMoneyMaxCount;
         adsToolCountText.text = adsToolCount + "/" + _adsToolMaxCount;
         adsFeedCountText.text = adsFeedCount + "/" + _adsFeedMaxCount;
+
+        int totalAds = 0;
+        if (adsDiamondCount >= _adsDiamondMaxCount)
+            totalAds += 1;
+        if (adsMoneyCount >= _adsMoneyMaxCount)
+            totalAds += 1;
+        if (adsToolCount >= _adsToolMaxCount)
+            totalAds += 1;
+        if (adsFeedCount >= _adsFeedMaxCount)
+            totalAds += 1;
+        leftRed.SetActive(totalAds < 4);
+        App.view.lobby.mallRedPoint.SetActive(totalAds < 4);
     }
 
     public void BuyDiamond_Ads()
