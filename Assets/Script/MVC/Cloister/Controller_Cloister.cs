@@ -112,7 +112,7 @@ public class Controller_Cloister : ControllerBehavior
         {
             item.Count -= 1;
             data.LosingCatStatus.Add("Flower");
-            App.system.cloudSave.UpdateLosingCatDiaryData(data);
+            App.system.cloudSave.SaveLosingCatData(data);
             
             //ValueChange
             App.model.cloister.SelectedLosingCatData = data;

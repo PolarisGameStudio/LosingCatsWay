@@ -13,6 +13,7 @@ public class View_SubInformation : ViewBehaviour
 {
     public CatSkin catSkin;
     [SerializeField] private TextMeshProUGUI catIdText;
+    [SerializeField] private GameObject catIdMask;
 
     [Title("SubInfo")] [SerializeField] private View_SubInfo_Status status;
     [SerializeField] private View_SubInfo_ChooseSkin chooseSkin;
@@ -62,8 +63,13 @@ public class View_SubInformation : ViewBehaviour
     private void OnSelectedCatChange(object value)
     {
         var cat = (Cat)value;
+
+        bool isChip = cat.cloudCatData.CatHealthData.IsChip;
+        catIdMask.SetActive(!isChip);
+        
         string tmpID = "ID:" + cat.cloudCatData.CatData.CatId;
-        catIdText.text = tmpID;
+        catIdText.text = isChip ? tmpID : "ID:-";
+        
         catSkin.ChangeSkin(cat.cloudCatData);
         if (cat.cloudCatData.CatData.SurviveDays > 3)
             catSkin.SetStatusFace(cat.cloudCatData);

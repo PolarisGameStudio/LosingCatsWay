@@ -18,6 +18,10 @@ public class View_FollowCat : ViewBehaviour
     public Image catSexImage;
     public Image moodImage;
 
+    [Title("Dialog")]
+    [SerializeField] private GameObject dialogObject;
+    [SerializeField] private TextMeshProUGUI growText;
+
     [Title("Fill")]
     [SerializeField] private Image satietyFill;
     [SerializeField] private Image moistureFill;
@@ -89,5 +93,9 @@ public class View_FollowCat : ViewBehaviour
         
         traitButton.interactable = cloudCatData.CatSkinData.UseSkinId is "Robot_Cat" or "Flyfish_Cat" or "Magic_Hat";
         traitMask.SetActive(!traitButton.interactable);
+        
+        dialogObject.SetActive(isKitty);
+        if (isKitty)
+            growText.text = (3 - cloudCatData.CatData.SurviveDays).ToString();
     }
 }

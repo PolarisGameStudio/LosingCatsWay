@@ -241,6 +241,7 @@ public class Controller_Hospital : ControllerBehavior
         if (index == 3)
         {
             cat.cloudCatData.CatHealthData.IsChip = true;
+            cat.cloudCatData.CatData.ChipId = App.system.player.PlayerId;
         }
 
         if (index == 4)

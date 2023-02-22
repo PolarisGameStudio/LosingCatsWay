@@ -100,12 +100,11 @@ public class MyApplication : MonoBehaviour
             system.openFlow.Init();
 
         system.settle.Init();
+        await controller.cloister.Init();
 
         // MyTime 一定要放最後
         system.myTime.Init();
 
-        // myTime 弄死貓之後再叫
-        await controller.cloister.Init();
         controller.greenHouse.Init();
         
         controller.mall.Init();

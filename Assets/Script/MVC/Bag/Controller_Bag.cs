@@ -223,7 +223,7 @@ public class Controller_Bag : ControllerBehavior
                 CloudLosingCatData cloudLosingCatData =
                     App.model.cloister.LosingCatDatas.Find(x => x.CatData.CatId == catId);
                 cloudLosingCatData.LosingCatStatus.Add("Flower");
-                App.system.cloudSave.UpdateLosingCatStatusData(cloudLosingCatData);
+                App.system.cloudSave.SaveLosingCatData(cloudLosingCatData);
                 item.Count--;
                 ChooseType(0);
                 ChooseType(6);
@@ -240,7 +240,7 @@ public class Controller_Bag : ControllerBehavior
                 CloudLosingCatData cloudLosingCatData =
                     App.model.cloister.LosingCatDatas.Find(x => x.CatData.CatId == catId);
                 cloudLosingCatData.LosingCatStatus.Add("AngelCat");
-                App.system.cloudSave.UpdateLosingCatStatusData(cloudLosingCatData);
+                App.system.cloudSave.SaveLosingCatData(cloudLosingCatData);
                 item.Count--;
                 ChooseType(0);
                 ChooseType(6);

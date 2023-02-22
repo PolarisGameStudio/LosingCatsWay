@@ -79,7 +79,7 @@ public class Controller_Diary : ControllerBehavior
         
         data.IsGetMemory = true;
         App.model.diary.LosingCatData = data;
-        App.system.cloudSave.UpdateLosingCatData(data);
+        App.system.cloudSave.SaveLosingCatData(data);
     }
 
     private int GetCatMemoryValue()

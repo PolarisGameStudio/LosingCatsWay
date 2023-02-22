@@ -179,13 +179,8 @@ public class Item : ScriptableObject
     {
         get
         {
-            if (itemBoughtType == ItemBoughtType.Cash)
-            {
-                if (app.model.mall.PurchaseRecords.ContainsKey(purchaseKey))
-                    return true;
-                return false;
-            }
-
+            if (app.model.mall.PurchaseRecords.ContainsKey(purchaseKey))
+                return true;
             if (unlockLevel > 0 && app.system.player.Level >= unlockLevel)
                 return true;
             return false;

@@ -44,12 +44,12 @@ public class CloudSaveSystem : MvcBehaviour
         WriteBatch batch = db.StartBatch();
         
         var cats = App.system.cat.GetCats();
-        CatDatasHelper catDatasHelper = new CatDatasHelper();
+        CatDataHelper catDataHelper = new CatDataHelper();
 
         foreach (var cat in cats)
         {
             string catId = cat.cloudCatData.CatData.CatId;
-            Dictionary<string, object> updates = catDatasHelper.GetCloudCatUpdate(cat.cloudCatData);
+            Dictionary<string, object> updates = catDataHelper.GetUpdate(cat.cloudCatData);
             DocumentReference docRef = db.Collection("Cats").Document(catId);
             batch.Set(docRef, updates, SetOptions.MergeAll);
         }
@@ -67,8 +67,8 @@ public class CloudSaveSystem : MvcBehaviour
 
     public async void SaveCloudCatData(CloudCatData cloudCatData)
     {
-        CatDatasHelper catDatasHelper = new CatDatasHelper();
-        var updates = catDatasHelper.GetCloudCatUpdate(cloudCatData);
+        CatDataHelper catDataHelper = new CatDataHelper();
+        var updates = catDataHelper.GetUpdate(cloudCatData);
         
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("Cats").Document(cloudCatData.CatData.CatId);
@@ -130,22 +130,26 @@ public class CloudSaveSystem : MvcBehaviour
 
     public async Task<CloudLosingCatData> CreateCloudLosingCatData(CloudCatData cloudCatData)
     {
-        CloudLosingCatData losingCatData = new CloudLosingCatData();
-        losingCatData.CatData = cloudCatData.CatData;
-        losingCatData.CatSkinData = cloudCatData.CatSkinData;
-        losingCatData.CatDiaryData = cloudCatData.CatDiaryData;
-        
-        var losingCats = await App.system.cloudSave.LoadCloudLosingCatDatas(App.system.player.PlayerId);
-        losingCatData.LosingCatStatus = new List<string>();
-        if (losingCats.Count <= 0)
-            losingCatData.LosingCatStatus.Add("First");
-        
-        losingCatData.ExpiredTimestamp = Timestamp.FromDateTime(App.system.myTime.MyTimeNow.AddDays(7));
-        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        var losingCatRef = db.Collection("LosingCats").Document(losingCatData.CatData.CatId);
-        await losingCatRef.SetAsync(losingCatData);
+        // CloudLosingCatData losingCatData = new CloudLosingCatData();
+        // losingCatData.CatData = cloudCatData.CatData;
+        // losingCatData.CatSkinData = cloudCatData.CatSkinData;
+        // losingCatData.CatDiaryData = cloudCatData.CatDiaryData;
+        //
+        // var losingCats = await App.system.cloudSave.LoadCloudLosingCatDatas(App.system.player.PlayerId);
+        // losingCatData.LosingCatStatus = new List<string>();
+        // if (losingCats.Count <= 0)
+        //     losingCatData.LosingCatStatus.Add("First");
+        //
+        // losingCatData.ExpiredTimestamp = Timestamp.FromDateTime(App.system.myTime.MyTimeNow.AddDays(7));
 
-        return losingCatData;
+        LosingCatDataHelper helper = new LosingCatDataHelper(App);
+        var data = helper.CreateLosingCatData(cloudCatData);
+        
+        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+        var losingCatRef = db.Collection("LosingCats").Document(data.CatData.CatId);
+        await losingCatRef.SetAsync(data);
+
+        return data;
     }
 
     public async Task<List<CloudLosingCatData>> LoadCloudLosingCatDatas(string owner)
@@ -163,40 +167,15 @@ public class CloudSaveSystem : MvcBehaviour
         return result;
     }
 
-        // todo healper
-    public async void UpdateLosingCatData(CloudLosingCatData cloudLosingCatData)
+    public async void SaveLosingCatData(CloudLosingCatData cloudLosingCatData)
     {
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("LosingCats").Document(cloudLosingCatData.CatData.CatId);
-        Dictionary<string, object> updates = new Dictionary<string, object>
-        {
-            { "CatData", cloudLosingCatData.CatData},
-            { "CatDiaryData", cloudLosingCatData.CatDiaryData },
-            { "IsGetMemory", cloudLosingCatData.IsGetMemory}
-        };
-        await docRef.UpdateAsync(updates);
-    }
 
-    public async void UpdateLosingCatDiaryData(CloudLosingCatData cloudLosingCatData)
-    {
-        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        DocumentReference docRef = db.Collection("LosingCats").Document(cloudLosingCatData.CatData.CatId);
-        Dictionary<string, object> updates = new Dictionary<string, object>
-        {
-            { "CatDiaryData", cloudLosingCatData.CatDiaryData }
-        };
-        await docRef.UpdateAsync(updates);
-    }
-    
-    public void UpdateLosingCatStatusData(CloudLosingCatData cloudLosingCatData)
-    {
-        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        DocumentReference docRef = db.Collection("LosingCats").Document(cloudLosingCatData.CatData.CatId);
-        Dictionary<string, object> updates = new Dictionary<string, object>
-        {
-            { "LosingCatStatus", cloudLosingCatData.LosingCatStatus }
-        };
-        docRef.UpdateAsync(updates);
+        LosingCatDataHelper helper = new LosingCatDataHelper(App);
+        var update = helper.GetUpdate(cloudLosingCatData);
+        
+        await docRef.UpdateAsync(update);
     }
 
     public async void DeleteLosingCatData(CloudLosingCatData cloudLosingCatData)

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CatDatasHelper
+public class CatDataHelper
 {
     #region Set
 
@@ -12,7 +12,7 @@ public class CatDatasHelper
 
     #region Save
 
-    public Dictionary<string, object> GetCloudCatUpdate(CloudCatData cloudCatData)
+    public Dictionary<string, object> GetUpdate(CloudCatData cloudCatData)
     {
         Dictionary<string, object> result = new Dictionary<string, object>
         {

@@ -11,7 +11,7 @@ public class View_SubShelter : ViewBehaviour
 {
     public CatSkin catSkin;
 
-    [Title("Left")] [SerializeField] private UIButton idButton;
+    [Title("Left")]
     [SerializeField] private TextMeshProUGUI catIdText;
     [SerializeField] private GameObject blackMask;
     
@@ -109,8 +109,7 @@ public class View_SubShelter : ViewBehaviour
         
         //ID
         string tmpID = "ID:" + cloudCatData.CatData.CatId;
-        catIdText.text = (cloudCatData.CatHealthData.IsChip) ? tmpID : "ID:-";
-        idButton.interactable = cloudCatData.CatHealthData.IsChip;
+        catIdText.text = cloudCatData.CatHealthData.IsChip ? tmpID : "ID:-";
         blackMask.SetActive(!cloudCatData.CatHealthData.IsChip);
     }
 }

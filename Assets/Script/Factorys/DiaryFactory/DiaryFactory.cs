@@ -171,7 +171,7 @@ public class DiaryFactory : SerializedMonoBehaviour
                     result.DiaryId = "103";
                     break;
                 default:
-                    result.DiaryId = "103";
+                    result.DiaryId = "102";
                     break;
             }
         }
@@ -186,7 +186,7 @@ public class DiaryFactory : SerializedMonoBehaviour
                     result.DiaryId = "106";
                     break;
                 default:
-                    result.DiaryId = "103";
+                    result.DiaryId = "106";
                     break;
             }
         }
