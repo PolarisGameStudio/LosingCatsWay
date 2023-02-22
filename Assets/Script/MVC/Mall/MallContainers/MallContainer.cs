@@ -105,7 +105,8 @@ public class MallContainer : ViewBehaviour
     public virtual void OpenInformation(int index)
     {
         var rewards = mallItems[index].rewards;
-        App.controller.mall.OpenPreviewPackageView(rewards);
+        var id = mallItems[index].id;
+        App.controller.mall.OpenPreviewPackageView(id, rewards);
     }
 
     public void GetItem(int index)

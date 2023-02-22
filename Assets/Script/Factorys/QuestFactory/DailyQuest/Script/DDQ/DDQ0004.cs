@@ -7,6 +7,7 @@ public class DDQ0004 : DailyQuest
 {
     public override void Init()
     {
+        base.Init();
         App.controller.shop.OnBuyByValue += Bind;
     }
 

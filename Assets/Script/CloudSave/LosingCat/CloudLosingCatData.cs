@@ -10,6 +10,7 @@ public class CloudLosingCatData
     
     [FirestoreProperty] public List<string> LosingCatStatus { get; set; }
     [FirestoreProperty] public Timestamp ExpiredTimestamp { get; set; }
+    [FirestoreProperty] public bool IsGetMemory { get; set; }
     
     public bool IsExpired => ExpiredTimestamp <= Timestamp.GetCurrentTimestamp();
 }

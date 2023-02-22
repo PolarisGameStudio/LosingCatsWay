@@ -97,4 +97,6 @@ public enum ConfirmTable
     Hints_NoSameName,
     Hints_GoFriendsHome,
     Hints_GoHome,
+    Hints_Network,
+    Hints_ShelterFull,
 }

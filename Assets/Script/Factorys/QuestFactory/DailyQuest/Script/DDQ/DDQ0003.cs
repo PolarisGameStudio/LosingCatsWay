@@ -7,6 +7,7 @@ public class DDQ0003 : DailyQuest
 {
     public override void Init()
     {
+        base.Init();
         App.system.catchCat.map.OnGameEnd += Bind;
     }
 

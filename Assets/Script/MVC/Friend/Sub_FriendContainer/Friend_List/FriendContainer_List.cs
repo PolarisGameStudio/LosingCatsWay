@@ -26,6 +26,8 @@ public class FriendContainer_List : ViewBehaviour
     {
         App.system.confirm.Active(ConfirmTable.Hints_GoFriendsHome, () =>
         {
+            App.SaveData();
+            
             App.system.transition.OnlyOpen(() =>
             {
                 PlayerPrefs.SetString("FriendRoomId", App.model.friend.Friends[index].PlayerId);

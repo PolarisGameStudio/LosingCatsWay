@@ -49,12 +49,19 @@ public class Login : MyApplication
         system.soundEffect.Init();
         controller.settings.Init();
         
-        system.bgm.Play("Login");
+        system.bgm.FadeOut(0).FadeIn(8).Play("Login");
     }
     
     private async void Start()
     {
         Init();
+
+        InternetChecker internetChecker = new InternetChecker();
+        if (!internetChecker.CheckInternetStatus())
+        {
+            system.confirm.ActiveByBlock(ConfirmTable.Hints_Network);
+            return;
+        }
         
         VersionChecker versionChecker = new VersionChecker();
         bool isActive = await versionChecker.Check();

@@ -10,6 +10,7 @@ public class MEQ0002_5 : Quest
         base.Init();
         App.system.tnr.OnAdoptCat += Bind;
         App.controller.shelter.OnAdoptCat += Bind;
+        App.controller.mall.OnBuyCat += Bind;
     }
 
     public void Bind(object value)

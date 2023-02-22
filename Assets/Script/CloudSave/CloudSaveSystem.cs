@@ -163,6 +163,20 @@ public class CloudSaveSystem : MvcBehaviour
         return result;
     }
 
+        // todo healper
+    public async void UpdateLosingCatData(CloudLosingCatData cloudLosingCatData)
+    {
+        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+        DocumentReference docRef = db.Collection("LosingCats").Document(cloudLosingCatData.CatData.CatId);
+        Dictionary<string, object> updates = new Dictionary<string, object>
+        {
+            { "CatData", cloudLosingCatData.CatData},
+            { "CatDiaryData", cloudLosingCatData.CatDiaryData },
+            { "IsGetMemory", cloudLosingCatData.IsGetMemory}
+        };
+        await docRef.UpdateAsync(updates);
+    }
+
     public async void UpdateLosingCatDiaryData(CloudLosingCatData cloudLosingCatData)
     {
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;

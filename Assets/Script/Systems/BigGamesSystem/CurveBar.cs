@@ -29,6 +29,8 @@ public class CurveBar : MonoBehaviour
 
     private float startPercent, endPercent;
 
+    private bool isClockwisePause;
+
     #region Basic
 
     private void LateUpdate()
@@ -208,17 +210,23 @@ public class CurveBar : MonoBehaviour
     {
         if (clockwiseSeq != null) 
             if (clockwiseSeq.IsPlaying())
+            {
                 clockwiseSeq.Pause();
+                isClockwisePause = true;
+            }
         if (unclockwiseSeq != null) 
             if (unclockwiseSeq.IsPlaying())
+            {
                 unclockwiseSeq.Pause();
+                isClockwisePause = false;
+            }
     }
 
     public void PointerResume()
     {
-        if (clockwiseSeq != null) 
+        if (isClockwisePause) 
             clockwiseSeq.Play();
-        if (unclockwiseSeq != null) 
+        else
             unclockwiseSeq.Play();
     }
 
