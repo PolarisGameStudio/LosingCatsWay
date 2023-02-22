@@ -2586,7 +2586,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4827937946840479734}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4827937946176286479}
+        m_TargetAssemblyTypeName: Controller_Settings, Assembly-CSharp
+        m_MethodName: LinkByGoogle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4827937946891863093
 GameObject:
   m_ObjectHideFlags: 0
@@ -7217,7 +7229,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4288904377450178907}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4827937946176286479}
+        m_TargetAssemblyTypeName: Controller_Settings, Assembly-CSharp
+        m_MethodName: LinkByApple
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7413002609803681730
 GameObject:
   m_ObjectHideFlags: 0
@@ -8179,10 +8203,10 @@ MonoBehaviour:
   - {fileID: 4827937947768471381}
   - {fileID: 4827937946079035766}
   - {fileID: 4827937946891863093}
+  googleLinkButton: {fileID: 4827937946840479732}
+  appleLinkButton: {fileID: 6820653437930708036}
   googleMask: {fileID: 4702298076204154478}
   appleMask: {fileID: 3317278480730287425}
-  googleText: {fileID: 5261494841837156000}
-  appleText: {fileID: 3922951662670128081}
 --- !u!1 &7874283571460404928
 GameObject:
   m_ObjectHideFlags: 0

@@ -72,16 +72,6 @@ public class UnlockGridSystem : MvcBehaviour
 
         App.system.player.GridSizeLevel++;
 
-        // 要對每個房間去往上移一格
-        var rooms = App.system.room.MyRooms;
-        for (int i = 0;
-             i < rooms.Count;
-             i++)
-        {
-            rooms[i].x++;
-            rooms[i].y++;
-        }
-
         App.system.cloudSave.SaveCloudSaveData();
         App.system.cloudSave.SaveCloudCatDatas();
 

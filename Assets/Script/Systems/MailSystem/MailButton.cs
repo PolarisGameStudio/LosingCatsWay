@@ -10,9 +10,6 @@ using UnityEngine.UI;
 
 public class MailButton : MvcBehaviour
 {
-    [Title("Basic")]
-    public Button button;
-
     [Title("UI")] 
     public GameObject unSelected;
     public GameObject selected;
@@ -28,6 +25,8 @@ public class MailButton : MvcBehaviour
     
     public TextMeshProUGUI expiredText1;
     public TextMeshProUGUI expiredText2;
+
+    private int clickIndex = -1;
     
     public void SetStatus(int index) // 0 選取 1 還沒領 2 領了
     {
@@ -56,14 +55,12 @@ public class MailButton : MvcBehaviour
         dateText2.text = dateText1.text;
         expiredText2.text = expiredText1.text;
 
-        button.onClick.AddListener(() =>
-        {
-            Click(index);
-        });
+        clickIndex = index;
     }
 
-    private void Click(int index)
+    public void Click()
     {
-        App.system.mail.Select(index);
+        print("測試");
+        App.system.mail.Select(clickIndex);
     }
 }

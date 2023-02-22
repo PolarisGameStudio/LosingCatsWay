@@ -28,6 +28,9 @@ public class Controller_Settings : ControllerBehavior
             // Creates an Apple Authentication manager with the deserializer
             appleAuthManager = new AppleAuthManager(deserializer);
         }
+
+        if (SceneManager.GetActiveScene().name == "SampleScene")
+            CheckLinkStatus();
     }
 
     public void Open()
@@ -89,6 +92,12 @@ public class Controller_Settings : ControllerBehavior
                 StartCoroutine(LoadLoginScene());
             });
         });
+    }
+
+    private void CheckLinkStatus()
+    {
+        bool flag = PlayerPrefs.HasKey("IsVisitor");
+        App.view.settings.SetLinkStatus(flag);
     }
 
     private void ReleaseCats()
@@ -160,23 +169,22 @@ public class Controller_Settings : ControllerBehavior
                     {
                         if (task.IsCanceled)
                         {
-                            Debug.LogError("SignInWithCredentialAsync was canceled.");
                             return;
                         }
 
                         if (task.IsFaulted)
                         {
-                            Debug.LogError("SignInWithCredentialAsync encountered an error: " + task.Exception);
                             return;
                         }
 
                         if (task.IsCompletedSuccessfully)
                         {
-                            
+                            PlayerPrefs.DeleteKey("IsVisitor");
                         }
                     });
                     
                     //TODO 顯示
+                    CheckLinkStatus();
                 }
             },
             error =>
@@ -212,6 +220,8 @@ public class Controller_Settings : ControllerBehavior
             return;
         }
 
+        PlayerPrefs.DeleteKey("IsVisitor");
+        CheckLinkStatus();
         //TODO 補上登入後
     }
 

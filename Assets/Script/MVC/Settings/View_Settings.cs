@@ -15,10 +15,10 @@ public class View_Settings : ViewBehaviour
     [Title("Language")] [SerializeField] private GameObject[] langMasks;
 
     [Title("BindAccount")]
+    [SerializeField] private GameObject googleLinkButton;
+    [SerializeField] private GameObject appleLinkButton;
     [SerializeField] private GameObject googleMask;
     [SerializeField] private GameObject appleMask;
-    [SerializeField] private TextMeshProUGUI googleText;
-    [SerializeField] private TextMeshProUGUI appleText;
 
     public override void Init()
     {
@@ -26,6 +26,25 @@ public class View_Settings : ViewBehaviour
         App.model.settings.OnSeVolumeChange += OnSeVolumeChange;
         App.model.settings.OnBgmVolumeChange += OnBgmVolumeChange;
         App.model.settings.OnLanguageIndexChange += OnLanguageIndexChange;
+    }
+
+    public void SetLinkStatus(bool flag)
+    {
+        googleLinkButton.SetActive(false);
+        appleLinkButton.SetActive(false);
+        googleMask.SetActive(false);
+        appleMask.SetActive(false);
+
+        GameObject linkButton = googleLinkButton;
+        GameObject mask = googleMask;
+        
+#if UNITY_IOS
+        linkButton = appleLinkButton;
+        mask = appleMask;
+#endif
+        
+        linkButton.SetActive(flag);
+        mask.SetActive(!flag);
     }
 
     private void OnSeVolumeChange(object value)
