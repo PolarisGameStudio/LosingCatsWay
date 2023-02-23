@@ -33,6 +33,8 @@ public class MailFromDevSystem : MvcBehaviour
             return;
 
         string adoptLocationKey = firstLosingCat.CatDiaryData.AdoptLocation;
+        adoptLocationKey = string.IsNullOrEmpty(adoptLocationKey) ? "OutSide" : adoptLocationKey;
+        
         string title = App.factory.stringFactory.GetMailFromDevContent("Title");
         string content = App.factory.stringFactory.GetMailFromDevContent("Content");
         string catByAdoptLocation = App.factory.stringFactory.GetMailFromDevContent(adoptLocationKey);

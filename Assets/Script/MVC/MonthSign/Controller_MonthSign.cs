@@ -72,6 +72,8 @@ public class Controller_MonthSign : ControllerBehavior
         signIndexs[day - 1] = 1;
         App.model.monthSign.SignIndexs = signIndexs;
         App.model.monthSign.LastMonthSignDate = App.system.myTime.MyTimeNow;
+        
+        App.SaveData();
     }
 
     /// 按鈕補簽

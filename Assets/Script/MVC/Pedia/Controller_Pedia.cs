@@ -154,6 +154,8 @@ public class Controller_Pedia : ControllerBehavior
             App.system.quest.KnowledgeCardData[pediaId]++;
             klc0001.Count -= 10;
             RefreshPediaItems();
+            App.view.pedia.subPedia.choosePedia.cards[index].clickUnlockEffect.SetActive(true);
+            App.SaveData();
         });
     }
 
@@ -414,16 +416,19 @@ public class Controller_Pedia : ControllerBehavior
         App.view.pedia.pediaCats.CloseReadCat();
     }
 
-    public void UnlockPediaCat(int index)
+    public bool UnlockPediaCat(int index)
     {
         string variety = App.model.pedia.UsingCatIds[index];
         int count = App.system.quest.KnowledgeCardData[variety];
         
         if (count < 1)
-            return;
+            return false;
 
         App.system.quest.KnowledgeCardStatus[variety]++;
         RefreshCatItems();
+        App.SaveData();
+
+        return true;
     }
 
     #endregion

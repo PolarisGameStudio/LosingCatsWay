@@ -9,7 +9,7 @@ public class View_LevelReward : ViewBehaviour
     public CardLevelReward[] cards;
     [SerializeField] private Scrollbar scrollbar;
 
-    private Vector2 tweenOrigin = new Vector2(1.1f, 1.1f);
+    private Vector3 tweenOrigin = new Vector3(1.1f, 1.1f, 1.1f);
 
     public override void Open()
     {
@@ -20,7 +20,7 @@ public class View_LevelReward : ViewBehaviour
             for (int i = 0; i < cards.Length; i++)
             {
                 cards[i].scrollbar.value = 0;
-                cards[i].transform.DOScale(Vector2.one, 0.25f).SetEase(Ease.OutBack)
+                cards[i].transform.DOScale(Vector3.one, 0.25f).SetEase(Ease.OutBack)
                     .SetDelay(0.12f * i);
             }
         });

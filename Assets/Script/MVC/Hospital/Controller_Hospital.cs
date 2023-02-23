@@ -251,6 +251,7 @@ public class Controller_Hospital : ControllerBehavior
         }
         
         App.model.hospital.SelectedCat = cat;
+        App.SaveData();
     }
 
     public void OpenDoctorFuntion() // 醫生做事

@@ -16,6 +16,9 @@ public class Card_ChoosePedia : MvcBehaviour
     [Title("Color")] [SerializeField] private Sprite[] borderColors;
     [SerializeField] private Material[] textMaterials;
     [SerializeField] private Color32[] textColors;
+
+    [Title("Effects")]
+    public GameObject clickUnlockEffect;
     
     public void SetData(string id)
     {
@@ -40,6 +43,8 @@ public class Card_ChoosePedia : MvcBehaviour
         icon.sprite = sprite;
         titleText.text = title;
         lockObject.SetActive(!unlock);
+
+        clickUnlockEffect.SetActive(false);
     }
 
     public void ChangeColor(int index)

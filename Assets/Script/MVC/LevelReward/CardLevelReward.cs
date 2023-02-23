@@ -23,6 +23,7 @@ public class CardLevelReward : MvcBehaviour
     [SerializeField] private GameObject selectUnlockTitle;
     [SerializeField] private GameObject normalRewardTitle;
     [SerializeField] private GameObject selectRewardTitle;
+    [SerializeField] private GameObject selectEffect;
     
     [Title("Color")]
     [SerializeField] private Color32 selectTextColor;
@@ -74,13 +75,15 @@ public class CardLevelReward : MvcBehaviour
         button.interactable = value;
         
         bg.sprite = value ? selectBg : noSelectBg;
-        bg.transform.localScale = value ? new Vector2(1.04f, 1.04f) : Vector2.one;
+        bg.transform.localScale = value ? new Vector3(1.04f, 1.04f, 1.04f) : Vector2.one;
         
         selectUnlockTitle.SetActive(value);
         normalUnlockTitle.SetActive(!value);
         
         selectRewardTitle.SetActive(value);
         normalRewardTitle.SetActive(!value);
+
+        selectEffect.SetActive(value);
 
         Color32 textColor = value ? selectTextColor : normalTextColor;
         noUnlockText.color = textColor;

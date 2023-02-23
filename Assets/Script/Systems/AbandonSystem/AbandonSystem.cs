@@ -152,6 +152,7 @@ public class AbandonSystem : MvcBehaviour
             App.system.cloudSave.SaveCloudCatData(selectedCat.cloudCatData);
             
             item.Count -= 1;
+            App.SaveData();
             
             CloseFinalConfirm();
             CloseConfirm();

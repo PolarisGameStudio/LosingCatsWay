@@ -45,7 +45,7 @@ public class FriendContainer_Invite : ViewBehaviour
         
         // 加入我的好友
         App.model.friend.Friends.Add(friend);
-        await App.system.cloudSave.UpdateFriendData();
+        App.SaveData();
 
         await App.controller.friend.RefreshData();
     }

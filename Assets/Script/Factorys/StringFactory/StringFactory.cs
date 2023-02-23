@@ -143,7 +143,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = RoomNameData[CountryId].Contents.ContainsKey(roomId)
             ? RoomNameData[CountryId].Contents[roomId]
-            : "要叫阿邦上";
+            : roomId;
         return result;
     }
 
@@ -151,7 +151,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = ItemName[CountryId].Contents.ContainsKey(itemId)
             ? ItemName[CountryId].Contents[itemId]
-            : "要叫阿邦上";
+            : itemId;
         return result;
     }
 
@@ -159,7 +159,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = ItemDescription[CountryId].Contents.ContainsKey(itemId)
             ? ItemDescription[CountryId].Contents[itemId]
-            : "要叫阿邦上";
+            : itemId;
         return result;
     }
 
@@ -167,7 +167,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = ItemType[CountryId].Contents.ContainsKey(id)
             ? ItemType[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
 
@@ -175,7 +175,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = ItemUsage[CountryId].Contents.ContainsKey(id)
             ? ItemUsage[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
 
@@ -188,7 +188,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = CatNotifyData[CountryId].Contents.ContainsKey(id)
             ? CatNotifyData[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
 
@@ -196,7 +196,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = ConfirmTitleData[CountryId].Contents.ContainsKey(id)
             ? ConfirmTitleData[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
 
@@ -204,7 +204,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = ConfirmContentData[CountryId].Contents.ContainsKey(id)
             ? ConfirmContentData[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
 
@@ -213,7 +213,7 @@ public class StringFactory : SerializedMonoBehaviour
         var t = id + "_Name";
         string result = NpcData[CountryId].Contents.ContainsKey(t)
             ? NpcData[CountryId].Contents[t]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
 
@@ -222,7 +222,7 @@ public class StringFactory : SerializedMonoBehaviour
         var t = id + "_Speaker_" + index;
         string result = NpcData[CountryId].Contents.ContainsKey(t)
             ? NpcData[CountryId].Contents[t]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
 
@@ -230,7 +230,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = QuestData[CountryId].Contents.ContainsKey(id)
             ? QuestData[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
 
@@ -238,7 +238,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = QuestTitleData[CountryId].Contents.ContainsKey(id)
             ? QuestTitleData[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
 
@@ -253,7 +253,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = (CatVarietyData[CountryId].Contents.ContainsKey(id))
             ? CatVarietyData[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
     
@@ -261,7 +261,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = CatInformationData[CountryId].Contents.ContainsKey(id)
             ? CatInformationData[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
 
@@ -269,7 +269,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = (PersonalityData[CountryId].Contents.ContainsKey(id))
             ? PersonalityData[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
 
@@ -277,7 +277,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = (TraitData[CountryId].Contents.ContainsKey(id))
             ? TraitData[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
 
@@ -287,7 +287,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = UnlockHead[CountryId].Contents.ContainsKey(id)
             ? UnlockHead[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
     
@@ -301,7 +301,7 @@ public class StringFactory : SerializedMonoBehaviour
         {
             result = (DiaryTitle_A[CountryId].Contents.ContainsKey(id))
                 ? DiaryTitle_A[CountryId].Contents[id]
-                : "要叫阿邦上";
+                : id;
             return result;
         }
 
@@ -309,7 +309,7 @@ public class StringFactory : SerializedMonoBehaviour
         {
             result = (DiaryTitle_B[CountryId].Contents.ContainsKey(id))
                 ? DiaryTitle_B[CountryId].Contents[id]
-                : "要叫阿邦上";
+                : id;
             return result;
         }
 
@@ -317,7 +317,7 @@ public class StringFactory : SerializedMonoBehaviour
         {
             result = (DiaryTitle_C[CountryId].Contents.ContainsKey(id))
                 ? DiaryTitle_C[CountryId].Contents[id]
-                : "要叫阿邦上";
+                : id;
             return result;
         }
 
@@ -325,13 +325,13 @@ public class StringFactory : SerializedMonoBehaviour
         {
             result = (DiaryTitle_D[CountryId].Contents.ContainsKey(id))
                 ? DiaryTitle_D[CountryId].Contents[id]
-                : "要叫阿邦上";
+                : id;
             return result;
         }
 
         result = (DiaryTitle_E[CountryId].Contents.ContainsKey(id))
             ? DiaryTitle_E[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
 
@@ -343,7 +343,7 @@ public class StringFactory : SerializedMonoBehaviour
         {
             result = (DiaryContent_A[CountryId].Contents.ContainsKey(id))
                 ? DiaryContent_A[CountryId].Contents[id]
-                : "要叫阿邦上";
+                : id;
             return result;
         }
 
@@ -351,7 +351,7 @@ public class StringFactory : SerializedMonoBehaviour
         {
             result = (DiaryContent_B[CountryId].Contents.ContainsKey(id))
                 ? DiaryContent_B[CountryId].Contents[id]
-                : "要叫阿邦上";
+                : id;
             return result;
         }
 
@@ -359,7 +359,7 @@ public class StringFactory : SerializedMonoBehaviour
         {
             result = (DiaryContent_C[CountryId].Contents.ContainsKey(id))
                 ? DiaryContent_C[CountryId].Contents[id]
-                : "要叫阿邦上";
+                : id;
             return result;
         }
 
@@ -367,13 +367,13 @@ public class StringFactory : SerializedMonoBehaviour
         {
             result = (DiaryContent_D[CountryId].Contents.ContainsKey(id))
                 ? DiaryContent_D[CountryId].Contents[id]
-                : "要叫阿邦上";
+                : id;
             return result;
         }
 
         result = (DiaryContent_E[CountryId].Contents.ContainsKey(id))
             ? DiaryContent_E[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
     
@@ -383,7 +383,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = GameString[CountryId].Contents.ContainsKey(id)
             ? GameString[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
     
@@ -391,7 +391,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = PediaTitle[CountryId].Contents.ContainsKey(id)
             ? PediaTitle[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
     
@@ -399,7 +399,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = PediaContent[CountryId].Contents.ContainsKey(id)
             ? PediaContent[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
 
@@ -418,7 +418,7 @@ public class StringFactory : SerializedMonoBehaviour
         string id = CatExtension.GetCatAgeLevel(surviveDays).ToString();
         string result = ageLevelStringDatas[CountryId].Contents.ContainsKey(id)
             ? ageLevelStringDatas[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
 
@@ -426,7 +426,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = MapNameData[CountryId].Contents.ContainsKey(id)
             ? MapNameData[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
 
@@ -434,7 +434,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = MapContentData[CountryId].Contents.ContainsKey(id)
             ? MapContentData[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
 
@@ -442,7 +442,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = sickName[CountryId].Contents.ContainsKey(id)
             ? sickName[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
     
@@ -450,7 +450,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = sickInfo[CountryId].Contents.ContainsKey(id)
             ? sickInfo[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
 
@@ -458,7 +458,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = CatchCatHints[CountryId].Contents.ContainsKey(id)
             ? CatchCatHints[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
 
@@ -466,7 +466,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = MallItemName[CountryId].Contents.ContainsKey(id)
             ? MallItemName[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
 
@@ -474,7 +474,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = HospitalFunctionName[CountryId].Contents.ContainsKey(id)
             ? HospitalFunctionName[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
     
@@ -482,7 +482,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = HospitalFunctionInfo[CountryId].Contents.ContainsKey(id)
             ? HospitalFunctionInfo[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
     
@@ -490,7 +490,7 @@ public class StringFactory : SerializedMonoBehaviour
     {
         string result = mailFromDevContent[CountryId].Contents.ContainsKey(id)
             ? mailFromDevContent[CountryId].Contents[id]
-            : "要叫阿邦上";
+            : id;
         return result;
     }
 }

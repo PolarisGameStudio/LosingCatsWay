@@ -98,7 +98,7 @@ public class Drop_Cultive : MvcBehaviour, IDropHandler
                 }
 
                 // 不喜歡的湯
-                if (item.waterType != WaterType.Water && cat.cloudCatData.CatSurviveData.LikeSoupIndex != (int)item.waterType)
+                if (item.waterType != WaterType.Water && cat.cloudCatData.CatSurviveData.HateSoupIndex == (int)item.waterType)
                 {
                     App.controller.cultive.Reject();
                     return;

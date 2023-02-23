@@ -305,7 +305,7 @@ public class Controller_Build : ControllerBehavior
         MyGridSystem myGridSystem = App.system.grid;
         int centerX = myGridSystem.width / 2;
         int centerY = myGridSystem.height / 2;
-
+        
         if (room.x == centerX && room.y == centerY)
             return true;
 

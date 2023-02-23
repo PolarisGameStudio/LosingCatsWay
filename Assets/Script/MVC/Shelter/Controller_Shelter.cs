@@ -241,7 +241,7 @@ public class Controller_Shelter : ControllerBehavior
             Cat cat = App.system.cat.CreateCatObject(cloudCatData);
 
             cat.GetHateSnack();
-            cat.GetLikeSoup();
+            cat.GetHateSoup();
 
             cloudCatData.CatData.Owner = App.system.player.PlayerId;
 

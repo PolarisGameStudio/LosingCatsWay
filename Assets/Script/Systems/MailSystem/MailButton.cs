@@ -49,7 +49,7 @@ public class MailButton : MvcBehaviour
         titleText1.text = title;
         dateText1.text = mailData.StartTime.ToDateTime().ToShortDateString();
         
-        expiredText1.text = (mailData.EndTime.ToDateTime() - Timestamp.GetCurrentTimestamp().ToDateTime()).Days + "天後到期";
+        expiredText1.text = (mailData.EndTime.ToDateTime() - Timestamp.GetCurrentTimestamp().ToDateTime()).Days.ToString();
         
         titleText2.text = titleText1.text;
         dateText2.text = dateText1.text;

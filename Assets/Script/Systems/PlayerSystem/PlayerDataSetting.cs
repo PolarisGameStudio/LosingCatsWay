@@ -4,15 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Random = UnityEngine.Random;
 
 [CreateAssetMenu(fileName = "PlayerDataSetting", menuName = "Factory/Create PlayerDataSetting")]
 public class PlayerDataSetting : SerializedScriptableObject
 {
-    [SerializeField] private int BigGameExp;
     public int LittleGameExp;
     public int CatchCatExp;
     public int CatchCatCoin;
-    [SerializeField] private Dictionary<int, int> BigGameCoinsByLevel = new Dictionary<int, int>();
 
     //下次升級經驗
     public int GetNextLevelUpExp(int level)
@@ -38,8 +37,7 @@ public class PlayerDataSetting : SerializedScriptableObject
     ///遊戲剩餘愛心換金幣 全額
     public int GetBigGameCoinsByChance(int level, int chance)
     {
-        MathfExtension.GetNumberRangeByTen(level, out int start, out int end);
-        int total = BigGameCoinsByLevel.ContainsKey(end) ? BigGameCoinsByLevel[end] : BigGameCoinsByLevel.Values.Last();
+        int total = GetBigGameCoinsByLevel(level);
         
         int result;
         switch (chance)
@@ -60,28 +58,51 @@ public class PlayerDataSetting : SerializedScriptableObject
         
         return result;
     }
+    
+    private int GetBigGameCoinsByLevel(int level)
+    {
+        if (level <= 10)
+            return 250;
+        if (level <= 20)
+            return 300;
+        if (level <= 30)
+            return 400;
+        if (level <= 40)
+            return 500;
+        if (level <= 50)
+            return 550;
+        if (level <= 60)
+            return 650;
+        if (level <= 70)
+            return 750;
+        if (level <= 80)
+            return 800;
+        if (level <= 90)
+            return 900;
+        return 1000;
+    }
 
     public int GetLittleGameCoinsByLevel(int level)
     {
-        if (level < 10)
-            return 30;
-        if (level < 20)
-            return 54;
-        if (level < 30)
-            return 78;
-        if (level < 40)
-            return 102;
-        if (level < 50)
-            return 120;
-        if (level < 60)
-            return 138;
-        if (level < 70)
-            return 156;
-        if (level < 80)
-            return 168;
-        if (level < 90)
-            return 180;
-        return 186;
+        if (level <= 10)
+            return Random.Range(50, 60);
+        if (level <= 20)
+            return Random.Range(60, 80);
+        if (level <= 30)
+            return Random.Range(80, 100);
+        if (level <= 40)
+            return Random.Range(100, 110);
+        if (level <= 50)
+            return Random.Range(110, 130);
+        if (level <= 60)
+            return Random.Range(130, 150);
+        if (level <= 70)
+            return Random.Range(150, 160);
+        if (level <= 80)
+            return Random.Range(160, 180);
+        if (level <= 90)
+            return Random.Range(180, 200);
+        return 200;
     }
 
     public int GetCatSlotByLevel(int level)
@@ -94,5 +115,11 @@ public class PlayerDataSetting : SerializedScriptableObject
         if (level < 70) return 6;
         if (level < 85) return 7;
         return 8;
+    }
+
+    [Button]
+    private void Test(int level)
+    {
+        Debug.Log($"下一個等級的經驗：{GetNextLevelUpExp(level)}");
     }
 }

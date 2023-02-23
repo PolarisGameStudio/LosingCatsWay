@@ -232,8 +232,8 @@ public class Controller_Lobby : ControllerBehavior
         DateTime nowTime = App.system.myTime.MyTimeNow;
         DateTime lastOpenLobbyTime = App.model.lobby.LastOpenLobbyTime;
 
-        if (nowTime.Year > lastOpenLobbyTime.Year || nowTime.Month > lastOpenLobbyTime.Month ||
-            nowTime.Day > lastOpenLobbyTime.Day)
+        if (nowTime.Year != lastOpenLobbyTime.Year || nowTime.Month != lastOpenLobbyTime.Month ||
+            nowTime.Day != lastOpenLobbyTime.Day)
         {
             print("進行刷新");
             App.SaveData();

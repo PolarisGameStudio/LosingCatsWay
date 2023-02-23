@@ -401,6 +401,7 @@ public class CatSkin : MvcBehaviour
         Skeleton catSkeleton = GetCatSkeleton();
 
         var catSickId = cloudCatData.CatHealthData.SickId;
+        catSkeleton.SetAttachment(ringworm_1, null);
         if (!string.IsNullOrEmpty(catSickId) || cloudCatData.CatHealthData.IsBug)
         {
             CloseEye();
@@ -422,7 +423,8 @@ public class CatSkin : MvcBehaviour
 
     private void SetCatBodyScale(CloudCatData cloudCatData)
     {
-        var newBodyScale = startScale * cloudCatData.CatData.BodyScale;
+        Vector3 newBodyScale = startScale * cloudCatData.CatData.BodyScale;
+        newBodyScale.z = 1;
         transform.localScale = newBodyScale;
 
         if (!isGUI)

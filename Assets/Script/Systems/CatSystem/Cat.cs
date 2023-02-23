@@ -287,7 +287,7 @@ public class Cat : MvcBehaviour
         if (cloudCatData.CatHealthData.IsBug)
             return;
         
-        if (DrawGameTimer < 30)
+        if (DrawGameTimer < 60)
         {
             DrawGameTimer++;
             return;
@@ -554,7 +554,7 @@ public class Cat : MvcBehaviour
             return;
 
         //檢查長蟲
-        if (Random.value <= 0.15f)
+        if (Random.value <= 0.1f)
         {
             cloudCatData.CatHealthData.IsBug = true;
             ChangeSkin();
@@ -569,6 +569,8 @@ public class Cat : MvcBehaviour
         // 造型給我還回來
         if (!cloudCatData.CatSkinData.UseSkinId.IsNullOrEmpty())
             App.factory.itemFactory.GetItem(cloudCatData.CatSkinData.UseSkinId).Count += 1;
+        
+        App.SaveData();
 
         cloudCatData.CatData.DeathTime = Timestamp.GetCurrentTimestamp();
         cloudCatData.CatDiaryData.DiaryDatas = App.factory.diaryFactory.GetDiaryDatas(cloudCatData); // todo 病死
@@ -597,34 +599,23 @@ public class Cat : MvcBehaviour
             GetHateSnack();
     }
 
-    public void GetLikeSoup()
+    public void GetHateSoup()
     {
-        cloudCatData.CatSurviveData.LikeSoupIndex = Random.Range(1, 4);
-        SaveLikeSoupIndex();
+        cloudCatData.CatSurviveData.HateSoupIndex = Random.Range(1, 4);
+        SaveHateSoupIndex();
     }
 
-    private void SaveLikeSoupIndex()
+    private void SaveHateSoupIndex()
     {
-        PlayerPrefs.SetInt($"{cloudCatData.CatData.CatId}_LikeSoupIndex", cloudCatData.CatSurviveData.LikeSoupIndex);
+        PlayerPrefs.SetInt($"{cloudCatData.CatData.CatId}_HateSoupIndex", cloudCatData.CatSurviveData.HateSoupIndex);
     }
 
     private void LoadLikeSoupIndex()
     {
-        cloudCatData.CatSurviveData.LikeSoupIndex =
-            PlayerPrefs.GetInt($"{cloudCatData.CatData.CatId}_LikeSoupIndex", -1);
-        if (cloudCatData.CatSurviveData.LikeSoupIndex == -1)
-            GetLikeSoup();
-    }
-
-    #endregion
-
-    #region Debug
-    
-    [Button]
-    private void DebugPrint()
-    {
-        print($"LikeSnack: {cloudCatData.CatSurviveData.HateSnackIndex}");
-        print($"LikeSoup:{cloudCatData.CatSurviveData.LikeSoupIndex}");
+        cloudCatData.CatSurviveData.HateSoupIndex =
+            PlayerPrefs.GetInt($"{cloudCatData.CatData.CatId}_HateSoupIndex", -1);
+        if (cloudCatData.CatSurviveData.HateSoupIndex == -1)
+            GetHateSoup();
     }
 
     #endregion

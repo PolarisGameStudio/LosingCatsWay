@@ -151,12 +151,6 @@ public enum ItemLitterType //喜歡討厭
     Wood = 2,
 }
 
-public enum ItemRoomType
-{
-    Normal = 0,
-    Fund = 1,
-}
-
 public enum RoomSizeType
 {
     One_One = 0,

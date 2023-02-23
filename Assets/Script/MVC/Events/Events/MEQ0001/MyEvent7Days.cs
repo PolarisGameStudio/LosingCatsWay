@@ -49,6 +49,7 @@ public class MyEvent7Days : MyEvent
 
             App.system.reward.Open(Rewards[receivedStatus]);
             masks[receivedStatus].SetActive(true);
+            uiParticles[receivedStatus].gameObject.SetActive(false);
         }
     }
 }

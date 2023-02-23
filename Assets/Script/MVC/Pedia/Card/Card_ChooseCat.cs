@@ -8,6 +8,8 @@ public class Card_ChooseCat : MvcBehaviour
     public CatSkin catSkin;
     public GameObject lockMask;
     public TextMeshProUGUI remainLigationText;
+    [SerializeField] private GameObject isUnlockEffect;
+    public GameObject clickUnlockEffect;
 
     public void SetData(string variety)
     {
@@ -17,6 +19,8 @@ public class Card_ChooseCat : MvcBehaviour
         int level = App.system.quest.KnowledgeCardStatus[variety];
         int count = App.system.quest.KnowledgeCardData[variety];
 
+        clickUnlockEffect.SetActive(false);
+
         if (count >= 10)
             catSkin.PlayAnimation();
         else
@@ -25,6 +29,7 @@ public class Card_ChooseCat : MvcBehaviour
         if (level > 0)
         {
             lockMask.SetActive(false);
+            isUnlockEffect.SetActive(false);
         }
         else
         {
@@ -32,6 +37,8 @@ public class Card_ChooseCat : MvcBehaviour
 
             int needCount = 1;
             remainLigationText.text = Math.Clamp(needCount - count, 0, 1).ToString();
+            
+            isUnlockEffect.SetActive(needCount - count <= 0);
         }
     }
 
@@ -44,6 +51,8 @@ public class Card_ChooseCat : MvcBehaviour
     public void Unlock()
     {
         int index = transform.GetSiblingIndex();
-        App.controller.pedia.UnlockPediaCat(index);
+        if (!App.controller.pedia.UnlockPediaCat(index))
+            return;
+        clickUnlockEffect.SetActive(true);
     }
 }

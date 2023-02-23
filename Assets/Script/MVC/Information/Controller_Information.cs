@@ -267,7 +267,6 @@ public class Controller_Information : ControllerBehavior
         App.system.soundEffect.Play("Button");
         
         int index = App.model.information.SelectedSkinIndex;
-        var cat = App.model.information.SelectedCat;
 
         isRecordSkin = false;
         
@@ -285,6 +284,7 @@ public class Controller_Information : ControllerBehavior
             // 脫
             OpenChooseSkin();
             App.system.cat.RefreshCatSkin();
+            App.SaveData();
             return;
         }
 
@@ -292,6 +292,7 @@ public class Controller_Information : ControllerBehavior
         skinItem.Count--;
         OpenChooseSkin();
         App.system.cat.RefreshCatSkin();
+        App.SaveData();
     }
 
     private void SpineSetSkinHappy()

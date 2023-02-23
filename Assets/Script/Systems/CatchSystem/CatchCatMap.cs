@@ -568,8 +568,8 @@ public class CatchCatMap : MvcBehaviour
             {
                 if (hp <= 51)
                 {
-                    exp = App.system.player.playerDataSetting.CatchCatExp;
-                    money = App.system.player.playerDataSetting.CatchCatCoin;
+                    exp = App.system.player.playerDataSetting.CatchCatExp / 2;
+                    money = App.system.player.playerDataSetting.CatchCatCoin / 2;
                 }
 
                 App.system.settle.Active(gameName, cloudCatData, exp, money, 0, 0, null, () =>

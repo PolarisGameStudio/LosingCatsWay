@@ -42,6 +42,8 @@ public class RewardSystem : MvcBehaviour
         if (setData)
             SetDatas(rewards);
 
+        App.SaveData();
+        
         isAnimationEnd = false;
 
         for (int i = 0; i < content.childCount; i++)

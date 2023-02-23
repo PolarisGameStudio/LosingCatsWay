@@ -76,6 +76,7 @@ public class PlayerRenameSystem : MvcBehaviour
             App.system.player.PlayerName = inputField.text;
             if (!isFreeRename)
                 renameItem.Count -= 1;
+            App.SaveData();
             OnRenameComplete?.Invoke();
         }, uIView.Show);
     }

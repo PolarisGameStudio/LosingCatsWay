@@ -20,8 +20,7 @@ public class UnlockGridSystem : MvcBehaviour
 
     public void Init()
     {
-        if (IsCanUnlock())
-            print("開特效");
+        RefreshEffect();
     }
 
     public void Active()
@@ -46,7 +45,7 @@ public class UnlockGridSystem : MvcBehaviour
         uiView.Show();
     }
 
-    public async void Confirm()
+    public void Confirm()
     {
         int gridLevel = App.system.player.GridSizeLevel;
 
@@ -72,8 +71,7 @@ public class UnlockGridSystem : MvcBehaviour
 
         App.system.player.GridSizeLevel++;
 
-        App.system.cloudSave.SaveCloudSaveData();
-        App.system.cloudSave.SaveCloudCatDatas();
+        App.SaveData();
 
         App.system.transition.OnlyOpen(() =>
         {
@@ -103,5 +101,14 @@ public class UnlockGridSystem : MvcBehaviour
     private void Close()
     {
         uiView.InstantHide();
+    }
+
+    public void RefreshEffect()
+    {
+        if (!IsCanUnlock())
+            return;
+        List<OutSideSensor> sensors = App.system.grid.OutSideSensors;
+        for (int i = 0; i < sensors.Count; i++)
+            sensors[i].effect.SetActive(true);
     }
 }

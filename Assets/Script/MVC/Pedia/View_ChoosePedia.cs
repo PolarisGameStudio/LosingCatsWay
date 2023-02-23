@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class View_ChoosePedia : ViewBehaviour
 {
-    [SerializeField] private Card_ChoosePedia[] cards;
+    public Card_ChoosePedia[] cards;
     
     public override void Init()
     {

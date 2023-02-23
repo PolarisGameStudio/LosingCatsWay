@@ -52,7 +52,10 @@ public class CatSystem : MvcBehaviour
             if (myCats[i].cloudCatData.CatHealthData.IsDead)
             {
                 if (i == 0)
+                {
                     App.model.entrance.DeadCat = myCats[i];
+                    App.SaveData();
+                }
                 await SetDead(myCats[i]);
             }
 

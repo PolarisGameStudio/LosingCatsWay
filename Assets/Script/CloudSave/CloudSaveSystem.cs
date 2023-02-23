@@ -33,6 +33,15 @@ public class CloudSaveSystem : MvcBehaviour
         DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
         await docRef.UpdateAsync(saveData);
     }
+    
+    public void SaveCloudSaveDataSync()
+    {
+        Dictionary<string, object> saveData = new PlayerDataHelper(App).GetSaveData();
+
+        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+        DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
+        docRef.UpdateAsync(saveData);
+    }
 
     #endregion
 
@@ -58,6 +67,33 @@ public class CloudSaveSystem : MvcBehaviour
         try
         {
             await batch.CommitAsync();
+        }
+        catch (Exception e)
+        {
+            print("An error occurred while updating cat data: " + e.Message);
+        }
+    }
+    
+    public void SaveCloudCatDatasSync()
+    {
+        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+        WriteBatch batch = db.StartBatch();
+        
+        var cats = App.system.cat.GetCats();
+        CatDataHelper catDataHelper = new CatDataHelper();
+
+        foreach (var cat in cats)
+        {
+            string catId = cat.cloudCatData.CatData.CatId;
+            Dictionary<string, object> updates = catDataHelper.GetUpdate(cat.cloudCatData);
+            DocumentReference docRef = db.Collection("Cats").Document(catId);
+            batch.Set(docRef, updates, SetOptions.MergeAll);
+        }
+        
+        // Wait for all tasks to complete
+        try
+        {
+            batch.CommitAsync();
         }
         catch (Exception e)
         {

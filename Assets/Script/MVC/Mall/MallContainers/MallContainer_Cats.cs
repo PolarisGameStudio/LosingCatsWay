@@ -40,6 +40,7 @@ public class MallContainer_Cats : MallContainer
         // item.Count -= 300; // reduceDiamond
         CloudCatData cloudCatData = await CreateCat();
         Refresh();
+        App.SaveData();
 
         buyCatSubView.Open(cloudCatData);
         
@@ -63,6 +64,7 @@ public class MallContainer_Cats : MallContainer
         item.Count--;
         CloudCatData cloudCatData = await CreateCat();
         Refresh();
+        App.SaveData();
 
         buyCatSubView.Open(cloudCatData);
         

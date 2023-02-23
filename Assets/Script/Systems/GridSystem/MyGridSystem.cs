@@ -32,6 +32,8 @@ public class MyGridSystem : MvcBehaviour
     private SpriteRenderer[,] buildGridArray;
 
     private List<GameObject> objectPool_Floor = new List<GameObject>();
+    private List<GameObject> myOutsides;
+    public List<OutSideSensor> OutSideSensors;
 
     public void Init()
     {
@@ -40,7 +42,12 @@ public class MyGridSystem : MvcBehaviour
 
         CreateFloor();
         SetCameraToOrigin();
+
+        myOutsides = new List<GameObject>();
         CreateOutSide();
+
+        OutSideSensors = new List<OutSideSensor>();
+        GetOutsideSensors();
         
         SetCatHouseEffectPosition();
     }
@@ -412,6 +419,11 @@ public class MyGridSystem : MvcBehaviour
 
         GameObject right = Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.CenterRight), viewMap);
         right.transform.position = GetWorldPosition(width, height / 2);
+
+        myOutsides.Add(up);
+        myOutsides.Add(down);
+        myOutsides.Add(left);
+        myOutsides.Add(right);
     }
 
     private void CreateOutSideCorner()
@@ -422,51 +434,63 @@ public class MyGridSystem : MvcBehaviour
 
         GameObject upRight1 = Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.UpRight1), viewMap);
         upRight1.transform.position = GetWorldPosition(width, height);
+        myOutsides.Add(upRight1);
 
         GameObject upRight2 = Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.UpRight2), viewMap);
         upRight2.transform.position = GetWorldPosition(width - 2, height);
+        myOutsides.Add(upRight2);
 
         GameObject upRight3 = Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.UpRight3), viewMap);
         upRight3.transform.position = GetWorldPosition(width, height - 2);
+        myOutsides.Add(upRight3);
 
         // UpLeft
 
         GameObject upLeft1 = Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.UpLeft1), viewMap);
         upLeft1.transform.position = GetWorldPosition(-2, height);
+        myOutsides.Add(upLeft1);
 
         GameObject upLeft2 = Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.UpLeft2), viewMap);
         upLeft2.transform.position = GetWorldPosition(0, height);
+        myOutsides.Add(upLeft2);
 
         GameObject upLeft3 = Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.UpLeft3), viewMap);
         upLeft3.transform.position = GetWorldPosition(-2, height - 2);
+        myOutsides.Add(upLeft3);
 
         // DownRight
 
         GameObject downRight1 =
             Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.DownRight1), viewMap);
         downRight1.transform.position = GetWorldPosition(width, -2);
+        myOutsides.Add(downRight1);
 
         GameObject downRight2 =
             Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.DownRight2), viewMap);
         downRight2.transform.position = GetWorldPosition(width - 2, -2);
+        myOutsides.Add(downRight2);
 
         GameObject downRight3 =
             Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.DownRight3), viewMap);
         downRight3.transform.position = GetWorldPosition(width, 0);
+        myOutsides.Add(downRight3);
 
         // DownLeft
 
         GameObject downLeft1 =
             Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.DownLeft1), viewMap);
         downLeft1.transform.position = GetWorldPosition(-2, -2);
+        myOutsides.Add(downLeft1);
 
         GameObject downLeft2 =
             Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.DownLeft2), viewMap);
         downLeft2.transform.position = GetWorldPosition(0, -2);
+        myOutsides.Add(downLeft2);
 
         GameObject downLeft3 =
             Instantiate(factory.GetOutside(FloorContainer.OutsideEnum.DownLeft3), viewMap);
         downLeft3.transform.position = GetWorldPosition(-2, 0);
+        myOutsides.Add(downLeft3);
     }
 
     private void CreateOutSideWall()
@@ -481,8 +505,6 @@ public class MyGridSystem : MvcBehaviour
 
         var upWall = factory.GetOutside(FloorContainer.OutsideEnum.FloorUp);
         var downWall = factory.GetOutside(FloorContainer.OutsideEnum.FloorDown);
-        // var leftWall = factory.outSides[FloorContainer.OutsideEnum.FloorLeft];
-        // var rightWall = factory.outSides[FloorContainer.OutsideEnum.FloorRight];
 
         for (int i = center - x + 2; i <= center + x - 2; i++)
         {
@@ -494,6 +516,9 @@ public class MyGridSystem : MvcBehaviour
 
             GameObject down = Instantiate(downWall, viewMap);
             down.transform.position = GetWorldPosition(i, center - y - 2);
+            
+            myOutsides.Add(up);
+            myOutsides.Add(down);
         }
 
         for (int i = center - y + 2; i <= center + y - 2; i++)
@@ -508,6 +533,9 @@ public class MyGridSystem : MvcBehaviour
             GameObject randomRight = factory.outSides_Right.GetRandom();
             GameObject right = Instantiate(randomRight, viewMap);
             right.transform.position = GetWorldPosition(width, i);
+            
+            myOutsides.Add(left);
+            myOutsides.Add(right);
         }
     }
 
@@ -570,5 +598,15 @@ public class MyGridSystem : MvcBehaviour
         float x = 0 - cellSize * 2;
         float y = height / 2 * cellSize + cellSize / 2;
         catHouseEffect.position = new Vector3(x, y, -0.5f);
+    }
+
+    private void GetOutsideSensors()
+    {
+        for (int i = 0; i < myOutsides.Count; i++)
+        {
+            OutSideSensor tmp = myOutsides[i].GetComponent<OutSideSensor>();
+            if (tmp != null)
+                OutSideSensors.Add(tmp);
+        }
     }
 }

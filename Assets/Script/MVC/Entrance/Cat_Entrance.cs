@@ -121,7 +121,7 @@ public class Cat_Entrance : MvcBehaviour
         Spine.Animation anim = catSkin.skeletonGraphic.SkeletonData.FindAnimation("Situation_Cat/Die");
         //播放動畫
         catSkin.skeletonGraphic.AnimationState.SetAnimation(0, anim, false);
-        DOVirtual.DelayedCall(4.3f, ShowDiaryButton);
+        DOVirtual.DelayedCall(6f, ShowDiaryButton);
         DOVirtual.DelayedCall(10f, App.controller.entrance.CloseDeadEffect);
     }
 

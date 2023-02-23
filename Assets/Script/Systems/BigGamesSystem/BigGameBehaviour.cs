@@ -127,6 +127,12 @@ public class BigGameBehaviour : MvcBehaviour
         var reward = new Reward(App.factory.itemFactory.GetItem("KLC0001"), 1);
         _rewards.Add(reward);
         
+        // 加數量
+        reward.item.Count += reward.count;
+        PlayerPrefs.SetInt("BagRedPoint" + 6, 1);
+        
+        App.controller.bag.RefreshReds();
+        
         PlayerPrefs.SetInt("KnowledgeCard", knowledgeCard);
     }
 
@@ -144,6 +150,12 @@ public class BigGameBehaviour : MvcBehaviour
         string id = "ISK0000" + Random.Range(1, 4);
         var reward = new Reward(App.factory.itemFactory.GetItem(id), 3);
         _rewards.Add(reward);
+
+        // 加數量
+        reward.item.Count += reward.count;
+        PlayerPrefs.SetInt("BagRedPoint" + 1, 1);
+        
+        App.controller.bag.RefreshReds();
     }
     
     private void GameEndAction()

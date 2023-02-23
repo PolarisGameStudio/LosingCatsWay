@@ -132,7 +132,7 @@ public class TnrSystem : MvcBehaviour
 
                 Cat cat = App.system.cat.CreateCatObject(cloudCatData);
                 cat.GetHateSnack();
-                cat.GetLikeSoup();
+                cat.GetHateSoup();
                 
                 App.system.cloudSave.SaveCloudCatData(cloudCatData);
 
@@ -184,7 +184,7 @@ public class TnrSystem : MvcBehaviour
         //Close();
         App.system.confirm.Active(ConfirmTable.Hints_Ligation, () =>
         {
-            if (!App.system.player.ReduceMoney(200))
+            if (!App.system.player.ReduceMoney(400))
             {
                 DOVirtual.DelayedCall(0.1f,
                     () => App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NoMoney));

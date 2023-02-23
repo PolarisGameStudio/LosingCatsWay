@@ -23,8 +23,7 @@ public class OpenFlowSystem : MvcBehaviour
         openFlowActions.Add(action);
     }
 
-    [Button]
-    public void StartAction()
+    private void StartAction()
     {
         flowIndex = 0;
         isEnd = false;

@@ -67,13 +67,6 @@ public class Item : ScriptableObject
 
     #endregion
 
-    #region Room
-
-    [ShowIf("itemType", ItemType.Room)] [EnumPaging]
-    public ItemRoomType itemRoomType;
-
-    #endregion
-
     [Space(10)] public int price;
 
     [InlineEditor(InlineEditorModes.GUIAndPreview)] public Sprite icon;
@@ -89,6 +82,10 @@ public class Item : ScriptableObject
 
     [ShowIf("@itemBoughtType == ItemBoughtType.Cash")]
     public string purchaseKey;
+
+    public bool isFund;
+    [ShowIf("@isFund == true")]
+    public Item fundKeyItem;
     
     #region Properties
 
@@ -186,29 +183,15 @@ public class Item : ScriptableObject
     {
         get
         {
+            if (isFund && fundKeyItem.Count > 0)
+                return true;
             if (app.model.mall.PurchaseRecords.ContainsKey(purchaseKey))
                 return true;
             if (unlockLevel > 0 && app.system.player.Level >= unlockLevel)
-                return true;
-            if (itemType == ItemType.Room && itemRoomType == ItemRoomType.Fund && CheckHasFundItem())
                 return true;
             return false;
         }
     }
 
     #endregion
-
-    // todo 確認SYB0001是不是就擁有所有募資房間
-    private bool CheckHasFundItem()
-    {
-        if (app.factory.itemFactory.GetItem("SYB0001").Count > 0)
-            return true;
-        if (app.factory.itemFactory.GetItem("SYB0002").Count > 0)
-            return true;
-        if (app.factory.itemFactory.GetItem("SYB0003").Count > 0)
-            return true;
-        if (app.factory.itemFactory.GetItem("SYB0004").Count > 0)
-            return true;
-        return false;
-    }
 }

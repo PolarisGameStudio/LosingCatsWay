@@ -227,6 +227,7 @@ public class Controller_Bag : ControllerBehavior
                 item.Count--;
                 ChooseType(0);
                 ChooseType(6);
+                App.SaveData();
             };
         }
         
@@ -245,6 +246,7 @@ public class Controller_Bag : ControllerBehavior
                 ChooseType(6);
                 
                 App.system.cat.CheckAngelCat();
+                App.SaveData();
             };
         }
     }

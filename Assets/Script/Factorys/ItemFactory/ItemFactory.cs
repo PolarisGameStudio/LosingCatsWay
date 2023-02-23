@@ -84,25 +84,11 @@ public class ItemFactory : SerializedMonoBehaviour
 
             if (item.itemType == ItemType.Unlock)
                 continue;
+            
+            if (item.isFund)
+                continue;
 
             result.Add(item);
-        }
-
-        return result;
-    }
-
-    // Get current level rewards from 0 to 10
-    public List<Reward[]> GetRewardsByTenLevel(int level)
-    {
-        List<Reward[]> result = new List<Reward[]>();
-        MathfExtension.GetNumberRangeByTen(level, out int startIndex, out int endIndex);
-
-        for (int i = startIndex; i <= endIndex; i++)
-        {
-            if (LevelRewards.ContainsKey(i))
-                result.Add(LevelRewards[i]);
-            else
-                result.Add(null);
         }
 
         return result;

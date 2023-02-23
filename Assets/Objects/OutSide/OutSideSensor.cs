@@ -7,6 +7,8 @@ using UnityEngine.Serialization;
 
 public class OutSideSensor : MvcBehaviour
 {
+    public GameObject effect;
+    
     public void OpenUnlockGrid()
     {
         if (SceneManager.GetActiveScene().name.Equals("FriendRoom"))

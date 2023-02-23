@@ -13,11 +13,9 @@ public class FloorContainer : SerializedScriptableObject
     [Title("Object", "Floor")] 
     public GameObject[] floorType1; 
     public GameObject[] floorType2; 
-    public GameObject[] floorType3; 
+    public GameObject[] floorType3;
 
-    [Title("Object","OutSide")]
-    public Dictionary<string, GameObject> outsides;
-
+    [Title("Object", "OutSide")]
     public GameObject[] outSides;
 
     public GameObject[] outSides_Left;
@@ -39,7 +37,7 @@ public class FloorContainer : SerializedScriptableObject
     {
         return outSides[(int)outsideEnum];
     }
-    
+
     public enum OutsideEnum
     {
         CenterUp,
@@ -62,13 +60,5 @@ public class FloorContainer : SerializedScriptableObject
         FloorDown,
         FloorLeft,
         FloorRight,
-    }
-
-    [Button]
-    private void DebugGet()
-    {
-        var tmp = outsides.ToList();
-        for (int i = 0; i < outsides.Count; i++)
-            outSides[i] = tmp[i].Value;
     }
 }

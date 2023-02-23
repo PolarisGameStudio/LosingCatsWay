@@ -11,6 +11,7 @@ public class View_Cloister : ViewBehaviour
     [SerializeField] private GameObject zeroPointFiveSelectObject;
     [SerializeField] private GameObject useFlowerButton;
     [SerializeField] private GameObject useFlowerMask;
+    public GameObject useFlowerEffect;
 
     public override void Open()
     {
@@ -81,6 +82,7 @@ public class View_Cloister : ViewBehaviour
         catFlower.gameObject.SetActive(true);
 
         useFlowerMask.SetActive(data.LosingCatStatus.Contains("Flower"));
+        useFlowerEffect.SetActive(false);
     }
     
     private void OnLosingCatDatasChange(object value)

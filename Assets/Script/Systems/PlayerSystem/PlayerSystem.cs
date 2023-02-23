@@ -299,7 +299,9 @@ public class PlayerSystem : SerializedMonoBehaviour
             Exp = nextExp;
             
             Level++;
+            App.SaveData();
             app.controller.lobby.SetLevelBuffer(Level);
+            app.system.unlockGrid.RefreshEffect();
             
             Exp = 0;
             Exp = end;

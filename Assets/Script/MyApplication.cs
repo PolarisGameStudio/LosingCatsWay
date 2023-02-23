@@ -111,6 +111,7 @@ public class MyApplication : MonoBehaviour
         await system.mail.Init();
         
         system.cat.CheckAngelCat();
+        system.unlockGrid.Init(); // 一定要在myGrid拿到sensor後
 
         int gridSizeLevel = system.player.GridSizeLevel;
 
@@ -124,36 +125,26 @@ public class MyApplication : MonoBehaviour
 
     private void OnApplicationFocus(bool focus)
     {
-        if (!_canSave)
-            return;
-        if (system.tutorial.isTutorial)
-            return;
         if (!focus)
-            SaveData();
+            SaveDataSync();
     }
 
     private void OnApplicationPause(bool pause)
     {
-        if (!_canSave)
-            return;
-        if (system.tutorial.isTutorial)
-            return;
         if (pause)
-            SaveData();
+            SaveDataSync();
     }
 
     private void OnApplicationQuit()
     {
-        if (!_canSave)
-            return;
-        if (system.tutorial.isTutorial)
-            return;
-        SaveData();
+        SaveDataSync();
     }
 
     public void SaveData()
     {
-        if (_isSaving)
+        if (!_canSave)
+            return;
+        if (system.tutorial.isTutorial)
             return;
         
         _isSaving = true;
@@ -163,6 +154,24 @@ public class MyApplication : MonoBehaviour
 
         system.cloudSave.SaveCloudSaveData();
         system.cloudSave.SaveCloudCatDatas();
+
+        _isSaving = false;
+    }
+
+    public void SaveDataSync()
+    {
+        if (!_canSave)
+            return;
+        if (system.tutorial.isTutorial)
+            return;
+        
+        _isSaving = true;
+        
+        controller.settings.SaveSettings();
+        system.myTime.SetDateTime();
+
+        system.cloudSave.SaveCloudSaveDataSync();
+        system.cloudSave.SaveCloudCatDatasSync();
 
         _isSaving = false;
     }

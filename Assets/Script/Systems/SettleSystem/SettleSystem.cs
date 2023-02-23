@@ -167,7 +167,7 @@ public class SettleSystem : MvcBehaviour
         getDiamondText.text = diamond.ToString();
 
         for (int i = 0; i < content.childCount; i++)
-            content.GetChild(i).transform.DOScale(Vector2.one, 0.2f).From(0).SetEase(Ease.OutBack).SetDelay(i * 0.1f);
+            content.GetChild(i).transform.DOScale(Vector2.one, 0.2f).From(0).SetEase(Ease.OutBack).SetDelay(i * 0.25f);
 
         DOVirtual.DelayedCall(1f, () => closeButton.SetActive(true));
     }

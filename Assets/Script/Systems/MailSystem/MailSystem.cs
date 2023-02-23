@@ -19,6 +19,7 @@ public class MailSystem : MvcBehaviour
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI contentText;
     public TextMeshProUGUI dateText;
+    [SerializeField] private TextMeshProUGUI expiredDayText;
     
     public MailRewardUI mailRewardUIObject;
     public Transform mailRewardContent;
@@ -102,6 +103,7 @@ public class MailSystem : MvcBehaviour
         titleText.text = mailData.Content[currentLanguageCode].Title;
         contentText.text = mailData.Content[currentLanguageCode].Content;
         dateText.text = mailData.StartTime.ToDateTime().ToShortDateString();
+        expiredDayText.text = (mailData.EndTime.ToDateTime() - Timestamp.GetCurrentTimestamp().ToDateTime()).Days.ToString();
 
         _rewards.Clear();
         

@@ -26,16 +26,16 @@ public class DailyQuest : Quest
         {
             int level = App.system.player.Level;
 
-            if (level <= 9)
+            if (level <= 10)
                 return 0;
 
-            if (level <= 39)
+            if (level <= 30)
                 return 1;
 
-            if (level <= 69)
+            if (level <= 50)
                 return 2;
 
-            if (level <= 84)
+            if (level <= 70)
                 return 3;
 
             return 4;

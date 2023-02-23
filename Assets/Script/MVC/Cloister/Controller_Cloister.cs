@@ -118,6 +118,7 @@ public class Controller_Cloister : ControllerBehavior
             App.model.cloister.SelectedLosingCatData = data;
             var datas = App.model.cloister.LosingCatDatas;
             App.model.cloister.LosingCatDatas = datas;
+            App.view.cloister.useFlowerEffect.SetActive(true);
         });
     }
 

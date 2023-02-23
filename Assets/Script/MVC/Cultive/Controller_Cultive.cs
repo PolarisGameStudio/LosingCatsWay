@@ -261,13 +261,13 @@ public class Controller_Cultive : ControllerBehavior
         float newMoisture = AddMoisture(moistureValue);
         float newFavourbility = AddFun(funValue);
 
-        if (lastSatiety < 90f && newSatiety >= 90f)
+        if (lastSatiety < 85f && newSatiety >= 85f)
             cat.cloudCatData.CatDiaryData.DiarySatietyScore++;
 
-        if (lastMoisture < 90f && newMoisture >= 90f)
+        if (lastMoisture < 85f && newMoisture >= 85f)
             cat.cloudCatData.CatDiaryData.DiaryMoistureScore++;
 
-        if (lastFavourbility < 90f && newFavourbility >= 90f)
+        if (lastFavourbility < 85f && newFavourbility >= 85f)
             cat.cloudCatData.CatDiaryData.DiaryFavourbilityScore++;
 
         if (!App.system.tutorial.isTutorial)
@@ -459,7 +459,7 @@ public class Controller_Cultive : ControllerBehavior
 
         App.model.cultive.NextCleanDateTime = App.model.cultive.NextCleanDateTime;
 
-        if (Random.value < 0.05f)
+        if (Random.value < 0.1f)
         {
             //Diamond
             App.system.player.AddDiamond(5);
@@ -468,7 +468,7 @@ public class Controller_Cultive : ControllerBehavior
             return;
         }
 
-        if (Random.value < 0.65f)
+        if (Random.value < 0.7f)
         {
             //Coin
             App.system.player.AddMoney(100);
@@ -572,7 +572,7 @@ public class Controller_Cultive : ControllerBehavior
         int hateIndex = App.model.cultive.SelectedCat.cloudCatData.CatSurviveData.HateLitterindex;
 
         if (usingIndex == likeIndex)
-            App.model.cultive.CleanLitterCount = 7;
+            App.model.cultive.CleanLitterCount = 10;
         else if (usingIndex == hateIndex)
             App.model.cultive.CleanLitterCount = 3;
         else
