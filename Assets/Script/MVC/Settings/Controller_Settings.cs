@@ -1,17 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using AppleAuth;
 using AppleAuth.Enums;
 using AppleAuth.Extensions;
 using AppleAuth.Interfaces;
 using AppleAuth.Native;
+using DG.Tweening;
 using Firebase.Auth;
 using Firebase.Firestore;
 using Google;
 using UnityEngine;
 using I2.Loc;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class Controller_Settings : ControllerBehavior
 {
@@ -160,31 +164,28 @@ public class Controller_Settings : ControllerBehavior
                 {
                     var identityToken = Encoding.UTF8.GetString(appleIdCredential.IdentityToken);
                     var authorizationCode = Encoding.UTF8.GetString(appleIdCredential.IdentityToken);
-
+                    
                     // And now you have all the information to create/login a user in your system
                     Firebase.Auth.Credential firebaseCredential =
                         Firebase.Auth.OAuthProvider.GetCredential("apple.com", identityToken, rawNonce, authorizationCode);
 
                     auth.CurrentUser.LinkWithCredentialAsync(firebaseCredential).ContinueWith(task =>
                     {
-                        if (task.IsCanceled)
+                        if (task.IsFaulted || task.IsCanceled)
                         {
+                            DOVirtual.DelayedCall(0.25f, () =>
+                            {
+                                App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
+                            });
                             return;
                         }
 
-                        if (task.IsFaulted)
-                        {
-                            return;
-                        }
-
-                        if (task.IsCompletedSuccessfully)
+                        DOVirtual.DelayedCall(0.25f, () =>
                         {
                             PlayerPrefs.DeleteKey("IsVisitor");
-                        }
+                            CheckLinkStatus();
+                        });
                     });
-                    
-                    //TODO 顯示
-                    CheckLinkStatus();
                 }
             },
             error =>
@@ -197,8 +198,10 @@ public class Controller_Settings : ControllerBehavior
 
     public async void LinkByGoogle()
     {
+        print("T1");
+        GoogleSignIn.DefaultInstance.SignOut();
+        
         Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
-
         var googleSignInResult = await GoogleSignIn.DefaultInstance.SignIn();
 
         if (googleSignInResult == null)
@@ -206,22 +209,27 @@ public class Controller_Settings : ControllerBehavior
             print("登入失敗");
             return;
         }
-
+        
         var credential = Firebase.Auth.GoogleAuthProvider.GetCredential(googleSignInResult.IdToken, null);
-        var result = auth.CurrentUser.LinkWithCredentialAsync(credential);
+        var result = auth.CurrentUser.LinkWithCredentialAsync(credential).ContinueWith(task => {
+            
+            if (task.IsFaulted || task.IsCanceled)
+            {
+                DOVirtual.DelayedCall(0.25f, () =>
+                {
+                    App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
+                });
+                return;
+            }
+            
+            DOVirtual.DelayedCall(0.25f, () =>
+            {
+                PlayerPrefs.DeleteKey("IsVisitor");
+                CheckLinkStatus();
+            });
+        });
 
-        if (result.IsCanceled)
-        {
-            return;
-        }
 
-        if (result.IsFaulted)
-        {
-            return;
-        }
-
-        PlayerPrefs.DeleteKey("IsVisitor");
-        CheckLinkStatus();
         //TODO 補上登入後
     }
 

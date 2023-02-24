@@ -186,6 +186,7 @@ public class Login : MyApplication
                         
                         if (task.IsCompletedSuccessfully)
                         {
+                            PlayerPrefs.DeleteKey("IsVisitor");
                             idText.text = $"UID: {auth.CurrentUser.UserId}";
                             system.post.Open();
                             loginView.InstantHide();
@@ -215,18 +216,12 @@ public class Login : MyApplication
         }
 
         var credential = Firebase.Auth.GoogleAuthProvider.GetCredential(googleSignInResult.IdToken, null);
-        var result = auth.SignInWithCredentialAsync(credential);
+        var result = await auth.SignInWithCredentialAsync(credential);
 
-        if (result.IsCanceled)
-        {
+        if (result == null)
             return;
-        }
 
-        if (result.IsFaulted)
-        {
-            return;
-        }
-        
+        PlayerPrefs.DeleteKey("IsVisitor");
 
         idText.text = $"UID: {auth.CurrentUser.UserId}";
         system.post.Open();
@@ -266,6 +261,11 @@ public class Login : MyApplication
             Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
             auth.SignOut();
 
+#if UNITY_ANDROID
+            GoogleSignIn.DefaultInstance.SignOut();
+#endif
+            
+            PlayerPrefs.DeleteKey("IsVisitor");
             startGameButton.SetActive(false);
             loginView.InstantShow();
             idText.text = $"UID: -";
