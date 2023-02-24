@@ -84,6 +84,10 @@ public class CatchCatMap : MvcBehaviour
 
         this.cloudCatData = cloudCatData;
         catSkin.ChangeSkin(cloudCatData);
+        
+        hateEffect.SetActive(false);
+        loveEffect.SetActive(false);
+        bigLoveEffect.SetActive(false);
 
         if (cloudCatData.CatData.SurviveDays <= 3)
             bubble.transform.localScale = new Vector2(2f, 2f);

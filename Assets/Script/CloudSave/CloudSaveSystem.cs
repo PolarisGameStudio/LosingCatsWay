@@ -143,15 +143,15 @@ public class CloudSaveSystem : MvcBehaviour
         return result;
     }
 
-    public async Task<CloudCatData> LoadCloudCatDataById(string catId)
-    {
-        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        var catsRef = db.Collection("Cats").Document(catId);
-        var result = await catsRef.GetSnapshotAsync();
-        if (!result.Exists)
-            return null;
-        return result.ConvertTo<CloudCatData>();
-    }
+    // public async Task<CloudCatData> LoadCloudCatDataById(string catId)
+    // {
+    //     FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+    //     var catsRef = db.Collection("Cats").Document(catId);
+    //     var result = await catsRef.GetSnapshotAsync();
+    //     if (!result.Exists)
+    //         return null;
+    //     return result.ConvertTo<CloudCatData>();
+    // }
 
     public async void DeleteCloudCatData(CloudCatData cloudCatData)
     {

@@ -17,7 +17,7 @@ public class MyGridSystem : MvcBehaviour
     public Transform viewMap;
     public Transform buildMap;
 
-    public int maxHomeParticle;
+    // public int maxHomeParticle;
 
     [Title("Build")]
     public GameObject buildTmp;
@@ -93,21 +93,27 @@ public class MyGridSystem : MvcBehaviour
         float x = width / 2 * cellSize + cellSize / 2;
         float y = height / 2 * cellSize + cellSize / 2;
 
+        int gridSizeLevel = App.system.player.GridSizeLevel;
+        int maxZoom = 10;
+        if (gridSizeLevel > 1)
+            maxZoom = 15;
+
         Camera cam = Camera.main;
 
         if (tween)
         {
             float zoom = cam.orthographicSize;
-            DOTween.To(() => zoom, x => zoom = x, 10, 0.5f).OnUpdate(() => { cam.orthographicSize = zoom; });
+            DOTween.To(() => zoom, x => zoom = x, maxZoom, 0.5f).OnUpdate(() => { cam.orthographicSize = zoom; });
         }
         else
         {
             cam.transform.position = new Vector3(x, y, -0.5f);
-            cam.orthographicSize = 10;
+            cam.orthographicSize = maxZoom;
         }
-
+        
         LeanPinchCamera pinch = cam.GetComponent<LeanPinchCamera>();
-        if (pinch != null) pinch.Zoom = 10;
+        if (pinch != null) 
+            pinch.Zoom = maxZoom;
     }
 
     public Vector3 GetWorldPosition(int x, int y)
@@ -322,41 +328,41 @@ public class MyGridSystem : MvcBehaviour
     #endregion
 
     #region Particle
+    //
+    // IEnumerator RefreshHomeParticle()
+    // {
+    //     while (true)
+    //     {
+    //         yield return new WaitForSecondsRealtime(10f);
+    //         SetHomeParticle();
+    //     }
+    // }
 
-    IEnumerator RefreshHomeParticle()
-    {
-        while (true)
-        {
-            yield return new WaitForSecondsRealtime(10f);
-            SetHomeParticle();
-        }
-    }
-
-    private void SetHomeParticle()
-    {
-        int homeParticleCount = 0;
-
-        //1.Particle Off
-        for (int i = 0; i < objectPool_Floor.Count; i++)
-        {
-            if (objectPool_Floor[i].Equals(null)) continue;
-            objectPool_Floor[i].transform.GetChild(0).gameObject.SetActive(false);
-        }
-
-        //2.Particle On
-        for (int i = 0; i < objectPool_Floor.Count; i++)
-        {
-            if (objectPool_Floor[i].Equals(null)) continue;
-
-            if (UnityEngine.Random.value < .3f)
-            {
-                homeParticleCount++;
-                objectPool_Floor[i].transform.GetChild(0).gameObject.SetActive(true);
-            }
-
-            if (homeParticleCount >= maxHomeParticle) break;
-        }
-    }
+    // private void SetHomeParticle()
+    // {
+    //     int homeParticleCount = 0;
+    //
+    //     //1.Particle Off
+    //     for (int i = 0; i < objectPool_Floor.Count; i++)
+    //     {
+    //         if (objectPool_Floor[i].Equals(null)) continue;
+    //         objectPool_Floor[i].transform.GetChild(0).gameObject.SetActive(false);
+    //     }
+    //
+    //     //2.Particle On
+    //     for (int i = 0; i < objectPool_Floor.Count; i++)
+    //     {
+    //         if (objectPool_Floor[i].Equals(null)) continue;
+    //
+    //         if (UnityEngine.Random.value < .3f)
+    //         {
+    //             homeParticleCount++;
+    //             objectPool_Floor[i].transform.GetChild(0).gameObject.SetActive(true);
+    //         }
+    //
+    //         if (homeParticleCount >= maxHomeParticle) break;
+    //     }
+    // }
 
     #endregion
 

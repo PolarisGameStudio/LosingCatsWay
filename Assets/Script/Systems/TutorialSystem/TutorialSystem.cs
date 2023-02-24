@@ -166,6 +166,7 @@ public class TutorialSystem : MvcBehaviour
     {
         startTutorialEnd = true;
         App.SaveData();
+        App.system.unlockGrid.RefreshEffect();
     }
 
     public void EndShelterTutorial()

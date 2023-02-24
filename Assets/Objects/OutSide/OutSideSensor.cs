@@ -11,6 +11,18 @@ public class OutSideSensor : MvcBehaviour
     
     public void OpenUnlockGrid()
     {
+        if (App.model.build.IsCanMoveOrRemove)
+            return;
+        
+        if (App.model.build.IsBuilding)
+            return;
+        
+        if (App.model.chooseOrigin.IsChooseOrigin)
+            return;
+
+        if (App.controller.followCat.isFollowing)
+            return;
+    
         if (SceneManager.GetActiveScene().name.Equals("FriendRoom"))
             return;
         

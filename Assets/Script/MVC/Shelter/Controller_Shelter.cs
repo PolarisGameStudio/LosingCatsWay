@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -168,22 +169,22 @@ public class Controller_Shelter : ControllerBehavior
     {
         string searchCatId = App.view.shelter.inputField.text;
 
-        if (string.IsNullOrEmpty(searchCatId))
+        if (string.IsNullOrEmpty(searchCatId)) // 空
         {
             App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NullValue);
             return;
         }
+        
+        if (!await CheckInShelter(searchCatId)) // 不在收容所 
+        {
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CantFindCat);
+            return;
+        }
 
-        var cloudCatData = await App.system.cloudSave.LoadCloudCatDataById(searchCatId);
+        var cloudCatData = await GetCloudCatData(searchCatId);
 
         if (cloudCatData != null)
         {
-            if (cloudCatData.CatData.Owner != "Shelter")
-            {
-                App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CantFindCat);
-                return;
-            }
-            
             if (!cloudCatData.CatHealthData.IsChip)
             {
                 App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CantFindCat);
@@ -208,6 +209,7 @@ public class Controller_Shelter : ControllerBehavior
         App.system.soundEffect.PlayCatMeow();
         App.model.shelter.SelectedAdoptCloudCatData = App.model.shelter.CloudCatDatas[index];
         App.model.shelter.SelectedCageIndex = index;
+        print(App.model.shelter.SelectedAdoptCloudCatData.CatData.CatId);
         OpenSubShelter();
     }
 
@@ -226,18 +228,18 @@ public class Controller_Shelter : ControllerBehavior
 
             return;
         }
+        
+        var cloudCatData = App.model.shelter.SelectedAdoptCloudCatData;
 
-        if (await CheckIsAdopted())
+        if (!await CheckInShelter(cloudCatData.CatData.CatId))
         {
             App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_LateAdopt);
-            CloseSubShelter();
+            CloseCage(cloudCatData.CatData.CatId);
             return;
         }
 
         App.system.confirm.Active(ConfirmTable.Hints_Adopt, okEvent: () =>
         {
-            var cloudCatData = App.model.shelter.SelectedAdoptCloudCatData;
-
             Cat cat = App.system.cat.CreateCatObject(cloudCatData);
 
             cat.GetHateSnack();
@@ -269,32 +271,41 @@ public class Controller_Shelter : ControllerBehavior
         });
     }
 
-    private void CloseCage(string CatId)
+    private void CloseCage(string catId)
     {
         App.view.shelter.cages[App.model.shelter.SelectedCageIndex].SetActive(false);
 
         //ValueChange
         List<CloudCatData> cats = App.model.shelter.CloudCatDatas;
-        for (int i = 0; i < cats.Count; i++)
+        for (int i = cats.Count - 1; i >= 0; i--)
         {
-            if (cats[i].CatData.CatId != CatId) continue;
+            if (cats[i].CatData.CatId != catId) continue;
             cats.RemoveAt(i);
         }
 
         App.model.shelter.CloudCatDatas = cats;
     }
 
-    private async Task<bool> CheckIsAdopted()
+    private async Task<bool> CheckInShelter(string id)
     {
-        string id = App.model.shelter.SelectedAdoptCloudCatData.CatData.CatId;
+        var docRef = FirebaseFirestore.DefaultInstance.Collection("Cats").Document(id);
+        var snapshot = await docRef.GetSnapshotAsync();
 
-        var cloudCatData = await App.system.cloudSave.LoadCloudCatDataById(id);
-
-        if (cloudCatData == null)
+        if (snapshot.Exists)
         {
-            return true;
+            try
+            {
+                string owner = snapshot.GetValue<string>("CatData.Owner");
+                return owner == "Shelter";
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
         }
 
+        Debug.LogError("Document not fount");
         return false;
     }
 
@@ -333,5 +344,17 @@ public class Controller_Shelter : ControllerBehavior
         shelterCats = snapshot.GetValue<int>("ShelterCount");
 
         return shelterCats >= totalCats;
+    }
+
+    private async Task<CloudCatData> GetCloudCatData(string id)
+    {
+        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+        DocumentReference docRef = db.Collection("Cats").Document(id);
+        var snapshot = await docRef.GetSnapshotAsync();
+
+        if (snapshot.Exists)
+            return snapshot.ConvertTo<CloudCatData>();
+
+        return null;
     }
 }

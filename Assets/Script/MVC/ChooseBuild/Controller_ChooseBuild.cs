@@ -56,7 +56,9 @@ public class Controller_ChooseBuild : ControllerBehavior
         App.system.room.CloseExistRoomsSensor();
         App.model.build.SelectedRoom = App.model.chooseBuild.SelectedRooms[index];
 
+        App.system.grid.SetCameraToOrigin();
         SetBuildTmp();
+        
         App.model.build.IsBuilding = true;
 
         App.system.cat.ClosePolyNav2D();
