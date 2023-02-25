@@ -37,6 +37,8 @@ public class TutorialActor_LobbyTreeSpine : TutorialActor
 
         DOVirtual.DelayedCall(0.5f, islandTitleView.Show);
         DOVirtual.DelayedCall(4.5f, islandTitleView.Hide);
+        
+        App.system.soundEffect.Play("ED00058");
     }
 
     private void WaitTreeIdle(TrackEntry trackentry)

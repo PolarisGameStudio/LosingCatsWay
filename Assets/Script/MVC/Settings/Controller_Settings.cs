@@ -144,6 +144,11 @@ public class Controller_Settings : ControllerBehavior
         Application.OpenURL(url);
     }
 
+    public void OpenThanks()
+    {
+        App.system.thanks.Open();
+    }
+
     #region Link
 
     public void LinkByApple()

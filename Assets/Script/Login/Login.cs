@@ -261,7 +261,7 @@ public class Login : MyApplication
             Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
             auth.SignOut();
 
-#if UNITY_ANDROID
+#if UNITY_ANDROID && !UNITY_EDITOR
             GoogleSignIn.DefaultInstance.SignOut();
 #endif
             
@@ -269,6 +269,7 @@ public class Login : MyApplication
             startGameButton.SetActive(false);
             loginView.InstantShow();
             idText.text = $"UID: -";
+            isRequest = false;
         });
     }
 

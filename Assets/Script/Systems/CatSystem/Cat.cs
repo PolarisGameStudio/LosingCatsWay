@@ -137,6 +137,7 @@ public class Cat : MvcBehaviour
         }
     }
 
+    [Button]
     public void MoveToSpecialSpineRoom()
     {
         // print("開始");
@@ -767,6 +768,7 @@ public class Cat : MvcBehaviour
         }
         
         cloudCatData.CatHealthData.SickId = sickId;
+        cloudCatData.CatHealthData.MetDoctorCount = App.factory.sickFactory.GetMetCount(sickId);
         ChangeSkin();
     }
 }

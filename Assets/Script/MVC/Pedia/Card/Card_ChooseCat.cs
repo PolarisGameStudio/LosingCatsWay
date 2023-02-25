@@ -9,6 +9,7 @@ public class Card_ChooseCat : MvcBehaviour
     public GameObject lockMask;
     public TextMeshProUGUI remainLigationText;
     [SerializeField] private GameObject isUnlockEffect;
+    [SerializeField] private GameObject isUnlockEffect02;
     public GameObject clickUnlockEffect;
 
     public void SetData(string variety)
@@ -30,6 +31,7 @@ public class Card_ChooseCat : MvcBehaviour
         {
             lockMask.SetActive(false);
             isUnlockEffect.SetActive(false);
+            isUnlockEffect02.SetActive(false);
         }
         else
         {
@@ -39,6 +41,7 @@ public class Card_ChooseCat : MvcBehaviour
             remainLigationText.text = Math.Clamp(needCount - count, 0, 1).ToString();
             
             isUnlockEffect.SetActive(needCount - count <= 0);
+            isUnlockEffect02.SetActive(needCount - count <= 0);
         }
     }
 

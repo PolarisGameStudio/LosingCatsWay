@@ -44,6 +44,8 @@ public class RewardSystem : MvcBehaviour
 
         App.SaveData();
         
+        App.system.soundEffect.Play("ED00053");
+        
         isAnimationEnd = false;
 
         for (int i = 0; i < content.childCount; i++)

@@ -276,6 +276,9 @@ public class CatchCatMap : MvcBehaviour
 
     private void RefreshTurn()
     {
+        App.system.soundEffect.Play("ED00041");
+        App.system.soundEffect.Play("ED00057");
+        
         turn++;
         turnText.text = $"{turn}/7";
     }
@@ -546,6 +549,8 @@ public class CatchCatMap : MvcBehaviour
 
     private void RunAway()
     {
+        App.system.soundEffect.Play("ED00062");
+        
         if (App.system.tutorial.isTutorial)
         {
             catSkin.SetActive(false);
@@ -820,6 +825,8 @@ public class CatchCatMap : MvcBehaviour
 
     private void SpineCatHappy()
     {
+        App.system.soundEffect.Play("ED00061");
+        
         string animationName = cloudCatData.CatData.SurviveDays <= 3
             ? "Catch_Cat/Catch_Win"
             : "Rearing_Cat/Rearing_Rub_IDLE";
@@ -832,6 +839,8 @@ public class CatchCatMap : MvcBehaviour
         if (cloudCatData.CatData.SurviveDays > 3)
             catSkin.SetAngry();
 
+        App.system.soundEffect.Play("ED00062");
+        
         TrackEntry t = catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "Catch_Cat/Catch_Lose", false);
         t.Complete += WaitSpineIdle;
     }
@@ -857,6 +866,7 @@ public class CatchCatMap : MvcBehaviour
             catSkin.SetAngry();
 
         App.system.soundEffect.Play("ED00046");
+        
         TrackEntry t = catSkin.skeletonGraphic.AnimationState.SetAnimation(0, "Catch_Cat/Catch_Lose", false);
         t.Complete += WaitSpineCatCatchFail;
     }

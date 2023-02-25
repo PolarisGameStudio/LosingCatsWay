@@ -41,7 +41,7 @@ public class SoundEffectSystem : SerializedMonoBehaviour
     {
         if (!audioDatas.ContainsKey(audioName))
         {
-            Debug.LogError("Audio didn't found.");
+            Debug.LogError($"Audio didn't found: {audioName}");
             return;
         }
 

@@ -22,5 +22,10 @@ public class MEQ00002_Card : MonoBehaviour
         progressText.text = "(" + quest.Progress + "/" + quest.TargetCount + ")";
         
         receive.SetActive(quest.IsReceived);
+
+        if (!quest.IsReceived)
+            return;
+
+        complete.SetActive(false);
     }
 }

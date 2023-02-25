@@ -68,6 +68,8 @@ public class SettleSystem : MvcBehaviour
     public void Active(string gameName, CloudCatData cloudCatData, int exp, int money, int diamond, int chance, Reward[] rewards, Callback onClose, bool isCatchGame = false)
     {
         App.system.soundEffect.Play("ED00044");
+        App.system.soundEffect.Play("ED00056");
+        
         float beforeExp = App.system.player.Exp;
         float afterExp = beforeExp + exp;
         int level = App.system.player.Level;

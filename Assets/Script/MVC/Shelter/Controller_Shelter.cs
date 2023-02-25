@@ -209,7 +209,6 @@ public class Controller_Shelter : ControllerBehavior
         App.system.soundEffect.PlayCatMeow();
         App.model.shelter.SelectedAdoptCloudCatData = App.model.shelter.CloudCatDatas[index];
         App.model.shelter.SelectedCageIndex = index;
-        print(App.model.shelter.SelectedAdoptCloudCatData.CatData.CatId);
         OpenSubShelter();
     }
 
@@ -343,7 +342,7 @@ public class Controller_Shelter : ControllerBehavior
         totalCats = snapshot.GetValue<int>("CatCount");
         shelterCats = snapshot.GetValue<int>("ShelterCount");
 
-        return shelterCats >= totalCats;
+        return shelterCats >= totalCats * 0.01f;
     }
 
     private async Task<CloudCatData> GetCloudCatData(string id)

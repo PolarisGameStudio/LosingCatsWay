@@ -35,6 +35,8 @@ public class BigGameBehaviour : MvcBehaviour
         _score = 0;
         _exp = 0;
         _coins = 0;
+        
+        App.system.bgm.FadeOut(0).FadeIn(1).Play("BG00001");
     }
 
     public void SetCloudCatData(CloudCatData cloudCatData)
@@ -81,7 +83,8 @@ public class BigGameBehaviour : MvcBehaviour
     public virtual void Close()
     {
         App.system.reward.OnClose -= Close;
-        
+
+        App.system.bgm.FadeOut();
         App.system.transition.Active(0, () =>
         {
             uIView.InstantHide();

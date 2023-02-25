@@ -48,6 +48,10 @@ public class View_LevelReward : ViewBehaviour
     private void OnLevelChange(object value)
     {
         int level = (int)value;
+
+        if (level >= 40)
+            return;
+        
         Reward[] rewards = App.factory.itemFactory.GetRewardsByLevel(level + 1);
 
         #region 貓居顯示下等級獎勵

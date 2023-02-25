@@ -42,6 +42,7 @@ public class AdsSystem : MvcBehaviour
             adUnitId = GetAdUnitIdByAndroid(adsType);
 #endif
             App.system.waiting.Open();
+            App.system.bgm.FadeOut();
 
             _endAction = null;
             _endAction = endAction;
@@ -93,6 +94,8 @@ public class AdsSystem : MvcBehaviour
     {
         print("Loaded Not Ok");
         App.system.waiting.Close();
+        App.system.bgm.FadeIn();
+        
         App.system.confirm.Active(ConfirmTable.Hints_AdFail);
         ClearEvent();
     }
@@ -101,6 +104,8 @@ public class AdsSystem : MvcBehaviour
     {
         print("Play Faild");
         App.system.waiting.Close();
+        App.system.bgm.FadeIn();
+        
         App.system.confirm.Active(ConfirmTable.Hints_AdFail);
         ClearEvent();
     }
@@ -109,6 +114,7 @@ public class AdsSystem : MvcBehaviour
     {
         print("Play End");
         ClearEvent();
+        App.system.bgm.FadeIn();
         
         if (_isEarnedReward)
             DOVirtual.DelayedCall(0.25f, () => { _endAction?.Invoke(); });

@@ -80,8 +80,9 @@ public class Item : ScriptableObject
 
     public int unlockLevel;
 
-    [ShowIf("@itemBoughtType == ItemBoughtType.Cash")]
-    public string purchaseKey;
+    public bool isOnlyPurchase;
+    [ShowIf("@isOnlyPurchase == true")]
+    public string[] purchaseKeys;
 
     public bool isFund;
     [ShowIf("@isFund == true")]
@@ -184,8 +185,6 @@ public class Item : ScriptableObject
         get
         {
             if (isFund && fundKeyItem.Count > 0)
-                return true;
-            if (app.model.mall.PurchaseRecords.ContainsKey(purchaseKey))
                 return true;
             if (unlockLevel > 0 && app.system.player.Level >= unlockLevel)
                 return true;

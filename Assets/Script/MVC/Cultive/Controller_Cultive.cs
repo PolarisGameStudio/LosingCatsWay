@@ -445,6 +445,8 @@ public class Controller_Cultive : ControllerBehavior
             SelectType(App.model.cultive.SelectedType);
             catSkeleton.AnimationState.SetAnimation(0, "AI_Main/IDLE_Ordinary01", true);
         });
+        
+        App.system.soundEffect.Play("ED00055");
 
         OnChangeLitter?.Invoke();
     }
@@ -626,6 +628,8 @@ public class Controller_Cultive : ControllerBehavior
     public void Reject()
     {
         isCanDrag = false;
+        
+        App.system.soundEffect.Play("ED00062");
         
         var cat = App.model.cultive.SelectedCat;
 

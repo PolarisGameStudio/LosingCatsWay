@@ -33,6 +33,7 @@ public class LevelUpSystem : MvcBehaviour
         view.InstantShow();
 
         // int level = afterLevel;
+        App.system.soundEffect.Play("ED00054");
 
         levelUpText.text = afterLevel.ToString();
         levelDownText.text = beforeLevel.ToString();
@@ -86,7 +87,7 @@ public class LevelUpSystem : MvcBehaviour
         ResetSibling();
         view.InstantHide();
         OnClose?.Invoke();
-        // App.system.reward.Open(App.factory.itemFactory.LevelRewards[App.system.player.Level], false);
+        App.system.soundEffect.Play("ED00008");
     }
 
     private void SetLastSibling()

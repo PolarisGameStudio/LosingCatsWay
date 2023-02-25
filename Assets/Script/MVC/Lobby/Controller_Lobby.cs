@@ -213,6 +213,8 @@ public class Controller_Lobby : ControllerBehavior
             App.model.lobby.TmpMoney = App.model.lobby.MoneyBuffer;
             App.view.lobby.moneyParticle.Play();
             App.model.lobby.MoneyBuffer = 0;
+            
+            App.system.soundEffect.Play("ED00060");
         }
         
         if (App.model.lobby.DiamondBuffer > 0)

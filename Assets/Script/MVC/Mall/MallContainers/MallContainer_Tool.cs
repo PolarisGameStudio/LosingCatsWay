@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -16,7 +17,7 @@ public class MallContainer_Tool : MallContainer
     public Reward[] diamondChangeName;
     public Reward[] diamondFlower;
 
-    private int _adsDiamondMaxCount = 5;
+    private int _adsDiamondMaxCount = 3;
     private int _adsMoneyMaxCount = 1;
     private int _adsToolMaxCount = 1;
     private int _adsFeedMaxCount = 1;
@@ -137,7 +138,7 @@ public class MallContainer_Tool : MallContainer
             if (App.system.player.ReduceDiamond(60))
                 GetItem(diamondFeed);
             else
-                App.system.confirm.Active(ConfirmTable.Hints_NoDiamond);
+                GoBuyDiamond();
         });
     }
 
@@ -148,7 +149,7 @@ public class MallContainer_Tool : MallContainer
             if (App.system.player.ReduceDiamond(300))
                 GetItem(diamondLosingCat);
             else
-                App.system.confirm.Active(ConfirmTable.Hints_NoDiamond);
+                GoBuyDiamond();
         });
     }
 
@@ -159,7 +160,7 @@ public class MallContainer_Tool : MallContainer
             if (App.system.player.ReduceDiamond(120))
                 GetItem(diamondChangeName);
             else
-                App.system.confirm.Active(ConfirmTable.Hints_NoDiamond);
+                GoBuyDiamond();
         });
     }
 
@@ -170,7 +171,15 @@ public class MallContainer_Tool : MallContainer
             if (App.system.player.ReduceDiamond(900))
                 GetItem(diamondFlower);
             else
-                App.system.confirm.Active(ConfirmTable.Hints_NoDiamond);
+                GoBuyDiamond();
+        });
+    }
+
+    private void GoBuyDiamond()
+    {
+        DOVirtual.DelayedCall(0.1f, () =>
+        {
+            App.system.confirm.Active(ConfirmTable.Hints_NoDiamond, () => App.controller.mall.SelectPage(6));
         });
     }
 }

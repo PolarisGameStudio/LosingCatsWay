@@ -124,12 +124,15 @@ public class FindCatMap : MvcBehaviour
         {
             countDown -= 1;
             Hide();
+            App.system.soundEffect.Play("ED00059");
             return;
         }
 
         catLoves[index].Play();
         cats[index].Stop();
         heart++;
+        
+        App.system.soundEffect.Play("ED00061");
         
         if (heart >= 3)
         {

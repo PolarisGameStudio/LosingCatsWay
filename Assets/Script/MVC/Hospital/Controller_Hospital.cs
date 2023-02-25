@@ -273,6 +273,7 @@ public class Controller_Hospital : ControllerBehavior
 
     public void OpenDoctorResult()
     {
+        App.system.soundEffect.Play("ED00063");
         App.view.hospital.OpenDoctorResult();
     }
 
