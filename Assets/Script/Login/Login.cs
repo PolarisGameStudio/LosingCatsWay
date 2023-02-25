@@ -14,6 +14,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using DG.Tweening;
 using Doozy.Runtime.UIManager.Containers;
+using Firebase.Auth;
+using Firebase.Firestore;
 using Google;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -32,12 +34,12 @@ public class Login : MyApplication
     [Title("UI")] public GameObject startGameButton;
     [SerializeField] TextMeshProUGUI idText;
 
-    [Title("Login")] 
-    public UIView loginView;
+    [Title("Login")] public UIView loginView;
     public Image bgMask;
 
     [Title("LoginButtons")] [SerializeField]
     private GameObject googleButton;
+
     [SerializeField] private GameObject appleButton;
 
     private bool isRequest = false;
@@ -48,10 +50,10 @@ public class Login : MyApplication
         system.bgm.Init();
         system.soundEffect.Init();
         controller.settings.Init();
-        
+
         system.bgm.FadeOut(0).FadeIn(8).Play("Login");
     }
-    
+
     private async void Start()
     {
         Init();
@@ -62,7 +64,7 @@ public class Login : MyApplication
             system.confirm.ActiveByBlock(ConfirmTable.Hints_Network);
             return;
         }
-        
+
         VersionChecker versionChecker = new VersionChecker();
         bool isActive = await versionChecker.Check();
         int status = await versionChecker.CheckStatus();
@@ -77,17 +79,16 @@ public class Login : MyApplication
                 confirmTable = ConfirmTable.Hints_Maintain;
             else if (status == 2)
                 confirmTable = ConfirmTable.Hints_VersionNotSame;
-            
+
             system.confirm.ActiveByBlock(confirmTable);
-            
+
             return;
         }
 
         googleButton.SetActive(false);
         appleButton.SetActive(false);
-        
-#if UNITY_IOS && !UNITY_EDITOR
 
+#if UNITY_IOS && !UNITY_EDITOR
         appleButton.SetActive(true);
 
         var attStatus = ATTrackingStatusBinding.GetAuthorizationTrackingStatus();
@@ -100,9 +101,9 @@ public class Login : MyApplication
             ATTrackingStatusBinding.RequestAuthorizationTracking();
         }
 #else
-        
+
         googleButton.SetActive(true);
-        
+
 #endif
 
         await FindObjectOfType<PostSystem>().Init();
@@ -121,10 +122,48 @@ public class Login : MyApplication
             WebClientId = "869333271731-41to0lgea513sqgreo46dq6m658hfnml.apps.googleusercontent.com"
         };
 
+        // 裝置檢查
+
+        if (!PlayerPrefs.HasKey("SessionKey"))
+        {
+            string randomSession = FirebaseFirestore.DefaultInstance.Collection("Players").Document().Id;
+            PlayerPrefs.SetString("SessionKey", randomSession);
+        }
+
         Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
 
         if (auth.CurrentUser != null) // 已登入
         {
+            FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+            DocumentReference docRef = db.Collection("Players").Document(auth.CurrentUser.UserId);
+
+            var playerData = await docRef.GetSnapshotAsync();
+
+            if (playerData.Exists)
+            {
+                Dictionary<string, object> playerDataDict = playerData.ToDictionary();
+                
+                if (playerDataDict.ContainsKey("SessionKey"))
+                {
+                    if (!PlayerPrefs.GetString("SessionKey").Equals(playerDataDict["SessionKey"]))
+                    {
+                        system.confirm.OnlyConfirm().Active(ConfirmTable.Fix, () =>
+                        {
+                            SignOutAction();
+                            
+                            idText.text = $"UID: -";
+                            startGameButton.SetActive(false);
+                            loginView.InstantShow();
+                            
+                            bgMask.DOFade(0, 1).From(1);
+                        });
+                        return;
+                    }
+                }
+                else
+                    SaveSessionKey();
+            }
+
             idText.text = $"UID: {auth.CurrentUser.UserId}";
             startGameButton.SetActive(true);
             system.post.Open(true);
@@ -135,7 +174,7 @@ public class Login : MyApplication
             startGameButton.SetActive(false);
             loginView.InstantShow();
         }
-        
+
         bgMask.DOFade(0, 1).From(1);
     }
 
@@ -168,7 +207,8 @@ public class Login : MyApplication
 
                     // And now you have all the information to create/login a user in your system
                     Firebase.Auth.Credential firebaseCredential =
-                        Firebase.Auth.OAuthProvider.GetCredential("apple.com", identityToken, rawNonce, authorizationCode);
+                        Firebase.Auth.OAuthProvider.GetCredential("apple.com", identityToken, rawNonce,
+                            authorizationCode);
 
                     auth.SignInWithCredentialAsync(firebaseCredential).ContinueWith(task =>
                     {
@@ -183,10 +223,12 @@ public class Login : MyApplication
                             Debug.LogError("SignInWithCredentialAsync encountered an error: " + task.Exception);
                             return;
                         }
-                        
+
                         if (task.IsCompletedSuccessfully)
                         {
                             PlayerPrefs.DeleteKey("IsVisitor");
+
+                            SaveSessionKey();
                             idText.text = $"UID: {auth.CurrentUser.UserId}";
                             system.post.Open();
                             loginView.InstantHide();
@@ -223,6 +265,7 @@ public class Login : MyApplication
 
         PlayerPrefs.DeleteKey("IsVisitor");
 
+        SaveSessionKey();
         idText.text = $"UID: {auth.CurrentUser.UserId}";
         system.post.Open();
         loginView.InstantHide();
@@ -238,7 +281,7 @@ public class Login : MyApplication
 
         Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
         var result = await auth.SignInAnonymouslyAsync();
-        
+
         if (result == null)
         {
             print("登入失敗");
@@ -246,8 +289,9 @@ public class Login : MyApplication
             return;
         }
 
+        SaveSessionKey();
         PlayerPrefs.SetInt("IsVisitor", 1);
-        
+
         idText.text = $"UID: {auth.CurrentUser.UserId}";
         system.post.Open();
         loginView.InstantHide();
@@ -258,19 +302,24 @@ public class Login : MyApplication
     {
         system.confirm.Active(ConfirmTable.Hints_LogOut, () =>
         {
-            Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
-            auth.SignOut();
+            SignOutAction();
+        });
+    }
+
+    private void SignOutAction()
+    {
+        Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+        auth.SignOut();
 
 #if UNITY_ANDROID && !UNITY_EDITOR
             GoogleSignIn.DefaultInstance.SignOut();
 #endif
-            
-            PlayerPrefs.DeleteKey("IsVisitor");
-            startGameButton.SetActive(false);
-            loginView.InstantShow();
-            idText.text = $"UID: -";
-            isRequest = false;
-        });
+
+        PlayerPrefs.DeleteKey("IsVisitor");
+        startGameButton.SetActive(false);
+        loginView.InstantShow();
+        idText.text = $"UID: -";
+        isRequest = false;
     }
 
     public void OpenAnnouncement()
@@ -283,5 +332,17 @@ public class Login : MyApplication
     {
         system.soundEffect.Play("ED00004");
         controller.settings.Open();
+    }
+
+    private void SaveSessionKey()
+    {
+        Dictionary<string, object> saveData = new Dictionary<string, object>
+        {
+            { "SessionKey", PlayerPrefs.GetString("SessionKey") }
+        };
+
+        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+        DocumentReference docRef = db.Collection("Players").Document(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
+        docRef.SetAsync(saveData, SetOptions.MergeAll);
     }
 }
