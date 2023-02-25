@@ -91,11 +91,13 @@ public class Controller_GreenHouse : ControllerBehavior
             return;
         }
         
-        chooseFlower.Show();
         
         List<CloudLosingCatData> cloudLosingCatDatas =
             App.model.cloister.LosingCatDatas.FindAll(x => x.LosingCatStatus.Contains("Flower"));
 
+        if (cloudLosingCatDatas.Count == 0)
+            return;
+        
         List<GreenHouseData> greenHouseDatas = App.model.greenHouse.GreenHouseDatas;
         for (int i = 0; i < greenHouseDatas.Count; i++)
         {
@@ -109,6 +111,8 @@ public class Controller_GreenHouse : ControllerBehavior
                     cloudLosingCatDatas.Remove(cloudLosingCatData);
             }
         }
+
+        chooseFlower.Show();
 
         App.model.greenHouse.ChooseFlowers = cloudLosingCatDatas;
         App.model.greenHouse.selectPositionIndex = index;

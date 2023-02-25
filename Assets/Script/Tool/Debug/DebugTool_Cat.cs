@@ -182,19 +182,19 @@ public class DebugTool_Cat
         catData.CatId = FirebaseFirestore.DefaultInstance.Collection("Cats").Document().Id;
         catData.CatName = "-";
         catData.Sex = Random.value > .5f ? (byte)1 : (byte)0;
-        catData.Variety = GetRandomCatVariety();
         catData.Owner = owner;
         catData.BodyScale = Random.Range(0.9f, 1.1f);
         catData.PersonalityTypes = new List<int>(GetRandomPersonality());
         catData.PersonalityLevels = new List<int>(GetPersonalityLevel(catData.PersonalityTypes));
 
         if (varietyType == 0)
-            catData.Trait = GetRandomTrait();
+            catData.Variety = GetRandomCatVariety();
         else if (varietyType == 1)
-            catData.Trait = GetPurebredCatVariety();
+            catData.Variety = GetPurebredCatVariety();
         else
-            catData.Trait = GetMixedCatVariety();
+            catData.Variety = GetMixedCatVariety();
 
+        catData.Trait = GetRandomTrait();
         catData.DeathTime = new Timestamp();
         catData.IsFavorite = false;
 
