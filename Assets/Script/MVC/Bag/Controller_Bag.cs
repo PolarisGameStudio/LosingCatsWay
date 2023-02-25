@@ -68,8 +68,16 @@ public class Controller_Bag : ControllerBehavior
         
         for (int i = buffer.Count - 1; i >= 0; i--)
         {
-            if (buffer[i].notShowAtBag)
-                buffer.RemoveAt(i);
+            if (!buffer[i].notShowAtBag)
+                continue;
+            
+            if (buffer[i].unlockLevel > 0)
+                continue;
+            
+            if (buffer[i].isOnlyPurchase && buffer[i].Unlock)
+                continue;
+            
+            buffer.RemoveAt(i);
         }
         
         App.model.bag.SelectedItems = buffer;

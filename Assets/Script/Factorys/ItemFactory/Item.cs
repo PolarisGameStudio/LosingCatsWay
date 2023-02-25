@@ -186,10 +186,26 @@ public class Item : ScriptableObject
         {
             if (isFund && fundKeyItem.Count > 0)
                 return true;
+            if (isOnlyPurchase)
+                return CheckIsPurchase();
             if (unlockLevel > 0 && app.system.player.Level >= unlockLevel)
                 return true;
             return false;
         }
+    }
+
+    private bool CheckIsPurchase()
+    {
+        var record = app.model.mall.PurchaseRecords;
+        for (int i = 0; i < purchaseKeys.Length; i++)
+        {
+            string key = purchaseKeys[i];
+            if (!record.ContainsKey(key))
+                continue;
+            return true;
+        }
+
+        return false;
     }
 
     #endregion

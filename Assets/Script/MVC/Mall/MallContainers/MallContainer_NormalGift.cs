@@ -10,7 +10,19 @@ public class MallContainer_NormalGift : MallContainer
     [Title("Red")]
     [SerializeField] private GameObject leftRed;
     [SerializeField] private GameObject dailyPackageRed;
-    
+
+    [Title("PriceText")]
+    [SerializeField] private PriceTextHelper[] _priceTextHelpers;
+
+    public override void Open()
+    {
+        base.Open();
+        for (int i = 0; i < _priceTextHelpers.Length; i++)
+        {
+            _priceTextHelpers[i].SetText();
+        }
+    }
+
     public override void Refresh()
     {
         base.Refresh();

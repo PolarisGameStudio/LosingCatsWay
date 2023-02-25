@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class MallContainer_Diamond : MallContainer
@@ -8,6 +9,18 @@ public class MallContainer_Diamond : MallContainer
     public Reward[] cash3000;
     public Reward[] cash5000;
     public Reward[] cash25000;
+    
+    [Title("PriceText")]
+    [SerializeField] private PriceTextHelper[] _priceTextHelpers;
+
+    public override void Open()
+    {
+        base.Open();
+        for (int i = 0; i < _priceTextHelpers.Length; i++)
+        {
+            _priceTextHelpers[i].SetText();
+        }
+    }
     
     public void Buy1000MoneyByDiamond()
     {

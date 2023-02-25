@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,9 @@ public class MallContainer_VIP : MallContainer
     public GameObject buyButton;
 
     private DateTime _monthLastTime;
+
+    [Title("PriceText")]
+    [SerializeField] private PriceTextHelper _priceTextHelper;
 
     public void BuyGhostBlack()
     {
@@ -63,6 +67,8 @@ public class MallContainer_VIP : MallContainer
 
         SetTime();
         Refresh();
+        
+        _priceTextHelper.SetText();
     }
 
     public override void Close()
