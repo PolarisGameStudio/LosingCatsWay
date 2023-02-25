@@ -50,13 +50,18 @@ public class CatchCatRunAway : MvcBehaviour
         
         OkEvent?.Invoke();
         OkEvent = null;
-        uiView.InstantHide();
+        Close();
     }
 
     public void Cancel()
     {
         CancelEvent?.Invoke();
         CancelEvent = null;
+        Close();
+    }
+
+    public void Close()
+    {
         uiView.InstantHide();
     }
 }

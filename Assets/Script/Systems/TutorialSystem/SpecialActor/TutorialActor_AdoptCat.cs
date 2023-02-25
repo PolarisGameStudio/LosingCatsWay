@@ -15,6 +15,8 @@ public class TutorialActor_AdoptCat : TutorialActor
         DebugTool_Cat debugToolCat = new DebugTool_Cat();
         CloudCatData cloudCatData = debugToolCat.GetCloudCatData(App.system.player.PlayerId, false);
         cloudCatData.CatDiaryData.AdoptLocation = "OutSide";
+
+        App.system.quest.QuestProgressData["ACR0001"]++;
         
         App.system.catRename.CantCancel().Active(cloudCatData, "Shelter", () =>
         {

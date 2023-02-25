@@ -91,6 +91,8 @@ public class Controller_Cultive : ControllerBehavior
         App.system.soundEffect.Play("Button");
 
         int index = App.model.cultive.OpenFromIndex; //0:Feed 1:Follow
+        
+        App.system.cat.RefreshRedPoint();
 
         App.system.bgm.FadeOut();
         App.system.transition.Active(0, () =>

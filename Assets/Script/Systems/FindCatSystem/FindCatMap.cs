@@ -26,7 +26,9 @@ public class FindCatMap : MvcBehaviour
     [Title("Cat")] public FindCatObject[] cats;
     [SerializeField] private UIParticle[] catLoves;
 
-    CloudCatData cloudCatData;
+    CloudCatData _cloudCatData;
+
+    private bool isCheckUse;
 
     public Callback OnGameEnd;
 
@@ -51,10 +53,9 @@ public class FindCatMap : MvcBehaviour
 
     public void SetCloudCatData(CloudCatData cloudCatData)
     {
-        if (cloudCatData == null) return;
-        
-        this.cloudCatData = cloudCatData;
-        SetCloudCatDataToUse(true);
+        if (cloudCatData == null) 
+            return;
+        _cloudCatData = cloudCatData;
     }
     
     void Init() //初始化遊戲
@@ -70,7 +71,7 @@ public class FindCatMap : MvcBehaviour
         RefreshTimeImage();
     }
 
-    public void StartGame()
+    private void StartGame()
     {
         Play();
     }
@@ -150,7 +151,6 @@ public class FindCatMap : MvcBehaviour
 
     public void Close()
     {
-        SetCloudCatDataToUse(false);
         App.system.transition.OnlyOpen();
         DOVirtual.DelayedCall(1f, () =>
         {
@@ -170,8 +170,8 @@ public class FindCatMap : MvcBehaviour
                 OnGameEnd?.Invoke();
                 uiView.Hide();
                 App.system.findCat.Close();
-                App.system.catchCat.Active(mapIndex, cloudCatData);
-                cloudCatData = null;
+                App.system.catchCat.Active(mapIndex, _cloudCatData);
+                _cloudCatData = null;
 
                 if (App.system.tutorial.isTutorial)
                     App.system.tutorial.Next();
@@ -194,6 +194,7 @@ public class FindCatMap : MvcBehaviour
             }
             
             OnGameEnd?.Invoke();
+            SetCatNotUse();
             Close();
         });
     }
@@ -229,18 +230,22 @@ public class FindCatMap : MvcBehaviour
     public void Exit()
     {
         Stop();
-        App.system.confirm.Active(ConfirmTable.Hints_Leave, okEvent: Close, cancelEvent: Play);
+        App.system.confirm.Active(ConfirmTable.Hints_Leave, () =>
+        {
+            Close();
+            SetCatNotUse();
+        }, cancelEvent: Play);
     }
 
-    private void SetCloudCatDataToUse(bool value)
-    {
-        if (App.system.tutorial.isTutorial)
-            return;
-        if (cloudCatData == null)
-            return;
-        cloudCatData.CatSurviveData.IsUseToFind = value;
-        App.system.cloudSave.SaveCloudCatData(cloudCatData);
-    }
+    // private void SetCloudCatDataToUse(bool value)
+    // {
+    //     if (App.system.tutorial.isTutorial)
+    //         return;
+    //     if (cloudCatData == null)
+    //         return;
+    //     cloudCatData.CatSurviveData.IsUseToFind = value;
+    //     App.system.cloudSave.SaveCloudCatData(cloudCatData);
+    // }
 
     private bool IsAnyCatShowing()
     {
@@ -258,23 +263,48 @@ public class FindCatMap : MvcBehaviour
     private void OnApplicationFocus(bool focus)
     {
         if (!focus)
-            SetCloudCatDataToUse(false);
-        else
-            SetCloudCatDataToUse(true);
+            ClearCat();
     }
 
     private void OnApplicationPause(bool pause)
     {
         if (pause)
-            SetCloudCatDataToUse(false);
-        else
-            SetCloudCatDataToUse(true);
+            ClearCat();
     }
 
     private void OnApplicationQuit()
     {
-        SetCloudCatDataToUse(false);
+        ClearCat();
     }
     
     #endregion
+    
+    private void SetCatNotUse()
+    {
+        if (App.system.tutorial.isTutorial)
+            return;
+        if (_cloudCatData == null)
+            return;
+        _cloudCatData.CatSurviveData.IsUseToFind = false;
+        App.system.cloudSave.SaveCloudCatData(_cloudCatData);
+    }
+    
+    private void ClearCat()
+    {
+        if (App.system.tutorial.isTutorial)
+            return;
+        
+        if (_cloudCatData == null)
+            return;
+
+        _cloudCatData.CatSurviveData.IsUseToFind = false;
+        App.system.cloudSave.SaveCloudCatData(_cloudCatData);
+        
+        // 如果還在教學階段
+        App.system.howToPlay.ClearEventAndClose();
+        
+        Stop();
+        _cloudCatData = null;
+        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CatFindFail, Close);
+    }
 }

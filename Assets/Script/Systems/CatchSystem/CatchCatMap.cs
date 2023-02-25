@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Coffee.UIExtensions;
 using DG.Tweening;
 using Doozy.Runtime.UIManager.Containers;
@@ -72,6 +73,8 @@ public class CatchCatMap : MvcBehaviour
     private int money;
 
     private string gameName;
+
+    private bool isCheckUse;
 
     #endregion
 
@@ -153,7 +156,7 @@ public class CatchCatMap : MvcBehaviour
             return;
         App.system.confirm.Active(ConfirmTable.Hints_Leave, () =>
         {
-            SetCloudCatDataToUse(false);
+            SetCatNotUse();
             CloseToMap();
         });
     }
@@ -528,8 +531,6 @@ public class CatchCatMap : MvcBehaviour
         catSkin.SetActive(false);
         bubble.Close();
 
-        SetCloudCatDataToUse(false);
-
         App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CatCatchSuccess, () =>
         {
             OnGameEnd?.Invoke();
@@ -571,7 +572,7 @@ public class CatchCatMap : MvcBehaviour
         {
             catSkin.SetActive(false);
             bubble.Close();
-            SetCloudCatDataToUse(false);
+            SetCatNotUse();
 
             App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CatCatchFail, () =>
             {
@@ -595,7 +596,7 @@ public class CatchCatMap : MvcBehaviour
         {
             catSkin.SetActive(false);
             bubble.Close();
-            SetCloudCatDataToUse(false);
+            SetCatNotUse();
 
             App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CatCatchFail, () =>
             {
@@ -618,15 +619,15 @@ public class CatchCatMap : MvcBehaviour
     }
 
     /// 把貓還回伺服器
-    private void SetCloudCatDataToUse(bool value)
-    {
-        if (App.system.tutorial.isTutorial)
-            return;
-        if (cloudCatData == null)
-            return;
-        cloudCatData.CatSurviveData.IsUseToFind = value;
-        App.system.cloudSave.SaveCloudCatData(cloudCatData);
-    }
+    //private void SetCloudCatDataToUse(bool value)
+    // {
+    //     if (App.system.tutorial.isTutorial)
+    //         return;
+    //     if (cloudCatData == null)
+    //         return;
+    //     cloudCatData.CatSurviveData.IsUseToFind = value;
+    //     App.system.cloudSave.SaveCloudCatData(cloudCatData);
+    // }
 
     #endregion
 
@@ -911,23 +912,50 @@ public class CatchCatMap : MvcBehaviour
     private void OnApplicationFocus(bool focus)
     {
         if (!focus)
-            SetCloudCatDataToUse(false);
-        else
-            SetCloudCatDataToUse(true);
+            ClearCat();
     }
 
     private void OnApplicationPause(bool pause)
     {
         if (pause)
-            SetCloudCatDataToUse(false);
-        else
-            SetCloudCatDataToUse(true);
+            ClearCat();
     }
 
     private void OnApplicationQuit()
     {
-        SetCloudCatDataToUse(false);
+        ClearCat();
     }
 
     #endregion
+
+    private void SetCatNotUse()
+    {
+        if (App.system.tutorial.isTutorial)
+            return;
+        if (cloudCatData == null)
+            return;
+        cloudCatData.CatSurviveData.IsUseToFind = false;
+        App.system.cloudSave.SaveCloudCatData(cloudCatData);
+    }
+    
+    private void ClearCat()
+    {
+        if (App.system.tutorial.isTutorial)
+            return;
+        
+        if (cloudCatData == null)
+            return;
+
+        cloudCatData.CatSurviveData.IsUseToFind = false;
+        App.system.cloudSave.SaveCloudCatData(cloudCatData);
+        
+        // 教學時
+        App.system.howToPlay.ClearEventAndClose();
+        App.system.tnr.Close();
+        App.system.catchCat.runAway.Close();
+        
+        cloudCatData = null;
+        App.system.howToPlay.ClearEventAndClose();
+        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CatFindFail, CloseToMap);
+    }
 }

@@ -196,4 +196,10 @@ public class HowToPlaySystem : MvcBehaviour
         startRect.DOAnchorPos(rightOrigin, .35f).From(rightOffset).SetEase(Ease.OutBack);
         startCanvasGroup.DOFade(1, .3f).From(0);
     }
+
+    public void ClearEventAndClose()
+    {
+        OnClose = null;
+        uiView.InstantHide();
+    }
 }

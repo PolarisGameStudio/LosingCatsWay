@@ -18,6 +18,7 @@ public class Controller_Mall : ControllerBehavior
 
     public void Open()
     {
+        App.system.soundEffect.Play("ED00007");
         App.view.mall.Open();
     }
 

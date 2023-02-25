@@ -194,9 +194,13 @@ public class Item : ScriptableObject
         }
     }
 
-    private bool CheckIsPurchase()
+    public bool CheckIsPurchase()
     {
         var record = app.model.mall.PurchaseRecords;
+        
+        if (record == null)
+            return false;
+        
         for (int i = 0; i < purchaseKeys.Length; i++)
         {
             string key = purchaseKeys[i];

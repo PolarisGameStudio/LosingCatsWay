@@ -82,15 +82,18 @@ public class Controller_Shop : ControllerBehavior
 
         List<Item> items = App.factory.itemFactory.GetItemByType((int)targetType);
 
-        for (int i = items.Count - 1; i >= 0; i--)
-        {
-            if (items[i].unlockLevel > 0)
-                continue;
-            
-            if (items[i].isOnlyPurchase && items[i].Unlock)
-                continue;
-            items.RemoveAt(i);
-        }
+        // for (int i = items.Count - 1; i >= 0; i--)
+        // {
+        //     if (items[i].unlockLevel <= 0)
+        //     {
+        //         items.RemoveAt(i);
+        //         continue;
+        //     }
+        //     
+        //     if (items[i].isOnlyPurchase && !items[i].Unlock)
+        //         items.RemoveAt(i);
+        // }
+        
         items = items.OrderByDescending(i => i.Unlock).ToList();
 
         App.model.shop.SelectedItems = items;

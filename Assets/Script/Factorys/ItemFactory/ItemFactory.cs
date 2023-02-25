@@ -63,6 +63,9 @@ public class ItemFactory : SerializedMonoBehaviour
             else if (item.itemType != targetType)
                 continue;
 
+            if (item.isOnlyPurchase && !item.CheckIsPurchase())
+                continue;
+            
             if (item.Count > 0)
                 result.Add(item);
         }
@@ -87,7 +90,10 @@ public class ItemFactory : SerializedMonoBehaviour
             
             if (item.isFund)
                 continue;
-
+            
+            if (item.isOnlyPurchase && !item.CheckIsPurchase())
+                continue;
+            
             result.Add(item);
         }
 

@@ -29,7 +29,7 @@ public class FindCatSystem : MvcBehaviour
     {
         activeMap = FindCatMaps[mapIndex];
         activeMap.SetCloudCatData(null);
-        CloudCatData cloudCatData = null;
+        CloudCatData cloudCatData;
         
         if (App.system.tutorial.isTutorial)
         {
@@ -65,7 +65,13 @@ public class FindCatSystem : MvcBehaviour
         
         App.system.waiting.Close();
         App.system.transition.OnlyClose();
+        
+        print($"UseCat: {cloudCatData.CatData.CatId}");
+        
         activeMap.SetCloudCatData(cloudCatData);
+        cloudCatData.CatSurviveData.IsUseToFind = true;
+        App.system.cloudSave.SaveCloudCatData(cloudCatData);
+        
         PlayMapBgm();
         activeMap.Open();
     }

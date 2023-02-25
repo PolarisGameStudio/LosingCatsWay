@@ -6,9 +6,12 @@ public class MEQ0003_Card : MonoBehaviour
 {
     public GameObject canGet;
     public GameObject receive;
+    public GameObject noFund;
     
     public void SetData(bool hasFund, bool isRecived)
     {
+        noFund.SetActive(!hasFund);
+        
         if (hasFund)
         {
             if (isRecived)
