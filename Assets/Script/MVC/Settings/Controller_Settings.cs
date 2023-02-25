@@ -21,6 +21,14 @@ public class Controller_Settings : ControllerBehavior
 {
     private IAppleAuthManager appleAuthManager;
 
+    private void Update()
+    {
+        if (appleAuthManager != null)
+        {
+            appleAuthManager.Update();
+        }
+    }
+
     public void Init()
     {
         LoadSettings();

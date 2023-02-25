@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Doozy.Runtime.UIManager.Containers;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -56,7 +57,11 @@ public class UnlockGridSystem : MvcBehaviour
         {
             if (!App.system.player.ReduceDiamond(needCount))
             {
-                App.system.confirm.Active(ConfirmTable.Hints_NoDiamond);
+                App.system.confirm.Active(ConfirmTable.Hints_NoDiamond, () =>
+                {
+                    Close();
+                    OpenTopUp();
+                });
                 return;
             }
         }
@@ -64,7 +69,7 @@ public class UnlockGridSystem : MvcBehaviour
         {
             if (!App.system.player.ReduceCatMemory(needCount))
             {
-                App.system.confirm.Active(ConfirmTable.Hints_NoMemory);
+                App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NoMemory);
                 return;
             }
         }
@@ -110,5 +115,11 @@ public class UnlockGridSystem : MvcBehaviour
         List<OutSideSensor> sensors = App.system.grid.OutSideSensors;
         for (int i = 0; i < sensors.Count; i++)
             sensors[i].effect.SetActive(true);
+    }
+    
+    private void OpenTopUp()
+    {
+        App.controller.mall.Open();
+        DOVirtual.DelayedCall(0.25f, () => App.controller.mall.SelectPage(6));
     }
 }

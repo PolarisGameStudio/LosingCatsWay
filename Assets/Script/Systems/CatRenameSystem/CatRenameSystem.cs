@@ -18,6 +18,10 @@ public class CatRenameSystem : MvcBehaviour
 
     [Title("Bg")] [SerializeField] private Image bgImage;
 
+    [Title("Title")]
+    [SerializeField] private GameObject normalTitle;
+    [SerializeField] private GameObject firstTitle;
+
     [HideInInspector] public CloudCatData cloudCatData;
 
     private UnityAction onConfirm;
@@ -40,6 +44,9 @@ public class CatRenameSystem : MvcBehaviour
         
         onConfirm = OnConfirm;
         onCancel = OnCancel;
+        
+        normalTitle.SetActive(cloudCatData.CatHealthData.IsChip);
+        firstTitle.SetActive(!cloudCatData.CatHealthData.IsChip);
 
         view.Show();
         catSkin.SetActive(true);

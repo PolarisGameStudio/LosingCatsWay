@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -33,7 +34,8 @@ public class MallContainer_Cats : MallContainer
 
         if (!App.system.player.ReduceDiamond(300))
         {
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_NoDiamond);
+            DOVirtual.DelayedCall(0.1f,
+                () => App.system.confirm.Active(ConfirmTable.Hints_NoDiamond, () => App.controller.mall.SelectPage(6)));
             return;
         }
 

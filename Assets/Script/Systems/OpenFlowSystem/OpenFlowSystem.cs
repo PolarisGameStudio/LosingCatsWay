@@ -45,4 +45,10 @@ public class OpenFlowSystem : MvcBehaviour
         openFlowActions[flowIndex].Invoke();
         flowIndex++;
     }
+
+    public void EndAction()
+    {
+        flowIndex = openFlowActions.Count + 1; // 不要清空flow 因爲過12.要彈出
+        isEnd = true;
+    }
 }

@@ -96,7 +96,7 @@ public class AdsSystem : MvcBehaviour
         App.system.waiting.Close();
         App.system.bgm.FadeIn();
         
-        App.system.confirm.Active(ConfirmTable.Hints_AdFail);
+        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_AdFail);
         ClearEvent();
     }
 
@@ -106,7 +106,7 @@ public class AdsSystem : MvcBehaviour
         App.system.waiting.Close();
         App.system.bgm.FadeIn();
         
-        App.system.confirm.Active(ConfirmTable.Hints_AdFail);
+        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_AdFail);
         ClearEvent();
     }
 

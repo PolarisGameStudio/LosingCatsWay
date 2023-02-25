@@ -98,6 +98,8 @@ public class MyApplication : MonoBehaviour
 
         if (backStatus != 2)
             system.openFlow.Init();
+        else
+            system.openFlow.EndAction();
 
         system.settle.Init();
         await controller.cloister.Init();

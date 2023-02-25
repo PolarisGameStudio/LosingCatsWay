@@ -90,11 +90,11 @@ public class Login : MyApplication
 
         appleButton.SetActive(true);
 
-        var status = ATTrackingStatusBinding.GetAuthorizationTrackingStatus();
+        var attStatus = ATTrackingStatusBinding.GetAuthorizationTrackingStatus();
         Version currentVersion = new Version(Device.systemVersion);
         Version ios14 = new Version("14.5");
 
-        if (status == ATTrackingStatusBinding.AuthorizationTrackingStatus.NOT_DETERMINED && currentVersion >= ios14)
+        if (attStatus == ATTrackingStatusBinding.AuthorizationTrackingStatus.NOT_DETERMINED && currentVersion >= ios14)
         {
             Debug.Log("申請廣告權限");
             ATTrackingStatusBinding.RequestAuthorizationTracking();

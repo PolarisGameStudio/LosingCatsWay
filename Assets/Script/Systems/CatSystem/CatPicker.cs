@@ -82,6 +82,20 @@ public class CatPicker : MvcBehaviour
         int gridX = (int)(position.x / 5.12);
         int gridY = (int)(position.y / 5.12);
 
+        if (gridX < 0 || gridX > App.system.grid.width - 1)
+        {
+            cat.transform.position = startPosition;
+            cat.Reset();
+            return;
+        }
+        
+        if (gridY < 0 || gridY > App.system.grid.height - 1)
+        {
+            cat.transform.position = startPosition;
+            cat.Reset();
+            return;
+        }
+        
         int gridValue = App.system.grid.GetGrid(gridX, gridY).Value;
 
         if (gridValue != 1 || !_polyNavMap.PointIsValid(position))

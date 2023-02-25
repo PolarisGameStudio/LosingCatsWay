@@ -47,7 +47,6 @@ public class FriendRoom : MyApplication
 
         // 生房間
         roomSystem.CreateRoom(playerData.ExistRoomDatas);
-        FindObjectOfType<MapSystem>().GenerateMap(true);
         
         // 生貓
         var cats = await LoadCloudCatDatas(friendId);

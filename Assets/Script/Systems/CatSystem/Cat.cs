@@ -288,7 +288,7 @@ public class Cat : MvcBehaviour
         if (cloudCatData.CatHealthData.IsBug)
             return;
         
-        if (DrawGameTimer < 60)
+        if (DrawGameTimer < 30)
         {
             DrawGameTimer++;
             return;

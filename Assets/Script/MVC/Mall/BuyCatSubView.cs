@@ -40,7 +40,7 @@ public class BuyCatSubView : ViewBehaviour
         DOVirtual.DelayedCall(7f, () =>
         {
             Close();
-            App.system.catRename.CantCancel().Active(_cloudCatData, "Location1");
+            App.system.catRename.CantCancel().Active(_cloudCatData, "Shelter");
         });
     }
 
