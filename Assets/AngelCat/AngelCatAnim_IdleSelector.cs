@@ -12,15 +12,10 @@ public class AngelCatAnim_IdleSelector : StateMachineBehaviour
 
         if (randomSelect == 0)
         {
-            int randomIndex = Random.Range(0, 4);
-            animator.SetInteger(CatAnimTable.IdleSelectIndex.ToString(), randomIndex);
             animator.SetBool(CatAnimTable.IsNeedIdle.ToString(), true);
         }
         else if (randomSelect == 1)
         {
-            int randomIndex = Random.Range(0, 2);
-            animator.SetInteger(CatAnimTable.WalkSelectIndex.ToString(), randomIndex);
-            
             if (Random.value > 0.5f)
                 animator.SetBool(CatAnimTable.IsLeftRoom.ToString(), true);
             else

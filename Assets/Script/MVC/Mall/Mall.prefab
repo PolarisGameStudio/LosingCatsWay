@@ -10049,6 +10049,7 @@ GameObject:
   - component: {fileID: 1653654953425494067}
   - component: {fileID: 1460116333105923254}
   - component: {fileID: 3008294077950011161}
+  - component: {fileID: 8978181985753474235}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -10104,7 +10105,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u7D9C\u5408\u9053\u5177"
+  m_text: Regular Support
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b4e6040c530d214489020b0f365901ca, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 0a693d1fd36a1f648a173eedba3d3363, type: 2}
@@ -10173,6 +10174,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8978181985753474235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042320293712364094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: Store_Necessities
+  mTermSecondary: 
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &1047688128709719186
 GameObject:
   m_ObjectHideFlags: 0
@@ -10506,7 +10546,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 3009373691163324249}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.809619
+  m_Size: 0.80961895
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11406,7 +11446,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1147926568462387671}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}
@@ -15789,6 +15829,7 @@ GameObject:
   - component: {fileID: 2316992048729925910}
   - component: {fileID: 3136305468037092429}
   - component: {fileID: 4641796916506230354}
+  - component: {fileID: 3803098558071852856}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -15844,7 +15885,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u5E38\u99D0\u79AE\u5305"
+  m_text: Necessities
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b4e6040c530d214489020b0f365901ca, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 0a693d1fd36a1f648a173eedba3d3363, type: 2}
@@ -15913,6 +15954,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3803098558071852856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1668373453393966965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: Store_LongTermPackage
+  mTermSecondary: 
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &1672408329448223104
 GameObject:
   m_ObjectHideFlags: 0
@@ -16034,7 +16114,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3179792945905890156}
   m_HandleRect: {fileID: 592538104664372648}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -19738,7 +19818,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4906840066770848653}
   m_HandleRect: {fileID: 8723851018174823626}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -23078,8 +23158,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 347837037458804035}
   m_HandleRect: {fileID: 768220350207747223}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -31661,6 +31741,7 @@ GameObject:
   - component: {fileID: 7001997095801976346}
   - component: {fileID: 5858600605244892952}
   - component: {fileID: 6407505751581208394}
+  - component: {fileID: 7065354481070017071}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -31716,7 +31797,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u512A\u826F\u8C93\u5974\u8B49"
+  m_text: Symbol of CatLover
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b4e6040c530d214489020b0f365901ca, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 0a693d1fd36a1f648a173eedba3d3363, type: 2}
@@ -31785,6 +31866,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7065354481070017071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3372038486990899678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: Store_MonthlyPass
+  mTermSecondary: 
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &3374265023240308333
 GameObject:
   m_ObjectHideFlags: 0
@@ -32670,7 +32790,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2110748729991196994}
   m_HandleRect: {fileID: 6866938471333493240}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -34792,6 +34912,7 @@ GameObject:
   - component: {fileID: 8890324442243760258}
   - component: {fileID: 3828514278806895566}
   - component: {fileID: 3862055340569297052}
+  - component: {fileID: 2638997881863972135}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -34847,7 +34968,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u947D\u77F3\u9B5A\u5E63\u8CFC\u8CB7&\u8F49\u63DB"
+  m_text: DiamondFishs&Coins
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b4e6040c530d214489020b0f365901ca, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 0a693d1fd36a1f648a173eedba3d3363, type: 2}
@@ -34916,6 +35037,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2638997881863972135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3577142408426588912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: Store_Diamond&Coins
+  mTermSecondary: 
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &3605454023014791815
 GameObject:
   m_ObjectHideFlags: 0
@@ -44499,7 +44659,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6926389324298096332}
   m_HandleRect: {fileID: 5374171690422326709}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -47617,6 +47777,7 @@ GameObject:
   - component: {fileID: 4777582856694072883}
   - component: {fileID: 3382497390200706866}
   - component: {fileID: 2312042697530982361}
+  - component: {fileID: 3592247653174776161}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -47672,7 +47833,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u798F\u723E\u55B5\u820D"
+  m_text: Furbaby Breeder
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b4e6040c530d214489020b0f365901ca, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 0a693d1fd36a1f648a173eedba3d3363, type: 2}
@@ -47741,6 +47902,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3592247653174776161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5073581845410556880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: Store_Cattery
+  mTermSecondary: 
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &5078991104959159100
 GameObject:
   m_ObjectHideFlags: 0
@@ -51379,6 +51579,7 @@ GameObject:
   - component: {fileID: 6373684474292276602}
   - component: {fileID: 7411438624669916087}
   - component: {fileID: 2900584247366185293}
+  - component: {fileID: 572501683392286537}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -51434,7 +51635,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u8D85\u503C\u79AE\u5305"
+  m_text: Best Deal
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b4e6040c530d214489020b0f365901ca, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 0a693d1fd36a1f648a173eedba3d3363, type: 2}
@@ -51503,6 +51704,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &572501683392286537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5419835081393790520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: Store_SuperPackage
+  mTermSecondary: 
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &5424485451570329467
 GameObject:
   m_ObjectHideFlags: 0
@@ -51788,6 +52028,7 @@ GameObject:
   - component: {fileID: 5868972250375412191}
   - component: {fileID: 8273412054057264886}
   - component: {fileID: 644373592293070301}
+  - component: {fileID: 1102380200972700664}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -51843,7 +52084,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u88DD\u98FE\u79AE\u5305"
+  m_text: DecorPackages
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b4e6040c530d214489020b0f365901ca, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 0a693d1fd36a1f648a173eedba3d3363, type: 2}
@@ -51912,6 +52153,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1102380200972700664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5486196015789114847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: Store_DecorPackage
+  mTermSecondary: 
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &5501651737089347985
 GameObject:
   m_ObjectHideFlags: 0
@@ -64268,7 +64548,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6624572364502723346}
   m_HandleRect: {fileID: 6263817723611091752}
   m_Direction: 2
-  m_Value: 0.9999997
+  m_Value: 0.99999976
   m_Size: 0.079155624
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -68561,7 +68841,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3807541865481337275}
   m_HandleRect: {fileID: 8024211071102591332}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -72338,7 +72618,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8716902330715795249}
   m_HandleRect: {fileID: 6336951969602335387}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -76871,7 +77151,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 7721285818949469500}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.6548554
+  m_Size: 0.6548553
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -84018,7 +84298,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 5980456184744891519}
   m_Direction: 2
   m_Value: 0.9999985
-  m_Size: 0.32209316
+  m_Size: 0.32209313
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -86932,7 +87212,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1668997949773899525}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.53286785
+  m_Size: 0.5328678
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -95434,8 +95714,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 864335009282451190}
   m_HandleRect: {fileID: 2168830356698925909}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

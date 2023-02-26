@@ -3336,7 +3336,7 @@ AnimatorTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: SpcialSpineRoomId
-    m_EventTreshold: 84
+    m_EventTreshold: 82
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5656805076200776523}
   m_Solo: 0
@@ -3374,12 +3374,12 @@ AnimatorStateMachine:
   - first: {fileID: -6065743462935375684}
     second:
     - {fileID: 6533114288624163198}
-  - first: {fileID: -3286990887496185940}
-    second:
-    - {fileID: 3381665546769518710}
   - first: {fileID: 7754164869190737859}
     second:
     - {fileID: -5765342310166228033}
+  - first: {fileID: -3286990887496185940}
+    second:
+    - {fileID: 3381665546769518710}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: -280, y: 0, z: 0}
   m_EntryPosition: {x: -80, y: 100, z: 0}
@@ -3487,21 +3487,21 @@ AnimatorStateMachine:
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: -7071251626423419232}
-    second:
-    - {fileID: 1247481197694785292}
-  - first: {fileID: -7028564150682073916}
-    second:
-    - {fileID: -7872690394421742280}
-  - first: {fileID: 524279492448515489}
-    second:
-    - {fileID: -5338487587685616950}
   - first: {fileID: 2018051462758261449}
     second:
     - {fileID: -1380424701996367421}
   - first: {fileID: 6450194409217236876}
     second:
     - {fileID: 3116135138927631707}
+  - first: {fileID: -7071251626423419232}
+    second:
+    - {fileID: 1247481197694785292}
+  - first: {fileID: 524279492448515489}
+    second:
+    - {fileID: -5338487587685616950}
+  - first: {fileID: -7028564150682073916}
+    second:
+    - {fileID: -7872690394421742280}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 40, y: 20, z: 0}
   m_EntryPosition: {x: 720, y: 370, z: 0}
@@ -14420,6 +14420,18 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events: []
+--- !u!114 &-1873865357647462187
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4448c202874a5045af30b23c1407954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1109 &-1835474116942985012
 AnimatorTransition:
   m_ObjectHideFlags: 1
@@ -16102,6 +16114,18 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events: []
+--- !u!114 &-827938485826250060
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4448c202874a5045af30b23c1407954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1102 &-816394702360539913
 AnimatorState:
   serializedVersion: 6
@@ -20043,7 +20067,7 @@ AnimatorTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: SpcialSpineRoomId
-    m_EventTreshold: 83
+    m_EventTreshold: 84
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -9105862761789230697}
   m_Solo: 0
@@ -22761,7 +22785,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1281856514098080975}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: -827938485826250060}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -23288,6 +23313,18 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events: []
+--- !u!114 &3058539871139214080
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4448c202874a5045af30b23c1407954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3069266101972990489
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -23735,7 +23772,7 @@ AnimatorTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: SpcialSpineRoomId
-    m_EventTreshold: 82
+    m_EventTreshold: 83
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5218572949454158283}
   m_Solo: 0
@@ -29669,7 +29706,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -583781209882301404}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 3058539871139214080}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -31092,7 +31130,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -3165030324817607488}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: -1873865357647462187}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

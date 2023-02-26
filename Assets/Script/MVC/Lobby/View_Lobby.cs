@@ -34,7 +34,7 @@ public class View_Lobby : ViewBehaviour
 
     [Title("TopRight")]
     public TextMeshProUGUI nextLevelBestItemText;
-    [FormerlySerializedAs("nextRewardLevelText")] public TextMeshProUGUI nextdLevelText;
+    public TextMeshProUGUI nextdLevelText;
     [SerializeField] private GameObject nextRewardChat;
     [SerializeField] private TextMeshProUGUI nextQuestText;
     [SerializeField] private GameObject nextQuestChat;
@@ -240,6 +240,8 @@ public class View_Lobby : ViewBehaviour
         
         int level = Convert.ToInt32(value);
         levelText.text = level.ToString("00");
+        
+        nextRewardChat.SetActive(level + 1 < 40);
     }
 
     private void OnCoinChange(object value)
