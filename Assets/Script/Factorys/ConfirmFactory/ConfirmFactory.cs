@@ -99,4 +99,7 @@ public enum ConfirmTable
     Hints_GoHome,
     Hints_Network,
     Hints_ShelterFull,
+    Hints_AlreadyUsed,
+    Hints_Left,
+    Hints_UnlockGreenHouse,
 }

@@ -186,10 +186,6 @@ public class Controller_Settings : ControllerBehavior
                     {
                         if (task.IsFaulted || task.IsCanceled)
                         {
-                            DOVirtual.DelayedCall(0.25f, () =>
-                            {
-                                App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
-                            });
                             return;
                         }
 
@@ -228,10 +224,6 @@ public class Controller_Settings : ControllerBehavior
             
             if (task.IsFaulted || task.IsCanceled)
             {
-                DOVirtual.DelayedCall(0.25f, () =>
-                {
-                    App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix);
-                });
                 return;
             }
             

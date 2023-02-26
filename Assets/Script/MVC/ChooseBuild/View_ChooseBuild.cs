@@ -15,7 +15,8 @@ public class View_ChooseBuild : ViewBehaviour
     [Title("Tween")] public Transform bg;
     
     //Top
-    [Title("Top")] [SerializeField] private RectTransform topSelectBlock;
+    [Title("Top")]
+    [SerializeField] private RectTransform topSelectBlock;
     [SerializeField] private Image topSelectIcon;
     [SerializeField] private TextMeshProUGUI topSelectText;
     [SerializeField] private RectTransform[] topRects;
@@ -106,7 +107,8 @@ public class View_ChooseBuild : ViewBehaviour
 
         scrollbar.value = 1;
 
-        topSelectBlock.DOAnchorPos(topRects[index].anchoredPosition, 0.25f).SetEase(Ease.OutExpo);
+        topSelectBlock.DOAnchorPosY(30, 0);
+        topSelectBlock.DOAnchorPosX(topRects[index].anchoredPosition.x, 0.25f).SetEase(Ease.OutExpo);
         topSelectIcon.sprite = topIcons[index].sprite;
         topSelectText.text = topTexts[index].text;
     }

@@ -305,6 +305,6 @@ public class FindCatMap : MvcBehaviour
         
         Stop();
         _cloudCatData = null;
-        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CatFindFail, Close);
+        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_Left, Close);
     }
 }

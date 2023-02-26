@@ -22,6 +22,7 @@ public class View_Map : ViewBehaviour
     public GameObject greenHouseMask;
     public SkeletonGraphic greenHouseSkeletonGraphic;
     public GameObject greenHouseUnlockEffect;
+    public Button greenHouseButton;
     
     public override void Init()
     {

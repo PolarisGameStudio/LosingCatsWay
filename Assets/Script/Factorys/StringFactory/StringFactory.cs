@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using I2.Loc;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -87,32 +88,30 @@ public class StringFactory : SerializedMonoBehaviour
     [SerializeField] private Dictionary<string, StringData> mailFromDevContent;
 
     private string countryId = "tw";
+    private int countryIndex = -1;
 
     #region Properties
 
-    private MyApplication app = null;
-    
-    private MyApplication App
-    {
-        get
-        {
-            if (app == null)
-                app = FindObjectOfType<MyApplication>();
-            
-            return app;
-        }
-    }
-
     public string GetCountryByLocaleIndex()
     {
-        int index = 0;
+        countryIndex = -1;
+        string lang = LocalizationManager.CurrentLanguage;
+        var languages = LocalizationManager.Sources[0].GetLanguages();
+        
+        for (int i = 0; i < languages.Count; i++)
+        {
+            if (languages[i] != lang)
+                continue;
+            countryIndex = i;
+            break;
+        }
 
-        if (App != null)
-            index = App.model.settings.LanguageIndex;
+        if (countryIndex == -1)
+            countryIndex = 0;
 
         string result = string.Empty;
 
-        switch (index)
+        switch (countryIndex)
         {
             case 0:
                 result = "tw";

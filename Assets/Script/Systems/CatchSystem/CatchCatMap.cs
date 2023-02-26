@@ -956,6 +956,6 @@ public class CatchCatMap : MvcBehaviour
         
         cloudCatData = null;
         App.system.howToPlay.ClearEventAndClose();
-        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_CatFindFail, CloseToMap);
+        App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_Left, CloseToMap);
     }
 }

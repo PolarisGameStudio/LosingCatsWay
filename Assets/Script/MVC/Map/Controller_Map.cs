@@ -114,11 +114,13 @@ public class Controller_Map : ControllerBehavior
         {
             map.greenHouseMask.SetActive(true);
             map.greenHouseSkeletonGraphic.timeScale = 0;
+            map.greenHouseButton.interactable = false;
         }
         else
         {
             map.greenHouseMask.SetActive(false);
             map.greenHouseSkeletonGraphic.timeScale = 1;
+            map.greenHouseButton.interactable = true;
         }
     }
 

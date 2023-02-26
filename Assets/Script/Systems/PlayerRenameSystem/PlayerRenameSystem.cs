@@ -68,8 +68,7 @@ public class PlayerRenameSystem : MvcBehaviour
         Close();
 
         ConfirmTable confirmTable = ConfirmTable.Hints_Rename;
-        if (App.system.tutorial.isTutorial)
-            confirmTable = ConfirmTable.Hints_Name;
+        //todo 另一種table
         
         App.system.confirm.Active(confirmTable, () => 
         {

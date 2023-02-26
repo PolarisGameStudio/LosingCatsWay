@@ -30,7 +30,7 @@ public class Controller_Diary : ControllerBehavior
         
         if (unlockGreenHouse)
         {
-            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix, () =>
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_UnlockGreenHouse, () =>
             {
                 App.system.transition.Active(0.5f, () =>
                 {

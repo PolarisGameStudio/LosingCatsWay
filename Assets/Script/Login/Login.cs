@@ -147,7 +147,7 @@ public class Login : MyApplication
                 {
                     if (!PlayerPrefs.GetString("SessionKey").Equals(playerDataDict["SessionKey"]))
                     {
-                        system.confirm.OnlyConfirm().Active(ConfirmTable.Fix, () =>
+                        system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_AlreadyUsed, () =>
                         {
                             SignOutAction();
                             
