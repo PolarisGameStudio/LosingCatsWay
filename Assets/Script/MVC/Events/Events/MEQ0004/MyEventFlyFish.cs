@@ -11,4 +11,9 @@ public class MyEventFlyFish : MyEvent
     public override void Init()
     {
     }
+
+    public override bool CheckRedPoint()
+    {
+        return false;
+    }
 }
