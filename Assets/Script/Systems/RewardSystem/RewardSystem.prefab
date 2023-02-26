@@ -1053,6 +1053,16 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6278624426096579574, guid: df331770ede4afc42b7d2a65a137c314,
+        type: 3}
+      propertyPath: m_text
+      value: LevelUp_Close
+      objectReference: {fileID: 0}
+    - target: {fileID: 6512886901357475988, guid: df331770ede4afc42b7d2a65a137c314,
+        type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8954563345782708246, guid: df331770ede4afc42b7d2a65a137c314,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1199,6 +1209,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &7772829481387667851 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8954563345774916141, guid: df331770ede4afc42b7d2a65a137c314,
+    type: 3}
+  m_PrefabInstance: {fileID: 1700773858890351526}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8638169773077974208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7772829481387667851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: LevelUp_Rewards
+  mTermSecondary: 
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!224 &7772829481599933360 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8954563345782708246, guid: df331770ede4afc42b7d2a65a137c314,

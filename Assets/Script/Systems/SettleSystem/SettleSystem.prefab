@@ -2434,6 +2434,7 @@ GameObject:
   - component: {fileID: 5692954887849249982}
   - component: {fileID: 4552879205799376559}
   - component: {fileID: 3614326978484482107}
+  - component: {fileID: 2247770449749289994}
   m_Layer: 5
   m_Name: Title - GameResult
   m_TagString: Untagged
@@ -2489,7 +2490,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<color=#fec171>\u904A\u6232</color>\u7D50\u679C"
+  m_text: <color=#fec171>Game</color>Result
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b4e6040c530d214489020b0f365901ca, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 2c5a02061678960459758338604dad7e, type: 2}
@@ -2516,12 +2517,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 78
+  m_fontSize: 60.05
   m_fontSizeBase: 78
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 78
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -2558,6 +2559,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2247770449749289994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3745593540270500722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: Settle_Result
+  mTermSecondary: 
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &4153037153352303557
 GameObject:
   m_ObjectHideFlags: 0
@@ -4878,8 +4918,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5708376355533892355}
   m_HandleRect: {fileID: 8308218963861742291}
   m_Direction: 2
-  m_Value: 0.8125
-  m_Size: 0.9999971
+  m_Value: -0.2
+  m_Size: 0.99999845
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5568,6 +5608,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1005513075888064883}
     m_Modifications:
+    - target: {fileID: 1754689740357421273, guid: cfc09e7df4eee304cad133309b58d7d8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2203175282820840122, guid: cfc09e7df4eee304cad133309b58d7d8,
         type: 3}
       propertyPath: m_Name
@@ -5582,6 +5627,11 @@ PrefabInstance:
         type: 3}
       propertyPath: kittyGuiPosition.y
       value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 3935491589585227295, guid: cfc09e7df4eee304cad133309b58d7d8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7790720410582483851, guid: cfc09e7df4eee304cad133309b58d7d8,
         type: 3}
