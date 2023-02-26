@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class Controller_Map : ControllerBehavior
 {
+    public void Init()
+    {
+        CheckGreenHouseUnlock();
+    }
+
     public void Open()
     {
         App.system.bgm.FadeIn().Play("Map");
@@ -99,5 +104,29 @@ public class Controller_Map : ControllerBehavior
             App.system.grid.SetCameraToOrigin();
             DOVirtual.DelayedCall(0.175f, App.controller.lobby.Open);
         });
+    }
+
+    private void CheckGreenHouseUnlock()
+    {
+        View_Map map = App.view.map;
+
+        if (App.system.player.CatDeadCount == 0)
+        {
+            map.greenHouseMask.SetActive(true);
+            map.greenHouseSkeletonGraphic.timeScale = 0;
+        }
+        else
+        {
+            map.greenHouseMask.SetActive(false);
+            map.greenHouseSkeletonGraphic.timeScale = 1;
+        }
+    }
+
+    // unlock
+    public void PlayUnlockGreenHouse()
+    {
+        App.view.map.greenHouseUnlockEffect.SetActive(true);
+        CheckGreenHouseUnlock();
+        DOVirtual.DelayedCall(3.5f, () => { App.view.map.greenHouseUnlockEffect.SetActive(false); });
     }
 }

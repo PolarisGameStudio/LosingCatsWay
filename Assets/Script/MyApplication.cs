@@ -66,6 +66,7 @@ public class MyApplication : MonoBehaviour
         system.player.Init(); // ValueChange
         controller.lobby.Init();
         controller.build.Init(); // 中心房要排序在myRooms的第0個
+        controller.map.Init(); // 要高於貓咪判斷死亡時
         system.cat.Init();
         controller.pedia.Init();
         controller.shelter.Init();
@@ -106,7 +107,6 @@ public class MyApplication : MonoBehaviour
 
         // MyTime 一定要放最後
         system.myTime.Init();
-
         controller.greenHouse.Init();
         
         controller.mall.Init();

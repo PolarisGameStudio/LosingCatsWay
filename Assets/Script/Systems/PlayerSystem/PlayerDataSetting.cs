@@ -13,6 +13,8 @@ public class PlayerDataSetting : SerializedScriptableObject
     public int CatchCatExp;
     public int CatchCatCoin;
 
+    public List<int> catSlotUnlockLevels;
+    
     //下次升級經驗
     public int GetNextLevelUpExp(int level)
     {
@@ -107,14 +109,15 @@ public class PlayerDataSetting : SerializedScriptableObject
 
     public int GetCatSlotByLevel(int level)
     {
-        if (level < 2) return 1;
-        if (level < 10) return 2;
-        if (level < 25) return 3;
-        if (level < 40) return 4;
-        if (level < 55) return 5;
-        if (level < 70) return 6;
-        if (level < 85) return 7;
-        return 8;
+        for (int i = 0; i < catSlotUnlockLevels.Count; i++)
+        {
+            int unlockLevel = catSlotUnlockLevels[i];
+
+            if (level < unlockLevel)
+                return i + 1;
+        }
+
+        return 6;
     }
 
     [Button]

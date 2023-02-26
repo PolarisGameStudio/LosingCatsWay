@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
+using Spine.Unity;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +19,10 @@ public class View_Map : ViewBehaviour
     [SerializeField] private CanvasGroup[] mapCanvasGroups;
     [SerializeField] private CanvasGroup[] buttonCanvasGroups;
 
+    public GameObject greenHouseMask;
+    public SkeletonGraphic greenHouseSkeletonGraphic;
+    public GameObject greenHouseUnlockEffect;
+    
     public override void Init()
     {
         base.Init();

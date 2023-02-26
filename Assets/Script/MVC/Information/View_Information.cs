@@ -145,47 +145,12 @@ public class View_Information : ViewBehaviour
         levelUnlockBlock.SetActive(level < 85);
         slotText.text = App.system.player.CatSlot.ToString();
 
-        if (level < 2)
-        {
-            levelUnlockSlotText.text = "2";
-            return;
-        }
-        
-        if (level < 10)
-        {
-            levelUnlockSlotText.text = "10";
-            return;
-        }
-        
-        if (level < 25)
-        {
-            levelUnlockSlotText.text = "25";
-            return;
-        }
-        
-        if (level < 40)
-        {
-            levelUnlockSlotText.text = "40";
-            return;
-        }
-        
-        if (level < 55)
-        {
-            levelUnlockSlotText.text = "55";
-            return;
-        }
-        
-        if (level < 70)
-        {
-            levelUnlockSlotText.text = "70";
-            return;
-        }
-        
-        if (level < 85)
-        {
-            levelUnlockSlotText.text = "85";
-            return;
-        }
+        int catSlotLevel = App.system.player.playerDataSetting.GetCatSlotByLevel(level);
+
+        if (catSlotLevel >= 6)
+            levelUnlockSlotText.text = "45";
+        else
+            levelUnlockSlotText.text = App.system.player.playerDataSetting.catSlotUnlockLevels[catSlotLevel - 1].ToString();
     }
 
     private void OnPlayerExpChange(object from, object to)

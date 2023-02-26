@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Doozy.Runtime.UIManager.Containers;
+using Spine.Unity;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,6 +21,8 @@ public class View_PediaCats : ViewBehaviour
     public TextMeshProUGUI catTypeText;
     public TextMeshProUGUI catInformationText;
     public CatSkin catSkin;
+    public GameObject allComplete;
+    public SkeletonGraphic bg;
 
     #endregion
 
@@ -88,21 +91,31 @@ public class View_PediaCats : ViewBehaviour
         string variety = value.ToString();
         int count = App.system.quest.KnowledgeCardData[variety];
 
+        if (count >= 5)
+        {
+            starStatusImages[0].sprite = starStatusSprites[1];
+            bg.gameObject.SetActive(true);
+        }
+        else
+        {
+            starStatusImages[0].sprite = starStatusSprites[0];
+            bg.gameObject.SetActive(false);
+        }
+
         if (count >= 10)
         {
             starStatusImages[1].sprite = starStatusSprites[1];
             catSkin.PlayAnimation();
+            allComplete.SetActive(true);
+            bg.timeScale = 1;
         }
         else
         {
             starStatusImages[1].sprite = starStatusSprites[0];
             catSkin.StopAnimation();
+            allComplete.SetActive(false);
+            bg.timeScale = 0;
         }
-
-        if (count >= 5)
-            starStatusImages[0].sprite = starStatusSprites[1];
-        else
-            starStatusImages[0].sprite = starStatusSprites[0];
 
         levelCountTexts[0].text = "(" + Math.Clamp(count, 0, 5) + "/5)";
         levelCountTexts[1].text = "(" + Math.Clamp(count, 0, 10) + "/10)";

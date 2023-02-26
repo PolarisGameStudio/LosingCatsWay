@@ -58,7 +58,7 @@ public class Card_Cloister : MvcBehaviour
         genderImage.sprite = App.factory.catFactory.GetCatSexSpriteEW(losingCatData.CatData.Sex);
         
         //Timer
-        if (losingCatData.LosingCatStatus.Contains("Flower") || losingCatData.LosingCatStatus.Contains("Angle"))
+        if (losingCatData.LosingCatStatus.Contains("Flower") || losingCatData.LosingCatStatus.Contains("AngelCat") || losingCatData.LosingCatStatus.Contains("First"))
             CancelInvoke(nameof(CountDown));
         else
             InvokeRepeating(nameof(CountDown), 1f, 1f);
@@ -73,7 +73,7 @@ public class Card_Cloister : MvcBehaviour
 
     private void CountDown()
     {
-        if (_losingCatData.LosingCatStatus.Contains("Flower") || _losingCatData.LosingCatStatus.Contains("Angle"))
+        if (_losingCatData.LosingCatStatus.Contains("Flower") || _losingCatData.LosingCatStatus.Contains("AngelCat") || _losingCatData.LosingCatStatus.Contains("First"))
         {
             CancelInvoke(nameof(CountDown));
             return;

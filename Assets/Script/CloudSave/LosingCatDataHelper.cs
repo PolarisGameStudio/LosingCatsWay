@@ -22,7 +22,7 @@ public class LosingCatDataHelper
         result.ExpiredTimestamp = Timestamp.FromDateTime(app.system.myTime.MyTimeNow.AddDays(7));
         result.LosingCatStatus = new List<string>();
         
-        if (app.model.cloister.LosingCatDatas.Count <= 0) // 在CatSystem的PerDay之前Cloister.Init已經下載了以前的日記貓
+        if (app.system.player.CatDeadCount <= 1) // 在CatSystem的PerDay之前Cloister.Init已經下載了以前的日記貓
             result.LosingCatStatus.Add("First");
 
         return result;
