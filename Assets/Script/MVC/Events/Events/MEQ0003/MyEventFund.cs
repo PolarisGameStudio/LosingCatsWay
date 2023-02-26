@@ -16,6 +16,11 @@ public class MyEventFund : MyEvent
     {
     }
 
+    public override bool CheckRedPoint()
+    {
+        return !quests[0].IsReceived;
+    }
+
     public void Recive(int index)
     {
         if (quests[index].IsReceived)
@@ -24,6 +29,7 @@ public class MyEventFund : MyEvent
         quests[index].IsReceived = true;
         App.system.reward.Open(quests[index].Rewards);
         RefreshUI();
+        App.controller.events.RefreshRedPoint();
     }
 
     private void RefreshUI()

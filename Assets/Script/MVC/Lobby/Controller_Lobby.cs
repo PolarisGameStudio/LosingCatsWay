@@ -23,6 +23,8 @@ public class Controller_Lobby : ControllerBehavior
     {
         App.controller.pedia.RefreshRedPoint();
         App.controller.dailyQuest.RefreshRedPoint();
+        App.controller.events.RefreshRedPoint();
+        
         App.system.catNotify.CheckRedActivate();
         
         ActiveBuffer();

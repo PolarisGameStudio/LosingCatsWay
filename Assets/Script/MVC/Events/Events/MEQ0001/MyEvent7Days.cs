@@ -30,18 +30,18 @@ public class MyEvent7Days : MyEvent
     {
     }
 
+    public override bool CheckRedPoint()
+    {
+        return IsReach();
+    }
+
     public void Click()
     {
-        int receivedStatus = App.system.quest.QuestReceivedStatusData[id];
-
-        if (receivedStatus >= 7)
-            return;
-
-        int nowTotalDay = (Timestamp.GetCurrentTimestamp().ToDateTime() - new DateTime(1970,1,1)).Days;
-        int lastTotalDay = App.system.quest.QuestProgressData[id];
-
-        if (nowTotalDay - lastTotalDay > 0)
+        if (IsReach())
         {
+            int receivedStatus = App.system.quest.QuestReceivedStatusData[id];
+            int nowTotalDay = (Timestamp.GetCurrentTimestamp().ToDateTime() - new DateTime(1970,1,1)).Days;
+
             App.system.soundEffect.Play("ED00011");
 
             App.system.quest.QuestReceivedStatusData[id] = receivedStatus + 1;
@@ -50,6 +50,21 @@ public class MyEvent7Days : MyEvent
             App.system.reward.Open(Rewards[receivedStatus]);
             masks[receivedStatus].SetActive(true);
             uiParticles[receivedStatus].gameObject.SetActive(false);
+            
+            App.controller.events.RefreshRedPoint();
         }
+    }
+
+    private bool IsReach()
+    {
+        int receivedStatus = App.system.quest.QuestReceivedStatusData[id];
+
+        if (receivedStatus >= 7)
+            return false;
+
+        int nowTotalDay = (Timestamp.GetCurrentTimestamp().ToDateTime() - new DateTime(1970,1,1)).Days;
+        int lastTotalDay = App.system.quest.QuestProgressData[id];
+
+        return nowTotalDay - lastTotalDay > 0;
     }
 }

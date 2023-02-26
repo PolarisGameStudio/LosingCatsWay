@@ -8,14 +8,16 @@ using UnityEngine;
 public class View_Events : ViewBehaviour
 {
     [Title("Left")] [SerializeField] private GameObject[] sectionMasks;
-    [SerializeField] private GameObject[] sectionDots;
+
+    [SerializeField] private Animator[] sectionDotAnimatorss;
+    public GameObject[] sectionDots;
 
     [Title("Right")] [SerializeField] private GameObject[] eventObjects;
 
     public override void Open()
     {
         base.Open();
-        CheckRedActivate();
+        PlayRedActivate();
     }
 
     public override void Init()
@@ -35,9 +37,7 @@ public class View_Events : ViewBehaviour
             else
                 sectionMasks[i].SetActive(false);
         }
-
-        sectionDots[index].SetActive(false);
-
+        
         for (int i = 0; i < eventObjects.Length; i++)
         {
             if (i == index)
@@ -47,15 +47,16 @@ public class View_Events : ViewBehaviour
         }
     }
 
-    private void CheckRedActivate()
+    public void PlayRedActivate()
     {
         for (int i = 0; i < sectionDots.Length; i++)
         {
             var tmp = sectionDots[i];
             if (!tmp.activeSelf)
                 continue;
-            tmp.SetActive(false);
-            DOVirtual.DelayedCall(0.15f, () => tmp.SetActive(true));
+
+            var animator = sectionDotAnimatorss[i];
+            DOVirtual.DelayedCall(0.15f, () => animator.Play("Play"));
         }
     }
 }

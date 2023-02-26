@@ -21,6 +21,18 @@ public class MyEventEa : MyEvent
         RefreshUI();
     }
 
+    public override bool CheckRedPoint()
+    {
+        for (int i = 0; i < quests.Length; i++)
+        {
+            Quest quest = quests[i];
+            if (quest.IsReach && !quest.IsReceived)
+                return true;
+        }
+
+        return false;
+    }
+
     public void GetReward(int index)
     {
         var quest = quests[index];
@@ -34,6 +46,7 @@ public class MyEventEa : MyEvent
         quest.IsReceived = true;
         
         RefreshUI();
+        App.controller.events.RefreshRedPoint();
     }
 
     private void RefreshUI()

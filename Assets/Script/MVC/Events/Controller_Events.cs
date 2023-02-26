@@ -12,6 +12,8 @@ public class Controller_Events : ControllerBehavior
         App.system.openFlow.AddAction(Open);
         for (int i = 0; i < myEvents.Length; i++)
             myEvents[i].Init();
+        
+        RefreshRedPoint();
     }
 
     [HorizontalGroup("Split", 0.5f)]
@@ -40,5 +42,23 @@ public class Controller_Events : ControllerBehavior
         App.system.soundEffect.Play("ED00010");
         App.model.events.SelectIndex = index;
         myEvents[index].Open();
+    }
+
+    public void RefreshRedPoint()
+    {
+        bool flag = false;
+        
+        for (int i = 0; i < myEvents.Length; i++)
+        {
+            MyEvent myEvent = myEvents[i];
+            
+            bool status = myEvent.CheckRedPoint();
+            App.view.events.sectionDots[i].SetActive(status);
+            
+            if (status)
+                flag = true;
+        }
+        
+        App.view.lobby.eventRedPoint.SetActive(flag);
     }
 }
