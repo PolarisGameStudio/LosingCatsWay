@@ -151,6 +151,7 @@ public class FindCatMap : MvcBehaviour
 
     public void Close()
     {
+        _cloudCatData = null;
         App.system.transition.OnlyOpen();
         DOVirtual.DelayedCall(1f, () =>
         {
@@ -232,8 +233,8 @@ public class FindCatMap : MvcBehaviour
         Stop();
         App.system.confirm.Active(ConfirmTable.Hints_Leave, () =>
         {
-            Close();
             SetCatNotUse();
+            Close();
         }, cancelEvent: Play);
     }
 

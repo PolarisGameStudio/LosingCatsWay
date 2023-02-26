@@ -115,6 +115,7 @@ public class CatchCatMap : MvcBehaviour
 
     private void Close()
     {
+        cloudCatData = null;
         App.system.catchCat.Close();
         uiView.InstantHide();
     }

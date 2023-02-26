@@ -12,11 +12,6 @@ public class DebugTool : MvcBehaviour
 {
     DebugTool_Cat cat = new DebugTool_Cat();
 
-    private void Start()
-    {
-        Application.runInBackground = true;
-    }
-
     [Button]
     public void CreateAdultCatAtShelter()
     {
