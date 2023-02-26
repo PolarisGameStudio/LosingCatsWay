@@ -55,6 +55,9 @@ public class CatSystem : MvcBehaviour
                 {
                     App.model.entrance.DeadCat = myCats[i];
                     App.SaveData();
+
+                    if (App.system.player.CatDeadCount == 0)
+                        App.controller.diary.unlockGreenHouse = true;
                 }
                 await SetDead(myCats[i]);
             }

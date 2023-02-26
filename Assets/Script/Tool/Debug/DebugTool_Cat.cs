@@ -200,7 +200,7 @@ public class DebugTool_Cat
 
         if (isAdult)
             catData.BornTime =
-                Timestamp.FromDateTime(Timestamp.GetCurrentTimestamp().ToDateTime() - TimeSpan.FromDays(5));
+                Timestamp.FromDateTime(Timestamp.GetCurrentTimestamp().ToDateTime() - TimeSpan.FromDays(Random.Range(0, 20)));
         else
             catData.BornTime = Timestamp.GetCurrentTimestamp();
 
@@ -260,6 +260,92 @@ public class DebugTool_Cat
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("Cats").Document(catData.CatId);
         await docRef.SetAsync(cloudCatData);
+
+        return cloudCatData;
+    }
+    
+    public CloudCatData GetCreateCatData(string owner, bool isAdult, int varietyType)
+    {
+        CloudCatData cloudCatData = new CloudCatData();
+
+        CloudSave_CatData catData = new CloudSave_CatData();
+        catData.CatId = FirebaseFirestore.DefaultInstance.Collection("Cats").Document().Id;
+        catData.CatName = "-";
+        catData.Sex = Random.value > .5f ? (byte)1 : (byte)0;
+        catData.Owner = owner;
+        catData.BodyScale = Random.Range(0.9f, 1.1f);
+        catData.PersonalityTypes = new List<int>(GetRandomPersonality());
+        catData.PersonalityLevels = new List<int>(GetPersonalityLevel(catData.PersonalityTypes));
+
+        if (varietyType == 0)
+            catData.Variety = GetRandomCatVariety();
+        else if (varietyType == 1)
+            catData.Variety = GetPurebredCatVariety();
+        else
+            catData.Variety = GetMixedCatVariety();
+
+        catData.Trait = GetRandomTrait();
+        catData.DeathTime = new Timestamp();
+        catData.IsFavorite = false;
+
+        if (isAdult)
+            catData.BornTime =
+                Timestamp.FromDateTime(Timestamp.GetCurrentTimestamp().ToDateTime() - TimeSpan.FromDays(Random.Range(0, 20)));
+        else
+            catData.BornTime = Timestamp.GetCurrentTimestamp();
+
+        catData.ChipId = String.Empty;
+
+        CloudSave_CatSkinData catSkinData = new CloudSave_CatSkinData();
+        if (IsPurebred(catData.Variety))
+            GeneratePurebredCatSkinId(catSkinData);
+        else
+            GenerateMixedCatSkinId(catSkinData);
+        catSkinData.UseSkinId = string.Empty;
+
+        CloudSave_CatSurviveData catSurviveData = new CloudSave_CatSurviveData();
+        catSurviveData.Satiety = 60;
+        catSurviveData.Moisture = 60;
+        catSurviveData.Favourbility = 60;
+        catSurviveData.RealSatiety = 100;
+        catSurviveData.RealMoisture = 100;
+        catSurviveData.RealFavourbility = 100;
+        catSurviveData.IsUseToFind = false;
+        catSurviveData.CleanLitterTimestamp = new Timestamp();
+        catSurviveData.UsingLitter = -1;
+        catSurviveData.CleanLitterCount = 0;
+        catSurviveData.LikeFoodIndex = Random.Range(0, 3);
+        catSurviveData.HateFoodIndex = Random.Range(0, 3);
+        catSurviveData.LikeLitterIndex = Random.Range(0, 3);
+        catSurviveData.HateLitterindex = Random.Range(0, 3);
+        catSurviveData.IsLikeDrink = Random.value > 0.5f;
+
+        CloudSave_CatHealthData catHealthData = new CloudSave_CatHealthData();
+        catHealthData.SickId = string.Empty;
+        catHealthData.IsLigation = false;
+        catHealthData.IsVaccine = false;
+        catHealthData.IsChip = false;
+        catHealthData.IsBug = false;
+        catHealthData.LastMetDoctorTimeStamp = new Timestamp();
+        catHealthData.MetDoctorCount = 0;
+        catHealthData.NoBugExpireTimestamp = new Timestamp();
+        catHealthData.IsMetDoctor = false;
+        catHealthData.IsDead = false;
+
+        CloudSave_CatDiaryData catDiaryData = new CloudSave_CatDiaryData();
+        catDiaryData.DiaryDatas = new List<CloudSave_DiaryData>();
+        catDiaryData.AdoptTimestamp = Timestamp.GetCurrentTimestamp();
+        catDiaryData.AdoptLocation = string.Empty;
+        catDiaryData.DiarySatietyScore = 0;
+        catDiaryData.DiaryLitterScore = 0;
+        catDiaryData.DiaryMoistureScore = 0;
+        catDiaryData.DiaryFavourbilityScore = 0;
+
+        cloudCatData.CatData = catData;
+        cloudCatData.CatSkinData = catSkinData;
+        cloudCatData.CatSurviveData = catSurviveData;
+        cloudCatData.CatHealthData = catHealthData;
+        cloudCatData.CatDiaryData = catDiaryData;
 
         return cloudCatData;
     }

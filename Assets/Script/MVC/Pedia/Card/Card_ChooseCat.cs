@@ -11,7 +11,8 @@ public class Card_ChooseCat : MvcBehaviour
     [SerializeField] private GameObject isUnlockEffect;
     [SerializeField] private GameObject isUnlockEffect02;
     public GameObject clickUnlockEffect;
-
+    public GameObject bg;
+    
     public void SetData(string variety)
     {
         catTypeText.text = App.factory.stringFactory.GetCatVariety(variety);
@@ -27,6 +28,8 @@ public class Card_ChooseCat : MvcBehaviour
         else
             catSkin.StopAnimation();
 
+        bg.SetActive(count >= 5);
+        
         if (level > 0)
         {
             lockMask.SetActive(false);

@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Controller_Diary : ControllerBehavior
 {
     [SerializeField] private GameObject leftButtonObject;
     [SerializeField] private GameObject rightButtonObject;
+
+    public bool unlockGreenHouse = false;
     
     public void Open()
     {
@@ -24,9 +27,26 @@ public class Controller_Diary : ControllerBehavior
     public void CloseByOpenCloister()
     {
         Close();
+        
+        if (unlockGreenHouse)
+        {
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Fix, () =>
+            {
+                App.system.transition.Active(0.5f, () =>
+                {
+                    App.controller.map.Open();
+                }, () =>
+                {
+                    App.controller.map.PlayUnlockGreenHouse();
+                });
+            });
+            return;
+        }
+
+        unlockGreenHouse = false;
         App.controller.cloister.Open();
     }
- 
+
     private void ToPage(int index)
     {
         var datas = App.model.diary.LosingCatData.CatDiaryData.DiaryDatas;

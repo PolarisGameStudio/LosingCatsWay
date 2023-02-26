@@ -18,6 +18,9 @@ public class MyEventFund : MyEvent
 
     public override bool CheckRedPoint()
     {
+        if (App.factory.itemFactory.GetItem("SYB0001").Count == 0)
+            return false;
+        
         return !quests[0].IsReceived;
     }
 

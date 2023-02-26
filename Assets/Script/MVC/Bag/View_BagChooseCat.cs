@@ -15,7 +15,7 @@ public class View_BagChooseCat : MvcBehaviour
 
     public void Open(BagChooseCatType bagChooseCatType, BagChooseCatExceptType bagChooseCatExceptType = BagChooseCatExceptType.None)
     {
-        RefreshUI(bagChooseCatType);
+        RefreshUI(bagChooseCatType, bagChooseCatExceptType);
         
         if (_cards.Count == 0)
             return;
@@ -77,7 +77,7 @@ public class View_BagChooseCat : MvcBehaviour
         if (bagChooseCatType == BagChooseCatType.LosingCat)
         {
             List<CloudLosingCatData> cats = App.model.cloister.LosingCatDatas;
-
+            
             if (bagChooseCatExceptType != BagChooseCatExceptType.None)
             {
                 string key = "Flower";
@@ -89,11 +89,19 @@ public class View_BagChooseCat : MvcBehaviour
                         break;
                 }
                 
-                for (int i = 0; i < cats.Count; i++)
+                for (int i = cats.Count - 1; i >= 0; i--)
                 {
                     var cat = cats[i];
+                    print(key);
+                    
                     if (cat.LosingCatStatus.Contains(key))
+                    {
+                        print("A");
                         cats.Remove(cat);
+                        continue;
+                    }
+
+                    print("B");
 
                     if (cat.CatData.SurviveDays <= 3)
                         cats.Remove(cat);

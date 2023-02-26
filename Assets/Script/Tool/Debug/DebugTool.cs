@@ -12,6 +12,11 @@ public class DebugTool : MvcBehaviour
 {
     DebugTool_Cat cat = new DebugTool_Cat();
 
+    private void Start()
+    {
+        Application.runInBackground = true;
+    }
+
     [Button]
     public void CreateAdultCatAtShelter()
     {
@@ -36,6 +41,27 @@ public class DebugTool : MvcBehaviour
     {
         int index = Random.Range(0, 2);
         cat.CreateCat($"Location{index}", false, 0);
+    }
+
+    [Button]
+    public async void RealCreate()
+    {
+        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+
+        for (int i = 0; i < 7; i++)
+        {
+            WriteBatch batch = db.StartBatch();
+
+            for (int j = 0; j < 500; j++)
+            {
+                CloudCatData cloudCatData = cat.GetCreateCatData("Location0", true, 0);
+                DocumentReference nycRef = db.Collection("Cats").Document(cloudCatData.CatData.CatId);
+                batch.Set(nycRef, cloudCatData);
+            }
+        
+            await batch.CommitAsync();
+            print("成功" + i);
+        }
     }
 
     public void GetMonthLastTime()
