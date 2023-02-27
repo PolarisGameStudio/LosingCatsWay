@@ -12,6 +12,7 @@ public class MallContainer_VIP : MallContainer
     public CanvasGroup page2;
     public Button backButton;
     public Button nextButton;
+    public GameObject blockButton;
 
     public GameObject block;
     public GameObject buyButton;
@@ -38,6 +39,11 @@ public class MallContainer_VIP : MallContainer
 
     public override void Refresh()
     {
+        DateTime d = DateTime.Now.ToLocalTime();
+        print($"DateLocal: {d}");
+        print($"TestMonth: {d.Month}");
+        blockButton.SetActive(d.Month == 2);
+        
         if (!App.model.mall.PurchaseRecords.ContainsKey("IMP00001"))
         {
             block.SetActive(false);
