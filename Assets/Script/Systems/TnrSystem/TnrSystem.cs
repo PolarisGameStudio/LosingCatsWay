@@ -1,14 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using DG.Tweening;
 using Doozy.Runtime.UIManager.Components;
 using Doozy.Runtime.UIManager.Containers;
+using Firebase.Firestore;
 using Sirenix.OdinInspector;
 using Spine;
 using Spine.Unity;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class TnrSystem : MvcBehaviour
 {
@@ -110,9 +114,16 @@ public class TnrSystem : MvcBehaviour
         App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_Copy);
     }
 
-    public void DoAdopt() // todo 檢查有沒有被搶先收養
+    public async void DoAdopt()
     {
         Close();
+
+        if (!await CheckInLocation(cloudCatData.CatData.CatId, _location))
+        {
+            App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_LateAdopt);
+            return;
+        }
+        
         App.system.confirm.Active(ConfirmTable.Hints_Adopt, () =>
         {
             App.system.catRename.CantCancel().Active(cloudCatData, _location, () =>
@@ -260,4 +271,27 @@ public class TnrSystem : MvcBehaviour
     }
 
     #endregion
+    
+    private async Task<bool> CheckInLocation(string id, string location)
+    {
+        var docRef = FirebaseFirestore.DefaultInstance.Collection("Cats").Document(id);
+        var snapshot = await docRef.GetSnapshotAsync();
+
+        if (snapshot.Exists)
+        {
+            try
+            {
+                string owner = snapshot.GetValue<string>("CatData.Owner");
+                return owner == location;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        Debug.LogError("Document not fount");
+        return false;
+    }
 }

@@ -261,23 +261,12 @@ public class FindCatMap : MvcBehaviour
     
     #region ApplicationProcess
 
-    private void OnApplicationFocus(bool focus)
-    {
-        if (!focus)
-            ClearCat();
-    }
-
     private void OnApplicationPause(bool pause)
     {
         if (pause)
             ClearCat();
     }
 
-    private void OnApplicationQuit()
-    {
-        ClearCat();
-    }
-    
     #endregion
     
     private void SetCatNotUse()

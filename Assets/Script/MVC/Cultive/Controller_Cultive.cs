@@ -504,6 +504,9 @@ public class Controller_Cultive : ControllerBehavior
 
     public void ClickCat()
     {
+        if (App.system.tutorial.isTutorial)
+            return;
+        
         var cat = App.model.cultive.SelectedCat;
 
         if (!String.IsNullOrEmpty(cat.cloudCatData.CatHealthData.SickId))

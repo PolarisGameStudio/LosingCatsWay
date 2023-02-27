@@ -125,12 +125,6 @@ public class MyApplication : MonoBehaviour
 
     #region ApplicationProcess
 
-    private void OnApplicationFocus(bool focus)
-    {
-        if (!focus)
-            SaveDataSync();
-    }
-
     private void OnApplicationPause(bool pause)
     {
         if (pause)

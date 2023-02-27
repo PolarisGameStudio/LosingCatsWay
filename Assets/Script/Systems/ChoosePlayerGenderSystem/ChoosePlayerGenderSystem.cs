@@ -22,7 +22,7 @@ public class ChoosePlayerGenderSystem : MvcBehaviour
     [Button]
     public void Open()
     {
-        uiView.Show();
+        uiView.InstantShow();
     }
 
     private void Close()

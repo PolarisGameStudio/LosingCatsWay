@@ -74,8 +74,6 @@ public class CatchCatMap : MvcBehaviour
 
     private string gameName;
 
-    private bool isCheckUse;
-
     #endregion
 
     #region 基本開關+暫停離開
@@ -910,21 +908,19 @@ public class CatchCatMap : MvcBehaviour
 
     #region ApplicationProcess
 
-    private void OnApplicationFocus(bool focus)
-    {
-        if (!focus)
-            ClearCat();
-    }
-
     private void OnApplicationPause(bool pause)
     {
         if (pause)
-            ClearCat();
-    }
-
-    private void OnApplicationQuit()
-    {
-        ClearCat();
+        {
+            if (App.system.settle.IsActivate)
+                SetCatNotUse();
+            else
+                ClearCat();
+        }
+        else
+        {
+            SetCatToUse();
+        }
     }
 
     #endregion
@@ -933,9 +929,23 @@ public class CatchCatMap : MvcBehaviour
     {
         if (App.system.tutorial.isTutorial)
             return;
+        
         if (cloudCatData == null)
             return;
+        
         cloudCatData.CatSurviveData.IsUseToFind = false;
+        App.system.cloudSave.SaveCloudCatData(cloudCatData);
+    }
+
+    private void SetCatToUse()
+    {
+        if (App.system.tutorial.isTutorial)
+            return;
+        
+        if (cloudCatData == null)
+            return;
+        
+        cloudCatData.CatSurviveData.IsUseToFind = true;
         App.system.cloudSave.SaveCloudCatData(cloudCatData);
     }
     

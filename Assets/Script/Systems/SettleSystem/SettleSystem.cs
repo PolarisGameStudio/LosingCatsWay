@@ -39,6 +39,8 @@ public class SettleSystem : MvcBehaviour
 
     private Callback _onClose;
 
+    public bool IsActivate;
+
     public void Init()
     {
         App.system.myTime.OnFirstLogin += () =>
@@ -50,10 +52,13 @@ public class SettleSystem : MvcBehaviour
     private void Open()
     {
         uiView.Show();
+        IsActivate = true;
     }
 
     public void Close()
     {
+        IsActivate = false;
+        
         uiView.InstantHide();
         _onClose?.Invoke();
         _onClose = null;
