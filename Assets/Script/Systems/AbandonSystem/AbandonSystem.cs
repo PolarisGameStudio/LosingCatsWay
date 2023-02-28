@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Doozy.Runtime.UIManager.Containers;
 using Firebase.Firestore;
 using Sirenix.OdinInspector;
@@ -157,6 +158,11 @@ public class AbandonSystem : MvcBehaviour
             CloseFinalConfirm();
             CloseConfirm();
             Close();
+
+            DOVirtual.DelayedCall(0.1f, () =>
+            {
+                App.system.confirm.OnlyConfirm().Active(ConfirmTable.Hints_Left);
+            });
         });
     }
 

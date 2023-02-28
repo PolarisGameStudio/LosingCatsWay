@@ -35,10 +35,15 @@ public class VersionChecker
     }
 
     /// -1正常 0關伺服 1版本檢查 2版本不同
-    public async Task<int> CheckStatus()
+    public async Task<int> CheckStatus(bool debugMode)
     {
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        DocumentReference docRef = db.Collection("Server").Document("Setting");
+
+        string docId = debugMode ? "DebugSetting" : "Setting";
+        DocumentReference docRef = db.Collection("Server").Document(docId);
+        
+        if (debugMode)
+            Debug.LogWarning("You are in debug mode.");
 
         DocumentSnapshot result = await docRef.GetSnapshotAsync();
         Dictionary<string, object> data = result.ToDictionary();
@@ -51,13 +56,17 @@ public class VersionChecker
 
         if (!isActive)
             return 0;
+        
+        Debug.LogWarning("Server is active");
 
-        if (!isVersionCheckActive) // 要不要確認版本
-            return -1;
+        // if (!isVersionCheckActive) // 要不要確認版本
+        //     return -1;
+        
+        if (isVersionCheckActive && clientVersion != serverVersion)
+            return 1;
 
-        if (clientVersion != serverVersion)
-            return 2;
+        Debug.LogWarning($"Version compare: Client: {clientVersion}, Server: {serverVersion}");
 
-        return 1;
+        return -1;
     }
 }

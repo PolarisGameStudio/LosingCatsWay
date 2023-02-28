@@ -203,6 +203,9 @@ public class Controller_DailyQuest : ControllerBehavior
     
     public void GetTotalDailyReward()
     {
+        if (!App.system.player.Vip)
+            return;
+    
         var quest = App.model.dailyQuest.TotalQuest;
         
         if (!quest.IsReach)

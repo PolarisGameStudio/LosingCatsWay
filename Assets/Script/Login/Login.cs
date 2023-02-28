@@ -33,6 +33,7 @@ public class Login : MyApplication
 {
     [Title("UI")] public GameObject startGameButton;
     [SerializeField] TextMeshProUGUI idText;
+    [SerializeField] private TextMeshProUGUI versionText;
 
     [Title("Login")] public UIView loginView;
     public Image bgMask;
@@ -58,6 +59,8 @@ public class Login : MyApplication
     {
         Init();
 
+        versionText.text = "v " + Application.version;
+
         InternetChecker internetChecker = new InternetChecker();
         if (!internetChecker.CheckInternetStatus())
         {
@@ -66,10 +69,10 @@ public class Login : MyApplication
         }
 
         VersionChecker versionChecker = new VersionChecker();
-        bool isActive = await versionChecker.Check();
-        int status = await versionChecker.CheckStatus();
+        // bool isActive = await versionChecker.Check();
+        int status = await versionChecker.CheckStatus(false);
 
-        if (!isActive)
+        if (status != -1)
         {
             ConfirmTable confirmTable = ConfirmTable.Hints_Maintain;
 
@@ -77,8 +80,6 @@ public class Login : MyApplication
                 confirmTable = ConfirmTable.Hints_Maintain;
             else if (status == 1)
                 confirmTable = ConfirmTable.Hints_Maintain;
-            else if (status == 2)
-                confirmTable = ConfirmTable.Hints_VersionNotSame;
 
             system.confirm.ActiveByBlock(confirmTable);
 

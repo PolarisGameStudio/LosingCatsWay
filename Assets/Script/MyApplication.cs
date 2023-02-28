@@ -22,7 +22,6 @@ public class MyApplication : MonoBehaviour
     public LeanPlane globalLeanPlane;
     
     private bool _canSave;
-    private bool _isSaving;
 
     [Button]
     public void Week()
@@ -143,33 +142,25 @@ public class MyApplication : MonoBehaviour
         if (system.tutorial.isTutorial)
             return;
         
-        _isSaving = true;
-        
         controller.settings.SaveSettings();
         system.myTime.SetDateTime();
 
         system.cloudSave.SaveCloudSaveData();
         system.cloudSave.SaveCloudCatDatas();
-
-        _isSaving = false;
     }
 
-    public void SaveDataSync()
+    private void SaveDataSync()
     {
         if (!_canSave)
             return;
         if (system.tutorial.isTutorial)
             return;
         
-        _isSaving = true;
-        
         controller.settings.SaveSettings();
         system.myTime.SetDateTime();
 
         system.cloudSave.SaveCloudSaveDataSync();
         system.cloudSave.SaveCloudCatDatasSync();
-
-        _isSaving = false;
     }
 
     #endregion
